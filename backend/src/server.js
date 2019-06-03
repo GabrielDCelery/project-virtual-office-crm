@@ -9,19 +9,23 @@ const config = require('./config');
 let server = null;
 
 const start = async (callback = () => { }) => {
-  const app = express();
+  try {
+    const app = express();
 
-  await loaders.start(app);
+    await loaders.start(app);
 
-  server = app.listen(config.host.port, error => {
-    if (error) {
-      return process.exit(1);
-    }
+    server = app.listen(config.host.port, error => {
+      if (error) {
+        return process.exit(1);
+      }
 
-    callback();
+      callback();
 
-    console.log(`Running app on PORT:${config.host.port}`);
-  });
+      console.log(`Running app on PORT:${config.host.port}`);
+    });
+  } catch(error) {
+    console.log(error);
+  }
 };
 
 const stop = async (callback = () => { }) => {

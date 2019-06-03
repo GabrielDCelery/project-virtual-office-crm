@@ -11,12 +11,15 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "knex": "^0.17.3",
     "lodash": "^4.17.11",
+    "objection": "^1.6.9",
+    "objection-password": "^2.0.0",
+    "pg": "^7.11.0",
     "typedi": "^0.8.0"
   },
   "devDependencies": {
     "axios": "^0.19.0",
-    "concurrently": "^4.1.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1"
   },
