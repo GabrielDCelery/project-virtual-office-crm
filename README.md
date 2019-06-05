@@ -1,20 +1,14 @@
 # project-virtual-office-crm
 A CRM for virtual office services
 
-Run dev/test environment
+Run dev environment
 
 ```
-docker-compose up
+make dev
 ```
 
-Enter the running docker container
+Run tests
 
 ```
-docker exec -it project-virtual-office-crm_backend_1 bash
-```
-
-Start test suite inside container
-
-```
-npm run test
+make test
 ```

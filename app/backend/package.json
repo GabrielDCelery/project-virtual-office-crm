@@ -26,7 +26,7 @@
   "scripts": {
     "start": "node ./app.js",
     "dev": "nodemon ./app.js",
-    "test": "node ./node_modules/jest/bin/jest.js --verbose --maxWorkers=1 --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --verbose --maxWorkers=1"
   },
   "author": "",
   "license": "ISC"

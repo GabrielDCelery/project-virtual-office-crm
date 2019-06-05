@@ -1,0 +1,22 @@
+version: '3'
+networks:
+  network-development:
+    driver: bridge
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: dev
+      POSTGRES_DB: dev_db
+    networks:
+      - network-development
+  backend:
+    command: npm run dev
+    volumes:
+      - /usr/src/virtual_office_crm_backend/node_modules
+      - ../app/backend:/usr/src/virtual_office_crm_backend
+    environment:
+      DB_PASSWORD: password
+      DB_NAME: dev_db
+    networks:
+      - network-development

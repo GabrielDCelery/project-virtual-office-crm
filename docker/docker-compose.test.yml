@@ -1,0 +1,19 @@
+version: '3'
+networks:
+  network-test:
+    driver: bridge
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: test
+      POSTGRES_DB: test_db
+    networks:
+      - network-test
+  backend:
+    command: npm run test
+    environment:
+      DB_PASSWORD: password
+      DB_NAME: test_db
+    networks:
+      - network-test
