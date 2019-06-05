@@ -1,0 +1,7 @@
+{
+  "verbose": true,
+  "maxConcurrency": 1,
+  "setupFiles": [
+    "./setup/setup.globals.js"
+  ]
+}
