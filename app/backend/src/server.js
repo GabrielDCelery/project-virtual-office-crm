@@ -23,15 +23,19 @@ const start = async (callback = () => { }) => {
 
       console.log(`Running app on PORT:${config.host.port}`);
     });
-  } catch(error) {
+  } catch (error) {
     console.log(error);
   }
 };
 
 const stop = async (callback = () => { }) => {
-  await loaders.stop();
-  await server.close();
-  callback();
+  try {
+    await loaders.stop();
+    await server.close();
+    callback();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {

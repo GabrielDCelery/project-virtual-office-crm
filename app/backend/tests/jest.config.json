@@ -1,7 +1,7 @@
 {
   "verbose": true,
   "maxConcurrency": 1,
-  "setupFiles": [
+  "setupFilesAfterEnv": [
     "./setup/setup.globals.js"
   ]
 }

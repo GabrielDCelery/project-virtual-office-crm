@@ -1,9 +1,15 @@
+build:
+	cd ./dockerdeploy; \
+	docker-compose build
 dev:
-	cd ./docker
-	docker-compose -f ./docker/docker-compose.yml up
+	cd ./dockerdeploy; \
+	docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml up 
 test:
-	cd ./docker
-	docker-compose -f ./docker/docker-compose.yml -f ./docker/docker-compose.test.yml up --exit-code-from backend
+	cd ./dockerdeploy; \
+	docker-compose -f ./docker-compose.yml -f ./docker-compose.test.yml up --exit-code-from backend
 build-and-test:
-	cd ./docker
-	docker-compose -f ./docker/docker-compose.yml -f ./docker/docker-compose.test.yml up --exit-code-from backend
+	cd ./dockerdeploy; \
+	docker-compose -f ./docker-compose.yml -f ./docker-compose.test.yml up --build --exit-code-from backend
+db:
+	cd ./dockerdeploy; \
+	docker-compose -f ./docker-compose.db.yml up

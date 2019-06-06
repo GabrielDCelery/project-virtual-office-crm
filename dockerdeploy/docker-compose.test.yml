@@ -1,0 +1,31 @@
+version: '3'
+networks:
+  network-test:
+    driver: bridge
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: dev_db
+    networks:
+      - network-test
+  db_test:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_USER: test_user
+      POSTGRES_DB: test_db
+    ports:
+      - 5434:5432
+    networks:
+      - network-test
+  backend:
+    command: npm run test
+    environment:
+      DB_HOST: db_test
+      DB_PASSWORD: test_password
+      DB_USER: test_user
+      DB_NAME: test_db
+      DB_PORT: 5432
+    networks:
+      - network-test

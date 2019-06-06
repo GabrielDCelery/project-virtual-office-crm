@@ -29,7 +29,8 @@
   "scripts": {
     "start": "node ./app.js",
     "dev": "nodemon ./app.js",
-    "test": "node ./node_modules/jest/bin/jest.js --config ./tests/jest.config.json"
+    "pretest": "NODE_ENV=test knex migrate:rollback && NODE_ENV=test knex migrate:latest && NODE_ENV=test knex seed:run",
+    "test": "node ./node_modules/jest/bin/jest.js --config ./tests/jest.config.json --maxWorkers=1"
   },
   "author": "",
   "license": "ISC"

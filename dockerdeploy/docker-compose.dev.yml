@@ -5,18 +5,20 @@ networks:
 services:
   db:
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: docker
       POSTGRES_DB: dev_db
     networks:
       - network-development
+    ports:
+      - 5433:5432
   backend:
     command: npm run dev
     volumes:
       - /usr/src/virtual_office_crm_backend/node_modules
       - ../app/backend:/usr/src/virtual_office_crm_backend
     environment:
-      DB_PASSWORD: password
+      DB_PASSWORD: docker
       DB_NAME: dev_db
+      DB_PORT: 5433
     networks:
       - network-development

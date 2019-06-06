@@ -9,6 +9,23 @@ module.exports = ({
   DB_CHARSET,
   DB_PORT
 }) => ({
+  test: {
+    client: DB_CLIENT,
+    connection: {
+      host: DB_HOST,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      database: DB_NAME,
+      charset: DB_CHARSET,
+      port: DB_PORT
+    },
+    migrations: {
+      directory: path.join(__dirname, '../../database/migrations/development')
+    },
+    seeds: {
+      directory: path.join(__dirname, '../../database/seeds/development')
+    }
+  },
   development: {
     client: DB_CLIENT,
     connection: {
