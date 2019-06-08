@@ -1,17 +1,11 @@
 version: '3'
-networks:
-  network-production:
-    driver: bridge
 services:
   db:
     image: postgres
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: postgres_db
-    ports:
-      - 5432:5432
-    networks:
-      - network-production
+      POSTGRES_DB: postgres
   backend:
     build:
       context: ../app/backend
@@ -28,6 +22,4 @@ services:
       DB_USER: postgres
       DB_HOST: db
       DB_PASSWORD: docker
-      DB_NAME: postgres_db
-    networks:
-      - network-production
+      DB_NAME: postgres
