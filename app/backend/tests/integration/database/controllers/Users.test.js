@@ -1,14 +1,26 @@
-const { getKnex, execDBAction } = globalRequire('database')
+const { getKnex, executeDBAction } = globalRequire('database');
 
 describe('controllers.Users', () => {
   beforeEach(async () => {
     await getKnex().seed.run();
   });
 
-  describe('_findByEmail({ email }, { transaction })', () => {
-    it('finds a user by email', async () => {
+  describe('authenticate({ email, password }, { transaction })', () => {
+    it('authenticates an existing user', async () => {
+      const user = await executeDBAction('Users')('authenticate')({
+        email: 'test@test.com',
+        password: 'password'
+      });
 
-      expect(true).toEqual(true);
+      expect(user).toEqual({
+        "success": true,
+        "errors": [],
+        "payload": {
+          "id": 1,
+          "email": "test@test.com",
+          "password": "password"
+        }
+      });
     });
   });
 });

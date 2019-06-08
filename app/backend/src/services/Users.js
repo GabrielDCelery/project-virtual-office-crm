@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { executeDBAction } = globalRequire('database');
-const { ResultWrapper } = globalRequire('./helperClasses');
+const { ResultWrapper } = globalRequire('helpers');
 const config = globalRequire('config');
 
 class Users {

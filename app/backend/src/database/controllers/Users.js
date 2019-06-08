@@ -5,11 +5,10 @@ const {
     ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID
 } = require('../constants');
 const models = require('../models');
-const { ResultWrapper } = globalRequire('helperClasses');
 
 class Users {
     constructor(container) {
-        this.resultWrapper = container.get(ResultWrapper);
+        this.dbResultWrapper = container.get('db.ResultWrapper');
     }
 
     async _register({ email, password }, { transaction }) {
@@ -22,32 +21,34 @@ class Users {
     }
 
     async _findByEmail({ email }, { transaction }) {
-        return models.Users
+        const user = await models.Users
             .query(transaction)
             .first()
             .where({ email });
+
+        return user || null;
     }
 
     async register({ email, password }, { transaction }) {
         const user = await this._findByEmail({ email }, { transaction });
 
         if (user) {
-            return this.resultWrapper.return('fail')(ERROR_EMAIL_ALREADY_REGISTERED);
+            return this.dbResultWrapper.return('fail')(ERROR_EMAIL_ALREADY_REGISTERED);
         }
 
         const newUser = await this._register({ email, password }, { transaction });
 
-        return this.resultWrapper.return('success')(newUser);
+        return this.dbResultWrapper.return('success')(newUser);
     }
 
     async authenticate({ email, password }, { transaction }) {
-        const user = await this._findByEmail({ email, transaction });
+        const user = await this._findByEmail({ email }, { transaction });
 
         if (!user || !await user.verifyPassword(password)) {
-            return this.resultWrapper.return('fail')(ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID);
+            return this.dbResultWrapper.return('fail')(ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID);
         }
 
-        return this.resultWrapper.return('success')({
+        return this.dbResultWrapper.return('success')({
             id: user.id,
             email,
             password
