@@ -21,3 +21,13 @@ services:
     container_name: pvoc_backend
     networks:
       - network-development
+  frontend:
+    command: npm run start
+    volumes:
+      - /usr/src/virtual_office_crm_frontend/node_modules
+      - ../app/frontend:/usr/src/virtual_office_crm_frontend
+    ports:
+      - 3001:3000
+    container_name: pvoc_frontend
+    networks:
+      - network-development

@@ -23,3 +23,15 @@ services:
       DB_HOST: db
       DB_PASSWORD: docker
       DB_NAME: postgres
+  frontend:
+    build:
+      context: ../app/frontend
+      dockerfile: $PWD/frontend.Dockerfile
+      args:
+        APP_CODE: /usr/src/virtual_office_crm_frontend
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+    environment:
+      APP_PORT: 3000 
