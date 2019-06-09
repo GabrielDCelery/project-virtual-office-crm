@@ -5,6 +5,7 @@ exports.up = async knex => {
         table.increments('id').primary();
         table.string('email');
         table.string('password');
+        table.integer('status');
         table.unique(['email']);
         table.timestamps();
     });
