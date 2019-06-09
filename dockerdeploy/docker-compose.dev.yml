@@ -14,7 +14,6 @@ services:
   backend:
     command: npm run dev
     volumes:
-      - /usr/src/virtual_office_crm_backend/node_modules
       - ../app/backend:/usr/src/virtual_office_crm_backend
     ports:
       - 8081:8080
@@ -24,7 +23,6 @@ services:
   frontend:
     command: npm run start
     volumes:
-      - /usr/src/virtual_office_crm_frontend/node_modules
       - ../app/frontend:/usr/src/virtual_office_crm_frontend
     ports:
       - 3001:3000
