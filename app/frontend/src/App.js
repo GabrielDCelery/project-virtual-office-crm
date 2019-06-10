@@ -1,19 +1,20 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import React from 'react';
+import { Route/*, Redirect, Switch */} from 'react-router-dom';
 import {
   ThemeDecorator,
-  StoreDecorator
+  StoreDecorator,
+  RouterDecorator
 } from './components';
 import {
-  Login
+  LoginView
 } from './views';
 
 function App() {
   return (
-    <Router>
-      <Route exact path='/' component={Login} />
-    </Router>
+    <React.Fragment>
+      <Route exact path='/' component={LoginView} />
+    </React.Fragment>
   );
 }
 
-export default StoreDecorator(ThemeDecorator(App));
+export default RouterDecorator(StoreDecorator(ThemeDecorator(App)));
