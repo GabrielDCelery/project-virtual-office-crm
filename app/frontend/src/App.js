@@ -1,18 +1,21 @@
 import React from 'react';
-import { Route/*, Redirect, Switch */} from 'react-router-dom';
+import { Route/*, Redirect, Switch */ } from 'react-router-dom';
 import {
   ThemeDecorator,
   StoreDecorator,
   RouterDecorator
-} from './components';
+} from 'components';
 import {
-  LoginView
-} from './views';
+  Login,
+  Dashboard
+} from 'views';
+import config from 'config';
 
-function App() {
+const App = () => {
   return (
     <React.Fragment>
-      <Route exact path='/' component={LoginView} />
+      <Route exact path={config.paths.main} component={Dashboard} />
+      <Route exact path={config.paths.login} component={Login} />
     </React.Fragment>
   );
 }

@@ -4,7 +4,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT
 } from './user.constants';
-import services from '../../services';
+import services from 'services';
 
 const login = function login({ email, password }, successCallback = () => { }) {
   return async dispatch => {

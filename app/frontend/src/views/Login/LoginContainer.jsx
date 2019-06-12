@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
   UserStoreDecorator,
-  WithRouterDecorator
-} from '../../components';
+  NavDecorator
+} from 'components';
 
-export const LoginContainer = WrappedComponent => {
+export default WrappedComponent => {
   class ContainerComponent extends Component {
     constructor(props) {
       super(props);
@@ -28,10 +28,12 @@ export const LoginContainer = WrappedComponent => {
     }
 
     handleLogin() {
-      const { actionLogin, handleNavToMainPage } = this.props;
+      const { actionLogin, history, PATH_TO_MAIN } = this.props;
       const { email, password } = this.state;
 
-      return actionLogin({ email, password }, handleNavToMainPage);
+      return actionLogin({ email, password }, () => {
+        return history.push(PATH_TO_MAIN);
+      });
     }
 
     render() {
@@ -41,6 +43,8 @@ export const LoginContainer = WrappedComponent => {
           {...{
             email: this.state.email,
             password: this.state.password,
+            handleEmailChange: this.handleFieldValueChangeWrapper('email'),
+            handlePasswordChange: this.handleFieldValueChangeWrapper('password'),
             handleFieldValueChangeWrapper: this.handleFieldValueChangeWrapper,
             handleLogin: this.handleLogin
           }}
@@ -49,5 +53,5 @@ export const LoginContainer = WrappedComponent => {
     }
   }
 
-  return WithRouterDecorator(UserStoreDecorator(ContainerComponent));
+  return NavDecorator(UserStoreDecorator(ContainerComponent));
 }
