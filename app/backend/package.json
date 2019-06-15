@@ -32,7 +32,7 @@
     "db-migrate-latest": "knex migrate:latest",
     "db-migrate-seed": "knex seed:run",
     "dev": "npm run db-migrate-rollback && npm run db-migrate-latest && npm run db-migrate-seed && nodemon ./app.js",
-    "pretest": "NODE_ENV=test knex migrate:rollback && NODE_ENV=test knex migrate:latest && NODE_ENV=test knex seed:run",
+    "pretest": "NODE_ENV=test npm run db-migrate-rollback && NODE_ENV=test npm run db-migrate-latest && NODE_ENV=test npm run db-migrate-seed",
     "test": "node ./node_modules/jest/bin/jest.js --config ./tests/jest.config.json --maxWorkers=1"
   },
   "author": "",

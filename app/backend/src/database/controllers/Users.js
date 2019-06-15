@@ -4,9 +4,7 @@ const {
     DB_ERROR_EMAIL_ALREADY_REGISTERED,
     DB_ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID,
     DB_ERROR_USER_INACTIVE,
-    DB_ERROR_USER_SUSPENDED,
-    DB_MODELS_USERS_STATUS_INACTIVE,
-    DB_MODELS_USERS_STATUS_SUSPENDED
+    DB_ERROR_USER_SUSPENDED
 } = require('../constants');
 const models = require('../models');
 
@@ -16,12 +14,12 @@ class Users {
     }
 
     async _register({ email, password }, { transaction }) {
-        return await models.Users
+        return models.Users
             .query(transaction)
             .insert({
                 email,
                 password,
-                status: DB_MODELS_USERS_STATUS_INACTIVE
+                status: models.Users.STATUSES.INACTIVE
             });
     }
 
@@ -53,11 +51,11 @@ class Users {
             return this.dbResultWrapper.return('fail')(DB_ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID);
         }
 
-        if (user.status === DB_MODELS_USERS_STATUS_INACTIVE) {
+        if (user.status === models.Users.STATUSES.INACTIVE) {
             return this.dbResultWrapper.return('fail')(DB_ERROR_USER_INACTIVE);
         }
 
-        if (user.status === DB_MODELS_USERS_STATUS_SUSPENDED) {
+        if (user.status === models.Users.STATUSES.SUSPENDED) {
             return this.dbResultWrapper.return('fail')(DB_ERROR_USER_SUSPENDED);
         }
 

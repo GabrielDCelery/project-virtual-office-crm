@@ -1,15 +1,19 @@
-'use strict';
-
-const config = globalRequire('config');
 const { Model } = require('objection');
-const Password = require('objection-password')({ rounds: config.database.models.users.hashRounds });
-const { DB_TABLE_NAME_USERS } = require('../constants');
+const Password = require('objection-password')(12);
 
 class Users extends Password(Model) {
     static get tableName() {
-        return DB_TABLE_NAME_USERS;
+        return 'users';
     }
 
+    static get STATUSES() {
+        return {
+            INACTIVE: 0,
+            ACTIVE: 1,
+            SUSPENDED: 2
+        };
+    }
+    
     async $beforeInsert(context) {
         await super.$beforeInsert(context);
 

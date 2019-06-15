@@ -1,3 +1,9 @@
+const users = require('./users');
+const addresses = require('./addresses');
+const mails = require('./mails');
+
 module.exports = {
-  Users: require('./Users')
+  ...users,
+  ...addresses,
+  ...mails
 };

@@ -1,7 +1,7 @@
-const { DB_TABLE_NAME_USERS } = require('../../constants');
+const { Users } = require('../../models');
 
 exports.seed = async knex => {
-  await knex(DB_TABLE_NAME_USERS).insert([{
+  await knex(Users.tableName).insert([{
     "id": 1,
     "email": "test@test.com",
     "password": "$2b$12$LTN3ZlKU7PLXiReDQ73ee.2olxwpNyuw4XkYjYUgFp9CLHfRBOUS2",
@@ -18,5 +18,5 @@ exports.seed = async knex => {
     "status": 2
   }]);
 
-  await knex.raw(`select setval(\'${DB_TABLE_NAME_USERS}_id_seq\', max(id)) from ${DB_TABLE_NAME_USERS}`);
+  await knex.raw(`select setval(\'${Users.tableName}_id_seq\', max(id)) from ${Users.tableName}`);
 };
