@@ -16,10 +16,14 @@ class DB {
   }
 
   _initControllers() {
-    const { Users } = controllers;
+    const {
+      Users,
+      AddressCountries
+    } = controllers;
 
     Container.set(`${DB_CONTROLLERS_NAMESPACE}.ResultWrapper`, new ResultWrapper(Container));
     Container.set(`${DB_CONTROLLERS_NAMESPACE}.Users`, new Users(Container));
+    Container.set(`${DB_CONTROLLERS_NAMESPACE}.AddressCountries`, new AddressCountries(Container));
   }
 
   _getControllerInstance(controllerName) {

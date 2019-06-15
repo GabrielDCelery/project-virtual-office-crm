@@ -5,12 +5,14 @@ const {
     DB_ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID,
     DB_ERROR_USER_INACTIVE,
     DB_ERROR_USER_SUSPENDED
-} = require('../constants');
-const models = require('../models');
+} = require('../../constants');
+const models = require('../../models');
 
 class Users {
     constructor(container) {
         this.dbResultWrapper = container.get('db.ResultWrapper');
+        this.register = this.register.bind(this);
+        this.authenticate = this.authenticate.bind(this);
     }
 
     async _register({ email, password }, { transaction }) {

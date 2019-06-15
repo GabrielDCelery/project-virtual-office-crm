@@ -1,10 +1,12 @@
-const { getKnex, executeDBAction } = globalRequire('database');
+const {
+  getKnex,
+  executeDBAction
+} = globalRequire('database');
 
 describe('executeDBAction.Users', () => {
   beforeEach(async () => {
     await getKnex().seed.run();
   });
-
 
   describe('register({ email, password }, { transaction })', () => {
     it('registers a new inactive user', async () => {
