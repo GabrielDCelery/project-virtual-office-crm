@@ -1,17 +1,21 @@
 version: '3'
 services:
   db:
+    container_name: pvocrm_db
     image: postgres
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: postgres
   backend:
+    container_name: pvocrm_backend
     build:
-      context: ../app/backend
-      dockerfile: $PWD/backend.Dockerfile
+      context: ./app/backend
+      dockerfile: Dockerfile
       args:
-        APP_CODE: /usr/src/virtual_office_crm_backend
+        APP_CODE: /usr/src/pvocrm_backend
     depends_on:
       - db
     ports:
@@ -24,14 +28,17 @@ services:
       DB_PASSWORD: docker
       DB_NAME: postgres
   frontend:
+    container_name: pvocrm_frontend
     build:
-      context: ../app/frontend
-      dockerfile: $PWD/frontend.Dockerfile
+      context: ./app/frontend
+      dockerfile: Dockerfile
       args:
-        APP_CODE: /usr/src/virtual_office_crm_frontend
+        APP_CODE: /usr/src/pvocrm_frontend
     depends_on:
       - backend
     ports:
       - 3000:3000
     environment:
       APP_PORT: 3000 
+      BACKEND_HOST: backend
+      BACKEND_PORT: 8000

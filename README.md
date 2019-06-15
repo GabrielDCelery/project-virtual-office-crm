@@ -1,14 +1,63 @@
-# project-virtual-office-crm
-A CRM for virtual office services
+# What is this project for?
 
-Run dev environment
+This is a CRM system for virtual office services.
+
+## Run development environment
+
+To start a dev environment run:
 
 ```
 make dev
 ```
 
-Run tests
+The above command will do the followings:
+
+1. Builds the Docker dev image
+2. Starts running containers
+3. Runs migrations on development database
+4. Seeds data into the dev database
+
+Containers | What is it running | What is it for | Port |
+------------ | ------------- | ------------- | ------------- 
+| pvocrm_db     | POSTGRESQL database | Storing users, clients etc... | 5432 |
+| pvocrm_backend      | NodeJs express      | Exposing API endpoints for executing database actions |   8000 |
+| pvocrm_frontend | ReactJs      | CRM user interface |   3000 |
+
+If the containers are running properly you can access the frontend at `localhost:3000`.
+
+Log in to the platform using the following credentials:
+
+username: `test@test.com`
+password: `password`
+
+## Running tests
+
+In order to run tests after starting the devlopment server run the following:
 
 ```
 make test
+```
+
+## Rebuild development environment
+
+If you make any changes to the Dockerfiles or install any dependencies don't forget to rebuild the image using the following command:
+
+```
+make build-image-dev
+```
+
+## Production Database Migrations
+
+The production build does not run database migrations autmatically.
+
+For running migrations inside the `pvocrm_backend` container go to the folder `/usr/src/pvocrm_backend` and run the following command:
+
+```
+npm run db-migrate-latest
+```
+
+If you want to roll back migrations:
+
+```
+npm run db-migrate-rollback
 ```

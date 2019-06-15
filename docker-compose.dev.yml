@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    ports:
+      - 5433:5432
+    volumes:
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
+  backend:
+    command: npm run dev
+    volumes:
+      - /usr/src/pvocrm_backend/node_modules
+      - ./app/backend:/usr/src/pvocrm_backend
+  frontend:
+    command: npm run dev
+    volumes:
+      - /usr/src/pvocrm_frontend/node_modules
+      - ./app/frontend:/usr/src/pvocrm_frontend
