@@ -7,16 +7,36 @@ import {
   CardContent,
   TextField
 } from '@material-ui/core';
+import {
+  BootstrapStyleAlert
+} from 'components';
 import { withStyles } from '@material-ui/core/styles';
-import styles from './styles';
+import loginStyles from './loginStyles';
 
-const LoginView = ({
+const ErrorMessages = ({ messages }) => {
+  return (
+    messages.length > 0 ?
+      <CardContent>
+        {messages.map((message, index) => (
+          <BootstrapStyleAlert
+            key={`login-error-${index}`}
+            alertType="danger"
+            message={message}
+          />
+        ))}
+      </CardContent>
+      : null
+  )
+}
+
+let LoginView = ({
   classes,
   email,
   password,
   handleEmailChange,
   handlePasswordChange,
-  handleLogin
+  handleLogin,
+  stateLoginErrorMessages
 }) => {
   return (
     <React.Fragment>
@@ -46,6 +66,7 @@ const LoginView = ({
                 value={password}
               />
             </CardContent>
+            <ErrorMessages messages={stateLoginErrorMessages} />
             <CardContent>
               <Button
                 fullWidth
@@ -64,4 +85,6 @@ const LoginView = ({
   );
 }
 
-export default withStyles(styles)(LoginView);
+LoginView = withStyles(loginStyles)(LoginView);
+
+export default LoginView;

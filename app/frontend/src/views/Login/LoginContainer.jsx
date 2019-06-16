@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
   UserStoreDecorator,
-  NavDecorator
+  WithRouterDecorator
 } from 'components';
 
 export default WrappedComponent => {
-  class ContainerComponent extends Component {
+  let ContainerComponent = class extends Component {
     constructor(props) {
       super(props);
 
@@ -53,5 +53,8 @@ export default WrappedComponent => {
     }
   }
 
-  return NavDecorator(UserStoreDecorator(ContainerComponent));
+  ContainerComponent = UserStoreDecorator(ContainerComponent);
+  ContainerComponent = WithRouterDecorator(ContainerComponent);
+
+  return ContainerComponent;
 }

@@ -20,16 +20,16 @@ class Authentication {
   }
 
   async login({ email, password }) {
-    /*
     const { data } = await axios({
       method: 'POST',
-      url: `${this.backendAPI}/api/users/authenticate`,
+      url: `/api/users/authenticate`,
       responseType: 'json',
       data: { email, password }
     });
-    */
 
-    return {};
+    const { success, payload, errors } = data;
+
+    return { success, payload, errors };
   }
 
   logout() {

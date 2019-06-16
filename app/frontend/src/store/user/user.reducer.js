@@ -23,10 +23,9 @@ export default function userReducer(state = initialState, { type, payload, error
       };
 
     case LOGIN_SUCCESS:
-      const { jwt, email } = payload;
       return {
         ...state,
-        ...{ jwt, email },
+        ...payload,
         ...{ isLoggingIn: false, isLoggedIn: true, hasLoginFailed: false, errors: [] }
       };
 

@@ -6,7 +6,7 @@ import {
 } from './user.constants';
 import services from 'services';
 
-const login = function login({ email, password }, successCallback = () => { }) {
+const login = ({ email, password }, successCallback = () => { }) => {
   return async dispatch => {
     dispatch({ type: LOGIN_REQUEST, payload: null, errors: [] });
 
@@ -25,7 +25,7 @@ const login = function login({ email, password }, successCallback = () => { }) {
   };
 }
 
-const logout = function logout(successCallback = () => { }) {
+const logout = (successCallback = () => { }) => {
   return dispatch => {
     services.user.authentication.logout();
     dispatch({ type: LOGOUT, payload: null, errors: [] });

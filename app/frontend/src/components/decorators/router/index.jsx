@@ -1,1 +1,1 @@
-export * from './NavDecorator';
+export * from './WithRouterDecorator';

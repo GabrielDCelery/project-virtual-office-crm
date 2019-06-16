@@ -3,21 +3,26 @@ import { Route/*, Redirect, Switch */ } from 'react-router-dom';
 import {
   ThemeDecorator,
   StoreDecorator,
-  RouterDecorator
+  RouterDecorator,
+  WithRouterDecorator
 } from 'components';
 import {
   Login,
   Dashboard
 } from 'views';
-import config from 'config';
 
-const App = () => {
+let App = ({ PATH_TO_MAIN, PATH_TO_LOGIN }) => {
   return (
     <React.Fragment>
-      <Route exact path={config.paths.main} component={Dashboard} />
-      <Route exact path={config.paths.login} component={Login} />
+      <Route exact path={PATH_TO_MAIN} component={Dashboard} />
+      <Route exact path={PATH_TO_LOGIN} component={Login} />
     </React.Fragment>
   );
 }
 
-export default RouterDecorator(StoreDecorator(ThemeDecorator(App)));
+App = ThemeDecorator(App);
+App = StoreDecorator(App);
+App = WithRouterDecorator(App);
+App = RouterDecorator(App);
+
+export default App;

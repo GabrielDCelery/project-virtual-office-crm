@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import config from 'config';
 
-export const NavDecorator = WrappedComponent => {
+export const WithRouterDecorator = WrappedComponent => {
   class DecoratorComponent extends Component {
     render() {
       return (
