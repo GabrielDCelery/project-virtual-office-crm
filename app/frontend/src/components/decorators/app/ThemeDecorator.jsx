@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -13,14 +13,10 @@ const theme = createMuiTheme({
   }
 });
 
-export const ThemeDecorator = WrappedComponent => {
-  return class extends Component {
-    render() {
-      return (
-        <ThemeProvider theme={theme}>
-          <WrappedComponent {...this.props} />
-        </ThemeProvider>
-      )
-    }
-  }
+export const ThemeDecorator = ToWrapComponent => {
+  return props => (
+    <ThemeProvider theme={theme}>
+      <ToWrapComponent {...props} />
+    </ThemeProvider>
+  );
 }

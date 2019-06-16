@@ -1,5 +1,5 @@
 export default () => ({
-  main: '/',
+  dashboard: '/dashboard',
   login: '/login',
   logout: '/logout'
 });

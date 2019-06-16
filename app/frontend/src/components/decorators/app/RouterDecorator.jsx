@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-export const RouterDecorator = WrappedComponent => {
-  return class extends Component {
-    render() {
-      return (
-        <Router>
-          <WrappedComponent {...this.props} />
-        </Router>
-      )
-    }
-  }
+export const RouterDecorator = ToWrapComponent => {
+  return props => (
+    <Router>
+      <ToWrapComponent {...props} />
+    </Router>
+  );
 }

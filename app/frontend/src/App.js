@@ -11,10 +11,10 @@ import {
   Dashboard
 } from 'views';
 
-let App = ({ PATH_TO_MAIN, PATH_TO_LOGIN }) => {
+let App = ({ PATH_TO_DASHBOARD, PATH_TO_LOGIN }) => {
   return (
     <React.Fragment>
-      <Route exact path={PATH_TO_MAIN} component={Dashboard} />
+      <Route exact path={PATH_TO_DASHBOARD} component={Dashboard} />
       <Route exact path={PATH_TO_LOGIN} component={Login} />
     </React.Fragment>
   );

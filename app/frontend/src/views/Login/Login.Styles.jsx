@@ -1,4 +1,7 @@
-export default () => ({
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = () => ({
   root: {
     backgroundColor: `${'#004792'}`,
     background: `linear-gradient(135deg, ${'#1A61AC'} 30%, ${'#004792'} 90%)`
@@ -14,3 +17,7 @@ export default () => ({
     padding: '2em'
   }
 });
+
+export default ToWrapComponent => {
+  return withStyles(styles)(props => <ToWrapComponent {...props} />);
+}

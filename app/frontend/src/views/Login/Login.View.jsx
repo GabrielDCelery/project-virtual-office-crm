@@ -10,8 +10,6 @@ import {
 import {
   BootstrapStyleAlert
 } from 'components';
-import { withStyles } from '@material-ui/core/styles';
-import loginStyles from './loginStyles';
 
 const ErrorMessages = ({ messages }) => {
   return (
@@ -29,7 +27,7 @@ const ErrorMessages = ({ messages }) => {
   )
 }
 
-let LoginView = ({
+export default ({
   classes,
   email,
   password,
@@ -76,7 +74,7 @@ let LoginView = ({
                 onClick={handleLogin}
               >
                 Login
-                </Button>
+              </Button>
             </CardContent>
           </Card>
         </Container>
@@ -84,7 +82,3 @@ let LoginView = ({
     </React.Fragment>
   );
 }
-
-LoginView = withStyles(loginStyles)(LoginView);
-
-export default LoginView;

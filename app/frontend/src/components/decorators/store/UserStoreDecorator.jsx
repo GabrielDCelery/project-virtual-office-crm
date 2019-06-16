@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import store from 'store';
 
@@ -15,15 +15,6 @@ const mapActionsToProps = {
   actionLogin: store.user.actions.login
 };
 
-export const UserStoreDecorator = WrappedComponent => {
-  class StoreComponent extends Component {
-    render() {
-      return (
-        <WrappedComponent {...this.props} />
-      )
-    }
-  }
-
-
-  return connect(mapStateToProps, mapActionsToProps)(StoreComponent);
+export const UserStoreDecorator = ToWrapComponent => {
+  return connect(mapStateToProps, mapActionsToProps)(props => <ToWrapComponent {...props} />);
 }
