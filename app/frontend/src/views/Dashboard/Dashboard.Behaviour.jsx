@@ -4,7 +4,6 @@ export default ToWrapComponent => {
   let WrapperComponent = props => {
     const [bIsOpen, setIsOpen] = useState(false);
 
-
     return (
       <ToWrapComponent
         {...props}
