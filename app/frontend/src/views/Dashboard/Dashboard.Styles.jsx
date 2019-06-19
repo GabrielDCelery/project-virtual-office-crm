@@ -6,13 +6,13 @@ const drawerWidth = 240;
 const styles = theme => {
   return {
     root: {
-      display: 'flex',
+      display: 'flex'
     },
     menuButton: {
-      marginRight: 36,
+      marginRight: 36
     },
     hide: {
-      display: 'none',
+      display: 'none'
     },
     drawer: {
       width: drawerWidth,
@@ -58,6 +58,9 @@ const styles = theme => {
       }
     },
     icon: {
+      color: '#fff'
+    },
+    iconText: {
       color: '#fff'
     }
   }

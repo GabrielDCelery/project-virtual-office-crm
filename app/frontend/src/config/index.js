@@ -1,7 +1,7 @@
-import backend from './backend';
 import paths from './paths';
+import rbacRules from './rbacRules';
 
 export default {
-  backend: backend(process.env),
-  paths: paths(process.env)
+  paths: paths,
+  rbacRules: rbacRules
 };

@@ -15,6 +15,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ContactsIcon from '@material-ui/icons/Contacts';
+import SearchIcon from '@material-ui/icons/Search';
 
 export default props => {
   const {
@@ -47,20 +48,25 @@ export default props => {
         </div>
         <Divider />
         <List>
-          <ListItem
-            button
-            className={classes.iconButton}
-          >
+          <ListItem button className={classes.iconButton}>
             <ListItemIcon>
               <DashboardIcon className={classes.icon} />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Dashboard" className={classes.iconText} />
           </ListItem>
+
+          <ListItem button className={classes.iconButton}>
+            <ListItemIcon>
+              <SearchIcon className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText primary="Search" className={classes.iconText} />
+          </ListItem>
+
           <ListItem button>
             <ListItemIcon>
               <ContactsIcon className={classes.icon} />
             </ListItemIcon>
-            <ListItemText primary="Clients" />
+            <ListItemText primary="Clients" className={classes.iconText} />
           </ListItem>
         </List>
         <Divider />
