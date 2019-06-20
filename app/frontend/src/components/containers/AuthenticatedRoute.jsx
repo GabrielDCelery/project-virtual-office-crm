@@ -4,22 +4,18 @@ import {
   UserStoreDecorator
 } from 'components';
 
-let AuthenticatedRoute = props => {
-  const {
-    stateIsUserLoggedIn,
-    exact,
-    path,
-    ComponentToRender,
-    redirectTo
-  } = props;
-
+let AuthenticatedRoute = ({
+  stateIsUserLoggedIn,
+  exact,
+  path,
+  ComponentToRender,
+  redirectTo
+}) => {
   return (
     <Route
       exact={exact}
       path={path}
-      render={() => (
-        stateIsUserLoggedIn ? <ComponentToRender /> : <Redirect to={redirectTo} />
-      )}
+      render={() => stateIsUserLoggedIn ? <ComponentToRender /> : <Redirect to={redirectTo} />}
     />
   );
 }
