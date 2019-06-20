@@ -1,7 +1,9 @@
-import paths from './paths';
-import rbacRules from './rbacRules';
+import app from './app';
+import navbar from './navbar';
+import routes from './routes';
 
 export default {
-  paths: paths,
-  rbacRules: rbacRules
+  app,
+  navbar,
+  routes
 };

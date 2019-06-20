@@ -4,25 +4,54 @@ import {
   ThemeDecorator,
   StoreDecorator,
   RouterDecorator,
-  WithRouterDecorator
+  AuthenticatedRoute
 } from 'components';
 import {
   Login,
   Dashboard
 } from 'views';
+import config from 'config';
 
-let App = ({ PATH_TO_DASHBOARD, PATH_TO_LOGIN }) => {
+const views = {
+  Login,
+  Dashboard
+};
+
+const ViewWithNavbar = ToWrapComponent => {
+  return props => (
+    <React.Fragment>
+      <ToWrapComponent {...props} />
+    </React.Fragment>
+  );
+}
+
+let App = () => {
   return (
     <React.Fragment>
-      <Route exact path={PATH_TO_DASHBOARD} component={Dashboard} />
-      <Route exact path={PATH_TO_LOGIN} component={Login} />
+      {config.routes.map(({ path, component, redirectTo, bHasNavbar, bNeedsAuthentication }, index) => (
+        <React.Fragment key={`route-${index}`}>
+          {bNeedsAuthentication ?
+            <AuthenticatedRoute
+              exact={true}
+              path={path}
+              ComponentToRender={bHasNavbar ? ViewWithNavbar(views[component]) : views[component]}
+              redirectTo={redirectTo}
+            />
+            :
+            <Route
+              exact={true}
+              path={path}
+              component={bHasNavbar ? ViewWithNavbar(views[component]) : views[component]}
+            />
+          }
+        </React.Fragment>
+      ))}
     </React.Fragment>
   );
 }
 
 App = ThemeDecorator(App);
 App = StoreDecorator(App);
-App = WithRouterDecorator(App);
 App = RouterDecorator(App);
 
 export default App;
