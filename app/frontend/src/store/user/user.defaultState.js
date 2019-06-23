@@ -1,4 +1,6 @@
-const cachedUser = null;
+import services from 'services';
+
+const cachedUser = services.user.authentication.getCachedUser();
 
 export default cachedUser ? {
   ...cachedUser,

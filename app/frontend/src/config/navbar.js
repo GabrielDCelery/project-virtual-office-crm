@@ -16,36 +16,39 @@ import {
 export default [{
   path: PATH_TO_DASHBOARD,
   component: 'Dashboard',
-  icon: 'tachometer-alt',
+  icon: 'DashboardIcon',
   label: 'Dashboard',
   rbacRule: STATIC_RBAC_RULE_DASHBOARD_PAGE_VISIT
 }, {
   path: null,
   component: 'Search',
-  icon: 'search',
+  icon: 'SearchIcon',
   label: 'Search',
   children: [{
     label: 'Contracts',
     path: PATH_TO_SEARCH_CONTRACTS,
-    component: 'Contracts',
+    component: 'Search',
     rbacRule: STATIC_RBAC_RULE_CONTRACTS_PAGE_VISIT
   }, {
     label: 'Mails',
     path: PATH_TO_SEARCH_MAILS,
+    component: 'Search',
     rbacRule: STATIC_RBAC_RULE_MAILS_PAGE_VISIT
   }, {
     label: 'Inspections',
     path: PATH_TO_SEARCH_INSPECTIONS,
+    component: 'Search',
     rbacRule: STATIC_RBAC_RULE_INSPECTIONS_PAGE_VISIT
   }, {
     label: 'Invoices',
     path: PATH_TO_SEARCH_INVOICES,
+    component: 'Search',
     rbacRule: STATIC_RBAC_RULE_INVOICES_PAGE_VISIT
   }]
 }, {
   path: null,
   component: null,
-  icon: 'user-circle',
+  icon: 'PersonIcon',
   label: 'User',
   rbacRule: null,
   children: [{

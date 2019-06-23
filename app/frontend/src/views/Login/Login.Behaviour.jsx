@@ -18,7 +18,10 @@ export default ToWrapComponent => {
           password: password,
           handleEmailChange: event => setEmail(event.target.value),
           handlePasswordChange: event => setPassword(event.target.value),
-          handleLogin: () => actionLogin({ email, password }, () => history.push(PATH_TO_DASHBOARD))
+          handleLogin: event => {
+            event.preventDefault();
+            actionLogin({ email, password }, () => history.push(PATH_TO_DASHBOARD));
+          }
         }}
       />
     )

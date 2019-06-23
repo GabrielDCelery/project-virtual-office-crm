@@ -42,40 +42,41 @@ export default ({
       <div className={classes.root}>
         <Container maxWidth="sm" className={classes.container}>
           <Card raised className={classes.card}>
-            <CardContent>
-              <TextField
-                id="email"
-                type="email"
-                required
-                fullWidth
-                label="Email"
-                margin="normal"
-                onChange={handleEmailChange}
-                value={email}
-              />
-              <TextField
-                id="password"
-                type="password"
-                required
-                fullWidth
-                label="Password"
-                margin="normal"
-                onChange={handlePasswordChange}
-                value={password}
-              />
-            </CardContent>
-            <ErrorMessages messages={stateLoginErrorMessages} />
-            <CardContent>
-              <Button
-                fullWidth
-                type='submit'
-                color="secondary"
-                variant="contained"
-                onClick={handleLogin}
-              >
-                Login
+            <form onSubmit={handleLogin}>
+              <CardContent>
+                <TextField
+                  id="email"
+                  type="email"
+                  required
+                  fullWidth
+                  label="Email"
+                  margin="normal"
+                  onChange={handleEmailChange}
+                  value={email}
+                />
+                <TextField
+                  id="password"
+                  type="password"
+                  required
+                  fullWidth
+                  label="Password"
+                  margin="normal"
+                  onChange={handlePasswordChange}
+                  value={password}
+                />
+              </CardContent>
+              <ErrorMessages messages={stateLoginErrorMessages} />
+              <CardContent>
+                <Button
+                  fullWidth
+                  type='submit'
+                  color="secondary"
+                  variant="contained"
+                >
+                  Login
               </Button>
-            </CardContent>
+              </CardContent>
+            </form>
           </Card>
         </Container>
       </div>

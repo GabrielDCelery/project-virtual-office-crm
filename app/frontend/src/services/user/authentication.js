@@ -32,7 +32,7 @@ class Authentication {
     return { success, payload, errors };
   }
 
-  logout() {
+  async logout() {
     return localStorage.removeItem('user');
   }
 }

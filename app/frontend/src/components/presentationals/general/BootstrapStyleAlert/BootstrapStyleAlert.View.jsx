@@ -3,10 +3,8 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import useStyles from './useStyles';
 
-let BootstrapStyleAlert = ({ alertType, message, classes }) => {
+export default ({ alertType, message, classes }) => {
   return (
     <React.Fragment>
       <Paper className={`${classes.root} ${classes[alertType]}`}>
@@ -17,7 +15,3 @@ let BootstrapStyleAlert = ({ alertType, message, classes }) => {
     </React.Fragment>
   );
 }
-
-BootstrapStyleAlert = withStyles(useStyles)(BootstrapStyleAlert);
-
-export { BootstrapStyleAlert };

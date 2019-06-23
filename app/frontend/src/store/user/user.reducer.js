@@ -14,22 +14,24 @@ const initialState = {
   jwt: null
 };
 
-export default function userReducer(state = initialState, { type, payload, errors }) {
+export default function userReducer(state = initialState, { type, payload }) {
   switch (type) {
     case LOGIN_REQUEST:
       return {
         ...state,
-        ...{ isLoggingIn: true, hasLoginFailed: false, errors: [] }
+        ...{ isLoggingIn: true, isLoggedIn: false, hasLoginFailed: false, errors: [] }
       };
 
     case LOGIN_SUCCESS:
+      const { email, jwt } = payload;
       return {
         ...state,
-        ...payload,
+        ...{ email, jwt },
         ...{ isLoggingIn: false, isLoggedIn: true, hasLoginFailed: false, errors: [] }
       };
 
     case LOGIN_FAILURE:
+      const { errors } = payload;
       return {
         ...state,
         ...{ isLoggingIn: false, hasLoginFailed: true, errors: errors }

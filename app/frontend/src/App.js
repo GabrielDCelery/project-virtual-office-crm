@@ -8,20 +8,38 @@ import {
 } from 'components';
 import {
   Login,
-  Dashboard
+  Dashboard,
+  Search,
+  NavBar
 } from 'views';
 import config from 'config';
 
 const views = {
   Login,
-  Dashboard
+  Dashboard,
+  Search
 };
 
 const ViewWithNavbar = ToWrapComponent => {
   return props => (
     <React.Fragment>
-      <ToWrapComponent {...props} />
+      <div style={{ display: 'flex' }}>
+        <NavBar />
+        <div style={{ flexGrow: 1 }} >
+          <ToWrapComponent {...props} />
+        </div>
+      </div>
     </React.Fragment>
+  );
+}
+
+const ViewWithoutNavbar = ToWrapComponent => {
+  return props => (
+    <div style={{ display: 'flex' }}>
+      <div style={{ flexGrow: 1 }} >
+        <ToWrapComponent {...props} />
+      </div>
+    </div>
   );
 }
 
@@ -34,14 +52,14 @@ let App = () => {
             <AuthenticatedRoute
               exact={true}
               path={path}
-              ComponentToRender={bHasNavbar ? ViewWithNavbar(views[component]) : views[component]}
+              ComponentToRender={bHasNavbar ? ViewWithNavbar(views[component]) : ViewWithoutNavbar(views[component])}
               redirectTo={redirectTo}
             />
             :
             <Route
               exact={true}
               path={path}
-              component={bHasNavbar ? ViewWithNavbar(views[component]) : views[component]}
+              component={bHasNavbar ? ViewWithNavbar(views[component]) : ViewWithoutNavbar(views[component])}
             />
           }
         </React.Fragment>
