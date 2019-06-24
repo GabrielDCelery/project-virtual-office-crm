@@ -1,5 +1,7 @@
 const Users = require('./Users');
 const { Container } = require('typedi');
+const { ResultWrapper } = require('../helpers');
+const { TYPEDI_NAMESPACE_SERVICES } = globalRequire('constants');
 
 const services = {
   Users
@@ -7,26 +9,36 @@ const services = {
 
 class Services {
   constructor() {
+    this.initialized = false;
+    this.start = this.start.bind(this);
+    this.stop = this.stop.bind(this);
     this.executeService = this.executeService.bind(this);
   }
 
-  executeService(serviceName) {
-    const service = services[serviceName];
+  _initServices() {
+    Container.set(`${TYPEDI_NAMESPACE_SERVICES}.ResultWrapper`, new ResultWrapper(Container));
+    Container.set(`${TYPEDI_NAMESPACE_SERVICES}.Users`, new Users(Container));
+  }
 
-    if (!service) {
-      throw new Error(`Could not find service -> ${serviceName}`);
+  async start() {
+    if (this.initialized) {
+      throw new Error('Tried to initialize services twice!');
     }
 
+    this._initServices();
+    this.initialized = true;
+  }
+
+  async stop() {
+    this.initialized = false;
+  }
+
+  executeService(serviceName) {
+    const serviceInstance = Container.get(`${TYPEDI_NAMESPACE_SERVICES}.${serviceName}`);
+
     return methodName => {
-      const serviceInstance = Container.get(service);
-      const methodToExecute = serviceInstance[methodName];
-
-      if (!methodToExecute) {
-        throw new Error(`Could not find method for service ${serviceName} -> ${methodToExecute}`);
-      }
-
       return (data = {}) => {
-        return Reflect.apply(methodToExecute, serviceInstance, [data]);
+        return Reflect.apply(serviceInstance[methodName], serviceInstance, [data]);
       }
     }
   }

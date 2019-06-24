@@ -26,11 +26,7 @@ class DB {
     Container.set(`${TYPEDI_NAMESPACE_DB}.AddressCountries`, new AddressCountries(Container));
   }
 
-  _getControllerInstance(controllerName) {
-    return Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
-  }
-
-  start({ config }) {
+  async start({ config }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the database twice!');
     }
@@ -41,7 +37,7 @@ class DB {
     this.initialized = true;
   }
 
-  stop() {
+  async stop() {
     this.knex.destroy();
     this.initialized = false;
   }
@@ -51,7 +47,7 @@ class DB {
   }
 
   executeDBAction(controllerName) {
-    const controllerInstance = this._getControllerInstance(controllerName);
+    const controllerInstance = Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
 
     return methodName => {
       return (data = {}, config = {}) => {
