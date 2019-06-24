@@ -3,10 +3,6 @@ const { Container } = require('typedi');
 const { ResultWrapper } = require('../helpers');
 const { TYPEDI_NAMESPACE_SERVICES } = globalRequire('constants');
 
-const services = {
-  Users
-};
-
 class Services {
   constructor() {
     this.initialized = false;
