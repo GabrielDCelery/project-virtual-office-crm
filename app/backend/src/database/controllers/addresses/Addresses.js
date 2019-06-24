@@ -1,5 +1,3 @@
-'use strict';
-
 const models = require('../../models');
 const { TYPEDI_NAMESPACE_DB } = globalRequire('constants');
 
