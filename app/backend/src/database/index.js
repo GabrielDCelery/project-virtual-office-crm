@@ -18,11 +18,13 @@ class DB {
   _initControllers() {
     const {
       Users,
+      Addresses,
       AddressCountries
     } = controllers;
 
     Container.set(`${TYPEDI_NAMESPACE_DB}.ResultWrapper`, new ResultWrapper(Container));
     Container.set(`${TYPEDI_NAMESPACE_DB}.Users`, new Users(Container));
+    Container.set(`${TYPEDI_NAMESPACE_DB}.Addresses`, new Addresses(Container));
     Container.set(`${TYPEDI_NAMESPACE_DB}.AddressCountries`, new AddressCountries(Container));
   }
 

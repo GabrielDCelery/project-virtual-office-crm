@@ -23,7 +23,7 @@ class AddressCities extends Model {
 
       return {
           locations: {
-              relation: CustomModel.HasManyRelation,
+              relation: Model.HasManyRelation,
               modelClass: AddressLocations,
               join: {
                   from: `${AddressCities.tableName}.id`,
@@ -31,7 +31,7 @@ class AddressCities extends Model {
               }
           },
           country: {
-              relation: CustomModel.BelongsToOneRelation,
+              relation: Model.BelongsToOneRelation,
               modelClass: AddressCountries,
               join: {
                   from: `${AddressCities.tableName}.country_id`,

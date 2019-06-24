@@ -22,7 +22,7 @@ class AddressCountries extends Model {
 
       return {
           cities: {
-              relation: CustomModel.HasManyRelation,
+              relation: Model.HasManyRelation,
               modelClass: AddressLocations,
               join: {
                   from: `${AddressCountries.tableName}.id`,

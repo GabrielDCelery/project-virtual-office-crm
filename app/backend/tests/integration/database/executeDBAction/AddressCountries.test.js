@@ -12,12 +12,12 @@ describe('executeDBAction.AddressCountries', () => {
     it('finds a country by id', async () => {
       // Given
       const methodToTest = executeDBAction('AddressCountries')('getById');
-      const input = {
+      const data = {
         "id": 98
       };
 
       // When
-      const result = await methodToTest(input);
+      const result = await methodToTest(data);
 
       // Then
       expect(result).toEqual({
