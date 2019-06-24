@@ -6,11 +6,14 @@ const {
     DB_ERROR_USER_INACTIVE,
     DB_ERROR_USER_SUSPENDED
 } = require('../../constants');
+const {
+    TYPEDI_NAMESPACE_DB
+} = globalRequire('constants');
 const models = require('../../models');
 
 class Users {
     constructor(container) {
-        this.dbResultWrapper = container.get('db.ResultWrapper');
+        this.dbResultWrapper = container.get(`${TYPEDI_NAMESPACE_DB}.ResultWrapper`);
         this.register = this.register.bind(this);
         this.authenticate = this.authenticate.bind(this);
     }

@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
 const { executeDBAction } = globalRequire('database');
-const { ResultWrapper } = globalRequire('helpers');
 const config = globalRequire('config');
+const {
+  TYPEDI_NAMESPACE_SERVICES
+} = globalRequire('constants');
 
 class Users {
   constructor(container) {
-    this.resultWrapper = container.get(ResultWrapper);
+    this.resultWrapper = container.get(`${TYPEDI_NAMESPACE_SERVICES}.ResultWrapper`);
   }
 
   async verifyJwtToken(jwt) {
