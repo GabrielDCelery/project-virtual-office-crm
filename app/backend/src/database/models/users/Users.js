@@ -13,7 +13,16 @@ class Users extends Password(Model) {
             SUSPENDED: 2
         };
     }
-    
+
+    static get ERRORS() {
+        return {
+            EMAIL_ALREADY_REGISTERED: 'Email already registered!',
+            EMAIL_AND_PASSWORD_COMBINATION_INVALID: 'The email and password combination you entered is invalid!',
+            USER_INACTIVE: 'This account is inactive!',
+            USER_SUSPENDED: 'This account is suspended!'
+        };
+    }
+
     async $beforeInsert(context) {
         await super.$beforeInsert(context);
 
