@@ -2,7 +2,7 @@ const Knex = require('knex');
 const { Model, transaction } = require('objection');
 const { Container } = require('typedi');
 const { ResultWrapper } = require('../helpers');
-const { DB_CONTROLLERS_NAMESPACE } = require('./constants');
+const { TYPEDI_NAMESPACE_DB } = globalRequire('constants');
 const controllers = require('./controllers');
 
 class DB {
@@ -21,13 +21,13 @@ class DB {
       AddressCountries
     } = controllers;
 
-    Container.set(`${DB_CONTROLLERS_NAMESPACE}.ResultWrapper`, new ResultWrapper(Container));
-    Container.set(`${DB_CONTROLLERS_NAMESPACE}.Users`, new Users(Container));
-    Container.set(`${DB_CONTROLLERS_NAMESPACE}.AddressCountries`, new AddressCountries(Container));
+    Container.set(`${TYPEDI_NAMESPACE_DB}.ResultWrapper`, new ResultWrapper(Container));
+    Container.set(`${TYPEDI_NAMESPACE_DB}.Users`, new Users(Container));
+    Container.set(`${TYPEDI_NAMESPACE_DB}.AddressCountries`, new AddressCountries(Container));
   }
 
   _getControllerInstance(controllerName) {
-    return Container.get(`${DB_CONTROLLERS_NAMESPACE}.${controllerName}`);
+    return Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
   }
 
   start({ config }) {
