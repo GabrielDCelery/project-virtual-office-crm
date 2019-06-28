@@ -42,7 +42,7 @@ class Redis {
     await this._stopRedisClient();
     this.initialized = false;
   }
-
+  //TODO add ResultWrapper
   executeRedisAction(methodName) {
     return key => {
       return async value => {
