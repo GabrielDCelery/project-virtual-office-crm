@@ -43,7 +43,7 @@ make test
 If you make any changes to the Dockerfiles or install any dependencies don't forget to rebuild the image using the following command:
 
 ```
-make build-image-dev
+make docker-build
 ```
 
 ## Production Database Migrations

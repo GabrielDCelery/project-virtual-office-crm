@@ -1,5 +1,10 @@
 version: '3'
 services:
+  redis:
+    container_name: pvocrm_redis
+    image: redis
+    ports:
+      - 6379:6379
   db:
     container_name: pvocrm_db
     image: postgres
@@ -18,6 +23,7 @@ services:
         APP_CODE: /usr/src/pvocrm_backend
     depends_on:
       - db
+      - redis
     ports:
       - 8080:8080
     environment:
@@ -27,6 +33,8 @@ services:
       DB_HOST: db
       DB_PASSWORD: docker
       DB_NAME: postgres
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
   frontend:
     container_name: pvocrm_frontend
     build:

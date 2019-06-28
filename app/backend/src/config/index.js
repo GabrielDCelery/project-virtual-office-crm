@@ -2,6 +2,7 @@ const host = require('./host');
 const authentication = require('./authentication');
 const api = require('./api');
 const database = require('./database');
+const redis = require('./redis');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -15,6 +16,8 @@ const {
   DB_NAME,
   DB_CHARSET,
   DB_PORT,
+  REDIS_HOST,
+  REDIS_PORT,
   DB_USERS_HASH_ROUNDS,
   USER_JWT_SECRET,
   USER_JWT_EXPIRY
@@ -40,6 +43,10 @@ class Config {
       DB_CHARSET,
       DB_PORT,
       DB_USERS_HASH_ROUNDS
+    });
+    this.redis = redis({
+      REDIS_HOST,
+      REDIS_PORT
     });
   }
 }

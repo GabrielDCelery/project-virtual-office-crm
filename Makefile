@@ -1,4 +1,4 @@
-build-image-dev:
+docker-build:
 	docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml build
 dev:
 	docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml up

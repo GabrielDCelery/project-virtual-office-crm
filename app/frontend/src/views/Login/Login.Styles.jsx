@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = () => ({
   root: {
-    backgroundColor: `${'#004792'}`,
-    background: `linear-gradient(135deg, ${'#1A61AC'} 30%, ${'#004792'} 90%)`
+    backgroundColor: `${'#021A32'}`,
+    background: `linear-gradient(135deg, ${'#1C344C'} 30%, ${'#021A32'} 90%)`
   },
   container: {
     height: '100vh'

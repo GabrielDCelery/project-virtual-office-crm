@@ -52,7 +52,7 @@ class DB {
     const controllerInstance = Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
 
     return methodName => {
-      return (data = {}, config = {}) => {
+      return async (data = {}, config = {}) => {
         return transaction(Model.knex(), async transaction => {
           return Reflect.apply(controllerInstance[methodName], controllerInstance, [data, { ...config, transaction }]);
         });

@@ -1,8 +1,6 @@
 version: '3'
 services:
   db:
-    ports:
-      - 5433:5432
     volumes:
       - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
   backend:

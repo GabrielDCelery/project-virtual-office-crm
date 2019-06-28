@@ -25,6 +25,7 @@ const start = async (callback = () => { }) => {
     });
   } catch (error) {
     console.log(error);
+    return process.exit(1);
   }
 };
 
@@ -35,6 +36,7 @@ const stop = async (callback = () => { }) => {
     callback();
   } catch (error) {
     console.log(error);
+    return process.exit(1);
   }
 };
 
