@@ -19,9 +19,7 @@ const start = async (callback = () => { }) => {
         return process.exit(1);
       }
 
-      callback();
-
-      console.log(`Running app on PORT:${config.host.port}`);
+      return callback();
     });
   } catch (error) {
     console.log(error);
