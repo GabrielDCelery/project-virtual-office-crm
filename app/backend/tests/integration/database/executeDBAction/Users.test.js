@@ -50,17 +50,17 @@ describe('executeDBAction.Users', () => {
 
   describe('authenticate({ email, password }, { transaction })', () => {
     it('authenticates an existing user using email and password', async () => {
-      //Given
+      // Given
       const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test@test.com",
         "password": "password"
       };
 
-      //When
+      // When
       const result = await methodToTest(data);
 
-      //Then
+      // Then
       expect(result).toEqual({
         "success": true,
         "errors": [],
@@ -71,7 +71,7 @@ describe('executeDBAction.Users', () => {
     });
 
     it('returns an error if it could not find the account', async () => {
-      //Given
+      // Given
       const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "doesnotexist@test.com",
@@ -90,7 +90,7 @@ describe('executeDBAction.Users', () => {
     });
 
     it('returns an error if the password is invalid', async () => {
-      //Given
+      // Given
       const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test@test.com",
@@ -109,7 +109,7 @@ describe('executeDBAction.Users', () => {
     });
 
     it('returns an error if the account is inactive', async () => {
-      //Given
+      // Given
       const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test2@test.com",

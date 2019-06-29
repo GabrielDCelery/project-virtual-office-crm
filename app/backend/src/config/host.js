@@ -1,3 +1,3 @@
-module.exports = ({ APP_PORT }) => ({
-  port: parseInt(APP_PORT, 10) || 8080
+module.exports = ({ BACKEND_APP_PORT }) => ({
+  port: parseInt(BACKEND_APP_PORT, 10) || 8080
 });

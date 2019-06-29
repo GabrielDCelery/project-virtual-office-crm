@@ -41,9 +41,7 @@ class Users {
 
   async authenticate({ email, password }) {
     const wrappedDBResult = await executeDBAction('Users')('authenticate')({ email, password });
-    if (!wrappedDBResult.success) {
-      return wrappedDBResult;
-    }
+    if (!wrappedDBResult.success) { return wrappedDBResult };
 
     return this.resultWrapper.return('success')({
       jwt: await this.signJwtToken({ email })

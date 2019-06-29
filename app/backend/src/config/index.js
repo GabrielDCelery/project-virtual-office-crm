@@ -8,7 +8,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 const {
   NODE_ENV,
-  APP_PORT,
+  BACKEND_APP_PORT,
   DB_CLIENT,
   DB_USER,
   DB_HOST,
@@ -27,7 +27,7 @@ class Config {
   constructor() {
     this.nodeEnv = NODE_ENV;
     this.host = host({
-      APP_PORT
+      BACKEND_APP_PORT
     });
     this.api = api({});
     this.authentication = authentication({

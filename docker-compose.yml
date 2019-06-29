@@ -1,5 +1,10 @@
 version: '3'
 services:
+  aws_s3:
+    container_name: pvocrm_aws_s3
+    image: lphoward/fake-s3
+    ports:
+      - 4569:4569
   redis:
     container_name: pvocrm_redis
     image: redis
@@ -22,12 +27,13 @@ services:
       args:
         APP_CODE: /usr/src/pvocrm_backend
     depends_on:
+      - aws_s3
       - db
       - redis
     ports:
       - 8080:8080
     environment:
-      APP_PORT: 8080
+      BACKEND_APP_PORT: 8080
       DB_CLIENT: pg
       DB_USER: postgres
       DB_HOST: db
@@ -47,6 +53,6 @@ services:
     ports:
       - 3000:3000
     environment:
-      APP_PORT: 3000 
+      FRONTEND_APP_PORT: 3000 
       BACKEND_HOST: backend
       BACKEND_PORT: 8080
