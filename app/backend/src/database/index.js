@@ -12,7 +12,7 @@ class DB {
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.getKnex = this.getKnex.bind(this);
-    this.executeDBAction = this.executeDBAction.bind(this);
+    //this.executeDBAction = this.executeDBAction.bind(this);
   }
 
   _initControllers() {

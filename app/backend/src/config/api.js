@@ -1,5 +1,6 @@
 module.exports = () => ({
   routerPathPrefix: {
-    users: '/api/users'
+    users: '/api/users',
+    addresses: '/api/addresses'
   }
 });

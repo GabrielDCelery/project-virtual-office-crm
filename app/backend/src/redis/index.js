@@ -4,27 +4,49 @@ const redis = require('redis');
 class Redis {
   constructor() {
     this.client = null;
+    this.flushRedis = this.flushRedis.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
-  }
-
-  getClient() {
-    return this.client;
+    this.executeRedisAction = this.executeRedisAction.bind(this);
   }
 
   async _startRedisClient({ host, port }) {
-    return new Promise((accept, reject) => {
-      this.client = redis.createClient({ host, port: port });
+    try {
+      this.client = redis.createClient({ host, port });
       this.client.getAsync = promisify(this.client.get).bind(this.client);
       this.client.setAsync = promisify(this.client.set).bind(this.client);
-      this.client.on('ready', accept);
-    });
+      await this.client.setAsync('health', 'OK');
+      const result = await this.client.getAsync('health');
+
+      if (result !== 'OK') {
+        throw new Error('Could not initialize redis!');
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   async _stopRedisClient() {
     return new Promise((accept, reject) => {
-      this.client.on('end', accept);
-      this.client.quit();
+      this.client.quit((error, success) => {
+        if (error) {
+          return reject(error.message)
+        };
+
+        return accept(success);
+      });
+    });
+  }
+
+  async flushRedis() {
+    return new Promise((accept, reject) => {
+      this.client.flushdb((error, succeeded) => {
+        if (error) {
+          return reject(error.message);
+        }
+
+        return accept(succeeded);
+      });
     });
   }
 
@@ -50,7 +72,7 @@ class Redis {
           return {
             success: true,
             errors: [],
-            payload: await this.client[`${methodName}Async`](...[value ? [key, value] : [key]])
+            payload: await this.client[methodName](...[value ? [key, value] : [key]])
           }
         } catch (error) {
           return {
