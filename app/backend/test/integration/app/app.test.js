@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const axios = require('axios');
 
 describe('app', () => {
@@ -14,8 +15,8 @@ describe('app', () => {
       const { status, data } = result;
 
       // Then
-      expect(status).toEqual(200);
-      expect(data).toEqual('OK');
+      expect(status).to.equal(200);
+      expect(data).to.equal('OK');
     });
   });
 });

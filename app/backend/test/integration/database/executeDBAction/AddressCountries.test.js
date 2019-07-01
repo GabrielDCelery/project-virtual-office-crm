@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const {
   getKnex,
   executeDBAction
@@ -20,7 +21,7 @@ describe('executeDBAction.AddressCountries', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": true,
         "errors": [],
         "payload": {
@@ -41,7 +42,7 @@ describe('executeDBAction.AddressCountries', () => {
       const result = await methodToTest();
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": true,
         "errors": [],
         "payload": globalRequire('database/seeds/data/address_countries')

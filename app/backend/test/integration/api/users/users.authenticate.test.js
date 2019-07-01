@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const axios = require('axios');
 
 describe('api/users/authenticate', () => {
@@ -19,10 +20,10 @@ describe('api/users/authenticate', () => {
 
     // Then
     const JWT_REGEXP = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/;
-    expect(status).toEqual(200);
-    expect(success).toEqual(true);
-    expect(errors).toEqual([]);
-    expect(JWT_REGEXP.test(payload.jwt)).toEqual(true);
+    expect(status).to.deep.equal(200);
+    expect(success).to.deep.equal(true);
+    expect(errors).to.deep.equal([]);
+    expect(JWT_REGEXP.test(payload.jwt)).to.deep.equal(true);
   });
 
   it('returns an error if user does not exist', async () => {
@@ -39,8 +40,8 @@ describe('api/users/authenticate', () => {
     const { status, data } = result;
 
     // Then
-    expect(status).toEqual(200);
-    expect(data).toEqual({
+    expect(status).to.deep.equal(200);
+    expect(data).to.deep.equal({
       "success": false,
       "errors": ["The email and password combination you entered is invalid!"],
       "payload": null

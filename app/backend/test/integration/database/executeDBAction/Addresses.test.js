@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const {
   getKnex,
   executeDBAction
@@ -19,7 +20,7 @@ describe('executeDBAction.Addresses', () => {
       const result = await methodToTest(data, config);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": true,
         "errors": [],
         "payload": [{
@@ -146,7 +147,7 @@ describe('executeDBAction.Addresses', () => {
       const result = await methodToTest(data, config);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": true,
         "errors": [],
         "payload": [{

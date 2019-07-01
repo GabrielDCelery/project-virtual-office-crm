@@ -1,3 +1,4 @@
+const { expect } = require('chai');
 const {
   getKnex,
   executeDBAction
@@ -21,11 +22,11 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result.success).toEqual(true);
-      expect(result.errors).toEqual([]);
-      expect(result.payload.id).toEqual(4);
-      expect(result.payload.email).toEqual('test4@test.com');
-      expect(result.payload.status).toEqual(0);
+      expect(result.success).to.deep.equal(true);
+      expect(result.errors).to.deep.equal([]);
+      expect(result.payload.id).to.deep.equal(4);
+      expect(result.payload.email).to.deep.equal('test4@test.com');
+      expect(result.payload.status).to.deep.equal(0);
     });
 
     it('returns an error if user is already registered', async () => {
@@ -40,7 +41,7 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": false,
         "errors": ["Email already registered!"],
         "payload": null
@@ -61,7 +62,7 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": true,
         "errors": [],
         "payload": {
@@ -82,7 +83,7 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": false,
         "errors": ["The email and password combination you entered is invalid!"],
         "payload": null
@@ -101,7 +102,7 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": false,
         "errors": ["The email and password combination you entered is invalid!"],
         "payload": null
@@ -120,7 +121,7 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": false,
         "errors": ["This account is inactive!"],
         "payload": null
@@ -139,7 +140,7 @@ describe('executeDBAction.Users', () => {
       const result = await methodToTest(data);
 
       // Then
-      expect(result).toEqual({
+      expect(result).to.deep.equal({
         "success": false,
         "errors": ["This account is suspended!"],
         "payload": null
