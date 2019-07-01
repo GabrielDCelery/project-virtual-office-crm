@@ -12,13 +12,11 @@ describe('executeDBAction.AddressCountries', () => {
   describe('findById({ id }, { transaction })', () => {
     it('finds a country by id', async () => {
       // Given
-      const methodToTest = executeDBAction('AddressCountries')('findById');
-      const data = {
-        "id": 98
-      };
+      const data = { "id": 98 };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('AddressCountries', 'findById', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -36,10 +34,11 @@ describe('executeDBAction.AddressCountries', () => {
   describe('findAll({ id }, { transaction })', () => {
     it('returns all countries', async () => {
       // Given
-      const methodToTest = executeDBAction('AddressCountries')('findAll');
+      const data = {};
+      const config = {};
 
       // When
-      const result = await methodToTest();
+      const result = await executeDBAction('AddressCountries', 'findAll', { data, config });
 
       // Then
       expect(result).to.deep.equal({

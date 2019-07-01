@@ -1,9 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { executeDBAction } = globalRequire('database');
+const database = globalRequire('database');
 const config = globalRequire('config');
-const {
-  TYPEDI_NAMESPACE_SERVICES
-} = globalRequire('constants');
+const { TYPEDI_NAMESPACE_SERVICES } = globalRequire('constants');
 
 class Users {
   constructor(container) {
@@ -28,11 +26,13 @@ class Users {
   }
 
   async register({ email, password }) {
-    const wrappedDBResult = await executeDBAction('Users')('register')({ email, password });
+    const wrappedDBResult = await database.executeDBAction(
+      'Users',
+      'register',
+      { data: { email, password }, config: {} }
+    );
 
-    if (!wrappedDBResult.success) {
-      return wrappedDBResult;
-    }
+    if (!wrappedDBResult.success) { return wrappedDBResult };
 
     return this.resultWrapper.return('success')({
       jwt: await this.signJwtToken({ email })
@@ -40,7 +40,12 @@ class Users {
   }
 
   async authenticate({ email, password }) {
-    const wrappedDBResult = await executeDBAction('Users')('authenticate')({ email, password });
+    const wrappedDBResult = await database.executeDBAction(
+      'Users',
+      'authenticate',
+      { data: { email, password }, config: {} }
+    );
+
     if (!wrappedDBResult.success) { return wrappedDBResult };
 
     return this.resultWrapper.return('success')({

@@ -12,14 +12,14 @@ describe('executeDBAction.Users', () => {
   describe('register({ email, password }, { transaction })', () => {
     it('registers a new inactive user', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('register');
       const data = {
         "email": "test4@test.com",
         "password": "mypassword"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'register', { data, config });
 
       // Then
       expect(result.success).to.deep.equal(true);
@@ -31,14 +31,14 @@ describe('executeDBAction.Users', () => {
 
     it('returns an error if user is already registered', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('register');
       const data = {
         "email": "test@test.com",
         "password": "mypassword"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'register', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -52,14 +52,14 @@ describe('executeDBAction.Users', () => {
   describe('authenticate({ email, password }, { transaction })', () => {
     it('authenticates an existing user using email and password', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test@test.com",
         "password": "password"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'authenticate', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -73,14 +73,14 @@ describe('executeDBAction.Users', () => {
 
     it('returns an error if it could not find the account', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "doesnotexist@test.com",
         "password": "password"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'authenticate', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -92,14 +92,14 @@ describe('executeDBAction.Users', () => {
 
     it('returns an error if the password is invalid', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test@test.com",
         "password": "somebspassword"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'authenticate', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -111,14 +111,14 @@ describe('executeDBAction.Users', () => {
 
     it('returns an error if the account is inactive', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test2@test.com",
         "password": "password"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'authenticate', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -130,14 +130,14 @@ describe('executeDBAction.Users', () => {
 
     it('returns an error if the account is suspended ', async () => {
       // Given
-      const methodToTest = executeDBAction('Users')('authenticate');
       const data = {
         "email": "test3@test.com",
         "password": "password"
       };
+      const config = {};
 
       // When
-      const result = await methodToTest(data);
+      const result = await executeDBAction('Users', 'authenticate', { data, config });
 
       // Then
       expect(result).to.deep.equal({

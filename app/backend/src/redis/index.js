@@ -65,22 +65,18 @@ class Redis {
     this.initialized = false;
   }
   //TODO add ResultWrapper
-  executeRedisAction(methodName) {
-    return key => {
-      return async value => {
-        try {
-          return {
-            success: true,
-            errors: [],
-            payload: await this.client[methodName](...[value ? [key, value] : [key]])
-          }
-        } catch (error) {
-          return {
-            success: false,
-            errors: [error.message],
-            payload: null
-          }
-        }
+  async executeRedisAction(key, methodName, value) {
+    try {
+      return {
+        success: true,
+        errors: [],
+        payload: await this.client[methodName](...[value ? [key, value] : [key]])
+      }
+    } catch (error) {
+      return {
+        success: false,
+        errors: [error.message],
+        payload: null
       }
     }
   }

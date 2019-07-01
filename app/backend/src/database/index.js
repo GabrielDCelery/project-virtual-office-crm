@@ -12,7 +12,7 @@ class DB {
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.getKnex = this.getKnex.bind(this);
-    //this.executeDBAction = this.executeDBAction.bind(this);
+    this.executeDBAction = this.executeDBAction.bind(this);
   }
 
   _initControllers() {
@@ -47,7 +47,7 @@ class DB {
   getKnex() {
     return this.knex;
   }
-
+/*
   executeDBAction(controllerName) {
     const controllerInstance = Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
 
@@ -58,6 +58,14 @@ class DB {
         });
       }
     }
+  }
+*/
+  async executeDBAction(controllerName, methodName, { data, config }) {
+    const controllerInstance = Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
+
+    return transaction(Model.knex(), async transaction => {
+      return Reflect.apply(controllerInstance[methodName], controllerInstance, [data, { ...config, transaction }]);
+    });
   }
 }
 

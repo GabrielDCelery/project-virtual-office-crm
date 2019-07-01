@@ -12,12 +12,11 @@ describe('executeDBAction.Addresses', () => {
   describe('getAll(data, { transaction })', () => {
     it('returns all adresses as a nested structure', async () => {
       // Given
-      const methodToTest = executeDBAction('Addresses')('getAll');
-      const data = null;
+      const data = {};
       const config = {};
 
       // When
-      const result = await methodToTest(data, config);
+      const result = await executeDBAction('Addresses', 'getAll', { data, config });
 
       // Then
       expect(result).to.deep.equal({
@@ -139,12 +138,11 @@ describe('executeDBAction.Addresses', () => {
 
     it('returns all adresses in a flattened structure', async () => {
       // Given
-      const methodToTest = executeDBAction('Addresses')('getAll');
-      const data = null;
+      const data = {};
       const config = { bFlatten: true };
 
       // When
-      const result = await methodToTest(data, config);
+      const result = await executeDBAction('Addresses', 'getAll', { data, config });
 
       // Then
       expect(result).to.deep.equal({

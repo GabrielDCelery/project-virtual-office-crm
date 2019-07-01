@@ -1,5 +1,5 @@
-const { executeDBAction } = globalRequire('database');
-const { executeRedisAction } = globalRequire('redis');
+const database = globalRequire('database');
+const redis = globalRequire('redis');
 const { TYPEDI_NAMESPACE_SERVICES } = globalRequire('constants');
 
 class AddressCountries {
@@ -8,9 +8,13 @@ class AddressCountries {
   }
 
   async findAll() {
-    const wrappedRedisResult = await executeRedisAction('getAsync')('AddressCountries')();
+    const wrappedRedisResult = await redis.executeRedisAction('AddressCountries', 'getAsync');
     if (!wrappedRedisResult.success) { return wrappedRedisResult };
-    const wrappedDBResult = await executeDBAction('AddressCountries')('findAll')();
+    const wrappedDBResult = await database.executeDBAction(
+      'AddressCountries',
+      'findAll',
+      { data: {}, config: {} }
+    );
     if (!wrappedDBResult.success) { return wrappedDBResult };
 
     return this.resultWrapper.return('success')(wrappedDBResult.payload);
