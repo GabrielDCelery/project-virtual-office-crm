@@ -47,19 +47,7 @@ class DB {
   getKnex() {
     return this.knex;
   }
-/*
-  executeDBAction(controllerName) {
-    const controllerInstance = Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
 
-    return methodName => {
-      return async (data = {}, config = {}) => {
-        return transaction(Model.knex(), async transaction => {
-          return Reflect.apply(controllerInstance[methodName], controllerInstance, [data, { ...config, transaction }]);
-        });
-      }
-    }
-  }
-*/
   async executeDBAction(controllerName, methodName, { data, config }) {
     const controllerInstance = Container.get(`${TYPEDI_NAMESPACE_DB}.${controllerName}`);
 
