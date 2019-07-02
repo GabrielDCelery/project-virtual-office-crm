@@ -18,14 +18,15 @@ class Users {
     return decoded;
   }
 
-  async signJwtToken({ email }) {
+  async _signJwtToken({ email }) {
     return jwt.sign({
       data: { email },
       exp: config.authentication.userJwtExpiry
     }, config.authentication.userJwtSecret);
   }
 
-  async register({ email, password }) {
+  async register({ data }) {
+    const { email, password } = data;
     const wrappedDBResult = await database.executeDBAction(
       'Users',
       'register',
@@ -35,11 +36,12 @@ class Users {
     if (!wrappedDBResult.success) { return wrappedDBResult };
 
     return this.resultWrapper.return('success')({
-      jwt: await this.signJwtToken({ email })
+      jwt: await this._signJwtToken({ email })
     });
   }
 
-  async authenticate({ email, password }) {
+  async authenticate({ data }) {
+    const { email, password } = data;
     const wrappedDBResult = await database.executeDBAction(
       'Users',
       'authenticate',
@@ -49,7 +51,7 @@ class Users {
     if (!wrappedDBResult.success) { return wrappedDBResult };
 
     return this.resultWrapper.return('success')({
-      jwt: await this.signJwtToken({ email })
+      jwt: await this._signJwtToken({ email })
     });
   }
 }

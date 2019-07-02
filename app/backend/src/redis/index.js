@@ -1,5 +1,8 @@
 const { promisify } = require('util');
 const redis = require('redis');
+const { Container } = require('typedi');
+const { ResultWrapper } = require('../helpers');
+const { TYPEDI_NAMESPACE_REDIS } = globalRequire('constants');
 
 class Redis {
   constructor() {
@@ -21,6 +24,7 @@ class Redis {
       if (result !== 'OK') {
         throw new Error('Could not initialize redis!');
       }
+      Container.set(`${TYPEDI_NAMESPACE_REDIS}.ResultWrapper`, new ResultWrapper(Container));
     } catch (error) {
       throw error;
     }
@@ -36,6 +40,28 @@ class Redis {
         return accept(success);
       });
     });
+  }
+
+  async _getAsync(key) {
+    const value = await this.client.getAsync(key);
+
+    try {
+      return JSON.parse(value);
+    } catch (error) {
+      return value;
+    }
+  }
+
+  async _setAsync(key, value) {
+    return this.client.setAsync(key, JSON.stringify(value));
+  }
+
+  _safeStringifyJSON(value) {
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    return JSON.stringify(value);
   }
 
   async flushRedis() {
@@ -64,20 +90,13 @@ class Redis {
     await this._stopRedisClient();
     this.initialized = false;
   }
-  //TODO add ResultWrapper
+
   async executeRedisAction(key, methodName, value) {
+    const resultWrapper = Container.get(`${TYPEDI_NAMESPACE_REDIS}.ResultWrapper`);
     try {
-      return {
-        success: true,
-        errors: [],
-        payload: await this.client[methodName](...[value ? [key, value] : [key]])
-      }
+      return resultWrapper.return('success')(await this[`_${methodName}`](key, value));
     } catch (error) {
-      return {
-        success: false,
-        errors: [error.message],
-        payload: null
-      }
+      return resultWrapper.return('fail')(error.message);
     }
   }
 }

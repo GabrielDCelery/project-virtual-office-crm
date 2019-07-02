@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const axios = require('axios');
 const sinon = require('sinon');
 const redis = globalRequire('redis');
-const database = globalRequire('database');
+const services = globalRequire('services');
 
 describe('api/addresses/countries', () => {
   beforeEach(async () => {
@@ -11,8 +11,7 @@ describe('api/addresses/countries', () => {
 
   it('returns a list of addresses', async () => {
     // Setup
-    sinon.spy(redis, 'executeRedisAction');
-    sinon.spy(database, 'executeDBAction');
+    sinon.spy(services, 'executeService');
 
     // Given
     const { BACKEND_APP_PORT } = process.env;
@@ -29,49 +28,14 @@ describe('api/addresses/countries', () => {
       "errors": [],
       "payload": globalRequire('database/seeds/data/address_countries')
     });
-    expect(redis.executeRedisAction.callCount).to.equal(1);
-    expect(redis.executeRedisAction.args[0]).to.deep.equal([
-      'AddressCountries',
-      'getAsync'
-    ]);
-    expect(await redis.executeRedisAction.returnValues[0]).to.deep.equal({
-      "success": true,
-      "errors": [],
-      "payload": null
-    });
-    expect(database.executeDBAction.callCount).to.equal(1);
-    expect(database.executeDBAction.args[0]).to.deep.equal([
+    expect(services.executeService.callCount).to.equal(1);
+    expect(services.executeService.args[0]).to.deep.equal([
       'AddressCountries',
       'findAll',
       { data: {}, config: {} }
     ]);
-    expect(await database.executeDBAction.returnValues[0]).to.deep.equal({
-      "success": true,
-      "errors": [],
-      "payload": globalRequire('database/seeds/data/address_countries')
-    });
 
     // Teardown
-    redis.executeRedisAction.restore();
-    database.executeDBAction.restore();
-  });
-
-  it('returns a list of addresses from cache', async () => {
-    // Given
-    const { BACKEND_APP_PORT } = process.env;
-    const endpoint = `http://localhost:${BACKEND_APP_PORT}/api/addresses/countries`;
-
-    // When
-    await axios.get(endpoint);
-    const result = await axios.get(endpoint);
-    const { status, data } = result;
-
-    // Then
-    expect(status).to.equal(200);
-    expect(data).to.deep.equal({
-      "success": true,
-      "errors": [],
-      "payload": globalRequire('database/seeds/data/address_countries')
-    });
+    services.executeService.restore();
   });
 });

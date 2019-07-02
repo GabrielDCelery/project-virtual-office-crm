@@ -31,14 +31,10 @@ class Services {
     this.initialized = false;
   }
 
-  executeService(serviceName) {
+  executeService(serviceName, methodName, { data, config }) {
     const serviceInstance = Container.get(`${TYPEDI_NAMESPACE_SERVICES}.${serviceName}`);
 
-    return methodName => {
-      return (data = {}) => {
-        return Reflect.apply(serviceInstance[methodName], serviceInstance, [data]);
-      }
-    }
+    return Reflect.apply(serviceInstance[methodName], serviceInstance, [{ data, config }]);
   }
 }
 

@@ -9,15 +9,24 @@ class AddressCountries {
 
   async findAll() {
     const wrappedRedisResult = await redis.executeRedisAction('AddressCountries', 'getAsync');
-    if (!wrappedRedisResult.success) { return wrappedRedisResult };
+
+    if (!wrappedRedisResult.success || wrappedRedisResult.payload) {
+      return wrappedRedisResult
+    };
+
     const wrappedDBResult = await database.executeDBAction(
       'AddressCountries',
       'findAll',
       { data: {}, config: {} }
     );
-    if (!wrappedDBResult.success) { return wrappedDBResult };
 
-    return this.resultWrapper.return('success')(wrappedDBResult.payload);
+    if (!wrappedDBResult.success || !wrappedDBResult.payload) {
+      return wrappedDBResult
+    };
+
+    await redis.executeRedisAction('AddressCountries', 'setAsync', wrappedDBResult.payload);
+
+    return wrappedDBResult;
   }
 }
 
