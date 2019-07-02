@@ -11,8 +11,8 @@ describe('api/addresses/countries', () => {
 
   it('returns a list of addresses', async () => {
     // Setup
-    const redisSpy = sinon.spy(redis, 'executeRedisAction');
-    const dbSpy = sinon.spy(database, 'executeDBAction');
+    sinon.spy(redis, 'executeRedisAction');
+    sinon.spy(database, 'executeDBAction');
 
     // Given
     const { BACKEND_APP_PORT } = process.env;
@@ -52,8 +52,8 @@ describe('api/addresses/countries', () => {
     });
 
     // Teardown
-    redisSpy.restore();
-    dbSpy.restore();
+    redis.executeRedisAction.restore();
+    database.executeDBAction.restore();
   });
 
   it('returns a list of addresses from cache', async () => {
@@ -62,6 +62,7 @@ describe('api/addresses/countries', () => {
     const endpoint = `http://localhost:${BACKEND_APP_PORT}/api/addresses/countries`;
 
     // When
+    await axios.get(endpoint);
     const result = await axios.get(endpoint);
     const { status, data } = result;
 
