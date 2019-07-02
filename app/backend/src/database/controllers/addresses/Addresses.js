@@ -4,10 +4,10 @@ const { TYPEDI_NAMESPACE_DB } = globalRequire('constants');
 class Addresses {
   constructor(container) {
     this.dbResultWrapper = container.get(`${TYPEDI_NAMESPACE_DB}.ResultWrapper`);
-    this.getAll = this.getAll.bind(this);
+    this.findAll = this.findAll.bind(this);
   }
 
-  async getAll(data, { bFlatten, transaction }) {
+  async findAll({ }, { bFlatten, transaction }) {
     let addresses = await models.Addresses
       .query(transaction)
       .eager('location.city.country');
