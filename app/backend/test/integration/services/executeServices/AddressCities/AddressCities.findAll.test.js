@@ -4,36 +4,48 @@ const redis = globalRequire('redis');
 const services = globalRequire('services');
 const database = globalRequire('database');
 
-describe('executeService("AddressCountries", "findAll")', () => {
+describe('executeService(" AddressCities", "findAll")', () => {
   beforeEach(async () => {
     await redis.flushRedis();
+    sinon.spy(redis, 'executeRedisAction');
+    sinon.spy(database, 'executeDBAction');
   });
 
-  it('returns all countries', async () => {
+  afterEach(async () => {
+    redis.executeRedisAction.restore();
+    database.executeDBAction.restore();
+  });
+
+  it('returns all cities', async () => {
     // Given
-    const controllerName = 'AddressCountries';
+    const controllerName = 'AddressCities';
     const methodName = 'findAll';
     const data = {};
-    const config = {};
+    const config = { bFlatten: true };
 
     // When
     const result = await services.executeService(controllerName, methodName, { data, config });
+    const { success, errors, payload } = result;
 
     // Then
-    expect(result).to.deep.equal({
-      "success": true,
-      "errors": [],
-      "payload": globalRequire('database/seeds/data/address_countries')
+    expect(success).to.equal(true);
+    expect(errors).to.deep.equal([]);
+    expect(payload.length).to.equal(globalRequire('database/seeds/data/address_cities').length);
+    expect(payload[0]).to.deep.equal({
+      "id": 1,
+      "name": "Aba",
+      "country_id": 98,
+      "country": {
+        "id": 98,
+        "name": "Hungary",
+        "short_name": "HU"
+      }
     });
   });
 
-  it('returns the countries from the database if they are not cached', async () => {
-    // Setup
-    sinon.spy(redis, 'executeRedisAction');
-    sinon.spy(database, 'executeDBAction');
-
+  it('returns the cities from the database if they are not cached', async () => {
     // Given
-    const controllerName = 'AddressCountries';
+    const controllerName = 'AddressCities';
     const methodName = 'findAll';
     const data = {};
     const config = {};
@@ -44,17 +56,25 @@ describe('executeService("AddressCountries", "findAll")', () => {
     // Then
     expect(database.executeDBAction.callCount).to.equal(1);
     expect(database.executeDBAction.args[0]).to.deep.equal([
-      'AddressCountries',
+      'AddressCities',
       'findAll',
       { data: {}, config: {} }
     ]);
-    expect(await database.executeDBAction.returnValues[0]).to.deep.equal({
-      "success": true,
-      "errors": [],
-      "payload": globalRequire('database/seeds/data/address_countries')
+    const { success, errors, payload } = await database.executeDBAction.returnValues[0];
+    expect(success).to.equal(true);
+    expect(errors).to.deep.equal([]);
+    expect(payload[0]).to.deep.equal({
+      "id": 1,
+      "name": "Aba",
+      "country_id": 98,
+      "country": {
+        "id": 98,
+        "name": "Hungary",
+        "short_name": "HU"
+      }
     });
     expect(redis.executeRedisAction.args[0]).to.deep.equal([
-      'AddressCountries',
+      'AddressCities',
       'getAsync'
     ]);
     expect(await redis.executeRedisAction.returnValues[0]).to.deep.equal({
@@ -62,18 +82,11 @@ describe('executeService("AddressCountries", "findAll")', () => {
       "errors": [],
       "payload": null
     });
-
-    // Teardown
-    redis.executeRedisAction.restore();
-    database.executeDBAction.restore();
   });
-
-  it('caches the countries in redis', async () => {
-    // Setup
-    sinon.spy(redis, 'executeRedisAction');
-
+  /*
+  it('caches the cities in redis', async () => {
     // Given
-    const controllerName = 'AddressCountries';
+    const controllerName = 'AddressCities';
     const methodName = 'findAll';
     const data = {};
     const config = {};
@@ -84,7 +97,7 @@ describe('executeService("AddressCountries", "findAll")', () => {
     // Then
     expect(redis.executeRedisAction.callCount).to.equal(2);
     expect(redis.executeRedisAction.args[1]).to.deep.equal([
-      'AddressCountries',
+      'AddressCities',
       'setAsync',
       globalRequire('database/seeds/data/address_countries')
     ]);
@@ -93,19 +106,14 @@ describe('executeService("AddressCountries", "findAll")', () => {
       "errors": [],
       "payload": "OK"
     });
-
-    // Teardown
-    redis.executeRedisAction.restore();
   });
 
-  it('returns the cached countries from redis', async () => {
+  it('returns the cached cities from redis', async () => {
     // Setup
-    await redis.executeRedisAction('AddressCountries', 'setAsync', globalRequire('database/seeds/data/address_countries'));
-    sinon.spy(redis, 'executeRedisAction');
-    sinon.spy(database, 'executeDBAction');
+    await redis.executeRedisAction('AddressCities', 'setAsync', globalRequire('database/seeds/data/address_countries'));
 
     // Given
-    const controllerName = 'AddressCountries';
+    const controllerName = 'AddressCities';
     const methodName = 'findAll';
     const data = {};
     const config = {};
@@ -115,16 +123,13 @@ describe('executeService("AddressCountries", "findAll")', () => {
 
     // Then
     expect(redis.executeRedisAction.callCount).to.equal(1);
-    expect(redis.executeRedisAction.args[0]).to.deep.equal(['AddressCountries', 'getAsync']);
+    expect(redis.executeRedisAction.args[0]).to.deep.equal(['AddressCities', 'getAsync']);
     expect(await redis.executeRedisAction.returnValues[0]).to.deep.equal({
       "success": true,
       "errors": [],
       "payload": globalRequire('database/seeds/data/address_countries')
     });
     expect(database.executeDBAction.callCount).to.equal(0);
-
-    // Teardown
-    redis.executeRedisAction.restore();
-    database.executeDBAction.restore();
   });
+  */
 });
