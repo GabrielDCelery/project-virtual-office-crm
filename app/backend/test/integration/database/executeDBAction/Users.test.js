@@ -49,10 +49,6 @@ describe('executeDBAction("Users", "register")', () => {
 });
 
 describe('executeDBAction("Users", "authenticate")', () => {
-  beforeEach(async () => {
-    await getKnex().seed.run();
-  });
-
   it('authenticates an existing user using email and password', async () => {
     // Given
     const data = {

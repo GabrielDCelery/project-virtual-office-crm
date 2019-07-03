@@ -1,14 +1,9 @@
 const { expect } = require('chai');
 const {
-  getKnex,
   executeDBAction
 } = globalRequire('database');
 
 describe('executeDBAction("AddressCountries", "findById")', () => {
-  beforeEach(async () => {
-    await getKnex().seed.run();
-  });
-
   it('finds a country by id', async () => {
     // Given
     const data = { "id": 98 };
@@ -32,10 +27,6 @@ describe('executeDBAction("AddressCountries", "findById")', () => {
 
 
 describe('executeDBAction("AddressCountries", "findAll")', () => {
-  beforeEach(async () => {
-    await getKnex().seed.run();
-  });
-
   it('returns all countries', async () => {
     // Given
     const data = {};
