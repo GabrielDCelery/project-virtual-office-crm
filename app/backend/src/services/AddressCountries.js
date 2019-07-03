@@ -7,21 +7,21 @@ class AddressCountries {
     this.resultWrapper = container.get(`${TYPEDI_NAMESPACE_SERVICES}.ResultWrapper`);
   }
 
-  async findAll() {
+  async findAll({ data, config }) {
     const wrappedRedisResult = await redis.executeRedisAction('AddressCountries', 'getAsync');
 
     if (!wrappedRedisResult.success || wrappedRedisResult.payload) {
-      return wrappedRedisResult
+      return wrappedRedisResult;
     };
 
     const wrappedDBResult = await database.executeDBAction(
       'AddressCountries',
       'findAll',
-      { data: {}, config: {} }
+      { data, config }
     );
 
     if (!wrappedDBResult.success || !wrappedDBResult.payload) {
-      return wrappedDBResult
+      return wrappedDBResult;
     };
 
     await redis.executeRedisAction('AddressCountries', 'setAsync', wrappedDBResult.payload);

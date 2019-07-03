@@ -7,7 +7,7 @@ class AddressCities {
     this.resultWrapper = container.get(`${TYPEDI_NAMESPACE_SERVICES}.ResultWrapper`);
   }
 
-  async findAll() {
+  async findAll({ data, config }) {
     const wrappedRedisResult = await redis.executeRedisAction('AddressCities', 'getAsync');
 
     if (!wrappedRedisResult.success || wrappedRedisResult.payload) {
@@ -17,7 +17,7 @@ class AddressCities {
     const wrappedDBResult = await database.executeDBAction(
       'AddressCities',
       'findAll',
-      { data: {}, config: {} }
+      { data, config }
     );
 
     if (!wrappedDBResult.success || !wrappedDBResult.payload) {
