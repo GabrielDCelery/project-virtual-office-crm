@@ -1,14 +1,9 @@
 const { expect } = require('chai');
 const {
-  getKnex,
   executeDBAction
 } = globalRequire('database');
 
 describe('executeDBAction("Addresses", "findAll")', () => {
-  beforeEach(async () => {
-    await getKnex().seed.run();
-  });
-
   it('returns all adresses as a nested structure', async () => {
     // Given
     const data = {};
