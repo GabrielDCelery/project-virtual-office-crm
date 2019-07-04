@@ -3,6 +3,7 @@ const { ResultWrapper } = require('../helpers');
 const { TYPEDI_NAMESPACE_SERVICES } = globalRequire('constants');
 const AddressCountries = require('./AddressCountries');
 const AddressCities = require('./AddressCities');
+const Addresses = require('./Addresses');
 const Users = require('./Users');
 
 class Services {
@@ -16,6 +17,7 @@ class Services {
   _initServices() {
     Container.set(`${TYPEDI_NAMESPACE_SERVICES}.ResultWrapper`, new ResultWrapper(Container));
     Container.set(`${TYPEDI_NAMESPACE_SERVICES}.Users`, new Users(Container));
+    Container.set(`${TYPEDI_NAMESPACE_SERVICES}.Addresses`, new Addresses(Container));
     Container.set(`${TYPEDI_NAMESPACE_SERVICES}.AddressCities`, new AddressCities(Container));
     Container.set(`${TYPEDI_NAMESPACE_SERVICES}.AddressCountries`, new AddressCountries(Container));
   }
