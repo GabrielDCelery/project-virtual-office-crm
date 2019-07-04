@@ -12,6 +12,7 @@ import {
   Dashboard as DashboardIcon,
   Search as SearchIcon,
   Person as PersonIcon,
+  Layers as LayersIcon,
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
@@ -20,7 +21,8 @@ import { Link } from 'react-router-dom';
 const Icons = {
   DashboardIcon,
   SearchIcon,
-  PersonIcon
+  PersonIcon,
+  LayersIcon
 };
 
 const SingleNavBarItem = ({ classes, label, Icon, bIsActive, path }) => (
@@ -43,7 +45,7 @@ const DropDownNavBarItem = ({ classes, label, Icon, bIsActive, children }) => {
 
   return (
     <React.Fragment>
-      <div onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <div onClick={() => setOpen(!bIsOpen)}>
         <ListItem
           button
           className={`${classes.listItem} ${bIsActive ? 'active' : ''}`}

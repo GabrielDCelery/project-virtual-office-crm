@@ -48,6 +48,18 @@ export default [{
 }, {
   path: null,
   component: null,
+  icon: 'LayersIcon',
+  label: 'Database',
+  rbacRule: null,
+  children: [{
+    label: 'Addresses',
+    path: PATH_TO_USER_SETTINGS,
+    component: 'Settings',
+    rbacRule: null
+  }]
+}, {
+  path: null,
+  component: null,
   icon: 'PersonIcon',
   label: 'User',
   rbacRule: null,
