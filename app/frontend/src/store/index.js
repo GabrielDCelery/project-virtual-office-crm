@@ -1,7 +1,9 @@
 import store from './store';
-import user from './user';
+import actions from './actions';
+import selectors from './selectors';
 
 export default {
   store,
-  user
+  actions,
+  selectors
 };

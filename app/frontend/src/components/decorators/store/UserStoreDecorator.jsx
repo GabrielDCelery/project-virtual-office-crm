@@ -4,16 +4,13 @@ import store from 'store';
 
 const mapStateToProps = (state, props) => {
   return {
-    stateIsUserLoggedIn: state.user.isLoggedIn,
-    stateIsUserLoggingIn: state.user.isLoggingIn,
-    stateHasUserLoginFailed: state.user.hasUserLoginFailed,
-    stateLoginErrorMessages: state.user.errors,
-    stateIsUserAuthorized: store.user.selectors.isUserAuthorizedSelector(state, props)
+    stateIsUserAuthenticated: store.selectors.user.isUserAuthenticated(state),
+    stateIsUserAuthorized: store.selectors.user.isUserAuthorized(state, props)
   }
 }
 
 const mapActionsToProps = {
-  actionLogin: store.user.actions.login
+  actionLogin: store.actions.user.login
 };
 
 export const UserStoreDecorator = ToWrapComponent => {

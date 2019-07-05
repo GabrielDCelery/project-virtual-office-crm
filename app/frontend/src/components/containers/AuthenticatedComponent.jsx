@@ -5,9 +5,9 @@ import {
 
 export const AuthenticatedComponent = ToWrapComponent => {
   const WrapperComponent = props => {
-    const { stateIsUserLoggedIn } = props;
+    const { stateIsUserAuthenticated } = props;
 
-    return stateIsUserLoggedIn ? <ToWrapComponent {...props} /> : null;
+    return stateIsUserAuthenticated ? <ToWrapComponent {...props} /> : null;
   };
 
   return UserStoreDecorator(WrapperComponent);

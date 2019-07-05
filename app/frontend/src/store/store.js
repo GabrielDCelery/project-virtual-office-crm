@@ -1,13 +1,16 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 //import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import user from './user';
+import reducers from './reducers';
+import default_state from './default_state';
+
 const combinedReducers = combineReducers({
-  user: user.reducer
+  user: reducers.user,
+  app: reducers.app
 });
 
 const combinedDefaultState = {
-  user: user.defaultState
+  user: default_state.user
 };
 
 //const loggerMiddleware = createLogger();

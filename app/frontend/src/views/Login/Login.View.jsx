@@ -34,7 +34,7 @@ export default ({
   handleEmailChange,
   handlePasswordChange,
   handleLogin,
-  stateLoginErrorMessages
+  stateAppErrors
 }) => {
   return (
     <React.Fragment>
@@ -65,7 +65,7 @@ export default ({
                   value={password}
                 />
               </CardContent>
-              <ErrorMessages messages={stateLoginErrorMessages} />
+              <ErrorMessages messages={stateAppErrors} />
               <CardContent>
                 <Button
                   fullWidth

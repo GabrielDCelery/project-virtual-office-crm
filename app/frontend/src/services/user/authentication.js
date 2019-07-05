@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 class Authentication {
-  setStoredLoginCredentials(user = {}) {
+  async setStoredLoginCredentials(user = {}) {
     return localStorage.setItem('user', JSON.stringify(user));
   }
 

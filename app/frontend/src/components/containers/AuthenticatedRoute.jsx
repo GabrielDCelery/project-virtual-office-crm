@@ -5,7 +5,7 @@ import {
 } from 'components';
 
 let AuthenticatedRoute = ({
-  stateIsUserLoggedIn,
+  stateIsUserAuthenticated,
   exact,
   path,
   ComponentToRender,
@@ -15,7 +15,7 @@ let AuthenticatedRoute = ({
     <Route
       exact={exact}
       path={path}
-      render={() => stateIsUserLoggedIn ? <ComponentToRender /> : <Redirect to={redirectTo} />}
+      render={() => stateIsUserAuthenticated ? <ComponentToRender /> : <Redirect to={redirectTo} />}
     />
   );
 }
