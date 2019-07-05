@@ -10,6 +10,7 @@ import {
   Login,
   Dashboard,
   Search,
+  Database,
   NavBar
 } from 'views';
 import config from 'config';
@@ -17,7 +18,8 @@ import config from 'config';
 const views = {
   Login,
   Dashboard,
-  Search
+  Search,
+  Database
 };
 
 const ViewWithNavbar = ToWrapComponent => {

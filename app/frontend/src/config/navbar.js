@@ -5,6 +5,7 @@ import {
   PATH_TO_SEARCH_INSPECTIONS,
   PATH_TO_SEARCH_INVOICES,
   PATH_TO_USER_SETTINGS,
+  PATH_TO_DATABASE_ADDRESSES,
   PATH_TO_LOGOUT,
   STATIC_RBAC_RULE_DASHBOARD_PAGE_VISIT,
   STATIC_RBAC_RULE_CONTRACTS_PAGE_VISIT,
@@ -53,8 +54,8 @@ export default [{
   rbacRule: null,
   children: [{
     label: 'Addresses',
-    path: PATH_TO_USER_SETTINGS,
-    component: 'Settings',
+    path: PATH_TO_DATABASE_ADDRESSES,
+    component: 'Database',
     rbacRule: null
   }]
 }, {
