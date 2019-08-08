@@ -34,13 +34,16 @@ services:
       - 8080:8080
     environment:
       BACKEND_APP_PORT: 8080
-      DB_CLIENT: pg
-      DB_USER: postgres
-      DB_HOST: db
-      DB_PASSWORD: docker
-      DB_NAME: postgres
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
+      SERVICE_DB_CLIENT: pg
+      SERVICE_DB_USER: postgres
+      SERVICE_DB_HOST: db
+      SERVICE_DB_PASSWORD: docker
+      SERVICE_DB_DATABASE: postgres
+      SERVICE_DB_PORT: 5432
+      SERVICE_REDIS_HOST: redis
+      SERVICE_REDIS_PORT: 6379
+      SERVICE_JWT_SECRET: super_secret
+      SERVICE_JWT_EXPIRY: null
   frontend:
     container_name: pvocrm_frontend
     build:
