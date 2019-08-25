@@ -1,11 +1,11 @@
 class Addresses {
-  constructor(models, scripts) {
+  constructor({ models, helpers }) {
     this.models = models;
-    this.scripts = scripts;
+    this.helpers = helpers;
     this.findAll = this.findAll.bind(this);
   }
 
-  async findAll({}, {
+  async findAll({ }, {
     bFlatten,
     transaction
   }) {

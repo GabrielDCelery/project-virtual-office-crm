@@ -1,11 +1,11 @@
 class AddressCities {
-  constructor(models, scripts) {
-    this.modesl = models;
-    this.scripts = scripts;
+  constructor({ models, helpers }) {
+    this.models = models;
+    this.helpers = helpers;
     this.findAll = this.findAll.bind(this);
   }
 
-  async findAll({}, {
+  async findAll({ }, {
     bFlatten,
     transaction
   }) {
@@ -17,7 +17,7 @@ class AddressCities {
       addresses = addresses.map(AddressCities.flattenRecord);
     }
 
-    return this.scripts.wrapResult('success', addresses);
+    return this.helpers.wrapResult('success', addresses);
   }
 
   static flattenRecord(record) {

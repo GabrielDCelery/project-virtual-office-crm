@@ -17,7 +17,7 @@ class DB {
     this.execute = this.execute.bind(this);
   }
 
-  initialize(scripts) {
+  initialize(helpers) {
     const {
       Users,
       Addresses,
@@ -25,29 +25,29 @@ class DB {
       AddressCountries
     } = controllers;
 
-    this.instances = {
+    this.controllers = {
       users: new Users({
         models,
-        scripts
+        helpers
       }),
       addresses: new Addresses({
         models,
-        scripts
+        helpers
       }),
       addressCities: new AddressCities({
         models,
-        scripts
+        helpers
       }),
       addressCountries: new AddressCountries({
         models,
-        scripts
+        helpers
       })
     }
   }
 
   async start({
     environmentVariables,
-    scripts
+    helpers
   }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the database twice!');
@@ -59,7 +59,7 @@ class DB {
     } = environmentVariables;
     this.knex = Knex(initializedConfig['connection'][NODE_ENV]);
     Model.knex(this.knex);
-    this.initialize(scripts);
+    this.initialize(helpers);
     this.initialized = true;
   }
 
@@ -72,17 +72,15 @@ class DB {
     return this.knex;
   }
 
-  async execute(controllerName, methodName, {
-    data,
-    config
+  async execute({
+    controller,
+    method,
+    data
   }) {
     return transaction(Model.knex(), async transaction => {
-      return this.instances[controllerName][methodName]({
+      return this.controllers[controller][method]({
         data,
-        config: {
-          ...config,
-          transaction
-        }
+        transaction
       });
     });
   }

@@ -1,7 +1,10 @@
 class AddressCountries {
-  constructor(models, scripts) {
+  constructor({
+    models,
+    helpers
+  }) {
     this.models = models;
-    this.scripts = scripts;
+    this.helpers = helpers;
     this.findById = this.findById.bind(this);
   }
 
@@ -17,7 +20,7 @@ class AddressCountries {
     return this.dbResultWrapper.return('success')(country);
   }
 
-  async findAll({}, {
+  async findAll({ }, {
     transaction
   }) {
     const countries = await this.models.AddressCountries

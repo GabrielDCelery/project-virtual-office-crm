@@ -1,10 +1,10 @@
-const { expect } = require('chai');
-const axios = require('axios');
+const { expect } = require("chai");
+const axios = require("axios");
 
-describe('/health', () => {
+describe("/health", () => {
   beforeEach(async () => { });
 
-  it('confirms if the service is running', async () => {
+  it("confirms if the service is running", async () => {
     // Given
     const { BACKEND_APP_PORT } = process.env;
     const endpoint = `http://localhost:${BACKEND_APP_PORT}/health`;
@@ -15,6 +15,6 @@ describe('/health', () => {
 
     // Then
     expect(status).to.equal(200);
-    expect(data).to.equal('OK');
+    expect(data).to.equal("OK");
   });
 });

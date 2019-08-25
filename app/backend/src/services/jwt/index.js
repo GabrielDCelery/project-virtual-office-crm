@@ -3,7 +3,7 @@ const config = require('./config');
 
 class JWT {
   constructor() {
-    this.scripts = null;
+    this.helpers = null;
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
     this.execute = this.execute.bind(this);
@@ -32,13 +32,13 @@ class JWT {
 
   async start({
     environmentVariables,
-    scripts
+    helpers
   }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the redis connection twice!');
     }
 
-    this.scripts = scripts;
+    this.helpers = helpers;
     this._initialize(config(environmentVariables));
     this.initialized = true;
   }
@@ -49,9 +49,9 @@ class JWT {
 
   async execute(methodName, value) {
     try {
-      return this.scripts.wrapResult('success', await this[methodName](value));
+      return this.helpers.wrapResult('success', await this[methodName](value));
     } catch (error) {
-      return this.scripts.wrapResult('fail', error.message);
+      return this.helpers.wrapResult('fail', error.message);
     }
   }
 }

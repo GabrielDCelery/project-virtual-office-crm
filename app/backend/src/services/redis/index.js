@@ -7,7 +7,7 @@ const config = require('./config');
 class Redis {
   constructor() {
     this.client = null;
-    this.scripts = null;
+    this.helpers = null;
     this.flushRedis = this.flushRedis.bind(this);
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
@@ -84,13 +84,13 @@ class Redis {
 
   async start({
     environmentVariables,
-    scripts
+    helpers
   }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the redis connection twice!');
     }
 
-    this.scripts = scripts;
+    this.helpers = helpers;
 
     await this._startRedisClient(config(environmentVariables));
 
@@ -104,9 +104,9 @@ class Redis {
 
   async execute(key, methodName, value) {
     try {
-      return this.scripts.wrapResult('success', await this[`_${methodName}`](key, value));
+      return this.helpers.wrapResult('success', await this[`_${methodName}`](key, value));
     } catch (error) {
-      return this.scripts.wrapResult('fail', error.message);
+      return this.helpers.wrapResult('fail', error.message);
     }
   }
 }

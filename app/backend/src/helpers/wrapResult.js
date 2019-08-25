@@ -1,20 +1,23 @@
-module.exports = (successOrFail, payload) => {
-  if (successOrFail === 'success') {
+module.exports = ({
+  type,
+  service,
+  payload,
+  errors
+}) => {
+  if (type === 'success') {
     return {
       success: true,
+      service,
       errors: [],
       payload: payload
     };
   }
 
-  if (successOrFail === 'fail') {
-    if (typeof payload === 'string') {
-      payload = [payload];
-    }
-
+  if (type === 'fail') {
     return {
       success: false,
-      errors: errors,
+      service,
+      errors: typeof errors === 'string' ? [errors] : errors,
       payload: null
     };
   }

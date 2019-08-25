@@ -1,5 +1,6 @@
 const services = globalRequire('services');
-const scripts = globalRequire('scripts');
+const helpers = globalRequire('helpers');
+
 const {
   NODE_ENV,
   SERVICE_DB_CLIENT,
@@ -28,21 +29,21 @@ module.exports = {
         SERVICE_DB_CHARSET,
         SERVICE_DB_PORT
       },
-      scripts: scripts
+      helpers: helpers
     });
     await services.get('redis').start({
       environmentVariables: {
         SERVICE_REDIS_HOST,
         SERVICE_REDIS_PORT
       },
-      scripts: scripts
+      helpers: helpers
     });
     await services.get('jwt').start({
       environmentVariables: {
         SERVICE_JWT_SECRET,
         SERVICE_JWT_EXPIRY
       },
-      scripts: scripts
+      helpers: helpers
     })
   },
   stop: async () => {
