@@ -1,7 +1,9 @@
 const Users = require('./Users');
+const addresses = require('./addresses');
 
 class Orchestrator {
   constructor() {
+    this.services = null;
     this.initialized = false;
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
@@ -12,7 +14,10 @@ class Orchestrator {
     this.instances = {
       users: new Users({
         services
-      })
+      }),
+      addresses: {
+        findAll: addresses.findAllWrapper(services)
+      }
     };
   }
 
@@ -30,14 +35,8 @@ class Orchestrator {
     this.initialized = false;
   }
 
-  async execute(instance_name, method_name, {
-    data,
-    config
-  }) {
-    return this.instances[instance_name][method_name]({
-      data,
-      config
-    });
+  async execute(instanceName, methodName, args) {
+    return this.instances[instanceName][methodName](args);
   }
 }
 

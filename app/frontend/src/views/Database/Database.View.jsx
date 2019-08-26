@@ -20,35 +20,33 @@ export default ({
   stateAddresses
 }) => {
   const classes = useStyles();
-  
+
   return (
     <Container maxWidth={false}>
       <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Postcode</TableCell>
-            <TableCell>City</TableCell>
-            <TableCell>Address Line 1</TableCell>
-            <TableCell>Address Line 2</TableCell>
-            <TableCell>Country Name</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {stateAddresses.map(address => (
-            <TableRow key={address.id}>
-              <TableCell component="th" scope="row">
-                {address.postcode}
-              </TableCell>
-              <TableCell>{address.city_name}</TableCell>
-              <TableCell>{address.address_line_1}</TableCell>
-              <TableCell>{address.address_line_2}</TableCell>
-              <TableCell>{address.country_name}</TableCell>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Postcode</TableCell>
+              <TableCell>Country Name</TableCell>
+              <TableCell>City</TableCell>
+              <TableCell>Street</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {stateAddresses.map(address => (
+              <TableRow key={address.id}>
+                <TableCell component="th" scope="row">
+                  {address.postcode}
+                </TableCell>
+                <TableCell>{address.country_name}</TableCell>
+                <TableCell>{address.city_name}</TableCell>
+                <TableCell>{address.long_street}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
     </Container>
   );
 }
