@@ -30,6 +30,16 @@ Log in to the platform using the following credentials:
 username: `test@test.com`
 password: `password`
 
+## Rebuild development environment
+
+If you got redundant docker containers and images on your local machines you can use the following commands to remove those images:
+
+```
+docker rm $(docker ps -a -q) --force
+docker rmi $(docker images -q) --force
+docker volume rm $(docker volume ls -qf dangling=true)
+```
+
 ## Running tests
 
 In order to run tests after starting the devlopment server run the following:

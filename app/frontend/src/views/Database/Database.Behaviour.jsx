@@ -14,7 +14,9 @@ export default ToWrapComponent => {
       actionAddressesFindAll();
 
       return () => { }
-    }, []);
+    }, [
+        actionAddressesFindAll
+      ]);
 
     return (
       <ToWrapComponent

@@ -12,9 +12,9 @@ export const WithRouterDecorator = ToWrapComponent => {
       <ToWrapComponent
         {...props}
         {...{
+          PATH_TO_DASHBOARD,
           PATH_TO_LOGIN,
-          PATH_TO_LOGOUT,
-          PATH_TO_DASHBOARD
+          PATH_TO_LOGOUT
         }}
       />
     )

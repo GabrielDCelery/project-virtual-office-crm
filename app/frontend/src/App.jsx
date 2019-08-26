@@ -1,37 +1,36 @@
 import React from 'react';
 import { Route/*, Redirect, Switch */ } from 'react-router-dom';
 import {
-  ThemeDecorator,
-  StoreDecorator,
+  AuthenticatedRoute,
   RouterDecorator,
-  AuthenticatedRoute
+  StoreDecorator,
+  ThemeDecorator
 } from 'components';
 import {
-  Login,
   Dashboard,
-  Search,
   Database,
-  NavBar
+  Login,
+  NavBar,
+  Search
 } from 'views';
 import config from 'config';
+import './App.css';
 
 const views = {
-  Login,
   Dashboard,
-  Search,
-  Database
+  Database,
+  Login,
+  Search
 };
 
 const ViewWithNavbar = ToWrapComponent => {
   return props => (
-    <React.Fragment>
-      <div style={{ display: 'flex' }}>
-        <NavBar />
-        <div style={{ flexGrow: 1 }} >
-          <ToWrapComponent {...props} />
-        </div>
+    <div style={{ display: 'flex' }}>
+      <NavBar />
+      <div style={{ flexGrow: 1 }} >
+        <ToWrapComponent {...props} />
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 

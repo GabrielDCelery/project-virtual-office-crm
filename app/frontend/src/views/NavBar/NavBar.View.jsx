@@ -1,122 +1,145 @@
 import React, { useState } from 'react';
 import {
-  Drawer,
+  Collapse,
   CssBaseline,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Collapse
+  List
 } from '@material-ui/core';
 import {
   Dashboard as DashboardIcon,
-  Search as SearchIcon,
-  Person as PersonIcon,
-  Layers as LayersIcon,
   ExpandLess as ExpandLessIcon,
-  ExpandMore as ExpandMoreIcon
+  ExpandMore as ExpandMoreIcon,
+  Layers as LayersIcon,
+  Person as PersonIcon,
+  Search as SearchIcon
 } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 
 const Icons = {
   DashboardIcon,
-  SearchIcon,
+  LayersIcon,
   PersonIcon,
-  LayersIcon
+  SearchIcon
 };
 
-const SingleNavBarItem = ({ classes, label, Icon, bIsActive, path }) => (
-  <Link to={path} style={{ textDecoration: 'none' }}>
-    <ListItem
-      button
-      className={`${classes.listItem} ${bIsActive ? 'active' : ''}`}
-    >
-      <ListItemIcon><Icon className={classes.listItemIcon} /></ListItemIcon>
-      <ListItemText
-        primary={label}
-        className={classes.listItemText}
-      />
-    </ListItem>
-  </Link>
-);
-
-const DropDownNavBarItem = ({ classes, label, Icon, bIsActive, children }) => {
-  const [bIsOpen, setOpen] = useState(false);
+const SingleNavBarItem = ({
+  StyledLink,
+  StyledListItem,
+  StyledListItemIcon,
+  StyledListItemText,
+  bIsActive,
+  icon,
+  label,
+  path
+}) => {
+  const Icon = Icons[icon];
 
   return (
-    <React.Fragment>
-      <div onClick={() => setOpen(!bIsOpen)}>
-        <ListItem
-          button
-          className={`${classes.listItem} ${bIsActive ? 'active' : ''}`}
-        >
-          <ListItemIcon>
-            <Icon className={classes.listItemIcon} />
-          </ListItemIcon>
-          <ListItemText
-            primary={label}
-            className={classes.listItemText}
-          />
-          {
-            bIsActive || bIsOpen ?
-              <ExpandLessIcon className={classes.listItemIcon} />
-              :
-              <ExpandMoreIcon className={classes.listItemIcon} />
-          }
-        </ListItem>
-        <Collapse in={bIsActive || bIsOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {children.map(({ label, bIsActive, path }, index) => (
-              <React.Fragment key={`navbar-item-collapsible-${index}`}>
-                <Link to={path} style={{ textDecoration: 'none' }}>
-                  <ListItem
-                    button
-                    className={`${classes.listItem} ${bIsActive ? 'active' : ''}`}
-                  >
-                    <ListItemText primary={label} className={classes.listItemText} />
-                  </ListItem>
-                </Link>
-              </React.Fragment>
-            ))}
-          </List>
-        </Collapse>
-      </div>
-    </React.Fragment>
+    <StyledLink to={path}>
+      <StyledListItem button className={`${bIsActive ? 'active' : ''}`}  >
+        <StyledListItemIcon><Icon /></StyledListItemIcon>
+        <StyledListItemText primary={label} />
+      </StyledListItem>
+    </StyledLink>
   )
 };
 
-export default ({
-  classes,
-  navbarItems
+const DropDownNavBarItem = ({
+  StyledLink,
+  StyledListItem,
+  StyledListItemIcon,
+  StyledListItemText,
+  bIsActive,
+  icon,
+  label,
+  navBarItemChildren
 }) => {
+  const [bIsOpen, setOpen] = useState(false);
+  const Icon = Icons[icon];
+
+  return (
+    <div onClick={() => setOpen(!bIsOpen)}>
+      <StyledListItem button className={`${bIsActive ? 'active' : ''}`} >
+        <StyledListItemIcon><Icon /></StyledListItemIcon>
+        <StyledListItemText primary={label} />
+        <StyledListItemIcon>
+          {bIsActive || bIsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        </StyledListItemIcon>
+      </StyledListItem>
+
+      <Collapse in={bIsActive || bIsOpen} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          {navBarItemChildren.map(({ label, bIsActive, path }, index) => (
+            <React.Fragment key={`navbar-item-collapsible-${index}`}>
+              <StyledLink to={path}>
+                <StyledListItem button className={`${bIsActive ? 'active' : ''}`}>
+                  <StyledListItemText primary={label} />
+                </StyledListItem>
+              </StyledLink>
+            </React.Fragment>
+          ))}
+        </List>
+      </Collapse>
+    </div>
+  )
+};
+
+export default function NavBarView({
+  StyledDrawer,
+  StyledDrawerContainer,
+  StyledLink,
+  StyledListItem,
+  StyledListItemIcon,
+  StyledListItemText,
+  navBarItems
+}) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Drawer
-        variant="permanent"
-        className={classes.drawer}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
-        <List>
-          {navbarItems.map(({ label, icon, bIsActive, path, children }, index) => {
-            const Icon = Icons[icon];
+      <StyledDrawerContainer>
+        <StyledDrawer variant="permanent" anchor="left">
+          <List>
+            {navBarItems.map((navBarItem, index) => {
+              const {
+                label,
+                icon,
+                bIsActive,
+                path,
+                navBarItemChildren
+              } = navBarItem;
 
-            return (
-              <React.Fragment key={`navbar-item-${index}`}>
-                {
-                  children ?
-                    <DropDownNavBarItem {...{ classes, label, Icon, bIsActive, children }} />
+              return (
+                <React.Fragment key={`navbar-item-${index}`}>
+                  {navBarItemChildren ?
+                    <DropDownNavBarItem
+                      {...{
+                        StyledLink,
+                        StyledListItem,
+                        StyledListItemIcon,
+                        StyledListItemText,
+                        bIsActive,
+                        icon,
+                        label,
+                        navBarItemChildren
+                      }}
+                    />
                     :
-                    <SingleNavBarItem {...{ classes, label, Icon, bIsActive, path }} />
-                }
-              </React.Fragment>
-            )
-          })}
-        </List>
-      </Drawer>
+                    <SingleNavBarItem
+                      {...{
+                        StyledLink,
+                        StyledListItem,
+                        StyledListItemIcon,
+                        StyledListItemText,
+                        bIsActive,
+                        icon,
+                        label,
+                        path
+                      }}
+                    />}
+                </React.Fragment>
+              )
+            })}
+          </List>
+        </StyledDrawer>
+      </StyledDrawerContainer>
     </React.Fragment>
   );
 }
