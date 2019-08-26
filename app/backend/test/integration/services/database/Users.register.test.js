@@ -1,7 +1,10 @@
-const { expect } = require("chai");
+const {
+  expect
+} = require("chai");
+const verror = require("verror");
 const services = require("../../../../src/services");
 
-describe("execute(\"users\", \"register\")", () => {
+describe("execute(\"users\", \"register\", { email, password })", () => {
   beforeEach(async () => {
     await services.get("database").getKnex().seed.run();
   });
@@ -10,17 +13,13 @@ describe("execute(\"users\", \"register\")", () => {
     // Given
     const controller = "users";
     const method = "register";
-    const data = {
+    const args = {
       "email": "test4@test.com",
       "password": "mypassword"
     };
 
     // When
-    const result = await services.get("database").execute({
-      controller,
-      method,
-      data
-    });
+    const result = await services.get("database").execute(controller, method, args);
 
     const {
       success,
@@ -46,17 +45,13 @@ describe("execute(\"users\", \"register\")", () => {
     // Given
     const controller = "users";
     const method = "register";
-    const data = {
+    const args = {
       "email": "test@test.com",
       "password": "mypassword"
     };
 
     // When
-    const result = await services.get("database").execute({
-      controller,
-      method,
-      data
-    });
+    const result = await services.get("database").execute(controller, method, args);
 
     const {
       success,
@@ -68,7 +63,10 @@ describe("execute(\"users\", \"register\")", () => {
     // Then
     expect(success).to.equal(false);
     expect(service).to.equal("database");
-    expect(errors).to.deep.equal(["Email already registered!"]);
+    expect(errors.length).to.equal(1);
+    expect(errors[0].name).to.equal("DatabaseControllerError");
+    expect(errors[0].message).to.equal("Email already registered!");
+    expect(verror.info(errors[0])).to.deep.equal(args);
     expect(payload).to.equal(null);
   });
 });

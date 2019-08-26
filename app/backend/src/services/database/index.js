@@ -6,6 +6,9 @@ const {
 const controllers = require('./controllers');
 const models = require('./models');
 const config = require('./config');
+const {
+  DB_ERROR_NAME_CONTROLLER_ERROR
+} = require("./constants");
 
 class DB {
   constructor() {
@@ -17,7 +20,11 @@ class DB {
     this.execute = this.execute.bind(this);
   }
 
-  initialize(helpers) {
+  initialize({
+    nodeModules: {
+      verror
+    }
+  }) {
     const {
       Users,
       Addresses,
@@ -28,25 +35,25 @@ class DB {
     this.controllers = {
       users: new Users({
         models,
-        helpers
+        nodeModules: {
+          verror
+        }
       }),
       addresses: new Addresses({
-        models,
-        helpers
+        models
       }),
       addressCities: new AddressCities({
-        models,
-        helpers
+        models
       }),
       addressCountries: new AddressCountries({
-        models,
-        helpers
+        models
       })
     }
   }
 
   async start({
     environmentVariables,
+    nodeModules,
     helpers
   }) {
     if (this.initialized) {
@@ -59,7 +66,10 @@ class DB {
     } = environmentVariables;
     this.knex = Knex(initializedConfig['connection'][NODE_ENV]);
     Model.knex(this.knex);
-    this.initialize(helpers);
+    this.initialize({
+      nodeModules
+    });
+    this.helpers = helpers;
     this.initialized = true;
   }
 
@@ -72,16 +82,30 @@ class DB {
     return this.knex;
   }
 
-  async execute({
-    controller,
-    method,
-    data
-  }) {
+  async execute(controller, method, args) {
     return transaction(Model.knex(), async transaction => {
-      return this.controllers[controller][method]({
-        data,
-        transaction
-      });
+      try {
+        const result = await this.controllers[controller][method]({
+          ...args,
+          transaction
+        });
+
+        return this.helpers.wrapResult({
+          type: "success",
+          service: "database",
+          payload: result
+        });
+      } catch (error) {
+        if (error.name !== DB_ERROR_NAME_CONTROLLER_ERROR) {
+          throw error;
+        }
+
+        return this.helpers.wrapResult({
+          type: "fail",
+          service: "database",
+          errors: [error]
+        });
+      }
     });
   }
 }

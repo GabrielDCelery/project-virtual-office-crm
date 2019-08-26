@@ -1,17 +1,18 @@
 const {
-  DB_ERROR_EMAIL_ALREADY_REGISTERED,
-  DB_ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID,
-  DB_ERROR_USER_INACTIVE,
-  DB_ERROR_USER_SUSPENDED
+  DB_ERROR_NAME_CONTROLLER_ERROR,
+  DB_ERROR_MESSAGE_EMAIL_ALREADY_REGISTERED,
+  DB_ERROR_MESSAGE_EMAIL_AND_PASSWORD_COMBINATION_INVALID,
+  DB_ERROR_MESSAGE_USER_INACTIVE,
+  DB_ERROR_MESSAGE_USER_SUSPENDED
 } = require("../../constants");
 
 class Users {
   constructor({
     models,
-    helpers
+    nodeModules
   }) {
     this.models = models;
-    this.helpers = helpers;
+    this.nodeModules = nodeModules;
     this.register = this.register.bind(this);
     this.authenticate = this.authenticate.bind(this);
   }
@@ -38,71 +39,71 @@ class Users {
   }
 
   async register({
-    data: {
-      email,
-      password
-    },
+    email,
+    password,
     transaction
   }) {
+    const {
+      VError
+    } = this.nodeModules.verror;
     const user = await this._findByEmail(email, transaction);
 
     if (user) {
-      return this.helpers.wrapResult({
-        type: "fail",
-        service: "database",
-        errors: [DB_ERROR_EMAIL_ALREADY_REGISTERED]
-      });
+      return Promise.reject(new VError({
+        name: DB_ERROR_NAME_CONTROLLER_ERROR,
+        info: {
+          email,
+          password
+        }
+      }, DB_ERROR_MESSAGE_EMAIL_ALREADY_REGISTERED));
     }
 
-    const newUser = await this._register(email, password, transaction);
-
-    return this.helpers.wrapResult({
-      type: "success",
-      service: "database",
-      payload: newUser
-    });
+    return await this._register(email, password, transaction);
   }
 
   async authenticate({
-    data: {
-      email,
-      password
-    },
+    email,
+    password,
     transaction
   }) {
+    const {
+      VError
+    } = this.nodeModules.verror;
     const user = await this._findByEmail(email, transaction);
 
     if (!user || !await user.verifyPassword(password)) {
-      return this.helpers.wrapResult({
-        type: "fail",
-        service: "database",
-        errors: [DB_ERROR_EMAIL_AND_PASSWORD_COMBINATION_INVALID]
-      });
+      return Promise.reject(new VError({
+        name: DB_ERROR_NAME_CONTROLLER_ERROR,
+        info: {
+          email,
+          password
+        }
+      }, DB_ERROR_MESSAGE_EMAIL_AND_PASSWORD_COMBINATION_INVALID));
     }
 
     if (user.status === this.models.Users.STATUSES.INACTIVE) {
-      return this.helpers.wrapResult({
-        type: "fail",
-        service: "database",
-        errors: [DB_ERROR_USER_INACTIVE]
-      });
+      return Promise.reject(new VError({
+        name: DB_ERROR_NAME_CONTROLLER_ERROR,
+        info: {
+          email,
+          password
+        }
+      }, DB_ERROR_MESSAGE_USER_INACTIVE));
     }
 
     if (user.status === this.models.Users.STATUSES.SUSPENDED) {
-      return this.helpers.wrapResult({
-        type: "fail",
-        service: "database",
-        errors: [DB_ERROR_USER_SUSPENDED]
-      });
+      return Promise.reject(new VError({
+        name: DB_ERROR_NAME_CONTROLLER_ERROR,
+        info: {
+          email,
+          password
+        }
+      }, DB_ERROR_MESSAGE_USER_SUSPENDED));
     }
 
-    return this.helpers.wrapResult({
-      type: "success",
-      service: "database",
-      payload: {
-        id: user.id
-      }
-    });
+    return {
+      id: user.id
+    };
   }
 }
 
