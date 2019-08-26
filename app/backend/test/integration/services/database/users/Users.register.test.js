@@ -2,12 +2,14 @@ const {
   expect
 } = require("chai");
 const verror = require("verror");
-const services = require("../../../../src/services");
+const services = require("../../../../../src/services");
 
 describe("execute(\"users\", \"register\", { email, password })", () => {
   beforeEach(async () => {
     await services.get("database").getKnex().seed.run();
   });
+
+  afterEach(async () => {});
 
   it("registers a new inactive user", async () => {
     // Given
