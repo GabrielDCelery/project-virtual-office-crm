@@ -26,16 +26,16 @@ class AddressCities extends Model {
   }
 
   static get relationMappings() {
-    const AddressLocations = require('./AddressLocations');
+    const Addresses = require('./Addresses');
     const AddressCountries = require('./AddressCountries');
 
     return {
-      locations: {
+      addresses: {
         relation: Model.HasManyRelation,
-        modelClass: AddressLocations,
+        modelClass: Addresses,
         join: {
           from: `${AddressCities.tableName}.id`,
-          to: `${AddressLocations.tableName}.city_id`
+          to: `${Addresses.tableName}.city_id`
         }
       },
       country: {

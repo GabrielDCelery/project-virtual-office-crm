@@ -2,7 +2,6 @@ const {
     Users,
     AddressCountries,
     AddressCities,
-    AddressLocations,
     Addresses,
     MailSenders,
     MailSenderNames
@@ -32,18 +31,12 @@ exports.up = async knex => {
         table.unique(['name', 'country_id']);
     });
 
-    await knex.schema.createTable(AddressLocations.tableName, table => {
+    await knex.schema.createTable(Addresses.tableName, table => {
         table.increments('id').primary();
         table.string('postcode').notNullable();
         table.integer('city_id').references('id').inTable(AddressCities.tableName).notNullable();
-        table.unique(['postcode', 'city_id']);
-    });
-
-    await knex.schema.createTable(Addresses.tableName, table => {
-        table.increments('id').primary();
-        table.integer('location_id').references('id').inTable(AddressLocations.tableName);
-        table.string('address_line_1');
-        table.string('address_line_2');
+        table.string('long_street');
+        table.unique(['postcode', 'city_id', 'long_street']);
         table.timestamps();
     });
 
@@ -66,7 +59,6 @@ exports.down = async knex => {
     await knex.schema.dropTableIfExists(MailSenders.tableName);
     await knex.schema.dropTableIfExists(MailSenderNames.tableName);
     await knex.schema.dropTableIfExists(Addresses.tableName);
-    await knex.schema.dropTableIfExists(AddressLocations.tableName);
     await knex.schema.dropTableIfExists(AddressCities.tableName);
     await knex.schema.dropTableIfExists(AddressCountries.tableName);
 };

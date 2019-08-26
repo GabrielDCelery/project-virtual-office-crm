@@ -7,37 +7,37 @@ exports.seed = async knex => {
 
   await knex(Addresses.tableName).insert([{
     "id": 1,
-    "location_id": 1,
-    "address_line_1": "Miklós u. 13.",
-    "address_line_2": "VIII/42.",
+    "postcode": "1033",
+    "city_id": 310,
+    "long_street": "Miklós u. 13. VIII/42.",
     "created_at": insertDate,
     "updated_at": insertDate
   }, {
     "id": 2,
-    "location_id": 1,
-    "address_line_1": "Kiscelli utca 45.",
-    "address_line_2": null,
+    "postcode": "1033",
+    "city_id": 310,
+    "long_street": "Kiscelli utca 45.",
     "created_at": insertDate,
     "updated_at": insertDate
   }, {
     "id": 3,
-    "location_id": 3,
-    "address_line_1": "Melencei u. 35-37.",
-    "address_line_2": null,
+    "postcode": "8000",
+    "city_id": 2528,
+    "long_street": "Melencei u. 35-37.",
     "created_at": insertDate,
     "updated_at": insertDate
   }, {
     "id": 4,
-    "location_id": 4,
-    "address_line_1": "József Attila u. 56.",
-    "address_line_2": null,
+    "postcode": "3527",
+    "city_id": 1668,
+    "long_street": "József Attila u. 56.",
     "created_at": insertDate,
     "updated_at": insertDate
   }, {
     "id": 5,
-    "location_id": 2,
-    "address_line_1": "Báthory utca 6-4.",
-    "address_line_2": "3. emelet 12.",
+    "postcode": "1054",
+    "city_id": 310,
+    "long_street": "Báthory utca 6-4. 3. emelet 12.",
     "created_at": insertDate,
     "updated_at": insertDate
   }]);

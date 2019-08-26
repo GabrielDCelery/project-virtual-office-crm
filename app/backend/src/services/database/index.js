@@ -28,9 +28,7 @@ class DB {
   }) {
     const {
       Users,
-      Addresses,
-      AddressCities,
-      AddressCountries
+      Addresses
     } = controllers;
 
     this.controllers = {
@@ -41,13 +39,10 @@ class DB {
         }
       }),
       addresses: new Addresses({
-        models
-      }),
-      addressCities: new AddressCities({
-        models
-      }),
-      addressCountries: new AddressCountries({
-        models
+        models,
+        nodeModules: {
+          verror
+        }
       })
     }
   }

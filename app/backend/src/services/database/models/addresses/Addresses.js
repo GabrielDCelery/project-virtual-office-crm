@@ -15,19 +15,18 @@ class Addresses extends Model {
         id: {
           type: 'integer'
         },
-        location_id: {
-          type: 'integer'
-        },
-        address_line_1: {
+        postcode: {
           type: 'string'
         },
-        address_line_2: {
+        city_id: {
+          type: 'integer'
+        },
+        long_street: {
           type: 'string'
         },
         created_at: {
           type: 'string',
-          format: 'date-time',
-          readOnly: true
+          format: 'date-time'
         },
         updated_at: {
           type: 'string',
@@ -38,18 +37,18 @@ class Addresses extends Model {
   }
 
   static get relationMappings() {
-    const AddressLocations = require('./AddressLocations');
+    const AddressCities = require('./AddressCities');
     const {
       MailSenders
     } = require('../mails');
 
     return {
-      location: {
+      city: {
         relation: Model.BelongsToOneRelation,
-        modelClass: AddressLocations,
+        modelClass: AddressCities,
         join: {
-          from: `${Addresses.tableName}.location_id`,
-          to: `${AddressLocations.tableName}.id`
+          from: `${Addresses.tableName}.city_id`,
+          to: `${AddressCities.tableName}.id`
         }
       },
       mail_senders: {
