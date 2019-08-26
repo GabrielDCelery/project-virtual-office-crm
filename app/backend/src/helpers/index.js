@@ -1,3 +1,3 @@
 module.exports = {
-  wrapResult: require('./wrapResult')
+  ResultWrapper: require('./ResultWrapper')
 };

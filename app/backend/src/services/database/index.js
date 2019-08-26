@@ -7,6 +7,7 @@ const controllers = require('./controllers');
 const models = require('./models');
 const config = require('./config');
 const {
+  DB_SERVICE_NAME,
   DB_ERROR_NAME_CONTROLLER_ERROR
 } = require("./constants");
 
@@ -83,6 +84,10 @@ class DB {
   }
 
   async execute(controller, method, args) {
+    const {
+      ResultWrapper
+    } = this.helpers;
+
     return transaction(Model.knex(), async transaction => {
       try {
         const result = await this.controllers[controller][method]({
@@ -90,9 +95,9 @@ class DB {
           transaction
         });
 
-        return this.helpers.wrapResult({
-          type: "success",
-          service: "database",
+        return new ResultWrapper().wrap({
+          type: ResultWrapper.TYPE.SUCCESS,
+          service: DB_SERVICE_NAME,
           payload: result
         });
       } catch (error) {
@@ -100,9 +105,9 @@ class DB {
           throw error;
         }
 
-        return this.helpers.wrapResult({
-          type: "fail",
-          service: "database",
+        return new ResultWrapper().wrap({
+          type: ResultWrapper.TYPE.FAIL,
+          service: DB_SERVICE_NAME,
           errors: [error]
         });
       }

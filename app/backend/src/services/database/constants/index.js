@@ -1,5 +1,8 @@
 const errors = require('./errors');
+const service = require('./service');
+
 
 module.exports = {
-  ...errors
+  ...errors,
+  ...service
 };

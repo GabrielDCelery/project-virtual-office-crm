@@ -1,8 +1,13 @@
-const SUCCESS = 'SUCCESS'
-
 class ResultWrapper {
   constructor() {
     this.wrap = this.wrap.bind(this);
+  }
+
+  static get TYPE() {
+    return {
+      SUCCESS: 'SUCCESS',
+      FAIL: 'FAIL'
+    };
   }
 
   wrap({
@@ -11,7 +16,7 @@ class ResultWrapper {
     payload,
     errors
   }) {
-    if (type === 'success') {
+    if (type === ResultWrapper.TYPE.SUCCESS) {
       return {
         success: true,
         service,
@@ -20,7 +25,7 @@ class ResultWrapper {
       };
     }
 
-    if (type === 'fail') {
+    if (type === ResultWrapper.TYPE.FAIL) {
       return {
         success: false,
         service,
@@ -29,8 +34,8 @@ class ResultWrapper {
       };
     }
 
-    throw new Error(`Invalid parameter for ResultWrapper -> ${successOrFail}!`);
+    throw new Error(`Invalid parameter for ResultWrapper -> ${type}!`);
   }
 }
 
-module.exports = new ResultWrapper();
+module.exports = ResultWrapper;
