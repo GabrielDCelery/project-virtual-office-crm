@@ -1,9 +1,11 @@
-const users = require('./users');
 const addresses = require('./addresses');
+const entities = require('./entities');
 const mails = require('./mails');
+const users = require('./users');
 
 module.exports = {
-  ...users,
   ...addresses,
-  ...mails
+  ...entities,
+  ...mails,
+  ...users
 };

@@ -1,24 +1,24 @@
 const {
 	Router
-} = require('express');
+} = require("express");
 const {
 	executeService
-} = globalRequire('services');
+} = globalRequire("services");
 const {
 	apiJsonResultWrapper
-} = require('../helpers');
+} = require("../helpers");
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
-	return apiJsonResultWrapper(res, () => executeService('Users', 'register', {
+router.post("/register", async (req, res) => {
+	return apiJsonResultWrapper(res, () => executeService("Users", "register", {
 		data: req.body,
 		config: {}
 	}));
 });
 
-router.post('/authenticate', async (req, res) => {
-	return apiJsonResultWrapper(res, () => executeService('Users', 'authenticate', {
+router.post("/authenticate", async (req, res) => {
+	return apiJsonResultWrapper(res, () => executeService("Users", "authenticate", {
 		data: req.body,
 		config: {}
 	}));

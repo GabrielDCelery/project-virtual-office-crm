@@ -1,14 +1,14 @@
 const {
 	Router
-} = require('express');
+} = require("express");
 const {
 	apiJsonResultWrapper
-} = require('../helpers');
-const orchestrator = globalRequire('orchestrator');
+} = require("../helpers");
+const orchestrator = globalRequire("orchestrator");
 const router = Router();
 
-router.get('/', async (req, res) => {
-	return apiJsonResultWrapper(res, () => orchestrator.execute('addresses', 'findAll', {
+router.get("/", async (req, res) => {
+	return apiJsonResultWrapper(res, () => orchestrator.execute("addresses", "findAll", {
 		bFlatten: true
 	}));
 });

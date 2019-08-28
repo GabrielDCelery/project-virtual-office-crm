@@ -56,6 +56,12 @@ If you make any changes to the Dockerfiles or install any dependencies don't for
 make docker-build
 ```
 
+## Database Diagram
+
+```
+https://dbdiagram.io/d/5c701489f7c5bb70c72f186a
+```
+
 ## Production Database Migrations
 
 The production build does not run database migrations autmatically.
