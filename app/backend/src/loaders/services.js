@@ -1,5 +1,6 @@
 const services = globalRequire("services");
 const helpers = globalRequire("helpers");
+const lodash = require("lodash");
 const verror = require("verror");
 
 const {
@@ -31,6 +32,7 @@ module.exports = {
         SERVICE_DB_PORT
       },
       nodeModules: {
+        lodash,
         verror
       },
       helpers: helpers

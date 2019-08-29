@@ -25,7 +25,10 @@ class LegalEntitiesVersion extends Model {
         legal_entity_id: {
           type: 'integer'
         },
-        name: {
+        short_name: {
+          type: 'string'
+        },
+        long_name: {
           type: 'string'
         },
         type: {
@@ -40,31 +43,14 @@ class LegalEntitiesVersion extends Model {
         permanent_address_id: {
           type: 'id'
         },
-        created_at: {
-          type: 'string',
-          format: 'date-time'
+        version_start_at: {
+          type: 'date'
         },
-        updated_at: {
-          type: 'string',
-          format: 'date-time'
+        version_end_at: {
+          type: 'date'
         }
       }
     };
-  }
-
-  async $beforeInsert(context) {
-    await super.$beforeInsert(context);
-
-    const date = new Date().toISOString();
-
-    this.created_at = date;
-    this.updated_at = date;
-  }
-
-  async $beforeUpdate(context) {
-    await super.$beforeInsert(context);
-
-    this.updated_at = new Date().toISOString();
   }
 }
 

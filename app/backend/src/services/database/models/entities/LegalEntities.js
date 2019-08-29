@@ -22,7 +22,10 @@ class LegalEntities extends Model {
         id: {
           type: 'integer'
         },
-        name: {
+        short_name: {
+          type: 'string'
+        },
+        long_name: {
           type: 'string'
         },
         type: {
@@ -41,20 +44,7 @@ class LegalEntities extends Model {
           type: 'integer'
         },
         version_start_at: {
-          type: 'string',
-          format: 'date-time'
-        },
-        version_end_at: {
-          type: 'string',
-          format: 'date-time'
-        },
-        created_at: {
-          type: 'string',
-          format: 'date-time'
-        },
-        updated_at: {
-          type: 'string',
-          format: 'date-time'
+          type: 'date'
         }
       }
     };
@@ -65,7 +55,7 @@ class LegalEntities extends Model {
 
     return {
       mail_senders: {
-        relation: CustomModel.HasManyRelation,
+        relation: Model.HasManyRelation,
         modelClass: LegalEntitiesVersion,
         join: {
           from: `${LegalEntities.tableName}.id`,
@@ -73,21 +63,6 @@ class LegalEntities extends Model {
         }
       }
     };
-  }
-
-  async $beforeInsert(context) {
-    await super.$beforeInsert(context);
-
-    const date = new Date().toISOString();
-
-    this.created_at = date;
-    this.updated_at = date;
-  }
-
-  async $beforeUpdate(context) {
-    await super.$beforeInsert(context);
-
-    this.updated_at = new Date().toISOString();
   }
 }
 

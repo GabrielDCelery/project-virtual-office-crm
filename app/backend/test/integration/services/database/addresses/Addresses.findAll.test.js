@@ -29,8 +29,8 @@ describe('execute("addresses", "findAll")', () => {
         "postcode": "1033",
         "city_id": 310,
         "long_street": "Miklós u. 13. VIII/42.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z"),
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z"),
         "city": {
           "id": 310,
           "name": "Budapest",
@@ -46,8 +46,8 @@ describe('execute("addresses", "findAll")', () => {
         "postcode": "1033",
         "city_id": 310,
         "long_street": "Kiscelli utca 45.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z"),
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z"),
         "city": {
           "id": 310,
           "name": "Budapest",
@@ -63,8 +63,8 @@ describe('execute("addresses", "findAll")', () => {
         "postcode": "8000",
         "city_id": 2528,
         "long_street": "Melencei u. 35-37.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z"),
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z"),
         "city": {
           "id": 2528,
           "name": "Székesfehérvár",
@@ -80,8 +80,8 @@ describe('execute("addresses", "findAll")', () => {
         "postcode": "3527",
         "city_id": 1668,
         "long_street": "József Attila u. 56.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z"),
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z"),
         "city": {
           "id": 1668,
           "name": "Miskolc",
@@ -97,8 +97,8 @@ describe('execute("addresses", "findAll")', () => {
         "postcode": "1054",
         "city_id": 310,
         "long_street": "Báthory utca 6-4. 3. emelet 12.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z"),
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z"),
         "city": {
           "id": 310,
           "name": "Budapest",
@@ -138,8 +138,8 @@ describe('execute("addresses", "findAll")', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Miklós u. 13. VIII/42.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z")
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z")
       }, {
         "id": 2,
         "postcode": "1033",
@@ -149,8 +149,8 @@ describe('execute("addresses", "findAll")', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Kiscelli utca 45.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z")
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z")
       }, {
         "id": 3,
         "postcode": "8000",
@@ -160,8 +160,8 @@ describe('execute("addresses", "findAll")', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Melencei u. 35-37.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z")
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z")
       }, {
         "id": 4,
         "postcode": "3527",
@@ -171,8 +171,8 @@ describe('execute("addresses", "findAll")', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "József Attila u. 56.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z")
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z")
       }, {
         "id": 5,
         "postcode": "1054",
@@ -182,8 +182,8 @@ describe('execute("addresses", "findAll")', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Báthory utca 6-4. 3. emelet 12.",
-        "created_at": new Date("2019-11-11T11:11:11.000Z"),
-        "updated_at": new Date("2019-11-11T11:11:11.000Z")
+        "created_at": new Date("2018-11-11T11:11:11.000Z"),
+        "updated_at": new Date("2018-11-11T11:11:11.000Z")
       }]
     });
   });

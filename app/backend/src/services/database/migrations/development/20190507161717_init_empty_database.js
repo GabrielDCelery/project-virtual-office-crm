@@ -57,30 +57,30 @@ exports.up = async knex => {
 
 	await knex.schema.createTable(LegalEntities.tableName, table => {
 		table.increments('id').primary();
-		table.string('name');
+		table.string('short_name');
+		table.string('long_name');
 		table.integer('type');
 		table.string('registration_id');
 		table.string('tax_id');
 		table.integer('permanent_address_id');
 		table.integer('version');
-		table.date('version_start_at');
-		table.date('version_end_at');
-		table.timestamps();
+		table.datetime('version_start_at');
 	});
 
 	await knex.schema.createTable(LegalEntitiesVersion.tableName, table => {
 		table.increments('id').primary();
-		table.integer('legal_entity_id').references('id').inTable(LegalEntities.tableName).notNullable();
-		table.string('name');
+		table.string('short_name');
+		table.string('long_name');
 		table.integer('type');
 		table.string('registration_id');
 		table.string('tax_id');
 		table.integer('permanent_address_id').references('id').inTable(Addresses.tableName).notNullable();
+		table.integer('legal_entity_id').references('id').inTable(LegalEntities.tableName).notNullable();
 		table.integer('version');
-		table.date('version_start_at');
-		table.date('version_end_at');
-		table.timestamps();
+		table.datetime('version_start_at');
+		table.datetime('version_end_at');
 		table.unique(['legal_entity_id', 'version']);
+		table.index(['legal_entity_id'], 'legal_entity_id');
 	});
 };
 

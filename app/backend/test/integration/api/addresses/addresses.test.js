@@ -37,8 +37,8 @@ describe('/api/addresses', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Miklós u. 13. VIII/42.",
-        "created_at": "2019-11-11T11:11:11.000Z",
-        "updated_at": "2019-11-11T11:11:11.000Z"
+        "created_at": "2018-11-11T11:11:11.000Z",
+        "updated_at": "2018-11-11T11:11:11.000Z"
       }, {
         "id": 2,
         "postcode": "1033",
@@ -48,8 +48,8 @@ describe('/api/addresses', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Kiscelli utca 45.",
-        "created_at": "2019-11-11T11:11:11.000Z",
-        "updated_at": "2019-11-11T11:11:11.000Z"
+        "created_at": "2018-11-11T11:11:11.000Z",
+        "updated_at": "2018-11-11T11:11:11.000Z"
       }, {
         "id": 3,
         "postcode": "8000",
@@ -59,8 +59,8 @@ describe('/api/addresses', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Melencei u. 35-37.",
-        "created_at": "2019-11-11T11:11:11.000Z",
-        "updated_at": "2019-11-11T11:11:11.000Z"
+        "created_at": "2018-11-11T11:11:11.000Z",
+        "updated_at": "2018-11-11T11:11:11.000Z"
       }, {
         "id": 4,
         "postcode": "3527",
@@ -70,8 +70,8 @@ describe('/api/addresses', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "József Attila u. 56.",
-        "created_at": "2019-11-11T11:11:11.000Z",
-        "updated_at": "2019-11-11T11:11:11.000Z"
+        "created_at": "2018-11-11T11:11:11.000Z",
+        "updated_at": "2018-11-11T11:11:11.000Z"
       }, {
         "id": 5,
         "postcode": "1054",
@@ -81,8 +81,8 @@ describe('/api/addresses', () => {
         "country_name": "Hungary",
         "country_short_name": "HU",
         "long_street": "Báthory utca 6-4. 3. emelet 12.",
-        "created_at": "2019-11-11T11:11:11.000Z",
-        "updated_at": "2019-11-11T11:11:11.000Z"
+        "created_at": "2018-11-11T11:11:11.000Z",
+        "updated_at": "2018-11-11T11:11:11.000Z"
       }]
     });
   });

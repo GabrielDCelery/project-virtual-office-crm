@@ -3,7 +3,7 @@ const {
 } = require('../../models');
 
 exports.seed = async knex => {
-  const insertDate = new Date('2019-11-11T11:11:11');
+  const insertDate = new Date('2018-11-11T11:11:11');
 
   await knex(Addresses.tableName).insert([{
     "id": 1,

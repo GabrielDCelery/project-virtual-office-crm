@@ -22,27 +22,26 @@ class DB {
   }
 
   initialize({
-    nodeModules: {
-      verror
-    }
+    nodeModules
   }) {
     const {
-      Users,
-      Addresses
+      Addresses,
+      LegalEntities,
+      Users
     } = controllers;
 
     this.controllers = {
-      users: new Users({
-        models,
-        nodeModules: {
-          verror
-        }
-      }),
       addresses: new Addresses({
         models,
-        nodeModules: {
-          verror
-        }
+        nodeModules
+      }),
+      legalEntities: new LegalEntities({
+        models,
+        nodeModules
+      }),
+      users: new Users({
+        models,
+        nodeModules
       })
     }
   }
