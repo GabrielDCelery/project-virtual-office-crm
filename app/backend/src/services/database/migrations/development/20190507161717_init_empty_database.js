@@ -85,12 +85,12 @@ exports.up = async knex => {
 };
 
 exports.down = async knex => {
-	await knex.schema.dropTableIfExists(Users.tableName);
+	await knex.schema.dropTableIfExists(LegalEntitiesVersion.tableName);
+	await knex.schema.dropTableIfExists(LegalEntities.tableName);
 	await knex.schema.dropTableIfExists(MailSenders.tableName);
 	await knex.schema.dropTableIfExists(MailSenderNames.tableName);
 	await knex.schema.dropTableIfExists(Addresses.tableName);
 	await knex.schema.dropTableIfExists(AddressCities.tableName);
 	await knex.schema.dropTableIfExists(AddressCountries.tableName);
-	await knex.schema.dropTableIfExists(LegalEntitiesVersion.tableName);
-	await knex.schema.dropTableIfExists(LegalEntities.tableName);
+	await knex.schema.dropTableIfExists(Users.tableName);
 };
