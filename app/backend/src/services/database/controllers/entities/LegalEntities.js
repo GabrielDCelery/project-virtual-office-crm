@@ -64,9 +64,22 @@ class LegalEntities {
   }
 
   async findAllVersions({
+    id,
     transaction
   }) {
+    const afterUpdateCurrentLegalEntity = await this.models.LegalEntities
+      .query(transaction)
+      .findById(id);
+    const afterUpdatePreviousVersionsOfLegalEntity = await this.models.LegalEntitiesVersion
+      .query(transaction)
+      .where({
+        legal_entity_id: id
+      }).orderBy('version', 'DESC');
 
+    return [
+      afterUpdateCurrentLegalEntity,
+      ...afterUpdatePreviousVersionsOfLegalEntity
+    ];
   }
 
   async update({
@@ -105,16 +118,10 @@ class LegalEntities {
         }
       }));
 
-    return {
-      current: await this.models.LegalEntities
-        .query(transaction)
-        .findById(id),
-      versions: await this.models.LegalEntitiesVersion
-        .query(transaction)
-        .where({
-          legal_entity_id: id
-        })
-    };
+    return await this.findAllVersions({
+      id,
+      transaction
+    });
   }
 }
 
