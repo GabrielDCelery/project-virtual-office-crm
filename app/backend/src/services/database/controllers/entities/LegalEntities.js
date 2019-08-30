@@ -67,18 +67,18 @@ class LegalEntities {
     id,
     transaction
   }) {
-    const afterUpdateCurrentLegalEntity = await this.models.LegalEntities
+    const latestVersionLegalEntity = await this.models.LegalEntities
       .query(transaction)
       .findById(id);
-    const afterUpdatePreviousVersionsOfLegalEntity = await this.models.LegalEntitiesVersion
+    const previousVersionsOfLegalEntity = await this.models.LegalEntitiesVersion
       .query(transaction)
       .where({
         legal_entity_id: id
       }).orderBy('version', 'DESC');
 
     return [
-      afterUpdateCurrentLegalEntity,
-      ...afterUpdatePreviousVersionsOfLegalEntity
+      latestVersionLegalEntity,
+      ...previousVersionsOfLegalEntity
     ];
   }
 
