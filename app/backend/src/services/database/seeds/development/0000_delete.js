@@ -2,6 +2,8 @@ const {
   AddressCities,
   AddressCountries,
   Addresses,
+  Documents,
+  DocumentsDetails,
   LegalEntities,
   LegalEntitiesVersion,
   MailSenderNames,
@@ -10,6 +12,8 @@ const {
 } = require('../../models');
 
 exports.seed = async knex => {
+  await knex(DocumentsDetails.tableName).del();
+  await knex(Documents.tableName).del();
   await knex(LegalEntitiesVersion.tableName).del();
   await knex(LegalEntities.tableName).del();
   await knex(Users.tableName).del();

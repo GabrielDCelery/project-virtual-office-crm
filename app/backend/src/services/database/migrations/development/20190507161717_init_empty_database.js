@@ -2,9 +2,12 @@ const {
 	AddressCities,
 	AddressCountries,
 	Addresses,
+	Documents,
+	DocumentsDetails,
 	LegalEntities,
 	LegalEntitiesMails,
-	LegalEntitiesMailsEvents,
+	LegalEntitiesMailsAuditTrails,
+	LegalEntitiesMailsAuditTrailsDetails,
 	LegalEntitiesVersion,
 	MailSenderNames,
 	MailSenders,
@@ -13,6 +16,27 @@ const {
 } = require('../../models');
 
 exports.up = async knex => {
+	await knex.schema.createTable(Documents.tableName, table => {
+		table.increments('id').primary();
+		table.string('name');
+		table.enum('type', [
+			Documents.TYPES.DEED_OF_ASSOCIATION,
+			Documents.TYPES.IDENTITY_CARD,
+			Documents.TYPES.MAIL,
+			Documents.TYPES.SPECIMEN_SIGNATURE
+		]);
+	});
+
+	await knex.schema.createTable(DocumentsDetails.tableName, table => {
+		table.increments('id')
+			.references('id')
+			.inTable(Documents.tableName)
+			.notNullable()
+			.primary();
+		table.jsonb('aws_storage_details');
+		table.timestamps();
+	});
+
 	await knex.schema.createTable(Users.tableName, table => {
 		table.increments('id').primary();
 		table.string('email');
@@ -110,18 +134,29 @@ exports.up = async knex => {
 		table.integer('document_id');
 	});
 
-	await knex.schema.createTable(LegalEntitiesMailsEvents.tableName, table => {
+	await knex.schema.createTable(LegalEntitiesMailsAuditTrails.tableName, table => {
 		table.increments('id').primary();
 		table.integer('legal_entities_mail_id').references('id').inTable(LegalEntitiesMails.tableName).notNullable();
-		table.integer('type');
-		table.jsonb('meta');
-		table.datetime('happened_at');
+		table.enum('event_type', [
+			LegalEntitiesMailsAuditTrails.TYPES.MAIL_RECEIVED
+		]);
+		table.datetime('event_time');
 		table.timestamps();
+	});
+
+	await knex.schema.createTable(LegalEntitiesMailsAuditTrailsDetails.tableName, table => {
+		table.increments('id').primary();
+		table.integer('legal_entities_mails_audit_trail_id')
+			.references('id')
+			.inTable(LegalEntitiesMailsAuditTrails.tableName)
+			.notNullable();
+		table.jsonb('data');
 	});
 };
 
 exports.down = async knex => {
-	await knex.schema.dropTableIfExists(LegalEntitiesMailsEvents.tableName);
+	await knex.schema.dropTableIfExists(LegalEntitiesMailsAuditTrailsDetails.tableName);
+	await knex.schema.dropTableIfExists(LegalEntitiesMailsAuditTrails.tableName);
 	await knex.schema.dropTableIfExists(LegalEntitiesMails.tableName);
 	await knex.schema.dropTableIfExists(LegalEntitiesVersion.tableName);
 	await knex.schema.dropTableIfExists(LegalEntities.tableName);
@@ -132,4 +167,6 @@ exports.down = async knex => {
 	await knex.schema.dropTableIfExists(AddressCities.tableName);
 	await knex.schema.dropTableIfExists(AddressCountries.tableName);
 	await knex.schema.dropTableIfExists(Users.tableName);
+	await knex.schema.dropTableIfExists(DocumentsDetails.tableName);
+	await knex.schema.dropTableIfExists(Documents.tableName);
 };

@@ -2,9 +2,9 @@ const {
   Model
 } = require('objection');
 
-class Addresses extends Model {
+class DocumentsDetails extends Model {
   static get tableName() {
-    return 'addresses';
+    return 'documents_details';
   }
 
   static get jsonSchema() {
@@ -15,14 +15,8 @@ class Addresses extends Model {
         id: {
           type: 'integer'
         },
-        postcode: {
-          type: 'string'
-        },
-        city_id: {
-          type: 'integer'
-        },
-        long_street: {
-          type: 'string'
+        aws_storage_details: {
+          type: 'json'
         },
         created_at: {
           type: 'string',
@@ -37,26 +31,15 @@ class Addresses extends Model {
   }
 
   static get relationMappings() {
-    const AddressCities = require('./AddressCities');
-    const {
-      MailSenders
-    } = require('../mails');
+    const Documents = require('./Documents');
 
     return {
-      city: {
+      document: {
         relation: Model.BelongsToOneRelation,
-        modelClass: AddressCities,
+        modelClass: Documents,
         join: {
-          from: `${Addresses.tableName}.city_id`,
-          to: `${AddressCities.tableName}.id`
-        }
-      },
-      mail_senders: {
-        relation: Model.HasManyRelation,
-        modelClass: MailSenders,
-        join: {
-          from: `${Addresses.tableName}.id`,
-          to: 'mail_senders.address_id'
+          from: `${DocumentsDetails.tableName}.document_id`,
+          to: `${Documents.tableName}.id`
         }
       }
     };
@@ -74,4 +57,4 @@ class Addresses extends Model {
   }
 }
 
-module.exports = Addresses;
+module.exports = DocumentsDetails;

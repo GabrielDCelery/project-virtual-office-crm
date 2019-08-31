@@ -26,9 +26,7 @@ class MailSenders extends Model {
   }
 
   static get relationMappings() {
-    const {
-      Addresses
-    } = require('../addresses');
+    const Addresses = require('./Addresses');
     const MailSenderNames = require('./MailSenderNames');
 
     return {

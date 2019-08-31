@@ -26,12 +26,17 @@ class DB {
   }) {
     const {
       Addresses,
+      Documents,
       LegalEntities,
       Users
     } = controllers;
 
     this.controllers = {
       addresses: new Addresses({
+        models,
+        nodeModules
+      }),
+      documents: new Documents({
         models,
         nodeModules
       }),
@@ -77,35 +82,39 @@ class DB {
     return this.knex;
   }
 
-  async execute(controller, method, args) {
+  async execute(controller, method, args = {}) {
     const {
       ResultWrapper
     } = this.helpers;
 
-    return transaction(Model.knex(), async transaction => {
-      try {
-        const result = await this.controllers[controller][method]({
-          ...args,
-          transaction
-        });
+    const trx = args["transaction"] ? args["transaction"] : await transaction.start(Model.knex());
 
-        return new ResultWrapper().wrap({
-          type: ResultWrapper.TYPE.SUCCESS,
-          service: DB_SERVICE_NAME,
-          payload: result
-        });
-      } catch (error) {
-        if (error.name !== DB_ERROR_NAME_CONTROLLER_ERROR) {
-          throw error;
-        }
+    try {
+      const result = await this.controllers[controller][method]({
+        ...args,
+        transaction: trx
+      });
 
-        return new ResultWrapper().wrap({
-          type: ResultWrapper.TYPE.FAIL,
-          service: DB_SERVICE_NAME,
-          errors: [error]
-        });
+      await trx.commit();
+
+      return new ResultWrapper().wrap({
+        type: ResultWrapper.TYPE.SUCCESS,
+        service: DB_SERVICE_NAME,
+        payload: result
+      });
+    } catch (error) {
+      await trx.rollback();
+
+      if (error.name !== DB_ERROR_NAME_CONTROLLER_ERROR) {
+        throw error;
       }
-    });
+
+      return new ResultWrapper().wrap({
+        type: ResultWrapper.TYPE.FAIL,
+        service: DB_SERVICE_NAME,
+        errors: [error]
+      });
+    }
   }
 }
 

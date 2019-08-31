@@ -27,7 +27,7 @@ class MailSenderNames extends Model {
 
     return {
       mail_senders: {
-        relation: CustomModel.HasManyRelation,
+        relation: Model.HasManyRelation,
         modelClass: MailSenders,
         join: {
           from: `${MailSenderNames.tableName}.id`,
