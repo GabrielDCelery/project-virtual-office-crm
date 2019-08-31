@@ -131,7 +131,7 @@ exports.up = async knex => {
 		table.integer('legal_entity_id').references('id').inTable(LegalEntities.tableName).notNullable();
 		table.integer('sender_id').references('id').inTable(MailSenders.tableName).notNullable();
 		table.integer('subject_id').references('id').inTable(MailSubjects.tableName).notNullable();
-		table.integer('document_id');
+		table.integer('document_id').references('id').inTable(Documents.tableName).notNullable();
 	});
 
 	await knex.schema.createTable(LegalEntitiesMailsAuditTrails.tableName, table => {
