@@ -9,7 +9,7 @@ class LegalEntities {
     this.nodeModules = nodeModules;
     this._prepareInputForDbInsert = this._prepareInputForDbInsert.bind(this);
     this.create = this.create.bind(this);
-    this.findAllVersions = this.findAllVersions.bind(this);
+    this.getAllVersions = this.getAllVersions.bind(this);
     this.update = this.update.bind(this);
   }
 
@@ -63,7 +63,7 @@ class LegalEntities {
       }));
   }
 
-  async findAllVersions({
+  async getAllVersions({
     id,
     transaction
   }) {
@@ -118,7 +118,7 @@ class LegalEntities {
         }
       }));
 
-    return await this.findAllVersions({
+    return await this.getAllVersions({
       id,
       transaction
     });

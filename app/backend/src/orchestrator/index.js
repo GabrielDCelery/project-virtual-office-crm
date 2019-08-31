@@ -1,5 +1,6 @@
 const Users = require('./Users');
 const addresses = require('./addresses');
+const legalEntities = require('./legalEntities');
 
 class Orchestrator {
   constructor() {
@@ -12,12 +13,15 @@ class Orchestrator {
 
   initialize(services) {
     this.instances = {
+      addresses: {
+        findAll: addresses.findAllWrapper(services)
+      },
+      legalEntities: {
+        update: legalEntities.updateWrapper(services)
+      },
       users: new Users({
         services
       }),
-      addresses: {
-        findAll: addresses.findAllWrapper(services)
-      }
     };
   }
 
