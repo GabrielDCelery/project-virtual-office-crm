@@ -47,18 +47,20 @@ describe("execute(\"users\", \"authenticate\", { email, password })", () => {
     const result = await services.get("database").execute(controller, method, args);
 
     // Then
-    const {
-      success,
-      errors,
-      payload
-    } = result;
-
-    expect(success).to.equal(false);
-    expect(errors.length).to.equal(1);
-    expect(errors[0].name).to.equal("DatabaseControllerError");
-    expect(errors[0].message).to.equal("The email and password combination you entered is invalid!");
-    expect(verror.info(errors[0])).to.deep.equal(args);
-    expect(payload).to.equal(null);
+    expect(JSON.parse(JSON.stringify(result))).to.deep.equal({
+      "success": false,
+      "service": "database",
+      "errors": [{
+        "name": "DatabaseControllerError",
+        "jse_shortmsg": "The email and password combination you entered is invalid!",
+        "jse_info": {
+          "email": "doesnotexist@test.com",
+          "password": "password"
+        },
+        "message": "The email and password combination you entered is invalid!"
+      }],
+      "payload": null
+    });
   });
 
   it("returns an error if the password is invalid", async () => {
@@ -74,18 +76,20 @@ describe("execute(\"users\", \"authenticate\", { email, password })", () => {
     const result = await services.get("database").execute(controller, method, args);
 
     // Then
-    const {
-      success,
-      errors,
-      payload
-    } = result;
-
-    expect(success).to.equal(false);
-    expect(errors.length).to.equal(1);
-    expect(errors[0].name).to.equal("DatabaseControllerError");
-    expect(errors[0].message).to.equal("The email and password combination you entered is invalid!");
-    expect(verror.info(errors[0])).to.deep.equal(args);
-    expect(payload).to.equal(null);
+    expect(JSON.parse(JSON.stringify(result))).to.deep.equal({
+      "success": false,
+      "service": "database",
+      "errors": [{
+        "name": "DatabaseControllerError",
+        "jse_shortmsg": "The email and password combination you entered is invalid!",
+        "jse_info": {
+          "email": "test@test.com",
+          "password": "somebspassword"
+        },
+        "message": "The email and password combination you entered is invalid!"
+      }],
+      "payload": null
+    });
   });
 
   it("returns an error if the account is inactive", async () => {
@@ -101,18 +105,20 @@ describe("execute(\"users\", \"authenticate\", { email, password })", () => {
     const result = await services.get("database").execute(controller, method, args);
 
     // Then
-    const {
-      success,
-      errors,
-      payload
-    } = result;
-
-    expect(success).to.equal(false);
-    expect(errors.length).to.equal(1);
-    expect(errors[0].name).to.equal("DatabaseControllerError");
-    expect(errors[0].message).to.equal("This account is inactive!");
-    expect(verror.info(errors[0])).to.deep.equal(args);
-    expect(payload).to.equal(null);
+    expect(JSON.parse(JSON.stringify(result))).to.deep.equal({
+      "success": false,
+      "service": "database",
+      "errors": [{
+        "name": "DatabaseControllerError",
+        "jse_shortmsg": "This account is inactive!",
+        "jse_info": {
+          "email": "test2@test.com",
+          "password": "password"
+        },
+        "message": "This account is inactive!"
+      }],
+      "payload": null
+    });
   });
 
   it("returns an error if the account is suspended ", async () => {
@@ -128,17 +134,19 @@ describe("execute(\"users\", \"authenticate\", { email, password })", () => {
     const result = await services.get("database").execute(controller, method, args);
 
     // Then
-    const {
-      success,
-      errors,
-      payload
-    } = result;
-
-    expect(success).to.equal(false);
-    expect(errors.length).to.equal(1);
-    expect(errors[0].name).to.equal("DatabaseControllerError");
-    expect(errors[0].message).to.equal("This account is suspended!");
-    expect(verror.info(errors[0])).to.deep.equal(args);
-    expect(payload).to.equal(null);
+    expect(JSON.parse(JSON.stringify(result))).to.deep.equal({
+      "success": false,
+      "service": "database",
+      "errors": [{
+        "name": "DatabaseControllerError",
+        "jse_shortmsg": "This account is suspended!",
+        "jse_info": {
+          "email": "test3@test.com",
+          "password": "password"
+        },
+        "message": "This account is suspended!"
+      }],
+      "payload": null
+    });
   });
 });

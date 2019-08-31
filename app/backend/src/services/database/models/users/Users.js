@@ -10,9 +10,9 @@ class Users extends Password(Model) {
 
   static get STATUSES() {
     return {
-      INACTIVE: 0,
-      ACTIVE: 1,
-      SUSPENDED: 2
+      INACTIVE: 'inactive',
+      ACTIVE: 'active',
+      SUSPENDED: 'suspended'
     };
   }
 

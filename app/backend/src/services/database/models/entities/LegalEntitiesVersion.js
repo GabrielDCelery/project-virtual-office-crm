@@ -9,8 +9,9 @@ class LegalEntitiesVersion extends Model {
 
   static get TYPES() {
     return {
-      KFT: 0,
-      BT: 1
+      LIMITED_LIABILITY_COMPANY: 'Limited Liability Company',
+      UNLIMITED_PARTNERSHIP: 'Unlimited Partnership',
+      SOLE_PROPRIETORSHIPS: 'Sole proprietorships'
     };
   }
 
@@ -32,7 +33,12 @@ class LegalEntitiesVersion extends Model {
           type: 'string'
         },
         type: {
-          type: 'integer'
+          type: 'string',
+          enum: [
+            LegalEntitiesVersion.TYPES.LIMITED_LIABILITY_COMPANY,
+            LegalEntitiesVersion.TYPES.UNLIMITED_PARTNERSHIP,
+            LegalEntitiesVersion.TYPES.SOLE_PROPRIETORSHIPS
+          ]
         },
         registration_id: {
           type: 'string'

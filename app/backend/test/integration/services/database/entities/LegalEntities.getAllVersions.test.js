@@ -11,7 +11,7 @@ describe("execute(\"legalEntities\", \"getAllVersions\", {})", () => {
 
   afterEach(async () => {});
 
-  it("updates a legal entity", async () => {
+  it("gets all versions of a legal entity", async () => {
     // Given
     const controller = "legalEntities";
     const method = "getAllVersions";
@@ -31,7 +31,7 @@ describe("execute(\"legalEntities\", \"getAllVersions\", {})", () => {
         "id": 2,
         "short_name": "Chrono-Line",
         "long_name": "Chrono-Line",
-        "type": 0,
+        "type": "Limited Liability Company",
         "registration_id": "02-03-529212",
         "tax_id": "31580371-1-42",
         "permanent_address_id": 1,
@@ -41,7 +41,7 @@ describe("execute(\"legalEntities\", \"getAllVersions\", {})", () => {
         "id": 2,
         "short_name": "Chrono-Line",
         "long_name": "Chrono-Line",
-        "type": 0,
+        "type": "Limited Liability Company",
         "registration_id": "02-03-529212",
         "tax_id": "41580371-1-42",
         "permanent_address_id": 1,
@@ -53,7 +53,7 @@ describe("execute(\"legalEntities\", \"getAllVersions\", {})", () => {
         "id": 1,
         "short_name": "Chrono-Trigger",
         "long_name": "Chrono-Trigger",
-        "type": 0,
+        "type": "Limited Liability Company",
         "registration_id": "02-03-529212",
         "tax_id": "41580371-1-42",
         "permanent_address_id": 1,

@@ -3,9 +3,12 @@ const {
 	AddressCountries,
 	Addresses,
 	LegalEntities,
+	LegalEntitiesMails,
+	LegalEntitiesMailsEvents,
 	LegalEntitiesVersion,
 	MailSenderNames,
 	MailSenders,
+	MailSubjects,
 	Users
 } = require('../../models');
 
@@ -14,7 +17,11 @@ exports.up = async knex => {
 		table.increments('id').primary();
 		table.string('email');
 		table.string('password');
-		table.integer('status').defaultTo(Users.STATUSES.INACTIVE);
+		table.enum('status', [
+			Users.STATUSES.INACTIVE,
+			Users.STATUSES.ACTIVE,
+			Users.STATUSES.SUSPENDED
+		]).defaultTo(Users.STATUSES.INACTIVE);
 		table.timestamps();
 		table.unique(['email']);
 	});
@@ -55,11 +62,20 @@ exports.up = async knex => {
 		table.unique(['address_id', 'name_id']);
 	});
 
+	await knex.schema.createTable(MailSubjects.tableName, table => {
+		table.increments('id').primary();
+		table.string('long_subject');
+		table.unique(['long_subject']);
+	});
+
 	await knex.schema.createTable(LegalEntities.tableName, table => {
 		table.increments('id').primary();
 		table.string('short_name');
 		table.string('long_name');
-		table.integer('type');
+		table.enum('type', [
+			LegalEntities.TYPES.LIMITED_LIABILITY_COMPANY,
+			LegalEntities.TYPES.UNLIMITED_PARTNERSHIP
+		]);
 		table.string('registration_id');
 		table.string('tax_id');
 		table.integer('permanent_address_id');
@@ -71,7 +87,10 @@ exports.up = async knex => {
 		table.increments('id').primary();
 		table.string('short_name');
 		table.string('long_name');
-		table.integer('type');
+		table.enum('type', [
+			LegalEntitiesVersion.TYPES.LIMITED_LIABILITY_COMPANY,
+			LegalEntitiesVersion.TYPES.UNLIMITED_PARTNERSHIP
+		]);
 		table.string('registration_id');
 		table.string('tax_id');
 		table.integer('permanent_address_id').references('id').inTable(Addresses.tableName).notNullable();
@@ -82,11 +101,31 @@ exports.up = async knex => {
 		table.unique(['legal_entity_id', 'version']);
 		table.index(['legal_entity_id'], 'legal_entity_id');
 	});
+
+	await knex.schema.createTable(LegalEntitiesMails.tableName, table => {
+		table.increments('id').primary();
+		table.integer('legal_entity_id').references('id').inTable(LegalEntities.tableName).notNullable();
+		table.integer('sender_id').references('id').inTable(MailSenders.tableName).notNullable();
+		table.integer('subject_id').references('id').inTable(MailSubjects.tableName).notNullable();
+		table.integer('document_id');
+	});
+
+	await knex.schema.createTable(LegalEntitiesMailsEvents.tableName, table => {
+		table.increments('id').primary();
+		table.integer('legal_entities_mail_id').references('id').inTable(LegalEntitiesMails.tableName).notNullable();
+		table.integer('type');
+		table.jsonb('meta');
+		table.datetime('happened_at');
+		table.timestamps();
+	});
 };
 
 exports.down = async knex => {
+	await knex.schema.dropTableIfExists(LegalEntitiesMailsEvents.tableName);
+	await knex.schema.dropTableIfExists(LegalEntitiesMails.tableName);
 	await knex.schema.dropTableIfExists(LegalEntitiesVersion.tableName);
 	await knex.schema.dropTableIfExists(LegalEntities.tableName);
+	await knex.schema.dropTableIfExists(MailSubjects.tableName);
 	await knex.schema.dropTableIfExists(MailSenders.tableName);
 	await knex.schema.dropTableIfExists(MailSenderNames.tableName);
 	await knex.schema.dropTableIfExists(Addresses.tableName);

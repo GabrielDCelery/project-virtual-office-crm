@@ -23,7 +23,7 @@ describe("execute(\"legalEntities\", \"update\", {})", () => {
     const method = "update";
     const args = {
       "id": 1,
-      "type": 1,
+      "type": "Unlimited Partnership",
       "taxId": "24892285-1-42"
     };
 
@@ -39,7 +39,7 @@ describe("execute(\"legalEntities\", \"update\", {})", () => {
         "id": 1,
         "short_name": "Bacz Invest",
         "long_name": "Bacz Invest Elektro Technikai",
-        "type": 1,
+        "type": "Unlimited Partnership",
         "registration_id": "03-01-131101",
         "tax_id": "24892285-1-42",
         "permanent_address_id": 1,
@@ -50,7 +50,7 @@ describe("execute(\"legalEntities\", \"update\", {})", () => {
         "legal_entity_id": 1,
         "short_name": "Bacz Invest",
         "long_name": "Bacz Invest Elektro Technikai",
-        "type": 0,
+        "type": "Limited Liability Company",
         "registration_id": "03-01-131101",
         "tax_id": "13781174-1-42",
         "permanent_address_id": 1,

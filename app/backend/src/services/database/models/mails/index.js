@@ -1,4 +1,7 @@
 module.exports = {
-  MailSenders: require('./MailSenders'),
-  MailSenderNames: require('./MailSenderNames')
+  LegalEntitiesMails: require("./LegalEntitiesMails"),
+  LegalEntitiesMailsEvents: require("./LegalEntitiesMailsEvents"),
+  MailSenders: require("./MailSenders"),
+  MailSenderNames: require("./MailSenderNames"),
+  MailSubjects: require("./MailSubjects")
 };
