@@ -95,13 +95,22 @@ class DB {
         transaction: trx
       });
 
-      await trx.commit();
-
-      return new ResultWrapper().wrap({
+      const returnObj = {
         type: ResultWrapper.TYPE.SUCCESS,
         service: DB_SERVICE_NAME,
         payload: result
-      });
+      };
+
+      if (args["bReturnTransaction"]) {
+        returnObj["extra"] = {};
+        returnObj["extra"]["transaction"] = trx;
+      }
+
+      const toReturn = new ResultWrapper().wrap(returnObj);
+
+      await trx.commit();
+
+      return toReturn;
     } catch (error) {
       await trx.rollback();
 

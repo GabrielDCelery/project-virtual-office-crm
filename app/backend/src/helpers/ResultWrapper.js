@@ -14,15 +14,22 @@ class ResultWrapper {
     type,
     service,
     payload,
-    errors
+    errors,
+    extra
   }) {
     if (type === ResultWrapper.TYPE.SUCCESS) {
-      return {
+      const returnObject = {
         success: true,
         service,
         errors: [],
         payload: payload
       };
+
+      if (extra) {
+        returnObject[extra];
+      }
+
+      return returnObject;
     }
 
     if (type === ResultWrapper.TYPE.FAIL) {
