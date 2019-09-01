@@ -1,6 +1,4 @@
-const {
-  Model
-} = require('objection');
+const { Model } = require('objection');
 
 class LegalEntitiesMails extends Model {
   static get tableName() {

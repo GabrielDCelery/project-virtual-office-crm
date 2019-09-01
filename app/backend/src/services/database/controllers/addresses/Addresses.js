@@ -1,22 +1,18 @@
 class Addresses {
-  constructor({
-    models,
-    nodeModules
-  }) {
+  constructor({ models, nodeModules }) {
     this.models = models;
     this.nodeModules = nodeModules;
     this.findAll = this.findAll.bind(this);
   }
 
-  async findAll({
-    bFlatten,
-    transaction
-  }) {
-    let addresses = await this.models.Addresses
-      .query(transaction)
-      .eager('city.country');
+  async findAll({ bFlatten, transaction }) {
+    let addresses = await this.models.Addresses.query(transaction).eager(
+      'city.country'
+    );
 
-    return bFlatten === true ? addresses.map(Addresses.flattenRecord) : addresses;
+    return bFlatten === true
+      ? addresses.map(Addresses.flattenRecord)
+      : addresses;
   }
 
   static flattenRecord(record) {

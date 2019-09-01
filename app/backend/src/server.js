@@ -8,7 +8,7 @@ const config = require('./config');
 
 let server = null;
 
-const start = async (callback = () => { }) => {
+const start = async (callback = () => {}) => {
   try {
     const app = express();
 
@@ -27,7 +27,7 @@ const start = async (callback = () => { }) => {
   }
 };
 
-const stop = async (callback = () => { }) => {
+const stop = async (callback = () => {}) => {
   try {
     await loaders.stop();
     await server.close();

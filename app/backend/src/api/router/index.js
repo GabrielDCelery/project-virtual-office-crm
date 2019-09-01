@@ -1,6 +1,6 @@
-const addresses = require("./addresses");
-const legalEntities = require("./legalEntities");
-const users = require("./users");
+const addresses = require('./addresses');
+const legalEntities = require('./legalEntities');
+const users = require('./users');
 
 module.exports = {
   addresses,

@@ -7,7 +7,7 @@ class DbResultWrapper {
           errors: [],
           payload: payload
         };
-      }
+      };
     }
 
     if (successOrFail === 'fail') {
@@ -21,11 +21,13 @@ class DbResultWrapper {
           errors: errors,
           payload: null
         };
-      }
+      };
     }
 
-    throw new Error(`Invalid parameter for DbResultWrapper -> ${successOrFail}!`);
+    throw new Error(
+      `Invalid parameter for DbResultWrapper -> ${successOrFail}!`
+    );
   }
-};
+}
 
 module.exports = DbResultWrapper;

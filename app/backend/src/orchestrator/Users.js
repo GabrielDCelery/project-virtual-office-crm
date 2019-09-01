@@ -11,43 +11,40 @@ class Users {
 
     try {
       decoded = jwt.verify(jwt, config.authentication.userJwtSecret);
-    } catch (err) {}
+    } catch (err) {
+      //TODO do something
+    }
 
     return decoded;
   }
 
-  async _signJwtToken({
-    email
-  }) {
-    return jwt.sign({
-      data: {
-        email
+  async _signJwtToken({ email }) {
+    return jwt.sign(
+      {
+        data: {
+          email
+        },
+        exp: config.authentication.userJwtExpiry
       },
-      exp: config.authentication.userJwtExpiry
-    }, config.authentication.userJwtSecret);
+      config.authentication.userJwtSecret
+    );
   }
 
-  async register({
-    data
-  }) {
-    const {
-      email,
-      password
-    } = data;
-    const wrappedDBResult = await this.services.get('database').executeDBAction(
-      'Users',
-      'register', {
+  async register({ data }) {
+    const { email, password } = data;
+    const wrappedDBResult = await this.services
+      .get('database')
+      .executeDBAction('Users', 'register', {
         data: {
           email,
           password
         },
         config: {}
-      }
-    );
+      });
 
     if (!wrappedDBResult.success) {
-      return wrappedDBResult
-    };
+      return wrappedDBResult;
+    }
 
     return this.resultWrapper.return('success')({
       jwt: await this._signJwtToken({
@@ -56,27 +53,21 @@ class Users {
     });
   }
 
-  async authenticate({
-    data
-  }) {
-    const {
-      email,
-      password
-    } = data;
-    const wrappedDBResult = await this.services.get('database').execute(
-      'users',
-      'authenticate', {
+  async authenticate({ data }) {
+    const { email, password } = data;
+    const wrappedDBResult = await this.services
+      .get('database')
+      .execute('users', 'authenticate', {
         data: {
           email,
           password
         },
         config: {}
-      }
-    );
+      });
 
     if (!wrappedDBResult.success) {
       return wrappedDBResult;
-    };
+    }
 
     return this.resultWrapper.return('success')({
       jwt: await this._signJwtToken({

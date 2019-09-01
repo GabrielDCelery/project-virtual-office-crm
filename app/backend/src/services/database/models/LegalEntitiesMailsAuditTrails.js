@@ -1,6 +1,4 @@
-const {
-  Model
-} = require('objection');
+const { Model } = require('objection');
 
 class LegalEntitiesMailsAuditTrails extends Model {
   static get tableName() {
@@ -9,7 +7,7 @@ class LegalEntitiesMailsAuditTrails extends Model {
 
   static get TYPES() {
     return {
-      MAIL_RECEIVED: 'mail received',
+      MAIL_RECEIVED: 'mail received'
     };
   }
 
@@ -26,9 +24,7 @@ class LegalEntitiesMailsAuditTrails extends Model {
         },
         event_type: {
           type: 'string',
-          enum: [
-            LegalEntitiesMailsAuditTrails.TYPES.MAIL_RECEIVED
-          ]
+          enum: [LegalEntitiesMailsAuditTrails.TYPES.MAIL_RECEIVED]
         },
         event_time: {
           type: 'date'

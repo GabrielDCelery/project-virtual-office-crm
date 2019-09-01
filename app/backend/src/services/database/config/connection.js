@@ -77,5 +77,5 @@ module.exports = ({
         directory: path.join(__dirname, '../migrations/production')
       }
     }
-  }
+  };
 };

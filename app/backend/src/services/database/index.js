@@ -1,15 +1,12 @@
 const Knex = require('knex');
-const {
-  Model,
-  transaction
-} = require('objection');
+const { Model, transaction } = require('objection');
 const controllers = require('./controllers');
 const models = require('./models');
 const config = require('./config');
 const {
   DB_SERVICE_NAME,
   DB_ERROR_NAME_CONTROLLER_ERROR
-} = require("./constants");
+} = require('./constants');
 
 class DB {
   constructor() {
@@ -21,15 +18,8 @@ class DB {
     this.execute = this.execute.bind(this);
   }
 
-  initialize({
-    nodeModules
-  }) {
-    const {
-      Addresses,
-      Documents,
-      LegalEntities,
-      Users
-    } = controllers;
+  initialize({ nodeModules }) {
+    const { Addresses, Documents, LegalEntities, Users } = controllers;
 
     this.controllers = {
       addresses: new Addresses({
@@ -48,22 +38,16 @@ class DB {
         models,
         nodeModules
       })
-    }
+    };
   }
 
-  async start({
-    environmentVariables,
-    nodeModules,
-    helpers
-  }) {
+  async start({ environmentVariables, nodeModules, helpers }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the database twice!');
     }
 
     const initializedConfig = config(environmentVariables);
-    const {
-      NODE_ENV
-    } = environmentVariables;
+    const { NODE_ENV } = environmentVariables;
     this.knex = Knex(initializedConfig['connection'][NODE_ENV]);
     Model.knex(this.knex);
     this.initialize({
@@ -83,11 +67,11 @@ class DB {
   }
 
   async execute(controller, method, args = {}) {
-    const {
-      ResultWrapper
-    } = this.helpers;
+    const { ResultWrapper } = this.helpers;
 
-    const trx = args["transaction"] ? args["transaction"] : await transaction.start(Model.knex());
+    const trx = args['transaction']
+      ? args['transaction']
+      : await transaction.start(Model.knex());
 
     try {
       const result = await this.controllers[controller][method]({
@@ -101,9 +85,9 @@ class DB {
         payload: result
       };
 
-      if (args["bReturnTransaction"]) {
-        returnObj["extra"] = {};
-        returnObj["extra"]["transaction"] = trx;
+      if (args['bReturnTransaction']) {
+        returnObj['extra'] = {};
+        returnObj['extra']['transaction'] = trx;
       } else {
         await trx.commit();
       }

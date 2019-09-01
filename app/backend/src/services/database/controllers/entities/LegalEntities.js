@@ -1,10 +1,5 @@
-const {} = require("../../constants");
-
 class LegalEntities {
-  constructor({
-    models,
-    nodeModules
-  }) {
+  constructor({ models, nodeModules }) {
     this.models = models;
     this.nodeModules = nodeModules;
     this._prepareInputForDbInsert = this._prepareInputForDbInsert.bind(this);
@@ -27,15 +22,19 @@ class LegalEntities {
     const _ = this.nodeModules.lodash;
     let final = {};
 
-    !_.isUndefined(shortName) && _.set(final, "short_name", shortName);
-    !_.isUndefined(longName) && _.set(final, "long_name", longName);
-    !_.isUndefined(type) && _.set(final, "type", type);
-    !_.isUndefined(registrationId) && _.set(final, "registration_id", registrationId);
-    !_.isUndefined(taxId) && _.set(final, "tax_id", taxId);
-    !_.isUndefined(permanentAddressId) && _.set(final, "permanent_address_id", permanentAddressId);
-    !_.isUndefined(version) && _.set(final, "version", version);
-    !_.isUndefined(versionStartAt) && _.set(final, "version_start_at", versionStartAt);
-    !_.isUndefined(versionEndAt) && _.set(final, "version_end_at", versionEndAt);
+    !_.isUndefined(shortName) && _.set(final, 'short_name', shortName);
+    !_.isUndefined(longName) && _.set(final, 'long_name', longName);
+    !_.isUndefined(type) && _.set(final, 'type', type);
+    !_.isUndefined(registrationId) &&
+      _.set(final, 'registration_id', registrationId);
+    !_.isUndefined(taxId) && _.set(final, 'tax_id', taxId);
+    !_.isUndefined(permanentAddressId) &&
+      _.set(final, 'permanent_address_id', permanentAddressId);
+    !_.isUndefined(version) && _.set(final, 'version', version);
+    !_.isUndefined(versionStartAt) &&
+      _.set(final, 'version_start_at', versionStartAt);
+    !_.isUndefined(versionEndAt) &&
+      _.set(final, 'version_end_at', versionEndAt);
 
     return final;
   }
@@ -49,9 +48,8 @@ class LegalEntities {
     permanentAddressId,
     transaction
   }) {
-    return await this.models.LegalEntities
-      .query(transaction)
-      .insert(this._prepareInputForDbInsert({
+    return await this.models.LegalEntities.query(transaction).insert(
+      this._prepareInputForDbInsert({
         shortName,
         longName,
         type,
@@ -60,63 +58,55 @@ class LegalEntities {
         permanentAddressId,
         version: 0,
         versionStartAt: new Date()
-      }));
+      })
+    );
   }
 
-  async getAllVersions({
-    id,
-    transaction
-  }) {
-    const latestVersionLegalEntity = await this.models.LegalEntities
-      .query(transaction)
-      .findById(id);
-    const previousVersionsOfLegalEntity = await this.models.LegalEntitiesVersion
-      .query(transaction)
+  async getAllVersions({ id, transaction }) {
+    const latestVersionLegalEntity = await this.models.LegalEntities.query(
+      transaction
+    ).findById(id);
+    const previousVersionsOfLegalEntity = await this.models.LegalEntitiesVersion.query(
+      transaction
+    )
       .where({
         legal_entity_id: id
-      }).orderBy('version', 'DESC');
+      })
+      .orderBy('version', 'DESC');
 
-    return [
-      latestVersionLegalEntity,
-      ...previousVersionsOfLegalEntity
-    ];
+    return [latestVersionLegalEntity, ...previousVersionsOfLegalEntity];
   }
 
-  async update({
-    id,
-    transaction,
-    ...inputs
-  }) {
+  async update({ id, transaction, ...inputs }) {
     const updatedAt = new Date();
-    const beforeUpdateLegalEntity = await this.models.LegalEntities
-      .query(transaction)
-      .findById(id);
+    const beforeUpdateLegalEntity = await this.models.LegalEntities.query(
+      transaction
+    ).findById(id);
 
-    await this.models.LegalEntitiesVersion
-      .query(transaction)
-      .insert({
-        legal_entity_id: id,
-        short_name: beforeUpdateLegalEntity["short_name"],
-        long_name: beforeUpdateLegalEntity["long_name"],
-        type: beforeUpdateLegalEntity["type"],
-        registration_id: beforeUpdateLegalEntity["registration_id"],
-        tax_id: beforeUpdateLegalEntity["tax_id"],
-        permanent_address_id: beforeUpdateLegalEntity["permanent_address_id"],
-        version: beforeUpdateLegalEntity["version"],
-        version_start_at: beforeUpdateLegalEntity["version_start_at"],
-        version_end_at: updatedAt
-      });
+    await this.models.LegalEntitiesVersion.query(transaction).insert({
+      legal_entity_id: id,
+      short_name: beforeUpdateLegalEntity['short_name'],
+      long_name: beforeUpdateLegalEntity['long_name'],
+      type: beforeUpdateLegalEntity['type'],
+      registration_id: beforeUpdateLegalEntity['registration_id'],
+      tax_id: beforeUpdateLegalEntity['tax_id'],
+      permanent_address_id: beforeUpdateLegalEntity['permanent_address_id'],
+      version: beforeUpdateLegalEntity['version'],
+      version_start_at: beforeUpdateLegalEntity['version_start_at'],
+      version_end_at: updatedAt
+    });
 
-    await this.models.LegalEntities
-      .query(transaction)
+    await this.models.LegalEntities.query(transaction)
       .findById(id)
-      .patch(this._prepareInputForDbInsert({
-        ...inputs,
-        ...{
-          version: beforeUpdateLegalEntity["version"] + 1,
-          versionStartAt: updatedAt
-        }
-      }));
+      .patch(
+        this._prepareInputForDbInsert({
+          ...inputs,
+          ...{
+            version: beforeUpdateLegalEntity['version'] + 1,
+            versionStartAt: updatedAt
+          }
+        })
+      );
 
     return await this.getAllVersions({
       id,

@@ -19,5 +19,5 @@ module.exports = ({
       SERVICE_DB_CHARSET,
       SERVICE_DB_PORT
     })
-  }
+  };
 };

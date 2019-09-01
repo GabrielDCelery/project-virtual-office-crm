@@ -9,31 +9,30 @@ class JWT {
     this.execute = this.execute.bind(this);
   }
 
-  _initialize({
-    secret,
-    expiry
-  }) {
+  _initialize({ secret, expiry }) {
     this.verify = async jwt => {
       let decoded = null;
 
       try {
         decoded = jwt.verify(jwt, secret);
-      } catch (err) {}
+      } catch (err) {
+        //TODO Do something
+      }
 
       return decoded;
     };
     this.sign = async value => {
-      return jwt.sign({
-        data: value,
-        exp: expiry
-      }, secret);
+      return jwt.sign(
+        {
+          data: value,
+          exp: expiry
+        },
+        secret
+      );
     };
   }
 
-  async start({
-    environmentVariables,
-    helpers
-  }) {
+  async start({ environmentVariables, helpers }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the redis connection twice!');
     }

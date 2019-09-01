@@ -1,6 +1,4 @@
-const {
-  promisify
-} = require('util');
+const { promisify } = require('util');
 const redis = require('redis');
 const config = require('./config');
 
@@ -14,25 +12,18 @@ class Redis {
     this.execute = this.execute.bind(this);
   }
 
-  async _startRedisClient({
-    host,
-    port
-  }) {
-    try {
-      this.client = redis.createClient({
-        host,
-        port
-      });
-      this.client.getAsync = promisify(this.client.get).bind(this.client);
-      this.client.setAsync = promisify(this.client.set).bind(this.client);
-      await this.client.setAsync('health', 'OK');
-      const result = await this.client.getAsync('health');
+  async _startRedisClient({ host, port }) {
+    this.client = redis.createClient({
+      host,
+      port
+    });
+    this.client.getAsync = promisify(this.client.get).bind(this.client);
+    this.client.setAsync = promisify(this.client.set).bind(this.client);
+    await this.client.setAsync('health', 'OK');
+    const result = await this.client.getAsync('health');
 
-      if (result !== 'OK') {
-        throw new Error('Could not initialize redis!');
-      }
-    } catch (error) {
-      throw error;
+    if (result !== 'OK') {
+      throw new Error('Could not initialize redis!');
     }
   }
 
@@ -40,8 +31,8 @@ class Redis {
     return new Promise((accept, reject) => {
       this.client.quit((error, success) => {
         if (error) {
-          return reject(error.message)
-        };
+          return reject(error.message);
+        }
 
         return accept(success);
       });
@@ -82,10 +73,7 @@ class Redis {
     });
   }
 
-  async start({
-    environmentVariables,
-    helpers
-  }) {
+  async start({ environmentVariables, helpers }) {
     if (this.initialized) {
       throw new Error('Tried to initialize the redis connection twice!');
     }
@@ -104,7 +92,10 @@ class Redis {
 
   async execute(key, methodName, value) {
     try {
-      return this.helpers.wrapResult('success', await this[`_${methodName}`](key, value));
+      return this.helpers.wrapResult(
+        'success',
+        await this[`_${methodName}`](key, value)
+      );
     } catch (error) {
       return this.helpers.wrapResult('fail', error.message);
     }

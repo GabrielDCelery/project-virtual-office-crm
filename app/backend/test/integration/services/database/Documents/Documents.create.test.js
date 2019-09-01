@@ -1,44 +1,47 @@
-const {
-  expect
-} = require("chai");
-const verror = require("verror");
-const sinon = require("sinon");
-const services = require("../../../../../src/services");
+const { expect } = require('chai');
+//const verror = require('verror');
+const sinon = require('sinon');
+const services = require('../../../../../src/services');
 
-describe("execute(\"documents\", \"create\", {})", () => {
+describe('execute("documents", "create", {})', () => {
   let clock = null;
 
   beforeEach(async () => {
-    await services.get("database").getKnex().seed.run();
-    clock = sinon.useFakeTimers(new Date("2019-08-27T11:11:11.000Z").getTime());
+    await services
+      .get('database')
+      .getKnex()
+      .seed.run();
+    clock = sinon.useFakeTimers(new Date('2019-08-27T11:11:11.000Z').getTime());
   });
 
   afterEach(async () => {
     clock.restore();
   });
 
-  it("creates a new document", async () => {
+  it('creates a new document', async () => {
     // Given
-    const controller = "documents";
-    const method = "create";
+    const controller = 'documents';
+    const method = 'create';
     const args = {
-      "name": "somedocumentname",
-      "type": "identity card",
-      "awsStorageDetails": {
-        "foobar": "barfoo"
+      name: 'somedocumentname',
+      type: 'identity card',
+      awsStorageDetails: {
+        foobar: 'barfoo'
       }
     };
 
     // When
-    const result = await services.get("database").execute(controller, method, args);
+    const result = await services
+      .get('database')
+      .execute(controller, method, args);
 
     // Then
     expect(result).to.deep.equal({
-      "success": true,
-      "service": "database",
-      "errors": [],
-      "payload": {
-        "id": 3
+      success: true,
+      service: 'database',
+      errors: [],
+      payload: {
+        id: 3
       }
     });
   });

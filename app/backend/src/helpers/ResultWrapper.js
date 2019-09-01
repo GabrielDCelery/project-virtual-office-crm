@@ -10,13 +10,7 @@ class ResultWrapper {
     };
   }
 
-  wrap({
-    type,
-    service,
-    payload,
-    errors,
-    extra
-  }) {
+  wrap({ type, service, payload, errors, extra }) {
     if (type === ResultWrapper.TYPE.SUCCESS) {
       const returnObject = {
         success: true,

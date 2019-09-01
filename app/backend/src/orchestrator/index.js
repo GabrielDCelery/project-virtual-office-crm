@@ -21,13 +21,11 @@ class Orchestrator {
       },
       users: new Users({
         services
-      }),
+      })
     };
   }
 
-  async start({
-    services
-  }) {
+  async start({ services }) {
     if (this.initialized) {
       throw new Error('Tried to initialize orchestrator twice!');
     }
