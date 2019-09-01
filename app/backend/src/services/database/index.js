@@ -104,13 +104,11 @@ class DB {
       if (args["bReturnTransaction"]) {
         returnObj["extra"] = {};
         returnObj["extra"]["transaction"] = trx;
+      } else {
+        await trx.commit();
       }
 
-      const toReturn = new ResultWrapper().wrap(returnObj);
-
-      await trx.commit();
-
-      return toReturn;
+      return new ResultWrapper().wrap(returnObj);
     } catch (error) {
       await trx.rollback();
 
