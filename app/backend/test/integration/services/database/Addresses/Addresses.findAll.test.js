@@ -40,7 +40,8 @@ describe('execute("addresses", "findAll")', () => {
             country: {
               id: 98,
               name: 'Hungary',
-              short_name: 'HU'
+              short_name: 'HU',
+              phone_code: null
             }
           }
         },
@@ -58,7 +59,8 @@ describe('execute("addresses", "findAll")', () => {
             country: {
               id: 98,
               name: 'Hungary',
-              short_name: 'HU'
+              short_name: 'HU',
+              phone_code: null
             }
           }
         },
@@ -76,7 +78,8 @@ describe('execute("addresses", "findAll")', () => {
             country: {
               id: 98,
               name: 'Hungary',
-              short_name: 'HU'
+              short_name: 'HU',
+              phone_code: null
             }
           }
         },
@@ -94,7 +97,8 @@ describe('execute("addresses", "findAll")', () => {
             country: {
               id: 98,
               name: 'Hungary',
-              short_name: 'HU'
+              short_name: 'HU',
+              phone_code: null
             }
           }
         },
@@ -112,7 +116,8 @@ describe('execute("addresses", "findAll")', () => {
             country: {
               id: 98,
               name: 'Hungary',
-              short_name: 'HU'
+              short_name: 'HU',
+              phone_code: null
             }
           }
         }

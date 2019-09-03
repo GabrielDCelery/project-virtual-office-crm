@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-class AddressCities extends Model {
+class Cities extends Model {
   static get tableName() {
-    return 'address_cities';
+    return 'cities';
   }
 
   static get jsonSchema() {
@@ -25,27 +25,27 @@ class AddressCities extends Model {
 
   static get relationMappings() {
     const Addresses = require('./Addresses');
-    const AddressCountries = require('./AddressCountries');
+    const Countries = require('./Countries');
 
     return {
       addresses: {
         relation: Model.HasManyRelation,
         modelClass: Addresses,
         join: {
-          from: `${AddressCities.tableName}.id`,
+          from: `${Cities.tableName}.id`,
           to: `${Addresses.tableName}.city_id`
         }
       },
       country: {
         relation: Model.BelongsToOneRelation,
-        modelClass: AddressCountries,
+        modelClass: Countries,
         join: {
-          from: `${AddressCities.tableName}.country_id`,
-          to: `${AddressCountries.tableName}.id`
+          from: `${Cities.tableName}.country_id`,
+          to: `${Countries.tableName}.id`
         }
       }
     };
   }
 }
 
-module.exports = AddressCities;
+module.exports = Cities;

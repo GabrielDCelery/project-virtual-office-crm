@@ -1,9 +1,10 @@
 const {
-  AddressCities,
-  AddressCountries,
+  Cities,
+  Countries,
   Addresses,
   Documents,
   DocumentsDetails,
+  Emails,
   LegalEntities,
   LegalEntitiesMails,
   LegalEntitiesMailsAuditTrails,
@@ -11,10 +12,13 @@ const {
   MailSenderNames,
   MailSenders,
   MailSubjects,
+  Phones,
   Users
 } = require('../../models');
 
 exports.seed = async knex => {
+  await knex(`${LegalEntities.tableName}_${Phones.tableName}`).del();
+  await knex(`${LegalEntities.tableName}_${Emails.tableName}`).del();
   await knex(LegalEntitiesMailsAuditTrails.tableName).del();
   await knex(LegalEntitiesMails.tableName).del();
   await knex(LegalEntitiesVersion.tableName).del();
@@ -24,8 +28,10 @@ exports.seed = async knex => {
   await knex(MailSenders.tableName).del();
   await knex(MailSenderNames.tableName).del();
   await knex(Addresses.tableName).del();
-  await knex(AddressCities.tableName).del();
-  await knex(AddressCountries.tableName).del();
   await knex(DocumentsDetails.tableName).del();
   await knex(Documents.tableName).del();
+  await knex(Emails.tableName).del();
+  await knex(Phones.tableName).del();
+  await knex(Cities.tableName).del();
+  await knex(Countries.tableName).del();
 };

@@ -1,9 +1,10 @@
 const {
-  AddressCities,
-  AddressCountries,
+  Cities,
+  Countries,
   Addresses,
   Documents,
   DocumentsDetails,
+  Emails,
   LegalEntities,
   LegalEntitiesMails,
   LegalEntitiesMailsAuditTrails,
@@ -12,10 +13,48 @@ const {
   MailSenderNames,
   MailSenders,
   MailSubjects,
+  Phones,
   Users
 } = require('../../models');
 
 exports.up = async knex => {
+  await knex.schema.createTable(Countries.tableName, table => {
+    table.increments('id').primary();
+    table.string('name').notNullable();
+    table.string('short_name').notNullable();
+    table.string('phone_code');
+  });
+
+  await knex.schema.createTable(Cities.tableName, table => {
+    table.increments('id').primary();
+    table.string('name').notNullable();
+    table
+      .integer('country_id')
+      .references('id')
+      .inTable(Countries.tableName)
+      .notNullable();
+    table.unique(['name', 'country_id']);
+  });
+
+  await knex.schema.createTable(Phones.tableName, table => {
+    table.increments('id').primary();
+    table.string('number').notNullable();
+    table
+      .integer('country_id')
+      .references('id')
+      .inTable(Countries.tableName)
+      .notNullable();
+    table.enum('status', [Phones.STATUSES.ACTIVE, Phones.STATUSES.INACTIVE]);
+    table.enum('type', [Phones.TYPES.MOBILE, Phones.TYPES.HOME]);
+    table.unique(['country_id', 'number']);
+  });
+
+  await knex.schema.createTable(Emails.tableName, table => {
+    table.increments('id').primary();
+    table.string('address');
+    table.enum('status', [Emails.STATUSES.ACTIVE, Emails.STATUSES.INACTIVE]);
+  });
+
   await knex.schema.createTable(Documents.tableName, table => {
     table.increments('id').primary();
     table.string('name');
@@ -53,31 +92,13 @@ exports.up = async knex => {
     table.unique(['email']);
   });
 
-  await knex.schema.createTable(AddressCountries.tableName, table => {
-    table.increments('id').primary();
-    table.string('name').notNullable();
-    table.string('short_name').notNullable();
-    table.unique(['name', 'short_name']);
-  });
-
-  await knex.schema.createTable(AddressCities.tableName, table => {
-    table.increments('id').primary();
-    table.string('name').notNullable();
-    table
-      .integer('country_id')
-      .references('id')
-      .inTable(AddressCountries.tableName)
-      .notNullable();
-    table.unique(['name', 'country_id']);
-  });
-
   await knex.schema.createTable(Addresses.tableName, table => {
     table.increments('id').primary();
     table.string('postcode').notNullable();
     table
       .integer('city_id')
       .references('id')
-      .inTable(AddressCities.tableName)
+      .inTable(Cities.tableName)
       .notNullable();
     table.string('long_street');
     table.timestamps();
@@ -204,9 +225,49 @@ exports.up = async knex => {
       table.jsonb('data');
     }
   );
+
+  await knex.schema.createTable(
+    `${LegalEntities.tableName}_${Emails.tableName}`,
+    table => {
+      table
+        .integer('legal_entity_id')
+        .references('id')
+        .inTable(LegalEntities.tableName)
+        .notNullable();
+      table
+        .integer('email_id')
+        .references('id')
+        .inTable(Emails.tableName)
+        .notNullable();
+      table.unique(['legal_entity_id', 'email_id']);
+    }
+  );
+
+  await knex.schema.createTable(
+    `${LegalEntities.tableName}_${Phones.tableName}`,
+    table => {
+      table
+        .integer('legal_entity_id')
+        .references('id')
+        .inTable(LegalEntities.tableName)
+        .notNullable();
+      table
+        .integer('phone_id')
+        .references('id')
+        .inTable(Phones.tableName)
+        .notNullable();
+      table.unique(['legal_entity_id', 'phone_id']);
+    }
+  );
 };
 
 exports.down = async knex => {
+  await knex.schema.dropTableIfExists(
+    `${LegalEntities.tableName}_${Phones.tableName}`
+  );
+  await knex.schema.dropTableIfExists(
+    `${LegalEntities.tableName}_${Emails.tableName}`
+  );
   await knex.schema.dropTableIfExists(
     LegalEntitiesMailsAuditTrailsDetails.tableName
   );
@@ -218,9 +279,11 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(MailSenders.tableName);
   await knex.schema.dropTableIfExists(MailSenderNames.tableName);
   await knex.schema.dropTableIfExists(Addresses.tableName);
-  await knex.schema.dropTableIfExists(AddressCities.tableName);
-  await knex.schema.dropTableIfExists(AddressCountries.tableName);
   await knex.schema.dropTableIfExists(Users.tableName);
   await knex.schema.dropTableIfExists(DocumentsDetails.tableName);
   await knex.schema.dropTableIfExists(Documents.tableName);
+  await knex.schema.dropTableIfExists(Emails.tableName);
+  await knex.schema.dropTableIfExists(Phones.tableName);
+  await knex.schema.dropTableIfExists(Cities.tableName);
+  await knex.schema.dropTableIfExists(Countries.tableName);
 };

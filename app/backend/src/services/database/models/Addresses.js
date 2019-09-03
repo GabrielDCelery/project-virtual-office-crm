@@ -35,16 +35,16 @@ class Addresses extends Model {
   }
 
   static get relationMappings() {
-    const AddressCities = require('./AddressCities');
+    const Cities = require('./Cities');
     const MailSenders = require('./MailSenders');
 
     return {
       city: {
         relation: Model.BelongsToOneRelation,
-        modelClass: AddressCities,
+        modelClass: Cities,
         join: {
           from: `${Addresses.tableName}.city_id`,
-          to: `${AddressCities.tableName}.id`
+          to: `${Cities.tableName}.id`
         }
       },
       mail_senders: {
