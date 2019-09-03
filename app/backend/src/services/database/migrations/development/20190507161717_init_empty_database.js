@@ -1,7 +1,7 @@
 const {
+  Addresses,
   Cities,
   Countries,
-  Addresses,
   Documents,
   DocumentsDetails,
   Emails,
