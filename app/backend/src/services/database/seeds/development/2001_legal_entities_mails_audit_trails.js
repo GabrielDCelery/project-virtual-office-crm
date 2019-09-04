@@ -1,11 +1,11 @@
-const { LegalEntitiesMailsAuditTrails } = require('../../models');
+const { MailsAuditTrails } = require('../../models');
 
 exports.seed = async knex => {
-  await knex(LegalEntitiesMailsAuditTrails.tableName).insert([
+  await knex(MailsAuditTrails.tableName).insert([
     {
       id: 1,
-      legal_entities_mail_id: 1,
-      event_type: LegalEntitiesMailsAuditTrails.TYPES.MAIL_RECEIVED,
+      mail_id: 1,
+      event_type: MailsAuditTrails.TYPES.MAIL_RECEIVED,
       event_time: new Date('2019-11-11T11:11:11.000Z'),
       created_at: new Date('2019-11-11T11:11:11.000Z'),
       updated_at: new Date('2019-11-11T11:11:11.000Z')
@@ -13,6 +13,6 @@ exports.seed = async knex => {
   ]);
 
   await knex.raw(
-    `select setval('${LegalEntitiesMailsAuditTrails.tableName}_id_seq', max(id)) from ${LegalEntitiesMailsAuditTrails.tableName}`
+    `select setval('${MailsAuditTrails.tableName}_id_seq', max(id)) from ${MailsAuditTrails.tableName}`
   );
 };

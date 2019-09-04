@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-class LegalEntitiesMails extends Model {
+class Mails extends Model {
   static get tableName() {
-    return 'legal_entities_mails';
+    return 'mails';
   }
 
   static get jsonSchema() {
@@ -32,7 +32,7 @@ class LegalEntitiesMails extends Model {
   static get relationMappings() {
     const Documents = require('./Documents');
     const LegalEntities = require('./LegalEntities');
-    const LegalEntitiesMailsAuditTrails = require('./LegalEntitiesMailsAuditTrails');
+    const MailsAuditTrails = require('./MailsAuditTrails');
     const MailSenders = require('./MailSenders');
     const MailSubjects = require('./MailSubjects');
 
@@ -41,7 +41,7 @@ class LegalEntitiesMails extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: LegalEntities,
         join: {
-          from: `${LegalEntitiesMails.tableName}.legal_entity_id`,
+          from: `${Mails.tableName}.legal_entity_id`,
           to: `${LegalEntities.tableName}.id`
         }
       },
@@ -49,7 +49,7 @@ class LegalEntitiesMails extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: MailSenders,
         join: {
-          from: `${LegalEntitiesMails.tableName}.sender_id`,
+          from: `${Mails.tableName}.sender_id`,
           to: `${MailSenders.tableName}.id`
         }
       },
@@ -57,7 +57,7 @@ class LegalEntitiesMails extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: MailSubjects,
         join: {
-          from: `${LegalEntitiesMails.tableName}.subject_id`,
+          from: `${Mails.tableName}.subject_id`,
           to: `${MailSubjects.tableName}.id`
         }
       },
@@ -65,20 +65,20 @@ class LegalEntitiesMails extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: Documents,
         join: {
-          from: `${LegalEntitiesMails.tableName}.document_id`,
+          from: `${Mails.tableName}.document_id`,
           to: `${Documents.tableName}.id`
         }
       },
       audit_trails: {
         relation: Model.HasManyRelation,
-        modelClass: LegalEntitiesMailsAuditTrails,
+        modelClass: MailsAuditTrails,
         join: {
-          from: `${LegalEntitiesMails.tableName}.id`,
-          to: `${LegalEntitiesMailsAuditTrails.tableName}.legal_entities_mail_id`
+          from: `${Mails.tableName}.id`,
+          to: `${MailsAuditTrails.tableName}.mail_id`
         }
       }
     };
   }
 }
 
-module.exports = LegalEntitiesMails;
+module.exports = Mails;

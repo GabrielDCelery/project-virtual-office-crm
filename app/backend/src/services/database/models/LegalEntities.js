@@ -57,12 +57,12 @@ class LegalEntities extends Model {
   static get relationMappings() {
     const Addresses = require('./Addresses');
     const Emails = require('./Emails');
-    const LegalEntitiesMails = require('./LegalEntitiesMails');
+    const Mails = require('./Mails');
     const LegalEntitiesVersion = require('./LegalEntitiesVersion');
     const Phones = require('./Phones');
 
     return {
-      legal_entities_version: {
+      legal_entities_versions: {
         relation: Model.HasManyRelation,
         modelClass: LegalEntitiesVersion,
         join: {
@@ -70,12 +70,12 @@ class LegalEntities extends Model {
           to: `${LegalEntitiesVersion.tableName}.legal_entity_id`
         }
       },
-      legal_entities_mails: {
+      mails: {
         relation: Model.HasManyRelation,
-        modelClass: LegalEntitiesMails,
+        modelClass: Mails,
         join: {
           from: `${LegalEntities.tableName}.id`,
-          to: `${LegalEntitiesMails.tableName}.legal_entity_id`
+          to: `${Mails.tableName}.legal_entity_id`
         }
       },
       emails: {

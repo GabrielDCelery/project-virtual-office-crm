@@ -39,15 +39,15 @@ class Documents extends Model {
   }
 
   static get relationMappings() {
-    const LegalEntitiesMails = require('./LegalEntitiesMails');
+    const Mails = require('./Mails');
 
     return {
-      legal_entities_mails: {
+      mails: {
         relation: Model.HasManyRelation,
-        modelClass: LegalEntitiesMails,
+        modelClass: Mails,
         join: {
           from: `${Documents.tableName}.id`,
-          to: `${LegalEntitiesMails.tableName}.document_id`
+          to: `${Mails.tableName}.document_id`
         }
       }
     };

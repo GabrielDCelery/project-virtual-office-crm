@@ -6,9 +6,9 @@ const {
   DocumentsDetails,
   Emails,
   LegalEntities,
-  LegalEntitiesMails,
-  LegalEntitiesMailsAuditTrails,
-  LegalEntitiesMailsAuditTrailsDetails,
+  Mails,
+  MailsAuditTrails,
+  MailsAuditTrailsDetails,
   LegalEntitiesVersion,
   MailSenderNames,
   MailSenders,
@@ -172,7 +172,7 @@ exports.up = async knex => {
     table.index(['legal_entity_id'], 'legal_entity_id');
   });
 
-  await knex.schema.createTable(LegalEntitiesMails.tableName, table => {
+  await knex.schema.createTable(Mails.tableName, table => {
     table.increments('id').primary();
     table
       .integer('legal_entity_id')
@@ -196,35 +196,27 @@ exports.up = async knex => {
       .notNullable();
   });
 
-  await knex.schema.createTable(
-    LegalEntitiesMailsAuditTrails.tableName,
-    table => {
-      table.increments('id').primary();
-      table
-        .integer('legal_entities_mail_id')
-        .references('id')
-        .inTable(LegalEntitiesMails.tableName)
-        .notNullable();
-      table.enum('event_type', [
-        LegalEntitiesMailsAuditTrails.TYPES.MAIL_RECEIVED
-      ]);
-      table.datetime('event_time');
-      table.timestamps();
-    }
-  );
+  await knex.schema.createTable(MailsAuditTrails.tableName, table => {
+    table.increments('id').primary();
+    table
+      .integer('mail_id')
+      .references('id')
+      .inTable(Mails.tableName)
+      .notNullable();
+    table.enum('event_type', [MailsAuditTrails.TYPES.MAIL_RECEIVED]);
+    table.datetime('event_time');
+    table.timestamps();
+  });
 
-  await knex.schema.createTable(
-    LegalEntitiesMailsAuditTrailsDetails.tableName,
-    table => {
-      table.increments('id').primary();
-      table
-        .integer('legal_entities_mails_audit_trail_id')
-        .references('id')
-        .inTable(LegalEntitiesMailsAuditTrails.tableName)
-        .notNullable();
-      table.jsonb('data');
-    }
-  );
+  await knex.schema.createTable(MailsAuditTrailsDetails.tableName, table => {
+    table.increments('id').primary();
+    table
+      .integer('mails_audit_trail_id')
+      .references('id')
+      .inTable(MailsAuditTrails.tableName)
+      .notNullable();
+    table.jsonb('data');
+  });
 
   await knex.schema.createTable(
     `${LegalEntities.tableName}_${Emails.tableName}`,
@@ -268,11 +260,9 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(
     `${LegalEntities.tableName}_${Emails.tableName}`
   );
-  await knex.schema.dropTableIfExists(
-    LegalEntitiesMailsAuditTrailsDetails.tableName
-  );
-  await knex.schema.dropTableIfExists(LegalEntitiesMailsAuditTrails.tableName);
-  await knex.schema.dropTableIfExists(LegalEntitiesMails.tableName);
+  await knex.schema.dropTableIfExists(MailsAuditTrailsDetails.tableName);
+  await knex.schema.dropTableIfExists(MailsAuditTrails.tableName);
+  await knex.schema.dropTableIfExists(Mails.tableName);
   await knex.schema.dropTableIfExists(LegalEntitiesVersion.tableName);
   await knex.schema.dropTableIfExists(LegalEntities.tableName);
   await knex.schema.dropTableIfExists(MailSubjects.tableName);

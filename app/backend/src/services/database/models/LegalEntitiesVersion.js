@@ -2,7 +2,7 @@ const { Model } = require('objection');
 
 class LegalEntitiesVersion extends Model {
   static get tableName() {
-    return 'legal_entities_version';
+    return 'legal_entities_versions';
   }
 
   static get TYPES() {

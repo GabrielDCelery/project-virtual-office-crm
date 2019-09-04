@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-class LegalEntitiesMailsAuditTrails extends Model {
+class MailsAuditTrails extends Model {
   static get tableName() {
-    return 'legal_entities_mails_audit_trails';
+    return 'mails_audit_trails';
   }
 
   static get TYPES() {
@@ -19,12 +19,12 @@ class LegalEntitiesMailsAuditTrails extends Model {
         id: {
           type: 'integer'
         },
-        legal_entities_mail_id: {
+        mail_id: {
           type: 'integer'
         },
         event_type: {
           type: 'string',
-          enum: [LegalEntitiesMailsAuditTrails.TYPES.MAIL_RECEIVED]
+          enum: [MailsAuditTrails.TYPES.MAIL_RECEIVED]
         },
         event_time: {
           type: 'date'
@@ -34,19 +34,19 @@ class LegalEntitiesMailsAuditTrails extends Model {
   }
 
   static get relationMappings() {
-    const LegalEntitiesMails = require('./LegalEntitiesMails');
+    const Mails = require('./Mails');
 
     return {
       mail: {
         relation: Model.BelongsToOneRelation,
-        modelClass: LegalEntitiesMails,
+        modelClass: Mails,
         join: {
-          from: `${LegalEntitiesMailsAuditTrails.tableName}.legal_entities_mail_id`,
-          to: `${LegalEntitiesMails.tableName}.id`
+          from: `${MailsAuditTrails.tableName}.mail_id`,
+          to: `${Mails.tableName}.id`
         }
       }
     };
   }
 }
 
-module.exports = LegalEntitiesMailsAuditTrails;
+module.exports = MailsAuditTrails;

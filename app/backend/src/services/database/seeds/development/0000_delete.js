@@ -6,8 +6,8 @@ const {
   DocumentsDetails,
   Emails,
   LegalEntities,
-  LegalEntitiesMails,
-  LegalEntitiesMailsAuditTrails,
+  Mails,
+  MailsAuditTrails,
   LegalEntitiesVersion,
   MailSenderNames,
   MailSenders,
@@ -19,8 +19,8 @@ const {
 exports.seed = async knex => {
   await knex(`${LegalEntities.tableName}_${Phones.tableName}`).del();
   await knex(`${LegalEntities.tableName}_${Emails.tableName}`).del();
-  await knex(LegalEntitiesMailsAuditTrails.tableName).del();
-  await knex(LegalEntitiesMails.tableName).del();
+  await knex(MailsAuditTrails.tableName).del();
+  await knex(Mails.tableName).del();
   await knex(LegalEntitiesVersion.tableName).del();
   await knex(LegalEntities.tableName).del();
   await knex(Users.tableName).del();
