@@ -25,6 +25,7 @@ class MailSenders extends Model {
 
   static get relationMappings() {
     const Addresses = require('./Addresses');
+    const LegalEntitiesMails = require('./LegalEntitiesMails');
     const MailSenderNames = require('./MailSenderNames');
 
     return {
@@ -42,6 +43,14 @@ class MailSenders extends Model {
         join: {
           from: `${MailSenders.tableName}.name_id`,
           to: `${MailSenderNames.tableName}.id`
+        }
+      },
+      legal_entities_mails: {
+        relation: Model.HasManyRelation,
+        modelClass: LegalEntitiesMails,
+        join: {
+          from: `${MailSenders.tableName}.id`,
+          to: `${LegalEntitiesMails.tableName}.sender_id`
         }
       }
     };

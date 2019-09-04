@@ -585,7 +585,7 @@ module.exports = [
     id: 98,
     short_name: 'HU',
     name: 'Hungary',
-    phone_code: null
+    phone_code: '+36'
   },
   {
     id: 99,
@@ -1353,7 +1353,7 @@ module.exports = [
     id: 226,
     short_name: 'GB',
     name: 'United Kingdom',
-    phone_code: null
+    phone_code: '+44'
   },
   {
     id: 227,

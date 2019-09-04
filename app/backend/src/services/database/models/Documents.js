@@ -37,6 +37,21 @@ class Documents extends Model {
       }
     };
   }
+
+  static get relationMappings() {
+    const LegalEntitiesMails = require('./LegalEntitiesMails');
+
+    return {
+      legal_entities_mails: {
+        relation: Model.HasManyRelation,
+        modelClass: LegalEntitiesMails,
+        join: {
+          from: `${Documents.tableName}.id`,
+          to: `${LegalEntitiesMails.tableName}.document_id`
+        }
+      }
+    };
+  }
 }
 
 module.exports = Documents;

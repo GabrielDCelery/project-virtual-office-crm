@@ -19,6 +19,21 @@ class LegalEntitiesMailsAuditTrailsDetails extends Model {
       }
     };
   }
+
+  static get relationMappings() {
+    const LegalEntitiesMailsAuditTrails = require('./LegalEntitiesMailsAuditTrails');
+
+    return {
+      audit_trail: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: LegalEntitiesMailsAuditTrails,
+        join: {
+          from: `${LegalEntitiesMailsAuditTrailsDetails.tableName}.legal_entities_mails_audit_trail_id`,
+          to: `${LegalEntitiesMailsAuditTrails.tableName}.id`
+        }
+      }
+    };
+  }
 }
 
 module.exports = LegalEntitiesMailsAuditTrailsDetails;

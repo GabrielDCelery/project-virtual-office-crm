@@ -19,6 +19,21 @@ class MailSubjects extends Model {
       }
     };
   }
+
+  static get relationMappings() {
+    const LegalEntitiesMails = require('./LegalEntitiesMails');
+
+    return {
+      legal_entities_mails: {
+        relation: Model.HasManyRelation,
+        modelClass: LegalEntitiesMails,
+        join: {
+          from: `${MailSubjects.tableName}.id`,
+          to: `${LegalEntitiesMails.tableName}.subject_id`
+        }
+      }
+    };
+  }
 }
 
 module.exports = MailSubjects;

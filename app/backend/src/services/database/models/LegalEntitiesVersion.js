@@ -56,6 +56,21 @@ class LegalEntitiesVersion extends Model {
       }
     };
   }
+
+  static get relationMappings() {
+    const LegalEntities = require('./LegalEntities');
+
+    return {
+      legal_entity: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: LegalEntities,
+        join: {
+          from: `${LegalEntitiesVersion.tableName}.legal_entity_id`,
+          to: `${LegalEntities.tableName}.id`
+        }
+      }
+    };
+  }
 }
 
 module.exports = LegalEntitiesVersion;

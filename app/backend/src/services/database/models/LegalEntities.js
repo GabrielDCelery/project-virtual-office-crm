@@ -55,15 +55,59 @@ class LegalEntities extends Model {
   }
 
   static get relationMappings() {
+    const Addresses = require('./Addresses');
+    const Emails = require('./Emails');
+    const LegalEntitiesMails = require('./LegalEntitiesMails');
     const LegalEntitiesVersion = require('./LegalEntitiesVersion');
+    const Phones = require('./Phones');
 
     return {
-      mail_senders: {
+      legal_entities_version: {
         relation: Model.HasManyRelation,
         modelClass: LegalEntitiesVersion,
         join: {
           from: `${LegalEntities.tableName}.id`,
           to: `${LegalEntitiesVersion.tableName}.legal_entity_id`
+        }
+      },
+      legal_entities_mails: {
+        relation: Model.HasManyRelation,
+        modelClass: LegalEntitiesMails,
+        join: {
+          from: `${LegalEntities.tableName}.id`,
+          to: `${LegalEntitiesMails.tableName}.legal_entity_id`
+        }
+      },
+      emails: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Emails,
+        join: {
+          from: `${LegalEntities.tableName}.id`,
+          through: {
+            from: `${LegalEntities.tableName}_${Emails.tableName}.legal_entity_id`,
+            to: `${LegalEntities.tableName}_${Emails.tableName}.email_id`
+          },
+          to: `${Emails.tableName}.id`
+        }
+      },
+      phones: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Phones,
+        join: {
+          from: `${LegalEntities.tableName}.id`,
+          through: {
+            from: `${LegalEntities.tableName}_${Phones.tableName}.legal_entity_id`,
+            to: `${LegalEntities.tableName}_${Phones.tableName}.phone_id`
+          },
+          to: `${Phones.tableName}.id`
+        }
+      },
+      permanent_address: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Addresses,
+        join: {
+          from: `${LegalEntities.tableName}.permanent_address_id`,
+          to: `${Addresses.tableName}.id`
         }
       }
     };

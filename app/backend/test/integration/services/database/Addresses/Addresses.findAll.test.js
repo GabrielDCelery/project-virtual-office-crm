@@ -41,7 +41,7 @@ describe('execute("addresses", "findAll")', () => {
               id: 98,
               name: 'Hungary',
               short_name: 'HU',
-              phone_code: null
+              phone_code: '+36'
             }
           }
         },
@@ -60,7 +60,7 @@ describe('execute("addresses", "findAll")', () => {
               id: 98,
               name: 'Hungary',
               short_name: 'HU',
-              phone_code: null
+              phone_code: '+36'
             }
           }
         },
@@ -79,7 +79,7 @@ describe('execute("addresses", "findAll")', () => {
               id: 98,
               name: 'Hungary',
               short_name: 'HU',
-              phone_code: null
+              phone_code: '+36'
             }
           }
         },
@@ -98,7 +98,7 @@ describe('execute("addresses", "findAll")', () => {
               id: 98,
               name: 'Hungary',
               short_name: 'HU',
-              phone_code: null
+              phone_code: '+36'
             }
           }
         },
@@ -117,7 +117,7 @@ describe('execute("addresses", "findAll")', () => {
               id: 98,
               name: 'Hungary',
               short_name: 'HU',
-              phone_code: null
+              phone_code: '+36'
             }
           }
         }

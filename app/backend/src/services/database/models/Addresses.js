@@ -36,6 +36,7 @@ class Addresses extends Model {
 
   static get relationMappings() {
     const Cities = require('./Cities');
+    const LegalEntities = require('./LegalEntities');
     const MailSenders = require('./MailSenders');
 
     return {
@@ -52,7 +53,15 @@ class Addresses extends Model {
         modelClass: MailSenders,
         join: {
           from: `${Addresses.tableName}.id`,
-          to: 'mail_senders.address_id'
+          to: `${MailSenders.tableName}.address_id`
+        }
+      },
+      legal_entities: {
+        relation: Model.HasManyRelation,
+        modelClass: LegalEntities,
+        join: {
+          from: `${Addresses.tableName}.id`,
+          to: `${LegalEntities.tableName}.permanent_address_id`
         }
       }
     };
