@@ -19,7 +19,13 @@ class DB {
   }
 
   initialize({ nodeModules }) {
-    const { Addresses, Documents, LegalEntities, Users } = controllers;
+    const {
+      Addresses,
+      Documents,
+      LegalEntities,
+      MailSenders,
+      Users
+    } = controllers;
 
     this.controllers = {
       addresses: new Addresses({
@@ -31,6 +37,10 @@ class DB {
         nodeModules
       }),
       legalEntities: new LegalEntities({
+        models,
+        nodeModules
+      }),
+      mailSenders: new MailSenders({
         models,
         nodeModules
       }),

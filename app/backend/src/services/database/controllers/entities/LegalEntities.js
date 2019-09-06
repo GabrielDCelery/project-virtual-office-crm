@@ -2,7 +2,6 @@ class LegalEntities {
   constructor({ models, nodeModules }) {
     this.models = models;
     this.nodeModules = nodeModules;
-    this._normalizeVersionRecord = this._normalizeVersionRecord.bind(this);
     this._prepareInputForDbInsert = this._prepareInputForDbInsert.bind(this);
     this.create = this.create.bind(this);
     this.getAllVersionsOfSingleEntity = this.getAllVersionsOfSingleEntity.bind(
@@ -11,7 +10,7 @@ class LegalEntities {
     this.update = this.update.bind(this);
   }
 
-  _normalizeShortVersionRecord(record) {
+  static _normalizeShortVersionRecord(record) {
     return {
       legal_entity_id: record['legal_entity_id'] || record['id'],
       long_name: record['long_name'],
@@ -19,7 +18,7 @@ class LegalEntities {
     };
   }
 
-  _normalizeVersionRecord(record) {
+  static _normalizeVersionRecord(record) {
     return {
       legal_entity_id: record['legal_entity_id'] || record['id'],
       short_name: record['short_name'],
@@ -102,8 +101,10 @@ class LegalEntities {
       .orderBy('version', 'DESC');
 
     return [
-      this._normalizeVersionRecord(latestVersionLegalEntity),
-      ...previousVersionsOfLegalEntity.map(this._normalizeVersionRecord)
+      LegalEntities._normalizeVersionRecord(latestVersionLegalEntity),
+      ...previousVersionsOfLegalEntity.map(
+        LegalEntities._normalizeVersionRecord
+      )
     ];
   }
 
@@ -122,7 +123,7 @@ class LegalEntities {
       ...previousVersionsOfLegalEntities
     ])
       .uniqBy('long_name')
-      .map(this._normalizeShortVersionRecord)
+      .map(LegalEntities._normalizeShortVersionRecord)
       .value();
   }
 
