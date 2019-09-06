@@ -40,7 +40,7 @@ describe('execute("legalEntities", "update", {})', () => {
       errors: [],
       payload: [
         {
-          id: 1,
+          legal_entity_id: 1,
           short_name: 'Bacz Invest',
           long_name: 'Bacz Invest Elektro Technikai',
           type: 'Unlimited Partnership',
@@ -48,10 +48,10 @@ describe('execute("legalEntities", "update", {})', () => {
           tax_id: '24892285-1-42',
           permanent_address_id: 1,
           version: 1,
-          version_start_at: new Date('2019-08-27T11:11:11.000Z')
+          version_start_at: new Date('2019-08-27T11:11:11.000Z'),
+          version_end_at: null
         },
         {
-          id: 3,
           legal_entity_id: 1,
           short_name: 'Bacz Invest',
           long_name: 'Bacz Invest Elektro Technikai',

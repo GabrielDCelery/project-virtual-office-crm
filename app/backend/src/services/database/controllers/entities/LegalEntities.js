@@ -2,10 +2,29 @@ class LegalEntities {
   constructor({ models, nodeModules }) {
     this.models = models;
     this.nodeModules = nodeModules;
+    this._normalizeVersions = this._normalizeVersions.bind(this);
     this._prepareInputForDbInsert = this._prepareInputForDbInsert.bind(this);
     this.create = this.create.bind(this);
     this.getAllVersions = this.getAllVersions.bind(this);
     this.update = this.update.bind(this);
+  }
+
+  _normalizeVersions(record) {
+    const final = {
+      legal_entity_id: record['legal_entity_id'] || record['id'],
+      short_name: record['short_name'],
+      long_name: record['long_name'],
+      type: record['type'],
+      registration_id: record['registration_id'],
+      long_name: record['long_name'],
+      tax_id: record['tax_id'],
+      permanent_address_id: record['permanent_address_id'],
+      version: record['version'],
+      version_start_at: record['version_start_at'],
+      version_end_at: record['version_end_at'] || null
+    };
+
+    return final;
   }
 
   _prepareInputForDbInsert({
@@ -74,7 +93,10 @@ class LegalEntities {
       })
       .orderBy('version', 'DESC');
 
-    return [latestVersionLegalEntity, ...previousVersionsOfLegalEntity];
+    return [
+      this._normalizeVersions(latestVersionLegalEntity),
+      ...previousVersionsOfLegalEntity.map(this._normalizeVersions)
+    ];
   }
 
   async update({ id, transaction, ...inputs }) {

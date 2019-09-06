@@ -38,7 +38,7 @@ describe('/api/legalEntities/update', () => {
       errors: [],
       payload: [
         {
-          id: 2,
+          legal_entity_id: 2,
           short_name: 'Chrono-Line',
           long_name: 'Chrono-Line New',
           type: 'Limited Liability Company',
@@ -46,43 +46,41 @@ describe('/api/legalEntities/update', () => {
           tax_id: '31580371-1-42',
           permanent_address_id: 2,
           version: 3,
-          version_start_at: '2019-08-27T11:11:11.000Z'
+          version_start_at: '2019-08-27T11:11:11.000Z',
+          version_end_at: null
         },
         {
-          id: 3,
+          legal_entity_id: 2,
           short_name: 'Chrono-Line',
           long_name: 'Chrono-Line',
           type: 'Limited Liability Company',
           registration_id: '02-03-529212',
           tax_id: '31580371-1-42',
           permanent_address_id: 1,
-          legal_entity_id: 2,
           version: 2,
           version_start_at: '2019-08-09T11:11:11.000Z',
           version_end_at: '2019-08-27T11:11:11.000Z'
         },
         {
-          id: 2,
+          legal_entity_id: 2,
           short_name: 'Chrono-Line',
           long_name: 'Chrono-Line',
           type: 'Limited Liability Company',
           registration_id: '02-03-529212',
           tax_id: '41580371-1-42',
           permanent_address_id: 1,
-          legal_entity_id: 2,
           version: 1,
           version_start_at: '2018-09-02T11:11:11.000Z',
           version_end_at: '2019-08-09T11:11:11.000Z'
         },
         {
-          id: 1,
+          legal_entity_id: 2,
           short_name: 'Chrono-Trigger',
           long_name: 'Chrono-Trigger',
           type: 'Limited Liability Company',
           registration_id: '02-03-529212',
           tax_id: '41580371-1-42',
           permanent_address_id: 1,
-          legal_entity_id: 2,
           version: 0,
           version_start_at: '2018-08-03T11:11:11.000Z',
           version_end_at: '2018-09-02T11:11:11.000Z'
