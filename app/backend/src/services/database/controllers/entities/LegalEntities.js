@@ -2,15 +2,25 @@ class LegalEntities {
   constructor({ models, nodeModules }) {
     this.models = models;
     this.nodeModules = nodeModules;
-    this._normalizeVersions = this._normalizeVersions.bind(this);
+    this._normalizeVersionRecord = this._normalizeVersionRecord.bind(this);
     this._prepareInputForDbInsert = this._prepareInputForDbInsert.bind(this);
     this.create = this.create.bind(this);
-    this.getAllVersions = this.getAllVersions.bind(this);
+    this.getAllVersionsOfSingleEntity = this.getAllVersionsOfSingleEntity.bind(
+      this
+    );
     this.update = this.update.bind(this);
   }
 
-  _normalizeVersions(record) {
-    const final = {
+  _normalizeShortVersionRecord(record) {
+    return {
+      legal_entity_id: record['legal_entity_id'] || record['id'],
+      long_name: record['long_name'],
+      type: record['type']
+    };
+  }
+
+  _normalizeVersionRecord(record) {
+    return {
       legal_entity_id: record['legal_entity_id'] || record['id'],
       short_name: record['short_name'],
       long_name: record['long_name'],
@@ -23,8 +33,6 @@ class LegalEntities {
       version_start_at: record['version_start_at'],
       version_end_at: record['version_end_at'] || null
     };
-
-    return final;
   }
 
   _prepareInputForDbInsert({
@@ -81,7 +89,7 @@ class LegalEntities {
     );
   }
 
-  async getAllVersions({ id, transaction }) {
+  async getAllVersionsOfSingleEntity({ id, transaction }) {
     const latestVersionLegalEntity = await this.models.LegalEntities.query(
       transaction
     ).findById(id);
@@ -94,9 +102,28 @@ class LegalEntities {
       .orderBy('version', 'DESC');
 
     return [
-      this._normalizeVersions(latestVersionLegalEntity),
-      ...previousVersionsOfLegalEntity.map(this._normalizeVersions)
+      this._normalizeVersionRecord(latestVersionLegalEntity),
+      ...previousVersionsOfLegalEntity.map(this._normalizeVersionRecord)
     ];
+  }
+
+  async getAllVersionsOfAllEntities({ transaction }) {
+    const _ = this.nodeModules.lodash;
+    const latestVersionsOfLegalEntities = await this.models.LegalEntities.query(
+      transaction
+    ).select('id', 'long_name', 'type');
+
+    const previousVersionsOfLegalEntities = await this.models.LegalEntitiesVersion.query(
+      transaction
+    ).select('legal_entity_id', 'long_name', 'type');
+
+    return _.chain([
+      ...latestVersionsOfLegalEntities,
+      ...previousVersionsOfLegalEntities
+    ])
+      .uniqBy('long_name')
+      .map(this._normalizeShortVersionRecord)
+      .value();
   }
 
   async update({ id, transaction, ...inputs }) {
@@ -130,7 +157,7 @@ class LegalEntities {
         })
       );
 
-    return await this.getAllVersions({
+    return await this.getAllVersionsOfSingleEntity({
       id,
       transaction
     });

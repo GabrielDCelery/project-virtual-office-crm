@@ -2,7 +2,7 @@ const { expect } = require('chai');
 //const verror = require("verror");
 const services = require('../../../../../src/services');
 
-describe('execute("legalEntities", "getAllVersions", {})', () => {
+describe('execute("legalEntities", "getAllVersionsOfSingleEntity", {})', () => {
   beforeEach(async () => {
     await services
       .get('database')
@@ -15,7 +15,7 @@ describe('execute("legalEntities", "getAllVersions", {})', () => {
   it('gets all versions of a legal entity', async () => {
     // Given
     const controller = 'legalEntities';
-    const method = 'getAllVersions';
+    const method = 'getAllVersionsOfSingleEntity';
     const args = {
       id: 2
     };
