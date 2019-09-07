@@ -40,28 +40,28 @@ describe('execute("legalEntities", "update", {})', () => {
       errors: [],
       payload: [
         {
-          legal_entity_id: 1,
-          short_name: 'Bacz Invest',
-          long_name: 'Bacz Invest Elektro Technikai',
+          legalEntityId: 1,
+          shortName: 'Bacz Invest',
+          longName: 'Bacz Invest Elektro Technikai',
           type: 'Unlimited Partnership',
-          registration_id: '03-01-131101',
-          tax_id: '24892285-1-42',
-          permanent_address_id: 1,
+          registrationId: '03-01-131101',
+          taxId: '24892285-1-42',
+          permanentAddressId: 1,
           version: 1,
-          version_start_at: new Date('2019-08-27T11:11:11.000Z'),
-          version_end_at: null
+          versionStartAt: new Date('2019-08-27T11:11:11.000Z'),
+          versionEndAt: null
         },
         {
-          legal_entity_id: 1,
-          short_name: 'Bacz Invest',
-          long_name: 'Bacz Invest Elektro Technikai',
+          legalEntityId: 1,
+          shortName: 'Bacz Invest',
+          longName: 'Bacz Invest Elektro Technikai',
           type: 'Limited Liability Company',
-          registration_id: '03-01-131101',
-          tax_id: '13781174-1-42',
-          permanent_address_id: 1,
+          registrationId: '03-01-131101',
+          taxId: '13781174-1-42',
+          permanentAddressId: 1,
           version: 0,
-          version_start_at: new Date('2019-08-01T11:11:11.000Z'),
-          version_end_at: new Date('2019-08-27T11:11:11.000Z')
+          versionStartAt: new Date('2019-08-01T11:11:11.000Z'),
+          versionEndAt: new Date('2019-08-27T11:11:11.000Z')
         }
       ]
     });

@@ -1,8 +1,9 @@
 const Knex = require('knex');
-const { Model, transaction } = require('objection');
+const config = require('./config');
 const controllers = require('./controllers');
 const models = require('./models');
-const config = require('./config');
+const { Model, transaction } = require('objection');
+const { RecordPreparator } = require('./helpers');
 const {
   DB_SERVICE_NAME,
   DB_ERROR_NAME_CONTROLLER_ERROR
@@ -30,7 +31,8 @@ class DB {
     this.controllers = {
       addresses: new Addresses({
         models,
-        nodeModules
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
       }),
       documents: new Documents({
         models,
@@ -38,11 +40,13 @@ class DB {
       }),
       legalEntities: new LegalEntities({
         models,
-        nodeModules
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
       }),
       mailSenders: new MailSenders({
         models,
-        nodeModules
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
       }),
       users: new Users({
         models,

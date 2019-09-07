@@ -1,3 +1,3 @@
 module.exports = {
-  ResultWrapper: require('./ResultWrapper')
+  RecordPreparator: require('./RecordPreparator')
 };

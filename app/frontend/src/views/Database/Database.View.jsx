@@ -12,13 +12,11 @@ const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
-    overflowX: 'auto',
+    overflowX: 'auto'
   }
 }));
 
-export default ({
-  stateAddresses
-}) => {
+export default ({ stateAddresses }) => {
   const classes = useStyles();
 
   return (
@@ -49,4 +47,4 @@ export default ({
       </Paper>
     </Container>
   );
-}
+};

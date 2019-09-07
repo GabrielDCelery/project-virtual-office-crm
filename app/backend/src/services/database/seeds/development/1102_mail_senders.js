@@ -5,27 +5,27 @@ exports.seed = async knex => {
     {
       id: 1,
       address_id: 1,
-      name_id: 1
+      sender_name_id: 1
     },
     {
       id: 2,
       address_id: 1,
-      name_id: 2
+      sender_name_id: 2
     },
     {
       id: 3,
       address_id: 2,
-      name_id: 4
+      sender_name_id: 4
     },
     {
       id: 4,
       address_id: 3,
-      name_id: 9
+      sender_name_id: 9
     },
     {
       id: 5,
       address_id: 4,
-      name_id: 4
+      sender_name_id: 4
     }
   ]);
 

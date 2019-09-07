@@ -1,7 +1,4 @@
-import {
-  USER_LOGIN,
-  USER_LOGOUT
-} from '../constants';
+import { USER_LOGIN, USER_LOGOUT } from '../constants';
 
 const initialState = {
   email: null,
@@ -26,4 +23,4 @@ export default (state = initialState, { type, email, jwt }) => {
     default:
       return state;
   }
-}
+};

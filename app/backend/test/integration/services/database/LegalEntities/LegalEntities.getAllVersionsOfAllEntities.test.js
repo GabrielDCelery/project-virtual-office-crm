@@ -27,18 +27,18 @@ describe('execute("legalEntities", "getAllVersionsOfAllEntities", {})', () => {
       errors: [],
       payload: [
         {
-          legal_entity_id: 1,
-          long_name: 'Bacz Invest Elektro Technikai',
+          legalEntityId: 1,
+          longName: 'Bacz Invest Elektro Technikai',
           type: 'Limited Liability Company'
         },
         {
-          legal_entity_id: 2,
-          long_name: 'Chrono-Line',
+          legalEntityId: 2,
+          longName: 'Chrono-Line',
           type: 'Limited Liability Company'
         },
         {
-          legal_entity_id: 2,
-          long_name: 'Chrono-Trigger',
+          legalEntityId: 2,
+          longName: 'Chrono-Trigger',
           type: 'Limited Liability Company'
         }
       ]

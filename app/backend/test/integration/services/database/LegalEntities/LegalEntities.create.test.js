@@ -43,14 +43,14 @@ describe('execute("legalEntities", "create", {})', () => {
       errors: [],
       payload: {
         id: 3,
-        short_name: 'Donim-Plussz',
-        long_name: 'Donim-Plussz Hungary',
+        shortName: 'Donim-Plussz',
+        longName: 'Donim-Plussz Hungary',
         type: 'Limited Liability Company',
-        registration_id: '01-01-129342',
-        tax_id: '21583385-1-41',
-        permanent_address_id: 2,
+        registrationId: '01-01-129342',
+        taxId: '21583385-1-41',
+        permanentAddressId: 2,
         version: 0,
-        version_start_at: new Date('2019-08-27T11:11:11.000Z')
+        versionStartAt: new Date('2019-08-27T11:11:11.000Z')
       }
     });
   });

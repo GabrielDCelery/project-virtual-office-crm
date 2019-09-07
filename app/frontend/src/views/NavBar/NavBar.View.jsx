@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
+import { Collapse, CssBaseline, List } from '@material-ui/core';
 import {
-  Collapse,
-  CssBaseline,
-  List
-} from '@material-ui/core';
-import {
+  ContactMail as ContactMailIcon,
   Dashboard as DashboardIcon,
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon,
   Layers as LayersIcon,
+  ListAlt as ListAltIcon,
   Person as PersonIcon,
   Search as SearchIcon
 } from '@material-ui/icons';
 
 const Icons = {
+  ContactMailIcon,
   DashboardIcon,
   LayersIcon,
+  ListAltIcon,
   PersonIcon,
   SearchIcon
 };
@@ -34,12 +34,14 @@ const SingleNavBarItem = ({
 
   return (
     <StyledLink to={path}>
-      <StyledListItem button className={`${bIsActive ? 'active' : ''}`}  >
-        <StyledListItemIcon><Icon /></StyledListItemIcon>
+      <StyledListItem button className={`${bIsActive ? 'active' : ''}`}>
+        <StyledListItemIcon>
+          <Icon />
+        </StyledListItemIcon>
         <StyledListItemText primary={label} />
       </StyledListItem>
     </StyledLink>
-  )
+  );
 };
 
 const DropDownNavBarItem = ({
@@ -57,8 +59,10 @@ const DropDownNavBarItem = ({
 
   return (
     <div onClick={() => setOpen(!bIsOpen)}>
-      <StyledListItem button className={`${bIsActive ? 'active' : ''}`} >
-        <StyledListItemIcon><Icon /></StyledListItemIcon>
+      <StyledListItem button className={`${bIsActive ? 'active' : ''}`}>
+        <StyledListItemIcon>
+          <Icon />
+        </StyledListItemIcon>
         <StyledListItemText primary={label} />
         <StyledListItemIcon>
           {bIsActive || bIsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -70,7 +74,10 @@ const DropDownNavBarItem = ({
           {navBarItemChildren.map(({ label, bIsActive, path }, index) => (
             <React.Fragment key={`navbar-item-collapsible-${index}`}>
               <StyledLink to={path}>
-                <StyledListItem button className={`${bIsActive ? 'active' : ''}`}>
+                <StyledListItem
+                  button
+                  className={`${bIsActive ? 'active' : ''}`}
+                >
                   <StyledListItemText primary={label} />
                 </StyledListItem>
               </StyledLink>
@@ -79,7 +86,7 @@ const DropDownNavBarItem = ({
         </List>
       </Collapse>
     </div>
-  )
+  );
 };
 
 export default function NavBarView({
@@ -108,7 +115,7 @@ export default function NavBarView({
 
               return (
                 <React.Fragment key={`navbar-item-${index}`}>
-                  {navBarItemChildren ?
+                  {navBarItemChildren ? (
                     <DropDownNavBarItem
                       {...{
                         StyledLink,
@@ -121,7 +128,7 @@ export default function NavBarView({
                         navBarItemChildren
                       }}
                     />
-                    :
+                  ) : (
                     <SingleNavBarItem
                       {...{
                         StyledLink,
@@ -133,9 +140,10 @@ export default function NavBarView({
                         label,
                         path
                       }}
-                    />}
+                    />
+                  )}
                 </React.Fragment>
-              )
+              );
             })}
           </List>
         </StyledDrawer>

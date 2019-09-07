@@ -13,7 +13,7 @@ class MailSenders extends Model {
         id: {
           type: 'integer'
         },
-        name_id: {
+        sender_name_id: {
           type: 'integer'
         },
         address_id: {
@@ -37,11 +37,11 @@ class MailSenders extends Model {
           to: `${Addresses.tableName}.id`
         }
       },
-      name: {
+      sender_name: {
         relation: Model.BelongsToOneRelation,
         modelClass: MailSenderNames,
         join: {
-          from: `${MailSenders.tableName}.name_id`,
+          from: `${MailSenders.tableName}.sender_name_id`,
           to: `${MailSenderNames.tableName}.id`
         }
       },

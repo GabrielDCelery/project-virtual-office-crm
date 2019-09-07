@@ -32,40 +32,40 @@ describe('execute("legalEntities", "getAllVersionsOfSingleEntity", {})', () => {
       errors: [],
       payload: [
         {
-          legal_entity_id: 2,
-          short_name: 'Chrono-Line',
-          long_name: 'Chrono-Line',
+          legalEntityId: 2,
+          shortName: 'Chrono-Line',
+          longName: 'Chrono-Line',
           type: 'Limited Liability Company',
-          registration_id: '02-03-529212',
-          tax_id: '31580371-1-42',
-          permanent_address_id: 1,
+          registrationId: '02-03-529212',
+          taxId: '31580371-1-42',
+          permanentAddressId: 1,
           version: 2,
-          version_start_at: new Date('2019-08-09T11:11:11.000Z'),
-          version_end_at: null
+          versionStartAt: new Date('2019-08-09T11:11:11.000Z'),
+          versionEndAt: null
         },
         {
-          legal_entity_id: 2,
-          short_name: 'Chrono-Line',
-          long_name: 'Chrono-Line',
+          legalEntityId: 2,
+          shortName: 'Chrono-Line',
+          longName: 'Chrono-Line',
           type: 'Limited Liability Company',
-          registration_id: '02-03-529212',
-          tax_id: '41580371-1-42',
-          permanent_address_id: 1,
+          registrationId: '02-03-529212',
+          taxId: '41580371-1-42',
+          permanentAddressId: 1,
           version: 1,
-          version_start_at: new Date('2018-09-02T11:11:11.000Z'),
-          version_end_at: new Date('2019-08-09T11:11:11.000Z')
+          versionStartAt: new Date('2018-09-02T11:11:11.000Z'),
+          versionEndAt: new Date('2019-08-09T11:11:11.000Z')
         },
         {
-          legal_entity_id: 2,
-          short_name: 'Chrono-Trigger',
-          long_name: 'Chrono-Trigger',
+          legalEntityId: 2,
+          shortName: 'Chrono-Trigger',
+          longName: 'Chrono-Trigger',
           type: 'Limited Liability Company',
-          registration_id: '02-03-529212',
-          tax_id: '41580371-1-42',
-          permanent_address_id: 1,
+          registrationId: '02-03-529212',
+          taxId: '41580371-1-42',
+          permanentAddressId: 1,
           version: 0,
-          version_start_at: new Date('2018-08-03T11:11:11.000Z'),
-          version_end_at: new Date('2018-09-02T11:11:11.000Z')
+          versionStartAt: new Date('2018-08-03T11:11:11.000Z'),
+          versionEndAt: new Date('2018-09-02T11:11:11.000Z')
         }
       ]
     });

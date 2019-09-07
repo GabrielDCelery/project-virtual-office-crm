@@ -118,10 +118,10 @@ exports.up = async knex => {
       .references('id')
       .inTable(Addresses.tableName);
     table
-      .integer('name_id')
+      .integer('sender_name_id')
       .references('id')
       .inTable(MailSenderNames.tableName);
-    table.unique(['address_id', 'name_id']);
+    table.unique(['address_id', 'sender_name_id']);
   });
 
   await knex.schema.createTable(MailSubjects.tableName, table => {

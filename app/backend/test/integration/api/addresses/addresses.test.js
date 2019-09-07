@@ -25,62 +25,42 @@ describe('/api/addresses', () => {
         {
           id: 1,
           postcode: '1033',
-          city_id: 310,
-          city_name: 'Budapest',
-          country_id: 98,
-          country_name: 'Hungary',
-          country_short_name: 'HU',
-          long_street: 'Miklós u. 13. VIII/42.',
-          created_at: '2018-11-11T11:11:11.000Z',
-          updated_at: '2018-11-11T11:11:11.000Z'
+          cityName: 'Budapest',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'Miklós u. 13. VIII/42.'
         },
         {
           id: 2,
           postcode: '1033',
-          city_id: 310,
-          city_name: 'Budapest',
-          country_id: 98,
-          country_name: 'Hungary',
-          country_short_name: 'HU',
-          long_street: 'Kiscelli utca 45.',
-          created_at: '2018-11-11T11:11:11.000Z',
-          updated_at: '2018-11-11T11:11:11.000Z'
+          cityName: 'Budapest',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'Kiscelli utca 45.'
         },
         {
           id: 3,
           postcode: '8000',
-          city_id: 2528,
-          city_name: 'Székesfehérvár',
-          country_id: 98,
-          country_name: 'Hungary',
-          country_short_name: 'HU',
-          long_street: 'Melencei u. 35-37.',
-          created_at: '2018-11-11T11:11:11.000Z',
-          updated_at: '2018-11-11T11:11:11.000Z'
+          cityName: 'Székesfehérvár',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'Melencei u. 35-37.'
         },
         {
           id: 4,
           postcode: '3527',
-          city_id: 1668,
-          city_name: 'Miskolc',
-          country_id: 98,
-          country_name: 'Hungary',
-          country_short_name: 'HU',
-          long_street: 'József Attila u. 56.',
-          created_at: '2018-11-11T11:11:11.000Z',
-          updated_at: '2018-11-11T11:11:11.000Z'
+          cityName: 'Miskolc',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'József Attila u. 56.'
         },
         {
           id: 5,
           postcode: '1054',
-          city_id: 310,
-          city_name: 'Budapest',
-          country_id: 98,
-          country_name: 'Hungary',
-          country_short_name: 'HU',
-          long_street: 'Báthory utca 6-4. 3. emelet 12.',
-          created_at: '2018-11-11T11:11:11.000Z',
-          updated_at: '2018-11-11T11:11:11.000Z'
+          cityName: 'Budapest',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'Báthory utca 6-4. 3. emelet 12.'
         }
       ]
     });

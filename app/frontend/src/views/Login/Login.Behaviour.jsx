@@ -21,16 +21,18 @@ export default ToWrapComponent => {
           handlePasswordChange: event => setPassword(event.target.value),
           handleLogin: event => {
             event.preventDefault();
-            actionLogin({ email, password }, () => history.push(PATH_TO_DASHBOARD));
+            actionLogin({ email, password }, () =>
+              history.push(PATH_TO_DASHBOARD)
+            );
           }
         }}
       />
-    )
-  }
+    );
+  };
 
   WrapperComponent = AppStoreDecorator(WrapperComponent);
   WrapperComponent = UserStoreDecorator(WrapperComponent);
   WrapperComponent = WithRouterDecorator(WrapperComponent);
 
   return WrapperComponent;
-}
+};

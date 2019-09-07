@@ -23,4 +23,4 @@ export default (state = initialState, { type, errors }) => {
     default:
       return state;
   }
-}
+};

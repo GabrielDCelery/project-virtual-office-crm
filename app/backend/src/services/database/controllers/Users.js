@@ -4,7 +4,7 @@ const {
   DB_ERROR_MESSAGE_EMAIL_AND_PASSWORD_COMBINATION_INVALID,
   DB_ERROR_MESSAGE_USER_INACTIVE,
   DB_ERROR_MESSAGE_USER_SUSPENDED
-} = require('../../constants');
+} = require('../constants');
 
 class Users {
   constructor({ models, nodeModules }) {
