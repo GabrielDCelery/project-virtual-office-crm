@@ -1,6 +1,7 @@
 const Users = require('./Users');
 const addresses = require('./addresses');
 const legalEntities = require('./legalEntities');
+const mailSenders = require('./mailSenders');
 
 class Orchestrator {
   constructor() {
@@ -17,7 +18,13 @@ class Orchestrator {
         findAll: addresses.findAllWrapper(services)
       },
       legalEntities: {
-        update: legalEntities.updateWrapper(services)
+        update: legalEntities.updateWrapper(services),
+        getAllVersionsOfAllEntities: legalEntities.getAllVersionsOfAllEntitiesWrapper(
+          services
+        )
+      },
+      mailSenders: {
+        findAll: mailSenders.findAllWrapper(services)
       },
       users: new Users({
         services

@@ -16,14 +16,9 @@ describe('execute("addresses", "findAll")', () => {
     // Given
     const controller = 'addresses';
     const method = 'findAll';
-    const args = {
-      bFlatten: true
-    };
 
     // When
-    const result = await services
-      .get('database')
-      .execute(controller, method, args);
+    const result = await services.get('database').execute(controller, method);
 
     // Then
     expect(result).to.deep.equal({

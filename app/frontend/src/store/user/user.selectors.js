@@ -11,11 +11,16 @@ const getRbacRule = (state, props = {}) => {
   return props.rbacRule;
 };
 
-export default {
-  isUserAuthenticated: createSelector([getUserEmail], email => {
+export const selectorIsUserAuthenticated = createSelector(
+  [getUserEmail],
+  email => {
     return !_.isNil(email);
-  }),
-  isUserAuthorized: createSelector([getUserRules, getRbacRule], (userRules, rbacRule) => {
+  }
+);
+
+export const selectorIsUserAuthorized = createSelector(
+  [getUserRules, getRbacRule],
+  (userRules, rbacRule) => {
     return _.isNil(rbacRule) || userRules.includes(rbacRule);
-  })
-};
+  }
+);

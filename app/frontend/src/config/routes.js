@@ -71,7 +71,7 @@ export default [
     bHasNavbar: true,
     bNeedsAuthentication: true,
     path: PATH_TO_ADD_NEW_MAIL,
-    component: 'Search',
+    component: 'MailsAddNew',
     redirectTo: PATH_TO_LOGIN
   }
 ];

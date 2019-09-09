@@ -4,14 +4,21 @@ import {
   APP_AJAX_REQUEST_FAIL,
   USER_LOGIN,
   USER_LOGOUT
-} from '../constants';
+} from './user.constants';
 import services from 'services';
 
-const login = ({ email, password }, successCallback = () => { }) => {
+export const actionLogin = (
+  { email, password },
+  successCallback = () => {}
+) => {
   return async dispatch => {
     dispatch({ type: APP_AJAX_REQUEST_START });
 
-    const { success, errors, payload } = await services.user.authentication.login({ email, password });
+    const {
+      success,
+      errors,
+      payload
+    } = await services.user.authentication.login({ email, password });
 
     if (!success) {
       return dispatch({ type: APP_AJAX_REQUEST_FAIL, errors });
@@ -19,25 +26,23 @@ const login = ({ email, password }, successCallback = () => { }) => {
 
     const { jwt } = payload;
 
-    await services.user.authentication.setStoredLoginCredentials({ email, jwt });
+    await services.user.authentication.setStoredLoginCredentials({
+      email,
+      jwt
+    });
     dispatch({ type: USER_LOGIN, email, jwt });
     dispatch({ type: APP_AJAX_REQUEST_SUCCESS });
 
     return successCallback();
   };
-}
+};
 
-const logout = (successCallback = () => { }) => {
+export const actionLogout = (successCallback = () => {}) => {
   return async dispatch => {
     await services.user.authentication.logout();
 
     dispatch({ type: USER_LOGOUT });
 
     return successCallback();
-  }
-}
-
-export default {
-  login,
-  logout
+  };
 };

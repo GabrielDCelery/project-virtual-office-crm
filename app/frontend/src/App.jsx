@@ -6,7 +6,7 @@ import {
   StoreDecorator,
   ThemeDecorator
 } from 'components';
-import { Dashboard, Database, Login, NavBar, Search } from 'views';
+import { Dashboard, Database, Login, MailsAddNew, NavBar, Search } from 'views';
 import config from 'config';
 import './App.css';
 
@@ -14,6 +14,7 @@ const views = {
   Dashboard,
   Database,
   Login,
+  MailsAddNew,
   Search
 };
 

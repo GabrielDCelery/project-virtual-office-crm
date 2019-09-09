@@ -6,13 +6,16 @@ const mapStateToProps = (state, props) => {
   return {
     stateIsUserAuthenticated: store.selectors.user.isUserAuthenticated(state),
     stateIsUserAuthorized: store.selectors.user.isUserAuthorized(state, props)
-  }
-}
+  };
+};
 
 const mapActionsToProps = {
   actionLogin: store.actions.user.login
 };
 
 export const UserStoreDecorator = ToWrapComponent => {
-  return connect(mapStateToProps, mapActionsToProps)(props => <ToWrapComponent {...props} />);
-}
+  return connect(
+    mapStateToProps,
+    mapActionsToProps
+  )(props => <ToWrapComponent {...props} />);
+};
