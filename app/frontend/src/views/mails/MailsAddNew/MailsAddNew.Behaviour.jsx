@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LegalEntitiesStoreDecorator, MailsStoreDecorator } from 'components';
 
 export default ToWrapComponent => {
@@ -8,6 +8,15 @@ export default ToWrapComponent => {
       actionGetAllVersionsOfAllEntities
     } = props;
 
+    const [mailReceiver, setMailReceiver] = useState(null);
+    const [mailSender, setMailSender] = useState(null);
+    const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
+
+    const handleSetMailSenderActivePanel = (event, newValue) => {
+      setMailSender(null);
+      setMailSenderActivePanel(newValue);
+    };
+
     useEffect(() => {
       (async () => {
         await actionFindAllMailSenders();
@@ -15,7 +24,19 @@ export default ToWrapComponent => {
       })();
     }, [actionFindAllMailSenders, actionGetAllVersionsOfAllEntities]);
 
-    return <ToWrapComponent {...props} />;
+    return (
+      <ToWrapComponent
+        {...props}
+        {...{
+          handleSetMailSenderActivePanel,
+          mailReceiver,
+          mailSender,
+          mailSenderActivePanel,
+          setMailReceiver,
+          setMailSender
+        }}
+      />
+    );
   };
 
   WrapperComponent = LegalEntitiesStoreDecorator(WrapperComponent);
