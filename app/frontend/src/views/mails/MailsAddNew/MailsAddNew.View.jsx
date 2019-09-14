@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { Container, Tab, Tabs, TextField } from '@material-ui/core';
 import {
   FormFieldControl,
@@ -103,15 +104,9 @@ export default ({
                 label="City"
                 onChange={recommendation => {
                   setterNewMailSender('city')(recommendation);
-                  if (
-                    recommendation !== null &&
-                    typeof recommendation === 'object' &&
-                    Object.prototype.hasOwnProperty.call(
-                      recommendation,
-                      'country'
-                    )
-                  ) {
-                    setterNewMailSender('country')(recommendation['country']);
+                  const country = _.get(recommendation, 'country');
+                  if (country) {
+                    setterNewMailSender('country')(country);
                   }
                 }}
                 options={getterRecommendations('cities')}
