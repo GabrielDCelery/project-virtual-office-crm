@@ -1,14 +1,24 @@
+import actions_old from './actions_old';
+import { actionFindAllCities } from './cities';
+import { actionFindAllCountries } from './countries';
+import { actionFindAllMailSenderNames } from './mailSenderNames';
 import { actionFindAllMailSenders } from './mailSenders';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
-import actions_old from './actions_old';
 
 export default {
   addresses: actions_old.addresses,
+  countries: {
+    findAll: actionFindAllCountries
+  },
+  cities: {
+    findAll: actionFindAllCities
+  },
   user: actions_old.user,
   legalEntities: {
     getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
   },
   mails: {
-    findAllMailSenders: actionFindAllMailSenders
+    findAllMailSenders: actionFindAllMailSenders,
+    findAllMailSenderNames: actionFindAllMailSenderNames
   }
 };

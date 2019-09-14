@@ -104,6 +104,9 @@ function Control(props) {
 }
 
 function Option(props) {
+  // FIX FOR LAG
+  const { onMouseMove, onMouseOver, ...newInnerProps } = props.innerProps;
+
   return (
     <MenuItem
       ref={props.innerRef}
@@ -112,7 +115,8 @@ function Option(props) {
       style={{
         fontWeight: props.isSelected ? 500 : 400
       }}
-      {...props.innerProps}
+      //{...props.innerProps}
+      {...newInnerProps}
     >
       {props.children}
     </MenuItem>
@@ -188,7 +192,7 @@ const components = {
   ValueContainer
 };
 
-export const ReactSelect = ({
+export const FormReactSelect = ({
   inputId,
   isClearable,
   isLoading,
@@ -211,6 +215,8 @@ export const ReactSelect = ({
     })
   };
 
+  let numOfOptionsShowing = 0;
+
   return (
     <Select
       classes={classes}
@@ -223,12 +229,27 @@ export const ReactSelect = ({
           shrink: true
         }
       }}
+      filterOption={(option, rawInput) => {
+        if (10 <= numOfOptionsShowing) {
+          return false;
+        }
+
+        if (option.label.toLowerCase().includes(rawInput)) {
+          numOfOptionsShowing++;
+          return true;
+        }
+
+        return false;
+      }}
       placeholder={placeholder}
       options={options}
       isClearable={isClearable}
       isLoading={isLoading}
       components={components}
       value={value}
+      onInputChange={() => {
+        numOfOptionsShowing = 0;
+      }}
       onChange={onChange}
     />
   );

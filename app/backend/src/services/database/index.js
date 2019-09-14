@@ -22,14 +22,27 @@ class DB {
   initialize({ nodeModules }) {
     const {
       Addresses,
+      Cities,
+      Countries,
       Documents,
       LegalEntities,
       MailSenders,
+      MailSenderNames,
       Users
     } = controllers;
 
     this.controllers = {
       addresses: new Addresses({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      cities: new Cities({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      countries: new Countries({
         models,
         nodeModules,
         recordPreparator: new RecordPreparator({ nodeModules })
@@ -44,6 +57,11 @@ class DB {
         recordPreparator: new RecordPreparator({ nodeModules })
       }),
       mailSenders: new MailSenders({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      mailSenderNames: new MailSenderNames({
         models,
         nodeModules,
         recordPreparator: new RecordPreparator({ nodeModules })

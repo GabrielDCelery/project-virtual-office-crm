@@ -1,123 +1,139 @@
 import React from 'react';
-import { Box, Container, Paper, Tab, Tabs, TextField } from '@material-ui/core';
-import { ReactSelect, StepAppBar } from 'components';
+import { Container, Tab, Tabs, TextField } from '@material-ui/core';
+import {
+  FormFieldControl,
+  FormPaper,
+  FormReactSelect,
+  FormStepAppBar
+} from 'components';
 
 export default ({
-  StyledFormControl,
+  getterAjaxInProgress,
+  getterNewMailSender,
+  getterRecommendations,
   handleSetMailSenderActivePanel,
   mailReceiver,
   mailSender,
   mailSenderActivePanel,
   setMailReceiver,
   setMailSender,
-  stateIsFetchingLegalEntities,
-  stateIsFetchingMailSenders,
-  stateLegalEntityRecommendations,
-  stateMailSenderRecommendations
+  setterNewMailSender
 }) => {
   return (
     <Container maxWidth="lg">
-      <StepAppBar label="Mail Receiver (Legal Entity)" />
-      <Paper>
-        <Box component="div" p={4}>
-          <StyledFormControl>
-            <ReactSelect
-              inputId="react-select-single"
-              isClearable={true}
-              isLoading={stateIsFetchingLegalEntities}
-              label="Legal Entity"
-              options={stateLegalEntityRecommendations}
-              onChange={value => {
-                setMailReceiver(value);
-              }}
-              placeholder="Select a legal entity"
-              value={mailReceiver}
-            />
-          </StyledFormControl>
-        </Box>
-      </Paper>
-      <StepAppBar label="Mail Sender" />
-      <Paper>
-        <Tabs
-          aria-label="disabled tabs example"
-          indicatorColor="primary"
-          onChange={handleSetMailSenderActivePanel}
-          textColor="primary"
-          value={mailSenderActivePanel}
-          style={{ background: '#eee' }}
-        >
-          <Tab label="Choose Existing Mail Sender" />
-          <Tab label="Add New Mail Sender" />
-        </Tabs>
-        <Box component="div" p={4}>
-          {mailSenderActivePanel === 0 ? (
-            <ReactSelect
-              inputId="react-select-single"
-              isClearable={true}
-              isLoading={stateIsFetchingMailSenders}
-              label="Mail Sender"
-              options={stateMailSenderRecommendations}
-              onChange={value => {
-                setMailSender(value);
-              }}
-              placeholder="Select a mail sender"
-              value={mailSender}
-            />
-          ) : null}
-          {mailSenderActivePanel === 1 ? (
-            <React.Fragment>
-              <StyledFormControl>
-                <ReactSelect
-                  inputId="react-select-single"
-                  isClearable={true}
-                  onChange={value => {}}
-                  options={stateLegalEntityRecommendations}
-                  label="Mail Sender"
-                  placeholder="Select or create Mail Sender"
-                  value={''}
-                  onInputChange={value => {
-                    console.log(value);
-                  }}
-                />
-              </StyledFormControl>
-              <StyledFormControl>
-                <ReactSelect
-                  inputId="react-select-single"
-                  isClearable={true}
-                  label="Country"
-                  onChange={value => {}}
-                  options={stateLegalEntityRecommendations}
-                  placeholder="Select Country"
-                  value={''}
-                />
-              </StyledFormControl>
-              <StyledFormControl>
-                <ReactSelect
-                  inputId="react-select-single"
-                  isClearable={true}
-                  label="City"
-                  onChange={value => {}}
-                  options={stateLegalEntityRecommendations}
-                  placeholder="Select City"
-                  value={''}
-                />
-              </StyledFormControl>
-              <StyledFormControl>
-                <TextField
-                  fullWidth={true}
-                  id="outlined-name"
-                  label="Long Street"
-                  onChange={() => {}}
-                  value=""
-                  margin="normal"
-                  variant="filled"
-                />
-              </StyledFormControl>
-            </React.Fragment>
-          ) : null}
-        </Box>
-      </Paper>
-      <StepAppBar label="Document" />
+      <FormStepAppBar label="Mail Receiver (Legal Entity)" />
+      <FormPaper>
+        <FormFieldControl>
+          <FormReactSelect
+            inputId="mail-sender-legal-entity"
+            isClearable={true}
+            isLoading={getterAjaxInProgress('legalEntityRecommendations')}
+            label="Legal Entity"
+            onChange={recommendation => setMailReceiver(recommendation)}
+            options={getterRecommendations('legalEntities')}
+            placeholder="Select a legal entity"
+            value={mailReceiver}
+          />
+        </FormFieldControl>
+      </FormPaper>
+      <FormStepAppBar label="Mail Sender" />
+      <Tabs
+        indicatorColor="primary"
+        onChange={handleSetMailSenderActivePanel}
+        textColor="primary"
+        value={mailSenderActivePanel}
+        style={{ background: '#eee' }}
+      >
+        <Tab label="Choose Existing Mail Sender" />
+        <Tab label="Add New Mail Sender" />
+      </Tabs>
+      <FormPaper>
+        {mailSenderActivePanel === 0 ? (
+          <FormReactSelect
+            inputId="mail-sender"
+            isClearable={true}
+            isLoading={getterAjaxInProgress('mailSenderRecommendations')}
+            label="Mail Sender"
+            onChange={recommendation => setMailSender(recommendation)}
+            options={getterRecommendations('mailSenders')}
+            placeholder="Select a mail sender"
+            value={mailSender}
+          />
+        ) : null}
+        {mailSenderActivePanel === 1 ? (
+          <React.Fragment>
+            <FormFieldControl>
+              <FormReactSelect
+                inputId="react-select-single"
+                isClearable={true}
+                isLoading={getterAjaxInProgress(
+                  'mailSenderNameRecommendations'
+                )}
+                onChange={recommendation =>
+                  setterNewMailSender('name')(recommendation)
+                }
+                options={getterRecommendations('mailSenderNames')}
+                label="Mail Sender Name"
+                placeholder="Select or create Mail Sender Name"
+                value={getterNewMailSender('name')}
+                onInputChange={value => {
+                  console.log(value);
+                }}
+              />
+            </FormFieldControl>
+            <FormFieldControl>
+              <FormReactSelect
+                inputId="react-select-single"
+                isClearable={true}
+                isLoading={getterAjaxInProgress('countryRecommendations')}
+                label="Country"
+                onChange={recommendation =>
+                  setterNewMailSender('country')(recommendation)
+                }
+                options={getterRecommendations('countries')}
+                placeholder="Select Country"
+                value={getterNewMailSender('country')}
+              />
+            </FormFieldControl>
+            <FormFieldControl>
+              <FormReactSelect
+                inputId="react-select-single"
+                isClearable={true}
+                isLoading={getterAjaxInProgress('cityRecommendations')}
+                label="City"
+                onChange={recommendation => {
+                  setterNewMailSender('city')(recommendation);
+                  if (
+                    recommendation !== null &&
+                    typeof recommendation === 'object' &&
+                    Object.prototype.hasOwnProperty.call(
+                      recommendation,
+                      'country'
+                    )
+                  ) {
+                    setterNewMailSender('country')(recommendation['country']);
+                  }
+                }}
+                options={getterRecommendations('cities')}
+                placeholder="Select City"
+                value={getterNewMailSender('city')}
+              />
+            </FormFieldControl>
+            <FormFieldControl>
+              <TextField
+                fullWidth={true}
+                id="outlined-name"
+                label="Long Street"
+                onChange={event =>
+                  setterNewMailSender('street')(event.target.value)
+                }
+                value={getterNewMailSender('street')}
+              />
+            </FormFieldControl>
+          </React.Fragment>
+        ) : null}
+      </FormPaper>
+      <FormStepAppBar label="Document" />
     </Container>
   );
 };

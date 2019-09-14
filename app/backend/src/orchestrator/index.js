@@ -1,6 +1,9 @@
 const Users = require('./Users');
 const addresses = require('./addresses');
+const cities = require('./cities');
+const countries = require('./countries');
 const legalEntities = require('./legalEntities');
+const mailSenderNames = require('./mailSenderNames');
 const mailSenders = require('./mailSenders');
 
 class Orchestrator {
@@ -17,6 +20,12 @@ class Orchestrator {
       addresses: {
         findAll: addresses.findAllWrapper(services)
       },
+      cities: {
+        findAll: cities.findAllWrapper(services)
+      },
+      countries: {
+        findAll: countries.findAllWrapper(services)
+      },
       legalEntities: {
         update: legalEntities.updateWrapper(services),
         getAllVersionsOfAllEntities: legalEntities.getAllVersionsOfAllEntitiesWrapper(
@@ -25,6 +34,9 @@ class Orchestrator {
       },
       mailSenders: {
         findAll: mailSenders.findAllWrapper(services)
+      },
+      mailSenderNames: {
+        findAll: mailSenderNames.findAllWrapper(services)
       },
       users: new Users({
         services

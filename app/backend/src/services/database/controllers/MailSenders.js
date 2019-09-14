@@ -25,7 +25,6 @@ class MailSenders {
 
     return mailSenders.map(dbRecord => {
       const flattenedDbRecord = MailSenders.flattenRecord(dbRecord);
-
       return this.recordPreparator.prepareDbRecordForReturn(flattenedDbRecord);
     });
   }
