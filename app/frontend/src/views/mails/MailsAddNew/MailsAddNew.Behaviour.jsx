@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import {
   CitiesStoreDecorator,
   CountriesStoreDecorator,
@@ -13,6 +14,7 @@ export default ToWrapComponent => {
       actionFindAllCountries,
       actionFindAllMailSenderNames,
       actionFindAllMailSenders,
+      actionFindAllMailSubjects,
       actionGetAllVersionsOfAllEntities,
       stateCityRecommendations,
       stateCountryRecommendations,
@@ -21,9 +23,11 @@ export default ToWrapComponent => {
       stateIsFetchingLegalEntities,
       stateIsFetchingMailSenderNames,
       stateIsFetchingMailSenders,
+      stateIsFetchingMailSubjects,
       stateLegalEntityRecommendations,
       stateMailSenderNameRecommendations,
-      stateMailSenderRecommendations
+      stateMailSenderRecommendations,
+      stateMailSubjectRecommendations
     } = props;
 
     const [mailReceiver, setMailReceiver] = useState(null);
@@ -31,11 +35,12 @@ export default ToWrapComponent => {
     const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
     const ajaxInProgress = {
-      mailSenderRecommendations: stateIsFetchingMailSenders,
-      mailSenderNameRecommendations: stateIsFetchingMailSenderNames,
-      legalEntityRecommendations: stateIsFetchingLegalEntities,
+      cityRecommendations: stateIsFetchingCities,
       countryRecommendations: stateIsFetchingCountries,
-      cityRecommendations: stateIsFetchingCities
+      legalEntityRecommendations: stateIsFetchingLegalEntities,
+      mailSenderNameRecommendations: stateIsFetchingMailSenderNames,
+      mailSenderRecommendations: stateIsFetchingMailSenders,
+      mailSubjects: stateIsFetchingMailSubjects
     };
 
     const getterAjaxInProgress = objKey => {
@@ -47,7 +52,8 @@ export default ToWrapComponent => {
       countries: stateCountryRecommendations,
       legalEntities: stateLegalEntityRecommendations,
       mailSenderNames: stateMailSenderNameRecommendations,
-      mailSenders: stateMailSenderRecommendations
+      mailSenders: stateMailSenderRecommendations,
+      mailSubjects: stateMailSubjectRecommendations
     };
 
     const getterRecommendations = objKey => {
@@ -55,9 +61,10 @@ export default ToWrapComponent => {
     };
 
     const initialStateNewMailSender = {
-      name: null,
-      country: null,
       city: null,
+      country: null,
+      name: null,
+      postcode: '',
       street: ''
     };
 
@@ -78,6 +85,28 @@ export default ToWrapComponent => {
       });
     };
 
+    const initialStateMailDocument = {
+      subject: null,
+      receivedDate: moment(new Date()).format('YYYY-MM-DD')
+    };
+
+    const [stateMailDocument, setMailDocument] = useState(
+      JSON.parse(JSON.stringify(initialStateMailDocument))
+    );
+
+    const getterMailDocument = objKey => {
+      return stateMailDocument[objKey];
+    };
+
+    const setterMailDocument = objKey => value => {
+      setMailDocument(stateMailDocument => {
+        return {
+          ...stateMailDocument,
+          [objKey]: value
+        };
+      });
+    };
+
     const handleSetMailSenderActivePanel = (event, newValue) => {
       setMailSender(null);
       setMailSenderActivePanel(newValue);
@@ -90,9 +119,11 @@ export default ToWrapComponent => {
         await actionFindAllCountries();
         await actionFindAllMailSenderNames();
         await actionFindAllMailSenders();
+        await actionFindAllMailSubjects();
         await actionGetAllVersionsOfAllEntities();
       })();
     }, [
+      actionFindAllMailSubjects,
       actionFindAllCities,
       actionFindAllCountries,
       actionFindAllMailSenderNames,
@@ -105,6 +136,7 @@ export default ToWrapComponent => {
         {...props}
         {...{
           getterAjaxInProgress,
+          getterMailDocument,
           getterNewMailSender,
           getterRecommendations,
           handleSetMailSenderActivePanel,
@@ -113,6 +145,7 @@ export default ToWrapComponent => {
           mailSenderActivePanel,
           setMailReceiver,
           setMailSender,
+          setterMailDocument,
           setterNewMailSender
         }}
       />

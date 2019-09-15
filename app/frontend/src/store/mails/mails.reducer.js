@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import { mailSendersReducer } from '../mailSenders';
 import { mailSenderNamesReducer } from '../mailSenderNames';
+import { mailSubjectsReducer } from '../mailSubjects';
 
 export const mailsReducer = combineReducers({
   senders: mailSendersReducer,
-  senderNames: mailSenderNamesReducer
+  senderNames: mailSenderNamesReducer,
+  subjects: mailSubjectsReducer
 });

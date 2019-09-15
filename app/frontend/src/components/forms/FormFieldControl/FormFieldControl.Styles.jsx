@@ -4,10 +4,8 @@ import { FormControl } from '@material-ui/core';
 
 const StyledFormControl = styled(FormControl)`
   width: 100%;
-  .MuiFormControl-root {
-    margin-top: 1em;
-    margin-bottom: 1em;
-  }
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
 `;
 
 export default ToWrapComponent => {

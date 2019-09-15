@@ -4,6 +4,7 @@ const countries = require('./countries');
 const legalEntities = require('./legalEntities');
 const mailSenderNames = require('./mailSenderNames');
 const mailSenders = require('./mailSenders');
+const mailSubjects = require('./mailSubjects');
 const users = require('./users');
 
 module.exports = {
@@ -11,7 +12,8 @@ module.exports = {
   cities,
   countries,
   legalEntities,
-  mailSenders,
   mailSenderNames,
+  mailSenders,
+  mailSubjects,
   users
 };

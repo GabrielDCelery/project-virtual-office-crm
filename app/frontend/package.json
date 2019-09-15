@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.2",
     "@material-ui/icons": "^4.2.0",
+    "@material-ui/pickers": "^3.2.6",
     "@material-ui/styles": "^4.0.2",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.0",
@@ -12,6 +13,7 @@
     "http-proxy-middleware": "^0.19.1",
     "lodash": "^4.17.11",
     "material-ui-dropzone": "^2.4.1",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-animate-height": "^2.0.15",
     "react-autosuggest": "^9.4.3",

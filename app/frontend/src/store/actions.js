@@ -3,6 +3,7 @@ import { actionFindAllCities } from './cities';
 import { actionFindAllCountries } from './countries';
 import { actionFindAllMailSenderNames } from './mailSenderNames';
 import { actionFindAllMailSenders } from './mailSenders';
+import { actionFindAllMailSubjects } from './mailSubjects';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 
 export default {
@@ -19,6 +20,7 @@ export default {
   },
   mails: {
     findAllMailSenders: actionFindAllMailSenders,
-    findAllMailSenderNames: actionFindAllMailSenderNames
+    findAllMailSenderNames: actionFindAllMailSenderNames,
+    findAllMailSubjects: actionFindAllMailSubjects
   }
 };

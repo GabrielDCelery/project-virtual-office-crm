@@ -1,9 +1,10 @@
-import { selectorIsUserAuthenticated, selectorIsUserAuthorized } from './user';
-import { selectorGetLegalEntityRecommendations } from './legalEntities';
-import { selectorGetMailSenderRecommendations } from './mailSenders';
-import { selectorGetMailSenderNameRecommendations } from './mailSenderNames';
-import { selectorGetCountryRecommendations } from './countries';
 import { selectorGetCityRecommendations } from './cities';
+import { selectorGetCountryRecommendations } from './countries';
+import { selectorGetLegalEntityRecommendations } from './legalEntities';
+import { selectorGetMailSenderNameRecommendations } from './mailSenderNames';
+import { selectorGetMailSenderRecommendations } from './mailSenders';
+import { selectorGetMailSubjectRecommendations } from './mailSubjects';
+import { selectorIsUserAuthenticated, selectorIsUserAuthorized } from './user';
 
 export default {
   user: {
@@ -15,7 +16,8 @@ export default {
   },
   mails: {
     getMailSenderRecommendations: selectorGetMailSenderRecommendations,
-    getMailSenderNameRecommendations: selectorGetMailSenderNameRecommendations
+    getMailSenderNameRecommendations: selectorGetMailSenderNameRecommendations,
+    getMailSubjectRecommendations: selectorGetMailSubjectRecommendations
   },
   countries: {
     getCountryRecommendations: selectorGetCountryRecommendations

@@ -6,6 +6,7 @@ module.exports = () => ({
     legalEntities: '/api/legalEntities',
     mailSenders: '/api/mailSenders',
     mailSenderNames: '/api/mailSenderNames',
+    mailSubjects: '/api/mailSubjects',
     users: '/api/users'
   }
 });

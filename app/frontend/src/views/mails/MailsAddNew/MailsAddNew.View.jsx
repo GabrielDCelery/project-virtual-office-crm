@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import { Container, Tab, Tabs, TextField } from '@material-ui/core';
-
 import {
   FormFieldControl,
   FormFileUpload,
@@ -12,6 +11,7 @@ import {
 
 export default ({
   getterAjaxInProgress,
+  getterMailDocument,
   getterNewMailSender,
   getterRecommendations,
   handleSetMailSenderActivePanel,
@@ -20,6 +20,7 @@ export default ({
   mailSenderActivePanel,
   setMailReceiver,
   setMailSender,
+  setterMailDocument,
   setterNewMailSender
 }) => {
   return (
@@ -86,6 +87,19 @@ export default ({
                   }}
                 />
               </FormFieldControl>
+
+              <FormFieldControl>
+                <TextField
+                  fullWidth={true}
+                  id="outlined-name"
+                  label="Postcode"
+                  onChange={event =>
+                    setterNewMailSender('postcode')(event.target.value)
+                  }
+                  value={getterNewMailSender('postcode')}
+                />
+              </FormFieldControl>
+
               <FormFieldControl>
                 <FormReactSelect
                   inputId="react-select-single"
@@ -100,6 +114,7 @@ export default ({
                   value={getterNewMailSender('country')}
                 />
               </FormFieldControl>
+
               <FormFieldControl>
                 <FormReactSelect
                   inputId="react-select-single"
@@ -118,6 +133,7 @@ export default ({
                   value={getterNewMailSender('city')}
                 />
               </FormFieldControl>
+
               <FormFieldControl>
                 <TextField
                   fullWidth={true}
@@ -136,7 +152,37 @@ export default ({
 
       <FormStep label="Document">
         <FormPaper>
-          <FormFileUpload />
+          <FormFieldControl>
+            <FormReactSelect
+              inputId="react-select-single"
+              isClearable={true}
+              isLoading={getterAjaxInProgress('mailSubjects')}
+              label="Mail Subject"
+              onChange={recommendation => {
+                setterMailDocument('subject')(recommendation);
+              }}
+              options={getterRecommendations('mailSubjects')}
+              placeholder="Select Mail Subject"
+              value={getterMailDocument('subject')}
+            />
+          </FormFieldControl>
+
+          <FormFieldControl>
+            <TextField
+              id="datetime-local"
+              label="Received Date"
+              defaultValue={getterMailDocument('receivedDate')}
+            />
+          </FormFieldControl>
+
+          <FormFieldControl>
+            <FormFileUpload
+              selectedFile={''}
+              customFileName={'Something'}
+              handleSetFile={() => {}}
+              handleClearFile={() => {}}
+            />
+          </FormFieldControl>
         </FormPaper>
       </FormStep>
     </Container>

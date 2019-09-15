@@ -19,6 +19,7 @@ module.exports = {
       config.api.routerPathPrefix.mailSenderNames,
       api.router.mailSenderNames
     );
+    app.use(config.api.routerPathPrefix.mailSubjects, api.router.mailSubjects);
     app.use(config.api.routerPathPrefix.users, api.router.users);
 
     // Path for performing health check on the service

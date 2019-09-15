@@ -6,10 +6,14 @@ const mapStateToProps = state => {
   return {
     stateIsFetchingMailSenders: state.mails.senders.isFetching,
     stateIsFetchingMailSenderNames: state.mails.senderNames.isFetching,
+    stateIsFetchingMailSubjects: state.mails.subjects.isFetching,
     stateMailSenderRecommendations: store.selectors.mails.getMailSenderRecommendations(
       state
     ),
     stateMailSenderNameRecommendations: store.selectors.mails.getMailSenderNameRecommendations(
+      state
+    ),
+    stateMailSubjectRecommendations: store.selectors.mails.getMailSubjectRecommendations(
       state
     )
   };
@@ -17,7 +21,8 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = {
   actionFindAllMailSenders: store.actions.mails.findAllMailSenders,
-  actionFindAllMailSenderNames: store.actions.mails.findAllMailSenderNames
+  actionFindAllMailSenderNames: store.actions.mails.findAllMailSenderNames,
+  actionFindAllMailSubjects: store.actions.mails.findAllMailSubjects
 };
 
 export const MailsStoreDecorator = ToWrapComponent => {

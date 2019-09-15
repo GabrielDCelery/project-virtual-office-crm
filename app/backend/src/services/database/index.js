@@ -28,6 +28,7 @@ class DB {
       LegalEntities,
       MailSenders,
       MailSenderNames,
+      MailSubjects,
       Users
     } = controllers;
 
@@ -62,6 +63,11 @@ class DB {
         recordPreparator: new RecordPreparator({ nodeModules })
       }),
       mailSenderNames: new MailSenderNames({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      mailSubjects: new MailSubjects({
         models,
         nodeModules,
         recordPreparator: new RecordPreparator({ nodeModules })
