@@ -8,7 +8,7 @@ export default ToWrapComponent => {
       <ToWrapComponent
         {...props}
         {...{
-          handleStepOpenToggle: () => setStep(!isStepOpen),
+          handleToggleStepOpen: () => setStep(!isStepOpen),
           isStepOpen
         }}
       />

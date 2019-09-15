@@ -1,6 +1,8 @@
 import React from 'react';
 import {
   AppBar,
+  Box,
+  Paper,
   Toolbar,
   Typography /*, Badge, Tooltip*/
 } from '@material-ui/core';
@@ -8,13 +10,18 @@ import {
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
+import AnimateHeight from 'react-animate-height';
 
-export default ({
-  StyledFlexBoxCenterPositioner,
-  handleStepOpenToggle,
-  isStepOpen,
-  label
-}) => {
+export default props => {
+  const {
+    StyledFlexBoxCenterPositioner,
+    children,
+    handleToggleStepOpen,
+    isStepOpen,
+    label,
+    rest
+  } = props;
+
   return (
     <React.Fragment>
       <div style={{ height: '1em' }}></div>
@@ -25,7 +32,7 @@ export default ({
           </Typography>
           <Typography component="div" style={{ flexGrow: 1 }}></Typography>
           <StyledFlexBoxCenterPositioner
-            onClick={handleStepOpenToggle}
+            onClick={handleToggleStepOpen}
             style={{ cursor: 'pointer' }}
           >
             {isStepOpen ? (
@@ -36,7 +43,10 @@ export default ({
           </StyledFlexBoxCenterPositioner>
         </Toolbar>
       </AppBar>
-      <div style={{ height: '1em' }}></div>
+      <AnimateHeight duration={500} height={isStepOpen ? 'auto' : 0}>
+        <div style={{ height: '1em' }}></div>
+        {children}
+      </AnimateHeight>
     </React.Fragment>
   );
 };
