@@ -1,8 +1,6 @@
 import React from 'react';
 import {
   AppBar,
-  Box,
-  Paper,
   Toolbar,
   Typography /*, Badge, Tooltip*/
 } from '@material-ui/core';
@@ -23,7 +21,7 @@ export default props => {
   } = props;
 
   return (
-    <React.Fragment>
+    <div {...rest}>
       <div style={{ height: '1em' }}></div>
       <AppBar position="static">
         <Toolbar variant="dense">
@@ -47,6 +45,6 @@ export default props => {
         <div style={{ height: '1em' }}></div>
         {children}
       </AnimateHeight>
-    </React.Fragment>
+    </div>
   );
 };
