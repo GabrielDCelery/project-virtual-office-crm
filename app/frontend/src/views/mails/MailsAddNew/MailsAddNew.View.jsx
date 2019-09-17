@@ -8,6 +8,11 @@ import {
   FormReactSelect,
   FormStep
 } from 'components';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 export default ({
   getterAjaxInProgress,
@@ -55,16 +60,18 @@ export default ({
         </Tabs>
         <FormPaper>
           {mailSenderActivePanel === 0 ? (
-            <FormReactSelect
-              inputId="mail-sender"
-              isClearable={true}
-              isLoading={getterAjaxInProgress('mailSenderRecommendations')}
-              label="Mail Sender"
-              onChange={recommendation => setMailSender(recommendation)}
-              options={getterRecommendations('mailSenders')}
-              placeholder="Select a mail sender"
-              value={mailSender}
-            />
+            <FormFieldControl>
+              <FormReactSelect
+                inputId="mail-sender"
+                isClearable={true}
+                isLoading={getterAjaxInProgress('mailSenderRecommendations')}
+                label="Mail Sender"
+                onChange={recommendation => setMailSender(recommendation)}
+                options={getterRecommendations('mailSenders')}
+                placeholder="Select a mail sender"
+                value={mailSender}
+              />
+            </FormFieldControl>
           ) : null}
           {mailSenderActivePanel === 1 ? (
             <React.Fragment>
@@ -168,11 +175,19 @@ export default ({
           </FormFieldControl>
 
           <FormFieldControl>
-            <TextField
-              id="datetime-local"
-              label="Received Date"
-              defaultValue={getterMailDocument('receivedDate')}
-            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Date picker dialog"
+                format="yyyy-MM-dd"
+                value={getterMailDocument('receivedDate')}
+                onChange={setterMailDocument('receivedDate')}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+            </MuiPickersUtilsProvider>
           </FormFieldControl>
 
           <FormFieldControl>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+//import moment from 'moment';
 import {
   CitiesStoreDecorator,
   CountriesStoreDecorator,
@@ -87,7 +87,7 @@ export default ToWrapComponent => {
 
     const initialStateMailDocument = {
       subject: null,
-      receivedDate: moment(new Date()).format('YYYY-MM-DD')
+      receivedDate: new Date()
     };
 
     const [stateMailDocument, setMailDocument] = useState(
