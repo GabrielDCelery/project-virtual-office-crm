@@ -1,33 +1,59 @@
 import {
-  START_FETCHING_MAIL_SENDER_NAMES,
-  FINSIHED_FETCHING_MAIL_SENDER_NAMES,
-  ERRORED_FETCHING_MAIL_SENDER_NAMES
+  ERRORED_FETCHING_MAIL_SENDER_NAMES,
+  FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES,
+  RESET_MAIL_SENDER_NAMES,
+  RESET_SELECTED_MAIL_SENDER_NAME,
+  SET_MAIL_SENDER_NAMES,
+  SET_SELECTED_MAIL_SENDER_NAME,
+  START_AJAX_REQUEST_MAIL_SENDER_NAMES
 } from './mailSenderNames.constants';
 
 const initialState = {
-  isFetching: false,
-  items: []
+  isAjaxRequestInProgress: false,
+  items: [],
+  selectedValue: null
 };
 
 export const mailSenderNamesReducer = (
   state = initialState,
-  { type, mailSenderNames }
+  { type, mailSenderNames, selectedValue }
 ) => {
   switch (type) {
-    case START_FETCHING_MAIL_SENDER_NAMES:
+    case START_AJAX_REQUEST_MAIL_SENDER_NAMES:
       return {
-        isFetching: true,
-        items: []
+        ...state,
+        isAjaxRequestInProgress: true
       };
-    case FINSIHED_FETCHING_MAIL_SENDER_NAMES:
+    case FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES:
       return {
-        isFetching: false,
-        items: mailSenderNames
+        ...state,
+        isAjaxRequestInProgress: false
       };
     case ERRORED_FETCHING_MAIL_SENDER_NAMES:
       return {
-        isFetching: false,
+        ...state,
+        isAjaxRequestInProgress: true
+      };
+    case RESET_MAIL_SENDER_NAMES:
+      return {
+        ...state,
         items: []
+      };
+    case SET_MAIL_SENDER_NAMES:
+      return {
+        ...state,
+        items: mailSenderNames
+      };
+    case RESET_SELECTED_MAIL_SENDER_NAME: {
+      return {
+        ...state,
+        selectedValue: null
+      };
+    }
+    case SET_SELECTED_MAIL_SENDER_NAME:
+      return {
+        ...state,
+        selectedValue: selectedValue
       };
     default:
       return state;

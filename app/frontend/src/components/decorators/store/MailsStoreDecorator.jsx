@@ -2,27 +2,48 @@ import React from 'react';
 import { connect } from 'react-redux';
 import store from 'store';
 
+const {
+  selectors: {
+    selectorGetMailSenderNameRecommendations,
+    selectorGetMailSenderRecommendations,
+    selectorGetMailSubjectRecommendations
+  },
+  actions: {
+    actionCreateNewMailSenderNameAndReFetch,
+    actionFindAllMailSenderNames,
+    actionFindAllMailSenders,
+    actionFindAllMailSubjects,
+    actionSetSelectedMailSender,
+    actionSetSelectedMailSenderName
+  }
+} = store;
+
 const mapStateToProps = state => {
   return {
-    stateIsFetchingMailSenders: state.mails.senders.isFetching,
-    stateIsFetchingMailSenderNames: state.mails.senderNames.isFetching,
+    stateIsMailSendersAjaxRequestInProgress:
+      state.mails.senders.isAjaxRequestInProgress,
+    stateIsMailSenderNamesAjaxRequestInProgress:
+      state.mails.senderNames.isAjaxRequestInProgress,
     stateIsFetchingMailSubjects: state.mails.subjects.isFetching,
-    stateMailSenderRecommendations: store.selectors.mails.getMailSenderRecommendations(
+    stateMailSenderRecommendations: selectorGetMailSenderRecommendations(state),
+    stateMailSenderNameRecommendations: selectorGetMailSenderNameRecommendations(
       state
     ),
-    stateMailSenderNameRecommendations: store.selectors.mails.getMailSenderNameRecommendations(
+    stateMailSubjectRecommendations: selectorGetMailSubjectRecommendations(
       state
     ),
-    stateMailSubjectRecommendations: store.selectors.mails.getMailSubjectRecommendations(
-      state
-    )
+    stateSelectedMailSenderName: state.mails.senderNames.selectedValue,
+    stateSelectedMailSender: state.mails.senders.selectedValue
   };
 };
 
 const mapActionsToProps = {
-  actionFindAllMailSenders: store.actions.mails.findAllMailSenders,
-  actionFindAllMailSenderNames: store.actions.mails.findAllMailSenderNames,
-  actionFindAllMailSubjects: store.actions.mails.findAllMailSubjects
+  actionCreateNewMailSenderNameAndReFetch,
+  actionFindAllMailSenderNames,
+  actionFindAllMailSenders,
+  actionFindAllMailSubjects,
+  actionSetSelectedMailSender,
+  actionSetSelectedMailSenderName
 };
 
 export const MailsStoreDecorator = ToWrapComponent => {

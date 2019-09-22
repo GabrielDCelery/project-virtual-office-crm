@@ -5,28 +5,26 @@ import {
   FormFieldControl,
   FormFileUpload,
   FormPaper,
+  FormReactCreateSelect,
   FormReactSelect,
   FormStep
 } from 'components';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 
 export default ({
   getterAjaxInProgress,
+  getterExistingMailSender,
   getterMailDocument,
   getterNewMailSender,
   getterRecommendations,
   handleSetMailSenderActivePanel,
+  handlerExistingMailSender,
+  handlerNewMailSender,
   mailReceiver,
-  mailSender,
   mailSenderActivePanel,
   setMailReceiver,
-  setMailSender,
   setterMailDocument,
-  setterNewMailSender
+  setterNewMailSender,
+  stateSelectedMailSenderName
 }) => {
   return (
     <Container maxWidth="lg">
@@ -66,32 +64,40 @@ export default ({
                 isClearable={true}
                 isLoading={getterAjaxInProgress('mailSenderRecommendations')}
                 label="Mail Sender"
-                onChange={recommendation => setMailSender(recommendation)}
+                onChange={recommendation => {
+                  handlerExistingMailSender('actionSetSelectedMailSender')(
+                    recommendation
+                  );
+                }}
                 options={getterRecommendations('mailSenders')}
                 placeholder="Select a mail sender"
-                value={mailSender}
+                value={getterExistingMailSender()}
               />
             </FormFieldControl>
           ) : null}
           {mailSenderActivePanel === 1 ? (
             <React.Fragment>
               <FormFieldControl>
-                <FormReactSelect
+                <FormReactCreateSelect
                   inputId="react-select-single"
                   isClearable={true}
                   isLoading={getterAjaxInProgress(
                     'mailSenderNameRecommendations'
                   )}
-                  onChange={recommendation =>
-                    setterNewMailSender('name')(recommendation)
-                  }
+                  onChange={recommendation => {
+                    handlerNewMailSender('actionSetSelectedMailSenderName')(
+                      recommendation
+                    );
+                  }}
+                  onCreateOption={mailSenderName => {
+                    handlerNewMailSender(
+                      'actionCreateNewMailSenderNameAndReFetch'
+                    )(mailSenderName);
+                  }}
                   options={getterRecommendations('mailSenderNames')}
                   label="Mail Sender Name"
                   placeholder="Select or create Mail Sender Name"
-                  value={getterNewMailSender('name')}
-                  onInputChange={value => {
-                    console.log(value);
-                  }}
+                  value={stateSelectedMailSenderName}
                 />
               </FormFieldControl>
 
@@ -100,6 +106,9 @@ export default ({
                   fullWidth={true}
                   id="outlined-name"
                   label="Postcode"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
                   onChange={event =>
                     setterNewMailSender('postcode')(event.target.value)
                   }
@@ -146,6 +155,9 @@ export default ({
                   fullWidth={true}
                   id="outlined-name"
                   label="Long Street"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
                   onChange={event =>
                     setterNewMailSender('street')(event.target.value)
                   }
@@ -175,19 +187,16 @@ export default ({
           </FormFieldControl>
 
           <FormFieldControl>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date picker dialog"
-                format="yyyy-MM-dd"
-                value={getterMailDocument('receivedDate')}
-                onChange={setterMailDocument('receivedDate')}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date'
-                }}
-              />
-            </MuiPickersUtilsProvider>
+            <TextField
+              id="date"
+              label="Received Date"
+              type="date"
+              InputLabelProps={{
+                shrink: true
+              }}
+              defaultValue={getterMailDocument('receivedDate')}
+              onChange={setterMailDocument('receivedDate')}
+            />
           </FormFieldControl>
 
           <FormFieldControl>

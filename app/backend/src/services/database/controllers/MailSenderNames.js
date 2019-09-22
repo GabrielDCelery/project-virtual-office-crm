@@ -3,7 +3,28 @@ class MailSenderNames {
     this.models = models;
     this.nodeModules = nodeModules;
     this.recordPreparator = recordPreparator;
+    this.create = this.create.bind(this);
     this.findAll = this.findAll.bind(this);
+  }
+
+  async create({ name, transaction }) {
+    const dbRecord = await this.models.MailSenderNames.query(transaction)
+      .where({
+        name
+      })
+      .first();
+
+    if (dbRecord) {
+      return this.recordPreparator.prepareDbRecordForReturn(dbRecord);
+    }
+
+    const newDbRecord = await this.models.MailSenderNames.query(
+      transaction
+    ).insert({
+      name
+    });
+
+    return this.recordPreparator.prepareDbRecordForReturn(newDbRecord);
   }
 
   async findAll({ transaction }) {

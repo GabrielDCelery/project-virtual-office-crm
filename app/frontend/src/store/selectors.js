@@ -7,17 +7,15 @@ import { selectorGetMailSubjectRecommendations } from './mailSubjects';
 import { selectorIsUserAuthenticated, selectorIsUserAuthorized } from './user';
 
 export default {
+  selectorGetMailSenderNameRecommendations,
+  selectorGetMailSenderRecommendations,
+  selectorGetMailSubjectRecommendations,
   user: {
     isUserAuthenticated: selectorIsUserAuthenticated,
     isUserAuthorized: selectorIsUserAuthorized
   },
   legalEntities: {
     getLegalEntityRecommendations: selectorGetLegalEntityRecommendations
-  },
-  mails: {
-    getMailSenderRecommendations: selectorGetMailSenderRecommendations,
-    getMailSenderNameRecommendations: selectorGetMailSenderNameRecommendations,
-    getMailSubjectRecommendations: selectorGetMailSubjectRecommendations
   },
   countries: {
     getCountryRecommendations: selectorGetCountryRecommendations

@@ -1,12 +1,25 @@
 import actions_old from './actions_old';
 import { actionFindAllCities } from './cities';
 import { actionFindAllCountries } from './countries';
-import { actionFindAllMailSenderNames } from './mailSenderNames';
-import { actionFindAllMailSenders } from './mailSenders';
+import {
+  actionCreateNewMailSenderNameAndReFetch,
+  actionFindAllMailSenderNames,
+  actionSetSelectedMailSenderName
+} from './mailSenderNames';
+import {
+  actionFindAllMailSenders,
+  actionSetSelectedMailSender
+} from './mailSenders';
 import { actionFindAllMailSubjects } from './mailSubjects';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 
 export default {
+  actionCreateNewMailSenderNameAndReFetch,
+  actionFindAllMailSenderNames,
+  actionFindAllMailSenders,
+  actionFindAllMailSubjects,
+  actionSetSelectedMailSender,
+  actionSetSelectedMailSenderName,
   addresses: actions_old.addresses,
   countries: {
     findAll: actionFindAllCountries
@@ -17,10 +30,5 @@ export default {
   user: actions_old.user,
   legalEntities: {
     getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
-  },
-  mails: {
-    findAllMailSenders: actionFindAllMailSenders,
-    findAllMailSenderNames: actionFindAllMailSenderNames,
-    findAllMailSubjects: actionFindAllMailSubjects
   }
 };

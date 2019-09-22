@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-//import moment from 'moment';
+import moment from 'moment';
 import {
   CitiesStoreDecorator,
   CountriesStoreDecorator,
@@ -10,36 +10,40 @@ import {
 export default ToWrapComponent => {
   let WrapperComponent = props => {
     const {
+      actionCreateNewMailSenderNameAndReFetch,
       actionFindAllCities,
       actionFindAllCountries,
       actionFindAllMailSenderNames,
       actionFindAllMailSenders,
       actionFindAllMailSubjects,
       actionGetAllVersionsOfAllEntities,
+      actionSetSelectedMailSender,
+      actionSetSelectedMailSenderName,
       stateCityRecommendations,
       stateCountryRecommendations,
       stateIsFetchingCities,
       stateIsFetchingCountries,
       stateIsFetchingLegalEntities,
-      stateIsFetchingMailSenderNames,
-      stateIsFetchingMailSenders,
       stateIsFetchingMailSubjects,
+      stateIsMailSenderNamesAjaxRequestInProgress,
+      stateIsMailSendersAjaxRequestInProgress,
       stateLegalEntityRecommendations,
       stateMailSenderNameRecommendations,
       stateMailSenderRecommendations,
-      stateMailSubjectRecommendations
+      stateMailSubjectRecommendations,
+      stateSelectedMailSender,
+      stateSelectedMailSenderName
     } = props;
 
     const [mailReceiver, setMailReceiver] = useState(null);
-    const [mailSender, setMailSender] = useState(null);
     const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
     const ajaxInProgress = {
       cityRecommendations: stateIsFetchingCities,
       countryRecommendations: stateIsFetchingCountries,
       legalEntityRecommendations: stateIsFetchingLegalEntities,
-      mailSenderNameRecommendations: stateIsFetchingMailSenderNames,
-      mailSenderRecommendations: stateIsFetchingMailSenders,
+      mailSenderNameRecommendations: stateIsMailSenderNamesAjaxRequestInProgress,
+      mailSenderRecommendations: stateIsMailSendersAjaxRequestInProgress,
       mailSubjects: stateIsFetchingMailSubjects
     };
 
@@ -60,10 +64,21 @@ export default ToWrapComponent => {
       return recommendations[objKey];
     };
 
+    const getterExistingMailSender = () => {
+      return stateSelectedMailSender;
+    };
+
+    const handlersExistingMailSender = {
+      actionSetSelectedMailSender
+    };
+
+    const handlerExistingMailSender = objKey => {
+      return handlersExistingMailSender[objKey];
+    };
+
     const initialStateNewMailSender = {
       city: null,
       country: null,
-      name: null,
       postcode: '',
       street: ''
     };
@@ -85,9 +100,18 @@ export default ToWrapComponent => {
       });
     };
 
+    const handlersNewMailSender = {
+      actionCreateNewMailSenderNameAndReFetch,
+      actionSetSelectedMailSenderName
+    };
+
+    const handlerNewMailSender = objKey => {
+      return handlersNewMailSender[objKey];
+    };
+
     const initialStateMailDocument = {
       subject: null,
-      receivedDate: new Date()
+      receivedDate: moment(new Date()).format('YYYY-MM-DD')
     };
 
     const [stateMailDocument, setMailDocument] = useState(
@@ -108,7 +132,6 @@ export default ToWrapComponent => {
     };
 
     const handleSetMailSenderActivePanel = (event, newValue) => {
-      setMailSender(null);
       setMailSenderActivePanel(newValue);
       setNewMailSender(JSON.parse(JSON.stringify(initialStateNewMailSender)));
     };
@@ -135,18 +158,20 @@ export default ToWrapComponent => {
       <ToWrapComponent
         {...props}
         {...{
+          handlerNewMailSender,
+          getterExistingMailSender,
+          handlerExistingMailSender,
           getterAjaxInProgress,
           getterMailDocument,
           getterNewMailSender,
           getterRecommendations,
           handleSetMailSenderActivePanel,
           mailReceiver,
-          mailSender,
           mailSenderActivePanel,
           setMailReceiver,
-          setMailSender,
           setterMailDocument,
-          setterNewMailSender
+          setterNewMailSender,
+          stateSelectedMailSenderName
         }}
       />
     );

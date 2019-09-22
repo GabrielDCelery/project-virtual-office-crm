@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import { emphasize, makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Chip,
@@ -194,12 +194,13 @@ const components = {
   ValueContainer
 };
 
-export const FormReactSelect = ({
+export const FormReactCreateSelect = ({
   inputId,
   isClearable,
   isLoading,
   label,
   onChange,
+  onCreateOption,
   options,
   placeholder,
   value
@@ -220,7 +221,7 @@ export const FormReactSelect = ({
   let numOfOptionsShowing = 0;
 
   return (
-    <Select
+    <CreatableSelect
       classes={classes}
       styles={selectStyles}
       inputId={inputId}
@@ -253,6 +254,7 @@ export const FormReactSelect = ({
         numOfOptionsShowing = 0;
       }}
       onChange={onChange}
+      onCreateOption={onCreateOption}
     />
   );
 };
