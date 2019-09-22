@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
 import moment from 'moment';
 import {
   CitiesStoreDecorator,
@@ -38,34 +39,40 @@ export default ToWrapComponent => {
     const [mailReceiver, setMailReceiver] = useState(null);
     const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
-    const ajaxInProgress = {
-      cityRecommendations: stateIsFetchingCities,
-      countryRecommendations: stateIsFetchingCountries,
-      legalEntityRecommendations: stateIsFetchingLegalEntities,
-      mailSenderNameRecommendations: stateIsMailSenderNamesAjaxRequestInProgress,
-      mailSenderRecommendations: stateIsMailSendersAjaxRequestInProgress,
-      mailSubjects: stateIsFetchingMailSubjects
+    const getters = {
+      ajaxInProgress: {
+        cityRecommendations: stateIsFetchingCities,
+        countryRecommendations: stateIsFetchingCountries,
+        legalEntityRecommendations: stateIsFetchingLegalEntities,
+        mailSenderNameRecommendations: stateIsMailSenderNamesAjaxRequestInProgress,
+        mailSenderRecommendations: stateIsMailSendersAjaxRequestInProgress,
+        mailSubjects: stateIsFetchingMailSubjects
+      },
+      recommendations: {
+        cities: stateCityRecommendations,
+        countries: stateCountryRecommendations,
+        legalEntities: stateLegalEntityRecommendations,
+        mailSenderNames: stateMailSenderNameRecommendations,
+        mailSenders: stateMailSenderRecommendations,
+        mailSubjects: stateMailSubjectRecommendations
+      },
+      fields: {
+        existingMailSender: stateSelectedMailSender
+      }
     };
 
-    const getterAjaxInProgress = objKey => {
-      return ajaxInProgress[objKey];
+    const getter = (...paths) => {
+      return _.get(getters, paths);
     };
 
-    const recommendations = {
-      cities: stateCityRecommendations,
-      countries: stateCountryRecommendations,
-      legalEntities: stateLegalEntityRecommendations,
-      mailSenderNames: stateMailSenderNameRecommendations,
-      mailSenders: stateMailSenderRecommendations,
-      mailSubjects: stateMailSubjectRecommendations
+    const handlers = {
+      existingMailSender: {
+        actionSetSelectedMailSender
+      }
     };
 
-    const getterRecommendations = objKey => {
-      return recommendations[objKey];
-    };
-
-    const getterExistingMailSender = () => {
-      return stateSelectedMailSender;
+    const handler = (...paths) => {
+      return _.get(handlers, paths);
     };
 
     const handlersExistingMailSender = {
@@ -158,13 +165,12 @@ export default ToWrapComponent => {
       <ToWrapComponent
         {...props}
         {...{
+          getter,
+          handler,
           handlerNewMailSender,
-          getterExistingMailSender,
           handlerExistingMailSender,
-          getterAjaxInProgress,
           getterMailDocument,
           getterNewMailSender,
-          getterRecommendations,
           handleSetMailSenderActivePanel,
           mailReceiver,
           mailSenderActivePanel,

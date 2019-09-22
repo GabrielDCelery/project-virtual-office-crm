@@ -11,13 +11,11 @@ import {
 } from 'components';
 
 export default ({
-  getterAjaxInProgress,
-  getterExistingMailSender,
+  getter,
   getterMailDocument,
   getterNewMailSender,
-  getterRecommendations,
   handleSetMailSenderActivePanel,
-  handlerExistingMailSender,
+  handler,
   handlerNewMailSender,
   mailReceiver,
   mailSenderActivePanel,
@@ -34,10 +32,10 @@ export default ({
             <FormReactSelect
               inputId="mail-sender-legal-entity"
               isClearable={true}
-              isLoading={getterAjaxInProgress('legalEntityRecommendations')}
+              isLoading={getter('ajaxInProgress', 'legalEntityRecommendations')}
               label="Legal Entity"
               onChange={recommendation => setMailReceiver(recommendation)}
-              options={getterRecommendations('legalEntities')}
+              options={getter('recommendations', 'legalEntities')}
               placeholder="Select a legal entity"
               value={mailReceiver}
             />
@@ -62,16 +60,19 @@ export default ({
               <FormReactSelect
                 inputId="mail-sender"
                 isClearable={true}
-                isLoading={getterAjaxInProgress('mailSenderRecommendations')}
+                isLoading={getter(
+                  'ajaxInProgress',
+                  'mailSenderRecommendations'
+                )}
                 label="Mail Sender"
                 onChange={recommendation => {
-                  handlerExistingMailSender('actionSetSelectedMailSender')(
+                  handler('existingMailSender', 'actionSetSelectedMailSender')(
                     recommendation
                   );
                 }}
-                options={getterRecommendations('mailSenders')}
+                options={getter('recommendations', 'mailSenders')}
                 placeholder="Select a mail sender"
-                value={getterExistingMailSender()}
+                value={getter('fields', 'existingMailSender')}
               />
             </FormFieldControl>
           ) : null}
@@ -81,7 +82,8 @@ export default ({
                 <FormReactCreateSelect
                   inputId="react-select-single"
                   isClearable={true}
-                  isLoading={getterAjaxInProgress(
+                  isLoading={getter(
+                    'ajaxInProgress',
                     'mailSenderNameRecommendations'
                   )}
                   onChange={recommendation => {
@@ -94,7 +96,7 @@ export default ({
                       'actionCreateNewMailSenderNameAndReFetch'
                     )(mailSenderName);
                   }}
-                  options={getterRecommendations('mailSenderNames')}
+                  options={getter('recommendations', 'mailSenderNames')}
                   label="Mail Sender Name"
                   placeholder="Select or create Mail Sender Name"
                   value={stateSelectedMailSenderName}
@@ -120,12 +122,12 @@ export default ({
                 <FormReactSelect
                   inputId="react-select-single"
                   isClearable={true}
-                  isLoading={getterAjaxInProgress('countryRecommendations')}
+                  isLoading={getter('ajaxInProgress', 'countryRecommendations')}
                   label="Country"
                   onChange={recommendation =>
                     setterNewMailSender('country')(recommendation)
                   }
-                  options={getterRecommendations('countries')}
+                  options={getter('recommendations', 'countries')}
                   placeholder="Select Country"
                   value={getterNewMailSender('country')}
                 />
@@ -135,7 +137,7 @@ export default ({
                 <FormReactSelect
                   inputId="react-select-single"
                   isClearable={true}
-                  isLoading={getterAjaxInProgress('cityRecommendations')}
+                  isLoading={getter('ajaxInProgress', 'cityRecommendations')}
                   label="City"
                   onChange={recommendation => {
                     setterNewMailSender('city')(recommendation);
@@ -144,7 +146,7 @@ export default ({
                       setterNewMailSender('country')(country);
                     }
                   }}
-                  options={getterRecommendations('cities')}
+                  options={getter('recommendations', 'cities')}
                   placeholder="Select City"
                   value={getterNewMailSender('city')}
                 />
@@ -175,12 +177,12 @@ export default ({
             <FormReactSelect
               inputId="react-select-single"
               isClearable={true}
-              isLoading={getterAjaxInProgress('mailSubjects')}
+              isLoading={getter('ajaxInProgress', 'mailSubjects')}
               label="Mail Subject"
               onChange={recommendation => {
                 setterMailDocument('subject')(recommendation);
               }}
-              options={getterRecommendations('mailSubjects')}
+              options={getter('recommendations', 'mailSubjects')}
               placeholder="Select Mail Subject"
               value={getterMailDocument('subject')}
             />
