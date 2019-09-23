@@ -17,7 +17,7 @@ export const actionFindAllMailSubjects = () => {
 
     dispatch({
       type: FINSIHED_FETCHING_MAIL_SUBJECTS,
-      mailSubjects: payload
+      items: payload
     });
   };
 };

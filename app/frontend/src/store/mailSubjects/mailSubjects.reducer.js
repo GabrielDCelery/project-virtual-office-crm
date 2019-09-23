@@ -9,10 +9,7 @@ const initialState = {
   items: []
 };
 
-export const mailSubjectsReducer = (
-  state = initialState,
-  { type, mailSubjects }
-) => {
+export const mailSubjectsReducer = (state = initialState, { type, items }) => {
   switch (type) {
     case START_FETCHING_MAIL_SUBJECTS:
       return {
@@ -22,7 +19,7 @@ export const mailSubjectsReducer = (
     case FINSIHED_FETCHING_MAIL_SUBJECTS:
       return {
         isFetching: false,
-        items: mailSubjects
+        items: items
       };
     case ERRORED_FETCHING_MAIL_SUBJECTS:
       return {
