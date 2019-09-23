@@ -49,6 +49,7 @@ export default ToWrapComponent => {
     const [stateReceivedDate, setReceivedDate] = useState(
       moment(new Date()).format('YYYY-MM-DD')
     );
+    const [stateFile, setFile] = useState(null);
 
     const getters = {
       ajaxInProgress: {
@@ -77,7 +78,8 @@ export default ToWrapComponent => {
           street: stateStreet
         },
         document: {
-          receivedDate: stateReceivedDate
+          receivedDate: stateReceivedDate,
+          file: stateFile
         }
       }
     };
@@ -99,7 +101,8 @@ export default ToWrapComponent => {
         setStreet
       },
       document: {
-        setReceivedDate
+        setReceivedDate,
+        setFile
       }
     };
 
