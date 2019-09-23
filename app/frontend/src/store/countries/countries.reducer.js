@@ -1,30 +1,59 @@
 import {
-  START_FETCHING_COUNTRIES,
-  FINSIHED_FETCHING_COUNTRIES,
-  ERRORED_FETCHING_COUNTRIES
+  ERRORED_FETCHING_COUNTRIES,
+  FINISH_AJAX_REQUEST_COUNTRIES,
+  RESET_COUNTRIES,
+  RESET_SELECTED_COUNTRY,
+  SET_COUNTRIES,
+  SET_SELECTED_COUNTRY,
+  START_AJAX_REQUEST_COUNTRIES
 } from './countries.constants';
 
 const initialState = {
-  isFetching: false,
-  items: []
+  isAjaxRequestInProgress: false,
+  items: [],
+  selectedValue: null
 };
 
-export const countriesReducer = (state = initialState, { type, countries }) => {
+export const countriesReducer = (
+  state = initialState,
+  { type, countries, selectedValue }
+) => {
   switch (type) {
-    case START_FETCHING_COUNTRIES:
+    case START_AJAX_REQUEST_COUNTRIES:
       return {
-        isFetching: true,
-        items: []
+        ...state,
+        isAjaxRequestInProgress: true
       };
-    case FINSIHED_FETCHING_COUNTRIES:
+    case FINISH_AJAX_REQUEST_COUNTRIES:
       return {
-        isFetching: false,
-        items: countries
+        ...state,
+        isAjaxRequestInProgress: false
       };
     case ERRORED_FETCHING_COUNTRIES:
       return {
-        isFetching: false,
+        ...state,
+        isAjaxRequestInProgress: true
+      };
+    case RESET_COUNTRIES:
+      return {
+        ...state,
         items: []
+      };
+    case SET_COUNTRIES:
+      return {
+        ...state,
+        items: countries
+      };
+    case RESET_SELECTED_COUNTRY: {
+      return {
+        ...state,
+        selectedValue: null
+      };
+    }
+    case SET_SELECTED_COUNTRY:
+      return {
+        ...state,
+        selectedValue: selectedValue
       };
     default:
       return state;

@@ -1,6 +1,6 @@
 import actions_old from './actions_old';
 import { actionFindAllCities } from './cities';
-import { actionFindAllCountries } from './countries';
+import { actionFindAllCountries, actionSetSelectedCountry } from './countries';
 import {
   actionCreateNewMailSenderNameAndReFetch,
   actionFindAllMailSenderNames,
@@ -20,10 +20,9 @@ export default {
   actionFindAllMailSubjects,
   actionSetSelectedMailSender,
   actionSetSelectedMailSenderName,
+  actionFindAllCountries,
+  actionSetSelectedCountry,
   addresses: actions_old.addresses,
-  countries: {
-    findAll: actionFindAllCountries
-  },
   cities: {
     findAll: actionFindAllCities
   },

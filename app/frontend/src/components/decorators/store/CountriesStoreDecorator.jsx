@@ -2,17 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import store from 'store';
 
+const {
+  selectors: { selectorGetCountryRecommendations },
+  actions: { actionFindAllCountries, actionSetSelectedCountry }
+} = store;
+
 const mapStateToProps = state => {
   return {
-    stateIsFetchingCountries: state.countries.isFetching,
-    stateCountryRecommendations: store.selectors.countries.getCountryRecommendations(
-      state
-    )
+    stateIsCountriesAjaxRequestInProgress:
+      state.countries.isAjaxRequestInProgress,
+    stateCountryRecommendations: selectorGetCountryRecommendations(state),
+    stateSelectedCountry: state.countries.selectedValue
   };
 };
 
 const mapActionsToProps = {
-  actionFindAllCountries: store.actions.countries.findAll
+  actionFindAllCountries,
+  actionSetSelectedCountry
 };
 
 export const CountriesStoreDecorator = ToWrapComponent => {

@@ -20,8 +20,7 @@ export default ({
   mailSenderActivePanel,
   setMailReceiver,
   setterMailDocument,
-  setterNewMailSender,
-  stateSelectedMailSenderName
+  setterNewMailSender
 }) => {
   return (
     <Container maxWidth="lg">
@@ -99,7 +98,7 @@ export default ({
                   options={getter('recommendations', 'mailSenderNames')}
                   label="Mail Sender Name"
                   placeholder="Select or create Mail Sender Name"
-                  value={stateSelectedMailSenderName}
+                  value={getter('fields', 'newMailSender', 'name')}
                 />
               </FormFieldControl>
 
@@ -111,10 +110,10 @@ export default ({
                   InputLabelProps={{
                     shrink: true
                   }}
-                  onChange={event =>
-                    setterNewMailSender('postcode')(event.target.value)
-                  }
-                  value={getterNewMailSender('postcode')}
+                  onChange={event => {
+                    handler('newMailSender', 'setPostcode')(event.target.value);
+                  }}
+                  value={getter('newMailSender', 'postcode')}
                 />
               </FormFieldControl>
 
@@ -124,12 +123,14 @@ export default ({
                   isClearable={true}
                   isLoading={getter('ajaxInProgress', 'countryRecommendations')}
                   label="Country"
-                  onChange={recommendation =>
-                    setterNewMailSender('country')(recommendation)
-                  }
+                  onChange={recommendation => {
+                    handler('newMailSender', 'actionSetSelectedCountry')(
+                      recommendation
+                    );
+                  }}
                   options={getter('recommendations', 'countries')}
                   placeholder="Select Country"
-                  value={getterNewMailSender('country')}
+                  value={getter('fields', 'newMailSender', 'country')}
                 />
               </FormFieldControl>
 
@@ -143,7 +144,9 @@ export default ({
                     setterNewMailSender('city')(recommendation);
                     const country = _.get(recommendation, 'country');
                     if (country) {
-                      setterNewMailSender('country')(country);
+                      handler('newMailSender', 'actionSetSelectedCountry')(
+                        country
+                      );
                     }
                   }}
                   options={getter('recommendations', 'cities')}
@@ -160,10 +163,10 @@ export default ({
                   InputLabelProps={{
                     shrink: true
                   }}
-                  onChange={event =>
-                    setterNewMailSender('street')(event.target.value)
-                  }
-                  value={getterNewMailSender('street')}
+                  onChange={event => {
+                    handler('newMailSender', 'setStreet')(event.target.value);
+                  }}
+                  value={getter('newMailSender', 'street')}
                 />
               </FormFieldControl>
             </React.Fragment>
@@ -196,8 +199,10 @@ export default ({
               InputLabelProps={{
                 shrink: true
               }}
-              defaultValue={getterMailDocument('receivedDate')}
-              onChange={setterMailDocument('receivedDate')}
+              defaultValue={getter('document', 'receivedDate')}
+              onChange={event => {
+                handler('document', 'setReceivedDate')(event.target.value);
+              }}
             />
           </FormFieldControl>
 

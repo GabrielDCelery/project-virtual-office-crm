@@ -10,15 +10,13 @@ export default {
   selectorGetMailSenderNameRecommendations,
   selectorGetMailSenderRecommendations,
   selectorGetMailSubjectRecommendations,
+  selectorGetCountryRecommendations,
   user: {
     isUserAuthenticated: selectorIsUserAuthenticated,
     isUserAuthorized: selectorIsUserAuthorized
   },
   legalEntities: {
     getLegalEntityRecommendations: selectorGetLegalEntityRecommendations
-  },
-  countries: {
-    getCountryRecommendations: selectorGetCountryRecommendations
   },
   cities: {
     getCityRecommendations: selectorGetCityRecommendations

@@ -18,12 +18,13 @@ export default ToWrapComponent => {
       actionFindAllMailSenders,
       actionFindAllMailSubjects,
       actionGetAllVersionsOfAllEntities,
+      actionSetSelectedCountry,
       actionSetSelectedMailSender,
       actionSetSelectedMailSenderName,
       stateCityRecommendations,
       stateCountryRecommendations,
+      stateIsCountriesAjaxRequestInProgress,
       stateIsFetchingCities,
-      stateIsFetchingCountries,
       stateIsFetchingLegalEntities,
       stateIsFetchingMailSubjects,
       stateIsMailSenderNamesAjaxRequestInProgress,
@@ -32,6 +33,7 @@ export default ToWrapComponent => {
       stateMailSenderNameRecommendations,
       stateMailSenderRecommendations,
       stateMailSubjectRecommendations,
+      stateSelectedCountry,
       stateSelectedMailSender,
       stateSelectedMailSenderName
     } = props;
@@ -39,10 +41,17 @@ export default ToWrapComponent => {
     const [mailReceiver, setMailReceiver] = useState(null);
     const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
+    const [statePostcode, setPostcode] = useState('');
+    const [stateStreet, setStreet] = useState('');
+
+    const [stateReceivedDate, setReceivedDate] = useState(
+      moment(new Date()).format('YYYY-MM-DD')
+    );
+
     const getters = {
       ajaxInProgress: {
         cityRecommendations: stateIsFetchingCities,
-        countryRecommendations: stateIsFetchingCountries,
+        countryRecommendations: stateIsCountriesAjaxRequestInProgress,
         legalEntityRecommendations: stateIsFetchingLegalEntities,
         mailSenderNameRecommendations: stateIsMailSenderNamesAjaxRequestInProgress,
         mailSenderRecommendations: stateIsMailSendersAjaxRequestInProgress,
@@ -57,7 +66,16 @@ export default ToWrapComponent => {
         mailSubjects: stateMailSubjectRecommendations
       },
       fields: {
-        existingMailSender: stateSelectedMailSender
+        existingMailSender: stateSelectedMailSender,
+        newMailSender: {
+          name: stateSelectedMailSenderName,
+          country: stateSelectedCountry,
+          postcode: statePostcode,
+          street: stateStreet
+        },
+        document: {
+          receivedDate: stateReceivedDate
+        }
       }
     };
 
@@ -71,7 +89,13 @@ export default ToWrapComponent => {
       },
       newMailSender: {
         actionCreateNewMailSenderNameAndReFetch,
-        actionSetSelectedMailSenderName
+        actionSetSelectedCountry,
+        actionSetSelectedMailSenderName,
+        setPostcode,
+        setStreet
+      },
+      document: {
+        setReceivedDate
       }
     };
 
@@ -80,10 +104,7 @@ export default ToWrapComponent => {
     };
 
     const initialStateNewMailSender = {
-      city: null,
-      country: null,
-      postcode: '',
-      street: ''
+      city: null
     };
 
     const [stateNewMailSender, setNewMailSender] = useState(
@@ -104,8 +125,7 @@ export default ToWrapComponent => {
     };
 
     const initialStateMailDocument = {
-      subject: null,
-      receivedDate: moment(new Date()).format('YYYY-MM-DD')
+      subject: null
     };
 
     const [stateMailDocument, setMailDocument] = useState(
@@ -161,8 +181,7 @@ export default ToWrapComponent => {
           mailSenderActivePanel,
           setMailReceiver,
           setterMailDocument,
-          setterNewMailSender,
-          stateSelectedMailSenderName
+          setterNewMailSender
         }}
       />
     );
