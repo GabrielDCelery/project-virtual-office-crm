@@ -18,8 +18,8 @@ export const actionSetSelectedMailSubject = value => {
 export const actionFindAllMailSubjects = () => {
   return async dispatch => {
     dispatch({ type: START_AJAX_REQUEST_MAIL_SUBJECTS });
-    dispatch({ type: RESET_MAIL_SUBJECTS });
     dispatch({ type: RESET_SELECTED_MAIL_SUBJECT });
+    dispatch({ type: RESET_MAIL_SUBJECTS });
 
     const { success, payload } = await services.mailSubjects.findAll();
 
@@ -29,5 +29,40 @@ export const actionFindAllMailSubjects = () => {
 
     dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SUBJECTS });
     dispatch({ type: SET_MAIL_SUBJECTS, items: payload });
+  };
+};
+
+export const actionCreateNewMailSubjectAndReFetch = mailSubject => {
+  return async dispatch => {
+    dispatch({ type: START_AJAX_REQUEST_MAIL_SUBJECTS });
+    dispatch({ type: RESET_SELECTED_MAIL_SUBJECT });
+    dispatch({ type: RESET_MAIL_SUBJECTS });
+
+    const createResult = await services.mailSubjects.create({
+      longSubject: mailSubject
+    });
+
+    if (!createResult.success) {
+      return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });
+    }
+
+    const findAllResult = await services.mailSubjects.findAll();
+
+    if (!findAllResult.success) {
+      return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });
+    }
+
+    dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SUBJECTS });
+    dispatch({
+      type: SET_MAIL_SUBJECTS,
+      items: findAllResult.payload
+    });
+    dispatch({
+      type: SET_SELECTED_MAIL_SUBJECT,
+      selectedValue: {
+        value: createResult.payload.id,
+        label: createResult.payload.longSubject
+      }
+    });
   };
 };

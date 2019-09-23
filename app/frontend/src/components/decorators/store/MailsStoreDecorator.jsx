@@ -10,6 +10,7 @@ const {
   },
   actions: {
     actionCreateNewMailSenderNameAndReFetch,
+    actionCreateNewMailSubjectAndReFetch,
     actionFindAllMailSenderNames,
     actionFindAllMailSenders,
     actionFindAllMailSubjects,
@@ -41,6 +42,7 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = {
   actionCreateNewMailSenderNameAndReFetch,
+  actionCreateNewMailSubjectAndReFetch,
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
   actionFindAllMailSubjects,

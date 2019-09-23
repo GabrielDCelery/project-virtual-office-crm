@@ -41,6 +41,7 @@ class Orchestrator {
         findAll: mailSenderNames.findAllWrapper(services)
       },
       mailSubjects: {
+        create: mailSubjects.createWrapper(services),
         findAll: mailSubjects.findAllWrapper(services)
       },
       users: new Users({

@@ -11,23 +11,25 @@ import {
   actionSetSelectedMailSender
 } from './mailSenders';
 import {
+  actionCreateNewMailSubjectAndReFetch,
   actionFindAllMailSubjects,
   actionSetSelectedMailSubject
 } from './mailSubjects';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 
 export default {
-  actionFindAllMailSubjects,
-  actionSetSelectedMailSubject,
   actionCreateNewMailSenderNameAndReFetch,
+  actionCreateNewMailSubjectAndReFetch,
   actionFindAllCities,
   actionFindAllCountries,
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
+  actionFindAllMailSubjects,
   actionSetSelectedCity,
   actionSetSelectedCountry,
   actionSetSelectedMailSender,
   actionSetSelectedMailSenderName,
+  actionSetSelectedMailSubject,
   addresses: actions_old.addresses,
   cities: {
     findAll: actionFindAllCities

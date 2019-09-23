@@ -109,7 +109,7 @@ export default ({
                   onChange={event => {
                     handler('newMailSender', 'setPostcode')(event.target.value);
                   }}
-                  value={getter('newMailSender', 'postcode')}
+                  value={getter('fields', 'newMailSender', 'postcode')}
                 />
               </FormFieldControl>
 
@@ -164,7 +164,7 @@ export default ({
                   onChange={event => {
                     handler('newMailSender', 'setStreet')(event.target.value);
                   }}
-                  value={getter('newMailSender', 'street')}
+                  value={getter('fields', 'newMailSender', 'street')}
                 />
               </FormFieldControl>
             </React.Fragment>
@@ -175,7 +175,7 @@ export default ({
       <FormStep label="Document">
         <FormPaper>
           <FormFieldControl>
-            <FormReactSelect
+            <FormReactCreateSelect
               inputId="react-select-single"
               isClearable={true}
               isLoading={getter('ajaxInProgress', 'mailSubjects')}
@@ -185,9 +185,14 @@ export default ({
                   recommendation
                 );
               }}
+              onCreateOption={mailSubject => {
+                handler('document', 'actionCreateNewMailSubjectAndReFetch')(
+                  mailSubject
+                );
+              }}
               options={getter('recommendations', 'mailSubjects')}
               placeholder="Select Mail Subject"
-              value={getter('document', 'subject')}
+              value={getter('fields', 'document', 'subject')}
             />
           </FormFieldControl>
 

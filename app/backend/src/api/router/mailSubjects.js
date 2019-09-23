@@ -9,4 +9,10 @@ router.get('/findAll', async (req, res) => {
   });
 });
 
+router.post('/create', async (req, res) => {
+  return apiJsonResultWrapper(res, () => {
+    return orchestrator.execute('mailSubjects', 'create', req.body);
+  });
+});
+
 module.exports = router;

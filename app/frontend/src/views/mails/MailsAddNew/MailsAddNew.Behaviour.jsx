@@ -12,6 +12,7 @@ export default ToWrapComponent => {
   let WrapperComponent = props => {
     const {
       actionCreateNewMailSenderNameAndReFetch,
+      actionCreateNewMailSubjectAndReFetch,
       actionFindAllCities,
       actionFindAllCountries,
       actionFindAllMailSenderNames,
@@ -104,6 +105,7 @@ export default ToWrapComponent => {
         setStreet
       },
       document: {
+        actionCreateNewMailSubjectAndReFetch,
         actionSetSelectedMailSubject,
         setFile,
         setReceivedDate
