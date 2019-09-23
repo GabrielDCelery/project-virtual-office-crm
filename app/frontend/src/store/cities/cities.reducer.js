@@ -1,30 +1,59 @@
 import {
-  START_FETCHING_CITIES,
-  FINSIHED_FETCHING_CITIES,
-  ERRORED_FETCHING_CITIES
+  ERRORED_FETCHING_CITIES,
+  FINISH_AJAX_REQUEST_CITIES,
+  RESET_CITIES,
+  RESET_SELECTED_CITY,
+  SET_CITIES,
+  SET_SELECTED_CITY,
+  START_AJAX_REQUEST_CITIES
 } from './cities.constants';
 
 const initialState = {
-  isFetching: false,
-  items: []
+  isAjaxRequestInProgress: false,
+  items: [],
+  selectedValue: null
 };
 
-export const citiesReducer = (state = initialState, { type, cities }) => {
+export const citiesReducer = (
+  state = initialState,
+  { type, cities, selectedValue }
+) => {
   switch (type) {
-    case START_FETCHING_CITIES:
+    case START_AJAX_REQUEST_CITIES:
       return {
-        isFetching: true,
-        items: []
+        ...state,
+        isAjaxRequestInProgress: true
       };
-    case FINSIHED_FETCHING_CITIES:
+    case FINISH_AJAX_REQUEST_CITIES:
       return {
-        isFetching: false,
-        items: cities
+        ...state,
+        isAjaxRequestInProgress: false
       };
     case ERRORED_FETCHING_CITIES:
       return {
-        isFetching: false,
+        ...state,
+        isAjaxRequestInProgress: true
+      };
+    case RESET_CITIES:
+      return {
+        ...state,
         items: []
+      };
+    case SET_CITIES:
+      return {
+        ...state,
+        items: cities
+      };
+    case RESET_SELECTED_CITY: {
+      return {
+        ...state,
+        selectedValue: null
+      };
+    }
+    case SET_SELECTED_CITY:
+      return {
+        ...state,
+        selectedValue: selectedValue
       };
     default:
       return state;

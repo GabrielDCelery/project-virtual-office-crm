@@ -1,5 +1,5 @@
 import actions_old from './actions_old';
-import { actionFindAllCities } from './cities';
+import { actionFindAllCities, actionSetSelectedCity } from './cities';
 import { actionFindAllCountries, actionSetSelectedCountry } from './countries';
 import {
   actionCreateNewMailSenderNameAndReFetch,
@@ -15,13 +15,15 @@ import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 
 export default {
   actionCreateNewMailSenderNameAndReFetch,
+  actionFindAllCities,
+  actionFindAllCountries,
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
   actionFindAllMailSubjects,
+  actionSetSelectedCity,
+  actionSetSelectedCountry,
   actionSetSelectedMailSender,
   actionSetSelectedMailSenderName,
-  actionFindAllCountries,
-  actionSetSelectedCountry,
   addresses: actions_old.addresses,
   cities: {
     findAll: actionFindAllCities

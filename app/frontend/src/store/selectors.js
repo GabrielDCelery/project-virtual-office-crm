@@ -11,14 +11,12 @@ export default {
   selectorGetMailSenderRecommendations,
   selectorGetMailSubjectRecommendations,
   selectorGetCountryRecommendations,
+  selectorGetCityRecommendations,
   user: {
     isUserAuthenticated: selectorIsUserAuthenticated,
     isUserAuthorized: selectorIsUserAuthorized
   },
   legalEntities: {
     getLegalEntityRecommendations: selectorGetLegalEntityRecommendations
-  },
-  cities: {
-    getCityRecommendations: selectorGetCityRecommendations
   }
 };

@@ -18,13 +18,14 @@ export default ToWrapComponent => {
       actionFindAllMailSenders,
       actionFindAllMailSubjects,
       actionGetAllVersionsOfAllEntities,
+      actionSetSelectedCity,
       actionSetSelectedCountry,
       actionSetSelectedMailSender,
       actionSetSelectedMailSenderName,
       stateCityRecommendations,
       stateCountryRecommendations,
+      stateIsCitiesAjaxRequestInProgress,
       stateIsCountriesAjaxRequestInProgress,
-      stateIsFetchingCities,
       stateIsFetchingLegalEntities,
       stateIsFetchingMailSubjects,
       stateIsMailSenderNamesAjaxRequestInProgress,
@@ -33,6 +34,7 @@ export default ToWrapComponent => {
       stateMailSenderNameRecommendations,
       stateMailSenderRecommendations,
       stateMailSubjectRecommendations,
+      stateSelectedCity,
       stateSelectedCountry,
       stateSelectedMailSender,
       stateSelectedMailSenderName
@@ -50,7 +52,7 @@ export default ToWrapComponent => {
 
     const getters = {
       ajaxInProgress: {
-        cityRecommendations: stateIsFetchingCities,
+        cityRecommendations: stateIsCitiesAjaxRequestInProgress,
         countryRecommendations: stateIsCountriesAjaxRequestInProgress,
         legalEntityRecommendations: stateIsFetchingLegalEntities,
         mailSenderNameRecommendations: stateIsMailSenderNamesAjaxRequestInProgress,
@@ -68,8 +70,9 @@ export default ToWrapComponent => {
       fields: {
         existingMailSender: stateSelectedMailSender,
         newMailSender: {
-          name: stateSelectedMailSenderName,
+          city: stateSelectedCity,
           country: stateSelectedCountry,
+          name: stateSelectedMailSenderName,
           postcode: statePostcode,
           street: stateStreet
         },
@@ -89,6 +92,7 @@ export default ToWrapComponent => {
       },
       newMailSender: {
         actionCreateNewMailSenderNameAndReFetch,
+        actionSetSelectedCity,
         actionSetSelectedCountry,
         actionSetSelectedMailSenderName,
         setPostcode,
@@ -101,27 +105,6 @@ export default ToWrapComponent => {
 
     const handler = (...paths) => {
       return _.get(handlers, paths);
-    };
-
-    const initialStateNewMailSender = {
-      city: null
-    };
-
-    const [stateNewMailSender, setNewMailSender] = useState(
-      JSON.parse(JSON.stringify(initialStateNewMailSender))
-    );
-
-    const getterNewMailSender = objKey => {
-      return stateNewMailSender[objKey];
-    };
-
-    const setterNewMailSender = objKey => value => {
-      setNewMailSender(stateNewMailSender => {
-        return {
-          ...stateNewMailSender,
-          [objKey]: value
-        };
-      });
     };
 
     const initialStateMailDocument = {
@@ -147,7 +130,6 @@ export default ToWrapComponent => {
 
     const handleSetMailSenderActivePanel = (event, newValue) => {
       setMailSenderActivePanel(newValue);
-      setNewMailSender(JSON.parse(JSON.stringify(initialStateNewMailSender)));
     };
 
     useEffect(() => {
@@ -175,13 +157,11 @@ export default ToWrapComponent => {
           getter,
           handler,
           getterMailDocument,
-          getterNewMailSender,
           handleSetMailSenderActivePanel,
           mailReceiver,
           mailSenderActivePanel,
           setMailReceiver,
-          setterMailDocument,
-          setterNewMailSender
+          setterMailDocument
         }}
       />
     );

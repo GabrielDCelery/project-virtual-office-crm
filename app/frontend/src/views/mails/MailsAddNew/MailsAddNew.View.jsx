@@ -13,14 +13,12 @@ import {
 export default ({
   getter,
   getterMailDocument,
-  getterNewMailSender,
   handleSetMailSenderActivePanel,
   handler,
   mailReceiver,
   mailSenderActivePanel,
   setMailReceiver,
-  setterMailDocument,
-  setterNewMailSender
+  setterMailDocument
 }) => {
   return (
     <Container maxWidth="lg">
@@ -141,7 +139,9 @@ export default ({
                   isLoading={getter('ajaxInProgress', 'cityRecommendations')}
                   label="City"
                   onChange={recommendation => {
-                    setterNewMailSender('city')(recommendation);
+                    handler('newMailSender', 'actionSetSelectedCity')(
+                      recommendation
+                    );
                     const country = _.get(recommendation, 'country');
                     if (country) {
                       handler('newMailSender', 'actionSetSelectedCountry')(
@@ -151,7 +151,7 @@ export default ({
                   }}
                   options={getter('recommendations', 'cities')}
                   placeholder="Select City"
-                  value={getterNewMailSender('city')}
+                  value={getter('fields', 'newMailSender', 'city')}
                 />
               </FormFieldControl>
 
