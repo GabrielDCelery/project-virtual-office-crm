@@ -43,7 +43,7 @@ export default ToWrapComponent => {
       stateSelectedMailSubject
     } = props;
 
-    const [mailReceiver, setMailReceiver] = useState(null);
+    const [stateMailReceiver, setMailReceiver] = useState(null);
     const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
     const [statePostcode, setPostcode] = useState('');
@@ -72,6 +72,7 @@ export default ToWrapComponent => {
         mailSubjects: stateMailSubjectRecommendations
       },
       fields: {
+        mailReceiver: stateMailReceiver,
         existingMailSender: stateSelectedMailSender,
         newMailSender: {
           city: stateSelectedCity,
@@ -93,6 +94,9 @@ export default ToWrapComponent => {
     };
 
     const handlers = {
+      mailReceiver: {
+        setMailReceiver
+      },
       existingMailSender: {
         actionSetSelectedMailSender
       },
@@ -145,9 +149,7 @@ export default ToWrapComponent => {
           getter,
           handler,
           handleSetMailSenderActivePanel,
-          mailReceiver,
-          mailSenderActivePanel,
-          setMailReceiver
+          mailSenderActivePanel
         }}
       />
     );

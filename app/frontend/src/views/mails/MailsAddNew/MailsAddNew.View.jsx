@@ -14,9 +14,7 @@ export default ({
   getter,
   handleSetMailSenderActivePanel,
   handler,
-  mailReceiver,
-  mailSenderActivePanel,
-  setMailReceiver
+  mailSenderActivePanel
 }) => {
   return (
     <Container maxWidth="lg">
@@ -28,10 +26,12 @@ export default ({
               isClearable={true}
               isLoading={getter('ajaxInProgress', 'legalEntityRecommendations')}
               label="Legal Entity"
-              onChange={recommendation => setMailReceiver(recommendation)}
+              onChange={recommendation => {
+                handler('mailReceiver', 'setMailReceiver')(recommendation);
+              }}
               options={getter('recommendations', 'legalEntities')}
               placeholder="Select a legal entity"
-              value={mailReceiver}
+              value={getter('fields', 'mailReceiver')}
             />
           </FormFieldControl>
         </FormPaper>
