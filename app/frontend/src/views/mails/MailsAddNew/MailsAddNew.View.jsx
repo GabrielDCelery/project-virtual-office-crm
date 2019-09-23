@@ -10,12 +10,7 @@ import {
   FormStep
 } from 'components';
 
-export default ({
-  getter,
-  handleSetMailSenderActivePanel,
-  handler,
-  mailSenderActivePanel
-}) => {
+export default ({ getter, handler }) => {
   return (
     <Container maxWidth="lg">
       <FormStep label="Mail Receiver">
@@ -40,16 +35,18 @@ export default ({
       <FormStep label="Mail Sender">
         <Tabs
           indicatorColor="primary"
-          onChange={handleSetMailSenderActivePanel}
+          onChange={(event, newValue) => {
+            handler('layout', 'setMailSenderActivePanel')(newValue);
+          }}
           textColor="primary"
-          value={mailSenderActivePanel}
+          value={getter('layout', 'mailSenderActivePanel')}
           style={{ background: '#eee' }}
         >
           <Tab label="Choose Existing Mail Sender" />
           <Tab label="Add New Mail Sender" />
         </Tabs>
         <FormPaper>
-          {mailSenderActivePanel === 0 ? (
+          {getter('layout', 'mailSenderActivePanel') === 0 ? (
             <FormFieldControl>
               <FormReactSelect
                 inputId="mail-sender"
@@ -70,7 +67,7 @@ export default ({
               />
             </FormFieldControl>
           ) : null}
-          {mailSenderActivePanel === 1 ? (
+          {getter('layout', 'mailSenderActivePanel') === 1 ? (
             <React.Fragment>
               <FormFieldControl>
                 <FormReactCreateSelect

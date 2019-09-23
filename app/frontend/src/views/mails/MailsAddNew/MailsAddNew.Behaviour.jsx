@@ -44,7 +44,8 @@ export default ToWrapComponent => {
     } = props;
 
     const [stateMailReceiver, setMailReceiver] = useState(null);
-    const [mailSenderActivePanel, setMailSenderActivePanel] = useState(0);
+
+    const [stateMailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
     const [statePostcode, setPostcode] = useState('');
     const [stateStreet, setStreet] = useState('');
@@ -86,6 +87,9 @@ export default ToWrapComponent => {
           receivedDate: stateReceivedDate,
           subject: stateSelectedMailSubject
         }
+      },
+      layout: {
+        mailSenderActivePanel: stateMailSenderActivePanel
       }
     };
 
@@ -113,15 +117,14 @@ export default ToWrapComponent => {
         actionSetSelectedMailSubject,
         setFile,
         setReceivedDate
+      },
+      layout: {
+        setMailSenderActivePanel
       }
     };
 
     const handler = (...paths) => {
       return _.get(handlers, paths);
-    };
-
-    const handleSetMailSenderActivePanel = (event, newValue) => {
-      setMailSenderActivePanel(newValue);
     };
 
     useEffect(() => {
@@ -144,12 +147,10 @@ export default ToWrapComponent => {
 
     return (
       <ToWrapComponent
-        {...props}
+        //{...props}
         {...{
           getter,
-          handler,
-          handleSetMailSenderActivePanel,
-          mailSenderActivePanel
+          handler
         }}
       />
     );
