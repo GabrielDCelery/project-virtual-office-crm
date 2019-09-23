@@ -12,13 +12,11 @@ import {
 
 export default ({
   getter,
-  getterMailDocument,
   handleSetMailSenderActivePanel,
   handler,
   mailReceiver,
   mailSenderActivePanel,
-  setMailReceiver,
-  setterMailDocument
+  setMailReceiver
 }) => {
   return (
     <Container maxWidth="lg">
@@ -183,11 +181,13 @@ export default ({
               isLoading={getter('ajaxInProgress', 'mailSubjects')}
               label="Mail Subject"
               onChange={recommendation => {
-                setterMailDocument('subject')(recommendation);
+                handler('document', 'actionSetSelectedMailSubject')(
+                  recommendation
+                );
               }}
               options={getter('recommendations', 'mailSubjects')}
               placeholder="Select Mail Subject"
-              value={getterMailDocument('subject')}
+              value={getter('document', 'subject')}
             />
           </FormFieldControl>
 

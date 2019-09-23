@@ -37,7 +37,9 @@ export default ToWrapComponent => {
       stateSelectedCity,
       stateSelectedCountry,
       stateSelectedMailSender,
-      stateSelectedMailSenderName
+      stateSelectedMailSenderName,
+      actionSetSelectedMailSubject,
+      stateSelectedMailSubject
     } = props;
 
     const [mailReceiver, setMailReceiver] = useState(null);
@@ -78,8 +80,9 @@ export default ToWrapComponent => {
           street: stateStreet
         },
         document: {
+          file: stateFile,
           receivedDate: stateReceivedDate,
-          file: stateFile
+          subject: stateSelectedMailSubject
         }
       }
     };
@@ -101,34 +104,14 @@ export default ToWrapComponent => {
         setStreet
       },
       document: {
-        setReceivedDate,
-        setFile
+        actionSetSelectedMailSubject,
+        setFile,
+        setReceivedDate
       }
     };
 
     const handler = (...paths) => {
       return _.get(handlers, paths);
-    };
-
-    const initialStateMailDocument = {
-      subject: null
-    };
-
-    const [stateMailDocument, setMailDocument] = useState(
-      JSON.parse(JSON.stringify(initialStateMailDocument))
-    );
-
-    const getterMailDocument = objKey => {
-      return stateMailDocument[objKey];
-    };
-
-    const setterMailDocument = objKey => value => {
-      setMailDocument(stateMailDocument => {
-        return {
-          ...stateMailDocument,
-          [objKey]: value
-        };
-      });
     };
 
     const handleSetMailSenderActivePanel = (event, newValue) => {
@@ -159,12 +142,10 @@ export default ToWrapComponent => {
         {...{
           getter,
           handler,
-          getterMailDocument,
           handleSetMailSenderActivePanel,
           mailReceiver,
           mailSenderActivePanel,
-          setMailReceiver,
-          setterMailDocument
+          setMailReceiver
         }}
       />
     );

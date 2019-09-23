@@ -1,30 +1,58 @@
 import {
-  START_FETCHING_MAIL_SUBJECTS,
-  FINSIHED_FETCHING_MAIL_SUBJECTS,
-  ERRORED_FETCHING_MAIL_SUBJECTS
+  START_AJAX_REQUEST_MAIL_SUBJECTS,
+  FINISH_AJAX_REQUEST_MAIL_SUBJECTS,
+  ERRORED_FETCHING_MAIL_SUBJECTS,
+  RESET_MAIL_SUBJECTS,
+  RESET_SELECTED_MAIL_SUBJECT,
+  SET_MAIL_SUBJECTS,
+  SET_SELECTED_MAIL_SUBJECT
 } from './mailSubjects.constants';
 
 const initialState = {
-  isFetching: false,
-  items: []
+  isAjaxRequestInProgress: false,
+  items: [],
+  selectedValue: null
 };
 
-export const mailSubjectsReducer = (state = initialState, { type, items }) => {
+export const mailSubjectsReducer = (
+  state = initialState,
+  { type, items, selectedValue }
+) => {
   switch (type) {
-    case START_FETCHING_MAIL_SUBJECTS:
+    case START_AJAX_REQUEST_MAIL_SUBJECTS:
       return {
-        isFetching: true,
-        items: []
+        ...state,
+        isAjaxRequestInProgress: true
       };
-    case FINSIHED_FETCHING_MAIL_SUBJECTS:
+    case FINISH_AJAX_REQUEST_MAIL_SUBJECTS:
       return {
-        isFetching: false,
-        items: items
+        ...state,
+        isAjaxRequestInProgress: false
       };
     case ERRORED_FETCHING_MAIL_SUBJECTS:
       return {
-        isFetching: false,
+        ...state,
+        isAjaxRequestInProgress: true
+      };
+    case RESET_MAIL_SUBJECTS:
+      return {
+        ...state,
         items: []
+      };
+    case SET_MAIL_SUBJECTS:
+      return {
+        ...state,
+        items: items
+      };
+    case RESET_SELECTED_MAIL_SUBJECT:
+      return {
+        ...state,
+        selectedValue: null
+      };
+    case SET_SELECTED_MAIL_SUBJECT:
+      return {
+        ...state,
+        selectedValue: selectedValue
       };
     default:
       return state;

@@ -10,16 +10,20 @@ import {
   actionFindAllMailSenders,
   actionSetSelectedMailSender
 } from './mailSenders';
-import { actionFindAllMailSubjects } from './mailSubjects';
+import {
+  actionFindAllMailSubjects,
+  actionSetSelectedMailSubject
+} from './mailSubjects';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 
 export default {
+  actionFindAllMailSubjects,
+  actionSetSelectedMailSubject,
   actionCreateNewMailSenderNameAndReFetch,
   actionFindAllCities,
   actionFindAllCountries,
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
-  actionFindAllMailSubjects,
   actionSetSelectedCity,
   actionSetSelectedCountry,
   actionSetSelectedMailSender,
