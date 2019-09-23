@@ -30,7 +30,7 @@ export const actionFindAllCountries = () => {
     dispatch({ type: FINISH_AJAX_REQUEST_COUNTRIES });
     dispatch({
       type: SET_COUNTRIES,
-      countries: payload
+      items: payload
     });
   };
 };

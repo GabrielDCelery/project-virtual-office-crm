@@ -30,7 +30,7 @@ export const actionFindAllCities = () => {
     dispatch({ type: FINISH_AJAX_REQUEST_CITIES });
     dispatch({
       type: SET_CITIES,
-      cities: payload
+      items: payload
     });
   };
 };

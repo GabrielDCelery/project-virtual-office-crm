@@ -30,7 +30,7 @@ export const actionFindAllMailSenderNames = () => {
     dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES });
     dispatch({
       type: SET_MAIL_SENDER_NAMES,
-      mailSenderNames: payload
+      items: payload
     });
   };
 };
@@ -58,7 +58,7 @@ export const actionCreateNewMailSenderNameAndReFetch = mailSenderName => {
     dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES });
     dispatch({
       type: SET_MAIL_SENDER_NAMES,
-      mailSenderNames: findAllResult.payload
+      items: findAllResult.payload
     });
     dispatch({
       type: SET_SELECTED_MAIL_SENDER_NAME,

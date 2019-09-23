@@ -28,6 +28,6 @@ export const actionFindAllMailSenders = () => {
     }
 
     dispatch({ type: FINSIH_AJAX_REQUEST_MAIL_SENDERS });
-    dispatch({ type: SET_MAIL_SENDERS, mailSenders: payload });
+    dispatch({ type: SET_MAIL_SENDERS, items: payload });
   };
 };

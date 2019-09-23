@@ -16,7 +16,7 @@ const initialState = {
 
 export const mailSendersReducer = (
   state = initialState,
-  { type, mailSenders, selectedValue }
+  { type, items, selectedValue }
 ) => {
   switch (type) {
     case START_AJAX_REQUEST_MAIL_SENDERS:
@@ -42,7 +42,7 @@ export const mailSendersReducer = (
     case SET_MAIL_SENDERS:
       return {
         ...state,
-        items: mailSenders
+        items: items
       };
     case RESET_SELECTED_MAIL_SENDER:
       return {

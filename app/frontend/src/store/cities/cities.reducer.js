@@ -16,7 +16,7 @@ const initialState = {
 
 export const citiesReducer = (
   state = initialState,
-  { type, cities, selectedValue }
+  { type, items, selectedValue }
 ) => {
   switch (type) {
     case START_AJAX_REQUEST_CITIES:
@@ -42,7 +42,7 @@ export const citiesReducer = (
     case SET_CITIES:
       return {
         ...state,
-        items: cities
+        items: items
       };
     case RESET_SELECTED_CITY: {
       return {
