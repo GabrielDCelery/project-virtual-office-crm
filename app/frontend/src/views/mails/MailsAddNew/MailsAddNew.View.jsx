@@ -204,7 +204,7 @@ export default ({
               InputLabelProps={{
                 shrink: true
               }}
-              defaultValue={getter('document', 'receivedDate')}
+              defaultValue={getter('fields', 'document', 'receivedDate')}
               onChange={event => {
                 handler('document', 'setReceivedDate')(event.target.value);
               }}
