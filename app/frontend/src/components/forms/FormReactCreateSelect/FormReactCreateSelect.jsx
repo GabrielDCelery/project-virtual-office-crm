@@ -237,7 +237,7 @@ export const FormReactCreateSelect = ({
           return false;
         }
 
-        if (option.label.toLowerCase().includes(rawInput)) {
+        if (option.label.toLowerCase().includes(rawInput.toLowerCase())) {
           numOfOptionsShowing++;
           return true;
         }
