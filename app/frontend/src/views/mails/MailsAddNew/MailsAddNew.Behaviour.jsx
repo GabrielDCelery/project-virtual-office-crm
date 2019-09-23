@@ -68,19 +68,15 @@ export default ToWrapComponent => {
     const handlers = {
       existingMailSender: {
         actionSetSelectedMailSender
+      },
+      newMailSender: {
+        actionCreateNewMailSenderNameAndReFetch,
+        actionSetSelectedMailSenderName
       }
     };
 
     const handler = (...paths) => {
       return _.get(handlers, paths);
-    };
-
-    const handlersExistingMailSender = {
-      actionSetSelectedMailSender
-    };
-
-    const handlerExistingMailSender = objKey => {
-      return handlersExistingMailSender[objKey];
     };
 
     const initialStateNewMailSender = {
@@ -105,15 +101,6 @@ export default ToWrapComponent => {
           [objKey]: value
         };
       });
-    };
-
-    const handlersNewMailSender = {
-      actionCreateNewMailSenderNameAndReFetch,
-      actionSetSelectedMailSenderName
-    };
-
-    const handlerNewMailSender = objKey => {
-      return handlersNewMailSender[objKey];
     };
 
     const initialStateMailDocument = {
@@ -167,8 +154,6 @@ export default ToWrapComponent => {
         {...{
           getter,
           handler,
-          handlerNewMailSender,
-          handlerExistingMailSender,
           getterMailDocument,
           getterNewMailSender,
           handleSetMailSenderActivePanel,

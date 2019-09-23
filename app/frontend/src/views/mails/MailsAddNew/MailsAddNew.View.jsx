@@ -16,7 +16,6 @@ export default ({
   getterNewMailSender,
   handleSetMailSenderActivePanel,
   handler,
-  handlerNewMailSender,
   mailReceiver,
   mailSenderActivePanel,
   setMailReceiver,
@@ -87,12 +86,13 @@ export default ({
                     'mailSenderNameRecommendations'
                   )}
                   onChange={recommendation => {
-                    handlerNewMailSender('actionSetSelectedMailSenderName')(
+                    handler('newMailSender', 'actionSetSelectedMailSenderName')(
                       recommendation
                     );
                   }}
                   onCreateOption={mailSenderName => {
-                    handlerNewMailSender(
+                    handler(
+                      'newMailSender',
                       'actionCreateNewMailSenderNameAndReFetch'
                     )(mailSenderName);
                   }}
