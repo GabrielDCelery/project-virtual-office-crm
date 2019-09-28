@@ -12,7 +12,7 @@ const findAll = () => {
     dispatch({ type: ADDRESSES_RESET });
     dispatch({ type: APP_AJAX_REQUEST_START });
 
-    const { success, errors, payload } = await services.addresses.findAll();
+    const { success, errors, payload } = await services.api.addresses.findAll();
 
     if (!success) {
       return dispatch({ type: APP_AJAX_REQUEST_FAIL, errors });
@@ -21,7 +21,7 @@ const findAll = () => {
     dispatch({ type: ADDRESSES_FETCHED, addresses: payload });
     dispatch({ type: APP_AJAX_REQUEST_SUCCESS });
   };
-}
+};
 
 export default {
   findAll

@@ -210,10 +210,14 @@ export default ({ getter, handler }) => {
 
           <FormFieldControl>
             <FormFileUpload
-              selectedFile={''}
-              customFileName={'Something'}
-              handleSetFile={() => {}}
-              handleClearFile={() => {}}
+              selectedFile={getter('fields', 'document', 'file')}
+              fileName={getter('callbacks', 'document', 'fileName')()}
+              handleSetFile={_file => {
+                handler('document', 'setFile')(_file);
+              }}
+              handleClearFile={() => {
+                handler('document', 'setFile')(null);
+              }}
             />
           </FormFieldControl>
         </FormPaper>

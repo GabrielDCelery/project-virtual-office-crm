@@ -21,7 +21,7 @@ export const actionFindAllCities = () => {
     dispatch({ type: RESET_SELECTED_CITY });
     dispatch({ type: RESET_CITIES });
 
-    const { success, payload } = await services.cities.findAll();
+    const { success, payload } = await services.api.cities.findAll();
 
     if (!success) {
       return dispatch({ type: ERRORED_FETCHING_CITIES });

@@ -10,7 +10,8 @@ export const selectorGetLegalEntityRecommendations = createSelector(
   legalEntityAllVersions => {
     return legalEntityAllVersions.map(({ legalEntityId, longName, type }) => ({
       value: legalEntityId,
-      label: `${longName} ${type}`
+      label: `${longName} ${type}`,
+      name: longName
     }));
   }
 );

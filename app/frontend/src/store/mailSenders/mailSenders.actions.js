@@ -21,7 +21,7 @@ export const actionFindAllMailSenders = () => {
     dispatch({ type: RESET_MAIL_SENDERS });
     dispatch({ type: RESET_SELECTED_MAIL_SENDER });
 
-    const { success, payload } = await services.mailSenders.findAll();
+    const { success, payload } = await services.api.mailSenders.findAll();
 
     if (!success) {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDERS });

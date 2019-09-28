@@ -15,7 +15,7 @@ const login = ({ email, password }, successCallback = () => {}) => {
       success,
       errors,
       payload
-    } = await services.user.authentication.login({ email, password });
+    } = await services.api.user.authentication.login({ email, password });
 
     if (!success) {
       return dispatch({ type: APP_AJAX_REQUEST_FAIL, errors });
@@ -23,7 +23,7 @@ const login = ({ email, password }, successCallback = () => {}) => {
 
     const { jwt } = payload;
 
-    await services.user.authentication.setStoredLoginCredentials({
+    await services.api.user.authentication.setStoredLoginCredentials({
       email,
       jwt
     });
@@ -36,7 +36,7 @@ const login = ({ email, password }, successCallback = () => {}) => {
 
 const logout = (successCallback = () => {}) => {
   return async dispatch => {
-    await services.user.authentication.logout();
+    await services.api.user.authentication.logout();
 
     dispatch({ type: USER_LOGOUT });
 

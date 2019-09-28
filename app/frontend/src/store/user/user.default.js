@@ -1,6 +1,6 @@
 import services from 'services';
 
-const cachedUser = services.user.authentication.getCachedUser();
+const cachedUser = services.api.user.authentication.getCachedUser();
 
 export default cachedUser
   ? cachedUser

@@ -21,7 +21,7 @@ export const actionFindAllMailSubjects = () => {
     dispatch({ type: RESET_SELECTED_MAIL_SUBJECT });
     dispatch({ type: RESET_MAIL_SUBJECTS });
 
-    const { success, payload } = await services.mailSubjects.findAll();
+    const { success, payload } = await services.api.mailSubjects.findAll();
 
     if (!success) {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });
@@ -38,7 +38,7 @@ export const actionCreateNewMailSubjectAndReFetch = mailSubject => {
     dispatch({ type: RESET_SELECTED_MAIL_SUBJECT });
     dispatch({ type: RESET_MAIL_SUBJECTS });
 
-    const createResult = await services.mailSubjects.create({
+    const createResult = await services.api.mailSubjects.create({
       longSubject: mailSubject
     });
 
@@ -46,7 +46,7 @@ export const actionCreateNewMailSubjectAndReFetch = mailSubject => {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });
     }
 
-    const findAllResult = await services.mailSubjects.findAll();
+    const findAllResult = await services.api.mailSubjects.findAll();
 
     if (!findAllResult.success) {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });

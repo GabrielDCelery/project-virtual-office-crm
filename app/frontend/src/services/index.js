@@ -1,19 +1,7 @@
-import addresses from './addresses';
-import cities from './cities';
-import countries from './countries';
-import legalEntities from './legalEntities';
-import mailSenderNames from './mailSenderNames';
-import mailSenders from './mailSenders';
-import mailSubjects from './mailSubjects';
-import user from './user';
+import api from './api';
+import documents from './documents';
 
 export default {
-  addresses,
-  cities,
-  countries,
-  legalEntities,
-  mailSenders,
-  mailSenderNames,
-  mailSubjects,
-  user
+  api,
+  documents
 };

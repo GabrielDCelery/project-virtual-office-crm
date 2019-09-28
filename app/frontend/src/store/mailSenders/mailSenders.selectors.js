@@ -11,7 +11,8 @@ export const selectorGetMailSenderRecommendations = createSelector(
     return mailSenders.map(
       ({ id, postcode, cityName, countryName, longStreet, senderName }) => ({
         value: id,
-        label: `${senderName}, ${postcode} ${countryName} ${cityName} ${longStreet}`
+        label: `${senderName}, ${postcode} ${countryName} ${cityName} ${longStreet}`,
+        name: senderName
       })
     );
   }

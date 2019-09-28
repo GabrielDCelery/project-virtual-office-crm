@@ -21,7 +21,7 @@ export const actionFindAllMailSenderNames = () => {
     dispatch({ type: RESET_SELECTED_MAIL_SENDER_NAME });
     dispatch({ type: RESET_MAIL_SENDER_NAMES });
 
-    const { success, payload } = await services.mailSenderNames.findAll();
+    const { success, payload } = await services.api.mailSenderNames.findAll();
 
     if (!success) {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDER_NAMES });
@@ -41,7 +41,7 @@ export const actionCreateNewMailSenderNameAndReFetch = mailSenderName => {
     dispatch({ type: RESET_SELECTED_MAIL_SENDER_NAME });
     dispatch({ type: RESET_MAIL_SENDER_NAMES });
 
-    const createResult = await services.mailSenderNames.create({
+    const createResult = await services.api.mailSenderNames.create({
       name: mailSenderName
     });
 
@@ -49,7 +49,7 @@ export const actionCreateNewMailSenderNameAndReFetch = mailSenderName => {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDER_NAMES });
     }
 
-    const findAllResult = await services.mailSenderNames.findAll();
+    const findAllResult = await services.api.mailSenderNames.findAll();
 
     if (!findAllResult.success) {
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDER_NAMES });

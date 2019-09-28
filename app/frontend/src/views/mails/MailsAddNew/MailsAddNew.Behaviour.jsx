@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
 import moment from 'moment';
 import {
@@ -7,6 +7,7 @@ import {
   LegalEntitiesStoreDecorator,
   MailsStoreDecorator
 } from 'components';
+import services from 'services';
 
 export default ToWrapComponent => {
   let WrapperComponent = props => {
@@ -90,6 +91,50 @@ export default ToWrapComponent => {
       },
       layout: {
         mailSenderActivePanel: stateMailSenderActivePanel
+      },
+      callbacks: {
+        document: {
+          fileName: useCallback(() => {
+            if (!stateFile) {
+              return null;
+            }
+
+            const fileName = services.documents.nameGenerator.create([
+              {
+                type: 'date',
+                value: stateReceivedDate
+              },
+              {
+                type: 'string',
+                value:
+                  stateMailSenderActivePanel === 0
+                    ? _.get(stateSelectedMailSender, 'name')
+                    : null
+              },
+              {
+                type: 'string',
+                value: _.get(stateSelectedMailSubject, 'label')
+              },
+              {
+                type: 'integer',
+                value: new Date().getTime()
+              },
+              {
+                type: 'string',
+                value: _.get(stateMailReceiver, 'name')
+              }
+            ]);
+
+            return `${fileName}.pdf`;
+          }, [
+            stateFile,
+            stateMailReceiver,
+            stateMailSenderActivePanel,
+            stateReceivedDate,
+            stateSelectedMailSender,
+            stateSelectedMailSubject
+          ])
+        }
       }
     };
 

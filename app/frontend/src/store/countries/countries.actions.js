@@ -21,7 +21,7 @@ export const actionFindAllCountries = () => {
     dispatch({ type: RESET_SELECTED_COUNTRY });
     dispatch({ type: RESET_COUNTRIES });
 
-    const { success, payload } = await services.countries.findAll();
+    const { success, payload } = await services.api.countries.findAll();
 
     if (!success) {
       return dispatch({ type: ERRORED_FETCHING_COUNTRIES });
