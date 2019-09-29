@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AnimateHeight from 'react-animate-height';
 import styled from 'styled-components';
 import { SizeMe } from 'react-sizeme';
@@ -32,6 +32,11 @@ const StyledAppBar = styled(AppBar)`
 export const DocumentPdf = ({ file }) => {
   const [stateActivePageIndex, setActivePageIndex] = useState(0);
   const [stateNumOfPages, setNumOfPages] = useState(0);
+
+  useEffect(() => {
+    setActivePageIndex(0);
+    setNumOfPages(0);
+  }, [file]);
 
   return (
     <React.Fragment>

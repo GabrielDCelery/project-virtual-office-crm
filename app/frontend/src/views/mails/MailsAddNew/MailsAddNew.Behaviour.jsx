@@ -172,6 +172,35 @@ export default ToWrapComponent => {
             stateSelectedMailSenderName,
             stateSelectedMailSubject,
             stateStreet
+          ]),
+          submit: useCallback(() => {
+            const data = {
+              receiver: stateMailReceiver['value'],
+              sender: stateSelectedMailSender
+                ? stateSelectedMailSender['value']
+                : {
+                    city: stateSelectedCity['value'],
+                    country: stateSelectedCountry['value'],
+                    name: stateSelectedMailSenderName['value'],
+                    postcode: statePostcode,
+                    street: stateStreet
+                  },
+              receivedDate: stateReceivedDate,
+              subject: stateSelectedMailSubject['value'],
+              file: stateFile
+            };
+            console.log(data);
+          }, [
+            stateFile,
+            stateMailReceiver,
+            statePostcode,
+            stateReceivedDate,
+            stateSelectedCity,
+            stateSelectedCountry,
+            stateSelectedMailSender,
+            stateSelectedMailSenderName,
+            stateSelectedMailSubject,
+            stateStreet
           ])
         }
       }

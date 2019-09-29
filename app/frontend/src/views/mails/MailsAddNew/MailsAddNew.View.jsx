@@ -237,6 +237,7 @@ export default ({ getter, handler }) => {
           size="large"
           fullWidth={true}
           disabled={!getter('callbacks', 'form', 'isReadyToSubmit')()}
+          onClick={getter('callbacks', 'form', 'submit')}
         >
           {getter('callbacks', 'form', 'isReadyToSubmit')()
             ? 'Submit mail'
