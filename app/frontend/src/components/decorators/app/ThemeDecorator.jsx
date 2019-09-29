@@ -8,7 +8,7 @@ const theme = createMuiTheme({
       main: '#004792'
     },
     secondary: {
-      main: '#9e6a5a'
+      main: '#082431'
     }
   }
 });
@@ -19,4 +19,4 @@ export const ThemeDecorator = ToWrapComponent => {
       <ToWrapComponent {...props} />
     </ThemeProvider>
   );
-}
+};

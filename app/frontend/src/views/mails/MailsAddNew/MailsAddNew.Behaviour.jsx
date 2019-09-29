@@ -109,7 +109,7 @@ export default ToWrapComponent => {
                 value:
                   stateMailSenderActivePanel === 0
                     ? _.get(stateSelectedMailSender, 'name')
-                    : null
+                    : _.get(stateSelectedMailSenderName, 'label')
               },
               {
                 type: 'string',
@@ -132,6 +132,7 @@ export default ToWrapComponent => {
             stateMailSenderActivePanel,
             stateReceivedDate,
             stateSelectedMailSender,
+            stateSelectedMailSenderName,
             stateSelectedMailSubject
           ])
         }
@@ -192,7 +193,6 @@ export default ToWrapComponent => {
 
     return (
       <ToWrapComponent
-        //{...props}
         {...{
           getter,
           handler

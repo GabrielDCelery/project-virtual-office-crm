@@ -1,7 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import { Container, Tab, Tabs, TextField } from '@material-ui/core';
+import { Button, Container, Tab, Tabs, TextField } from '@material-ui/core';
 import {
+  DocumentPdf,
   FormFieldControl,
   FormFileUpload,
   FormPaper,
@@ -169,7 +170,7 @@ export default ({ getter, handler }) => {
         </FormPaper>
       </FormStep>
 
-      <FormStep label="Document">
+      <FormStep label="Mail Details">
         <FormPaper>
           <FormFieldControl>
             <FormReactCreateSelect
@@ -207,7 +208,11 @@ export default ({ getter, handler }) => {
               }}
             />
           </FormFieldControl>
+        </FormPaper>
+      </FormStep>
 
+      <FormStep label="Document Upload">
+        <FormPaper>
           <FormFieldControl>
             <FormFileUpload
               selectedFile={getter('fields', 'document', 'file')}
@@ -220,8 +225,22 @@ export default ({ getter, handler }) => {
               }}
             />
           </FormFieldControl>
+          <DocumentPdf file={getter('fields', 'document', 'file')} />
         </FormPaper>
       </FormStep>
+
+      <div style={{ height: '1em' }}></div>
+      <FormPaper>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          fullWidth={true}
+        >
+          Submit Mail
+        </Button>
+      </FormPaper>
+      <div style={{ height: '2em' }}></div>
     </Container>
   );
 };
