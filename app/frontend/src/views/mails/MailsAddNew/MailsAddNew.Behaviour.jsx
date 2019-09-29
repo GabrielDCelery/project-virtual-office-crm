@@ -83,10 +83,12 @@ export default ToWrapComponent => {
           postcode: statePostcode,
           street: stateStreet
         },
-        document: {
-          file: stateFile,
+        mailDetails: {
           receivedDate: stateReceivedDate,
           subject: stateSelectedMailSubject
+        },
+        document: {
+          file: stateFile
         }
       },
       layout: {
@@ -135,6 +137,42 @@ export default ToWrapComponent => {
             stateSelectedMailSenderName,
             stateSelectedMailSubject
           ])
+        },
+        form: {
+          readyToSubmit: useCallback(() => {
+            const bFileUploaded = !!stateFile;
+            const bMailReceiverSet = !!stateMailReceiver;
+            const bMailSenderSet =
+              stateMailSenderActivePanel === 0
+                ? !!stateSelectedMailSender
+                : stateSelectedCity &&
+                  stateSelectedCountry &&
+                  stateSelectedMailSenderName &&
+                  statePostcode &&
+                  stateStreet;
+            const bMailSubjectSet = !!stateSelectedMailSubject;
+            const bReceivedDateSet = !!stateReceivedDate;
+
+            return (
+              bFileUploaded &&
+              bMailReceiverSet &&
+              bMailSenderSet &&
+              bMailSubjectSet &&
+              bReceivedDateSet
+            );
+          }, [
+            stateFile,
+            stateMailReceiver,
+            stateMailSenderActivePanel,
+            statePostcode,
+            stateReceivedDate,
+            stateSelectedCity,
+            stateSelectedCountry,
+            stateSelectedMailSender,
+            stateSelectedMailSenderName,
+            stateSelectedMailSubject,
+            stateStreet
+          ])
         }
       }
     };
@@ -158,11 +196,13 @@ export default ToWrapComponent => {
         setPostcode,
         setStreet
       },
-      document: {
+      mailDetails: {
         actionCreateNewMailSubjectAndReFetch,
         actionSetSelectedMailSubject,
-        setFile,
         setReceivedDate
+      },
+      document: {
+        setFile
       },
       layout: {
         setMailSenderActivePanel

@@ -179,18 +179,18 @@ export default ({ getter, handler }) => {
               isLoading={getter('ajaxInProgress', 'mailSubjects')}
               label="Mail Subject"
               onChange={recommendation => {
-                handler('document', 'actionSetSelectedMailSubject')(
+                handler('mailDetails', 'actionSetSelectedMailSubject')(
                   recommendation
                 );
               }}
               onCreateOption={mailSubject => {
-                handler('document', 'actionCreateNewMailSubjectAndReFetch')(
+                handler('mailDetails', 'actionCreateNewMailSubjectAndReFetch')(
                   mailSubject
                 );
               }}
               options={getter('recommendations', 'mailSubjects')}
               placeholder="Select Mail Subject"
-              value={getter('fields', 'document', 'subject')}
+              value={getter('fields', 'mailDetails', 'subject')}
             />
           </FormFieldControl>
 
@@ -202,9 +202,9 @@ export default ({ getter, handler }) => {
               InputLabelProps={{
                 shrink: true
               }}
-              defaultValue={getter('fields', 'document', 'receivedDate')}
+              defaultValue={getter('fields', 'mailDetails', 'receivedDate')}
               onChange={event => {
-                handler('document', 'setReceivedDate')(event.target.value);
+                handler('mailDetails', 'setReceivedDate')(event.target.value);
               }}
             />
           </FormFieldControl>
@@ -236,8 +236,11 @@ export default ({ getter, handler }) => {
           color="secondary"
           size="large"
           fullWidth={true}
+          disabled={!getter('callbacks', 'form', 'readyToSubmit')()}
         >
-          Submit Mail
+          {getter('callbacks', 'form', 'readyToSubmit')()
+            ? 'Submit mail'
+            : 'Please fill out the form before submitting'}
         </Button>
       </FormPaper>
       <div style={{ height: '2em' }}></div>
