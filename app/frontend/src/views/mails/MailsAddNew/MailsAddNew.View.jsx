@@ -236,9 +236,9 @@ export default ({ getter, handler }) => {
           color="secondary"
           size="large"
           fullWidth={true}
-          disabled={!getter('callbacks', 'form', 'readyToSubmit')()}
+          disabled={!getter('callbacks', 'form', 'isReadyToSubmit')()}
         >
-          {getter('callbacks', 'form', 'readyToSubmit')()
+          {getter('callbacks', 'form', 'isReadyToSubmit')()
             ? 'Submit mail'
             : 'Please fill out the form before submitting'}
         </Button>

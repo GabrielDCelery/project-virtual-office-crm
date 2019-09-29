@@ -139,7 +139,7 @@ export default ToWrapComponent => {
           ])
         },
         form: {
-          readyToSubmit: useCallback(() => {
+          isReadyToSubmit: useCallback(() => {
             const bFileUploaded = !!stateFile;
             const bMailReceiverSet = !!stateMailReceiver;
             const bMailSenderSet =
