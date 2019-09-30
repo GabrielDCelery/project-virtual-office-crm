@@ -16,7 +16,11 @@ router.post('/login', async (req, res) => {
     secure: true
   });
 
-  return res.json(loginResult);
+  return res.json({
+    success: true,
+    errors: [],
+    payload: null
+  });
 });
 
 router.post('/register', async (req, res) => {
