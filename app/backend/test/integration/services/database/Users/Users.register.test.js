@@ -3,7 +3,7 @@ const sinon = require('sinon');
 //const verror = require("verror");
 const services = require('../../../../../src/services');
 
-describe('execute("users", "register", { email, password })', () => {
+describe('services.get("database").execute("users", "register")', () => {
   let clock = null;
 
   beforeEach(async () => {

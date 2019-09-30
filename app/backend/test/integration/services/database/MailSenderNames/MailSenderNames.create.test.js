@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const services = require('../../../../../src/services');
 
-describe('execute("mailSenderNames", "create", {})', () => {
+describe('services.get("database").execute("mailSenderNames", "create")', () => {
   let clock = null;
 
   beforeEach(async () => {

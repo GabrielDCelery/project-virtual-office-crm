@@ -2,7 +2,7 @@ const { expect } = require('chai');
 //const verror = require('verror');
 const services = require('../../../../../src/services');
 
-describe('execute("addresses", "findAll")', () => {
+describe('services.get("database").execute("addresses", "findAll")', () => {
   beforeEach(async () => {
     await services
       .get('database')
