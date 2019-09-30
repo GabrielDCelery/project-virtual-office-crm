@@ -6,6 +6,7 @@ const legalEntities = require('./legalEntities');
 const mailSenderNames = require('./mailSenderNames');
 const mailSenders = require('./mailSenders');
 const mailSubjects = require('./mailSubjects');
+const users = require('./users');
 
 class Orchestrator {
   constructor() {
@@ -44,9 +45,9 @@ class Orchestrator {
         create: mailSubjects.createWrapper(services),
         findAll: mailSubjects.findAllWrapper(services)
       },
-      users: new Users({
-        services
-      })
+      users: {
+        login: users.loginWrapper(services)
+      }
     };
   }
 

@@ -17,11 +17,11 @@ The above command will do the followings:
 3. Runs migrations on development database
 4. Seeds data into the dev database
 
-Containers | What is it running | What is it for | Port |
------------- | ------------- | ------------- | ------------- 
-| pvocrm_db     | POSTGRESQL database | Storing users, clients etc... | 5432 |
-| pvocrm_backend      | NodeJs express      | Exposing API endpoints for executing database actions |   8000 |
-| pvocrm_frontend | ReactJs      | CRM user interface |   3000 |
+| Containers      | What is it running  | What is it for                                        | Port |
+| --------------- | ------------------- | ----------------------------------------------------- | ---- |
+| pvocrm_db       | POSTGRESQL database | Storing users, clients etc...                         | 5432 |
+| pvocrm_backend  | NodeJs express      | Exposing API endpoints for executing database actions | 8000 |
+| pvocrm_frontend | ReactJs             | CRM user interface                                    | 3000 |
 
 If the containers are running properly you can access the frontend at `localhost:3000`.
 
