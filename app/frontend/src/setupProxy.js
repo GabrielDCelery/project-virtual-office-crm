@@ -1,10 +1,7 @@
 const proxy = require('http-proxy-middleware');
 
 module.exports = app => {
-  const {
-    BACKEND_HOST,
-    BACKEND_PORT
-  } = process.env;
+  const { BACKEND_HOST, BACKEND_PORT } = process.env;
 
   const proxyToConfig = { target: `http://${BACKEND_HOST}:${BACKEND_PORT}` };
 
