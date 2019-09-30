@@ -1,5 +1,6 @@
 const services = globalRequire('services');
 const helpers = globalRequire('helpers');
+const jsonwebtoken = require('jsonwebtoken');
 const lodash = require('lodash');
 const verror = require('verror');
 
@@ -15,7 +16,7 @@ const {
   SERVICE_REDIS_HOST,
   SERVICE_REDIS_PORT,
   SERVICE_JWT_SECRET,
-  SERVICE_JWT_EXPIRY
+  SERVICE_JWT_EXPIRY_IN_SECONDS
 } = process.env;
 
 module.exports = {
@@ -44,12 +45,16 @@ module.exports = {
       },
       helpers: helpers
     });
-    await services.get('jwt').start({
+    await services.get('authentication').start({
       environmentVariables: {
         SERVICE_JWT_SECRET,
-        SERVICE_JWT_EXPIRY
+        SERVICE_JWT_EXPIRY_IN_SECONDS
       },
-      helpers: helpers
+      helpers: helpers,
+      nodeModules: {
+        jsonwebtoken,
+        verror
+      }
     });
   },
   stop: async () => {

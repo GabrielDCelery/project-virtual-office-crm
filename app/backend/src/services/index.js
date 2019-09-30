@@ -1,7 +1,7 @@
 const services = {
+  authentication: require('./authentication'),
   database: require('./database'),
-  redis: require('./redis'),
-  jwt: require('./jwt')
+  redis: require('./redis')
 };
 
 const get = name => {

@@ -43,7 +43,7 @@ services:
       SERVICE_REDIS_HOST: redis
       SERVICE_REDIS_PORT: 6379
       SERVICE_JWT_SECRET: super_secret
-      SERVICE_JWT_EXPIRY: null
+      SERVICE_JWT_EXPIRY_IN_SECONDS: null
   frontend:
     container_name: pvocrm_frontend
     build:
