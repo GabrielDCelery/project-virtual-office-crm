@@ -4,6 +4,7 @@ const {
   Addresses,
   Documents,
   DocumentsDetails,
+  DocumentsTemporary,
   Emails,
   LegalEntities,
   Mails,
@@ -29,6 +30,7 @@ exports.seed = async knex => {
   await knex(MailSenderNames.tableName).del();
   await knex(Addresses.tableName).del();
   await knex(DocumentsDetails.tableName).del();
+  await knex(DocumentsTemporary.tableName).del();
   await knex(Documents.tableName).del();
   await knex(Emails.tableName).del();
   await knex(Phones.tableName).del();

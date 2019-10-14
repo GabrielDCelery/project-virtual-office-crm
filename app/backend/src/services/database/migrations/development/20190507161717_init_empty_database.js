@@ -4,6 +4,7 @@ const {
   Countries,
   Documents,
   DocumentsDetails,
+  DocumentsTemporary,
   Emails,
   LegalEntities,
   Mails,
@@ -64,6 +65,19 @@ exports.up = async knex => {
       Documents.TYPES.MAIL,
       Documents.TYPES.SPECIMEN_SIGNATURE
     ]);
+  });
+
+  await knex.schema.createTable(DocumentsTemporary.tableName, table => {
+    table.uuid('id').primary();
+    table
+      .integer('document_id')
+      .references('id')
+      .inTable(Documents.tableName)
+      .notNullable();
+    table.binary('file');
+    table.string('mimetype');
+    table.string('extension');
+    table.timestamps();
   });
 
   await knex.schema.createTable(DocumentsDetails.tableName, table => {
@@ -271,6 +285,7 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(Addresses.tableName);
   await knex.schema.dropTableIfExists(Users.tableName);
   await knex.schema.dropTableIfExists(DocumentsDetails.tableName);
+  await knex.schema.dropTableIfExists(DocumentsTemporary.tableName);
   await knex.schema.dropTableIfExists(Documents.tableName);
   await knex.schema.dropTableIfExists(Emails.tableName);
   await knex.schema.dropTableIfExists(Phones.tableName);

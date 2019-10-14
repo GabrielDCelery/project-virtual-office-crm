@@ -25,9 +25,9 @@ describe('services.get("database").execute("documents", "create")', () => {
     const args = {
       name: 'somedocumentname',
       type: 'identity card',
-      awsStorageDetails: {
-        foobar: 'barfoo'
-      }
+      file: Buffer.from('wefersger', 'binary'),
+      mimetype: 'application/pdf',
+      extension: 'pdf'
     };
 
     // When

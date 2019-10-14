@@ -2,6 +2,7 @@ const services = globalRequire('services');
 const helpers = globalRequire('helpers');
 const jsonwebtoken = require('jsonwebtoken');
 const lodash = require('lodash');
+const uuidv4 = require('uuid/v4');
 const verror = require('verror');
 
 const {
@@ -34,6 +35,7 @@ module.exports = {
       },
       nodeModules: {
         lodash,
+        uuidv4,
         verror
       },
       helpers: helpers
