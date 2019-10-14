@@ -7,7 +7,7 @@ class Documents extends Model {
 
   static get TYPES() {
     return {
-      DEED_OF_ASSOCIATION: 'deed of association',
+      DEED_OF_ASSOCIATION: 'deed Of association',
       IDENTITY_CARD: 'identity card',
       MAIL: 'mail',
       SPECIMEN_SIGNATURE: 'specimen signature'

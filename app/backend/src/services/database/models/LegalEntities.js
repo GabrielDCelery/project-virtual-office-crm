@@ -7,9 +7,9 @@ class LegalEntities extends Model {
 
   static get TYPES() {
     return {
-      LIMITED_LIABILITY_COMPANY: 'Limited Liability Company',
-      UNLIMITED_PARTNERSHIP: 'Unlimited Partnership',
-      SOLE_PROPRIETORSHIPS: 'Sole proprietorships'
+      LIMITED_LIABILITY_COMPANY: 'limited liability company',
+      UNLIMITED_PARTNERSHIP: 'unlimited partnership',
+      SOLE_PROPRIETORSHIPS: 'sole proprietorships'
     };
   }
 

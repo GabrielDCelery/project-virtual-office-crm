@@ -24,7 +24,7 @@ describe('services.get("database").execute("legalEntities", "update")', () => {
     const method = 'update';
     const args = {
       id: 1,
-      type: 'Unlimited Partnership',
+      type: 'unlimited partnership',
       taxId: '24892285-1-42'
     };
 
@@ -43,7 +43,7 @@ describe('services.get("database").execute("legalEntities", "update")', () => {
           legalEntityId: 1,
           shortName: 'Bacz Invest',
           longName: 'Bacz Invest Elektro Technikai',
-          type: 'Unlimited Partnership',
+          type: 'unlimited partnership',
           registrationId: '03-01-131101',
           taxId: '24892285-1-42',
           permanentAddressId: 1,
@@ -55,7 +55,7 @@ describe('services.get("database").execute("legalEntities", "update")', () => {
           legalEntityId: 1,
           shortName: 'Bacz Invest',
           longName: 'Bacz Invest Elektro Technikai',
-          type: 'Limited Liability Company',
+          type: 'limited liability company',
           registrationId: '03-01-131101',
           taxId: '13781174-1-42',
           permanentAddressId: 1,

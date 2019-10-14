@@ -25,7 +25,7 @@ describe('services.get("database").execute("legalEntities", "create")', () => {
     const args = {
       shortName: 'Donim-Plussz',
       longName: 'Donim-Plussz Hungary',
-      type: 'Limited Liability Company',
+      type: 'limited liability company',
       registrationId: '01-01-129342',
       taxId: '21583385-1-41',
       permanentAddressId: 2
@@ -45,7 +45,7 @@ describe('services.get("database").execute("legalEntities", "create")', () => {
         id: 3,
         shortName: 'Donim-Plussz',
         longName: 'Donim-Plussz Hungary',
-        type: 'Limited Liability Company',
+        type: 'limited liability company',
         registrationId: '01-01-129342',
         taxId: '21583385-1-41',
         permanentAddressId: 2,

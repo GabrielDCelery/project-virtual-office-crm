@@ -29,17 +29,17 @@ describe('services.get("database").execute("legalEntities", "getAllVersionsOfAll
         {
           legalEntityId: 1,
           longName: 'Bacz Invest Elektro Technikai',
-          type: 'Limited Liability Company'
+          type: 'limited liability company'
         },
         {
           legalEntityId: 2,
           longName: 'Chrono-Line',
-          type: 'Limited Liability Company'
+          type: 'limited liability company'
         },
         {
           legalEntityId: 2,
           longName: 'Chrono-Trigger',
-          type: 'Limited Liability Company'
+          type: 'limited liability company'
         }
       ]
     });
