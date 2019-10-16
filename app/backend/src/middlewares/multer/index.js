@@ -1,6 +1,5 @@
 class MulterMiddleware {
   constructor() {
-    this.services = null;
     this.initialized = false;
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
