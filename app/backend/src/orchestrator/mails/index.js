@@ -1,5 +1,5 @@
-const addNewWrapper = require('./addNewWrapper');
+const createWrapper = require('./createWrapper');
 
 module.exports = {
-  addNewWrapper
+  createWrapper
 };
