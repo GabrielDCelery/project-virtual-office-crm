@@ -5,7 +5,7 @@ module.exports = ({ Router, middlewares, orchestrator }) => {
 
   router.post(
     '/addNew',
-    middlewares.get('multer').createSync('single', 'file'),
+    middlewares.get('multer').createSync('single', 'document'),
     async (req, res) => {
       return apiJsonResultWrapper(res, () => {
         return orchestrator.execute('mails', 'addNew');
