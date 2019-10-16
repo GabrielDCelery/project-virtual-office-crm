@@ -17,7 +17,7 @@ module.exports = ({ Router, orchestrator }) => {
       return await orchestrator.execute(
         'legalEntities',
         'getAllVersionsOfSingleEntity',
-        { id: 2 }
+        req.body
       );
     });
   });
