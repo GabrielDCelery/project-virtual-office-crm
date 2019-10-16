@@ -3,6 +3,7 @@ global.globalRequire = path => {
 };
 
 const express = require('express');
+const { Router } = require('express');
 const loaders = require('./loaders');
 const config = require('./config');
 
@@ -12,7 +13,7 @@ const start = async (callback = () => {}) => {
   try {
     const app = express();
 
-    await loaders.start(app);
+    await loaders.start({ app, Router });
 
     server = app.listen(config.host.port, error => {
       if (error) {
