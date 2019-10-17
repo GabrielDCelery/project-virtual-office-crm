@@ -3,6 +3,7 @@ const addresses = require('./addresses');
 const cities = require('./cities');
 const countries = require('./countries');
 const legalEntities = require('./legalEntities');
+const mails = require('./mails');
 const mailSenderNames = require('./mailSenderNames');
 const mailSenders = require('./mailSenders');
 const mailSubjects = require('./mailSubjects');
@@ -34,6 +35,9 @@ class Orchestrator {
           services
         )
       },
+      mails: {
+        create: mails.createWrapper(services)
+      },
       mailSenders: {
         findAll: mailSenders.findAllWrapper(services)
       },
@@ -57,6 +61,8 @@ class Orchestrator {
     }
     this.initialize(services);
     this.initialized = true;
+
+    return this;
   }
 
   async stop() {

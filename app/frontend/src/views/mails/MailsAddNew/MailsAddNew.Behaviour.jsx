@@ -187,7 +187,7 @@ export default ToWrapComponent => {
                   },
               receivedDate: stateReceivedDate,
               subject: stateSelectedMailSubject['value'],
-              file: stateFile
+              document: stateFile
             };
             console.log(data);
           }, [

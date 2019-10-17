@@ -1,4 +1,4 @@
-module.exports = async (res, methodToExecute = () => {}) => {
+module.exports = async (res, methodToExecute = async () => {}) => {
   try {
     return res.json(await methodToExecute());
   } catch (error) {
