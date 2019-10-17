@@ -89,7 +89,7 @@ export default ToWrapComponent => {
         }
       ]);
 
-      return `${fileName}.pdf`;
+      return `${fileName}`;
     }, [
       stateFile,
       stateMailReceiver,
@@ -179,9 +179,20 @@ export default ToWrapComponent => {
             stateStreet
           ]),
           submit: useCallback(() => {
-            const data = {
-              receiver: stateMailReceiver['value'],
-              sender: stateSelectedMailSender
+            const formData = new FormData();
+
+            formData.append(
+              'document',
+              JSON.stringify({
+                name: generateFileName(),
+                received: stateReceivedDate
+              })
+            );
+            formData.append('file', stateFile, stateFile.name);
+            formData.append('receiver', stateMailReceiver['value']);
+            formData.append(
+              'sender',
+              stateSelectedMailSender
                 ? stateSelectedMailSender['value']
                 : JSON.stringify({
                     city: stateSelectedCity['value'],
@@ -189,16 +200,11 @@ export default ToWrapComponent => {
                     name: stateSelectedMailSenderName['value'],
                     postcode: statePostcode,
                     street: stateStreet
-                  }),
-              document: JSON.stringify({
-                name: generateFileName(),
-                received: stateReceivedDate
-              }),
-              subject: stateSelectedMailSubject['value'],
-              file: stateFile
-            };
+                  })
+            );
+            formData.append('subject', stateSelectedMailSubject['value']);
 
-            actionCreateNewMail(data);
+            actionCreateNewMail(formData);
           }, [
             actionCreateNewMail,
             generateFileName,

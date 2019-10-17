@@ -5,22 +5,8 @@ import {
 
 import services from 'services';
 
-export const actionCreateNewMail = ({
-  document,
-  file,
-  receiver,
-  sender,
-  subject
-}) => {
+export const actionCreateNewMail = formData => {
   return async dispatch => {
-    const formData = new FormData();
-
-    formData.append('document', document);
-    formData.append('file', file, file.name);
-    formData.append('receiver', receiver);
-    formData.append('sender', sender);
-    formData.append('subject', subject);
-
     dispatch({ type: START_AJAX_REQUEST_MAIL_CREATE });
 
     const { success } = await services.api.mails.create(formData);

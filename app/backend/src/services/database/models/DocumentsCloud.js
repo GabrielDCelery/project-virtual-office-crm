@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-class DocumentsDetails extends Model {
+class DocumentsCloud extends Model {
   static get tableName() {
-    return 'documents_details';
+    return 'documents_cloud';
   }
 
   static get jsonSchema() {
@@ -11,9 +11,12 @@ class DocumentsDetails extends Model {
       required: [],
       properties: {
         id: {
+          type: 'uuid'
+        },
+        document_id: {
           type: 'integer'
         },
-        aws_storage_details: {
+        storage_details: {
           type: 'json'
         },
         created_at: {
@@ -36,7 +39,7 @@ class DocumentsDetails extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: Documents,
         join: {
-          from: `${DocumentsDetails.tableName}.document_id`,
+          from: `${DocumentsCloud.tableName}.document_id`,
           to: `${Documents.tableName}.id`
         }
       }
@@ -55,4 +58,4 @@ class DocumentsDetails extends Model {
   }
 }
 
-module.exports = DocumentsDetails;
+module.exports = DocumentsCloud;

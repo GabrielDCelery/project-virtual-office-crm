@@ -3,7 +3,7 @@ module.exports = {
   Cities: require('./Cities'),
   Countries: require('./Countries'),
   Documents: require('./Documents'),
-  DocumentsDetails: require('./DocumentsDetails'),
+  DocumentsCloud: require('./DocumentsCloud'),
   DocumentsTemporary: require('./DocumentsTemporary'),
   Emails: require('./Emails'),
   LegalEntities: require('./LegalEntities'),

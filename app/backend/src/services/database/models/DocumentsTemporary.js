@@ -5,6 +5,18 @@ class DocumentsTemporary extends Model {
     return 'documents_temporary';
   }
 
+  static get EXTENSIONS() {
+    return {
+      PDF: 'pdf'
+    };
+  }
+
+  static get MIMETYPES() {
+    return {
+      APPLICATION_PDF: 'application/pdf'
+    };
+  }
+
   static get jsonSchema() {
     return {
       type: 'object',
@@ -20,10 +32,12 @@ class DocumentsTemporary extends Model {
           contentEncoding: 'binary'
         },
         mimetype: {
-          type: 'string'
+          type: 'string',
+          enum: [DocumentsTemporary.MIMETYPES.APPLICATION_PDF]
         },
         extension: {
-          type: 'string'
+          type: 'string',
+          enum: [DocumentsTemporary.EXTENSIONS.PDF]
         },
         created_at: {
           type: 'string',

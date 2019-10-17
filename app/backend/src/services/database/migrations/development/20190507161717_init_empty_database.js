@@ -3,7 +3,7 @@ const {
   Cities,
   Countries,
   Documents,
-  DocumentsDetails,
+  DocumentsCloud,
   DocumentsTemporary,
   Emails,
   LegalEntities,
@@ -65,6 +65,7 @@ exports.up = async knex => {
       Documents.TYPES.MAIL,
       Documents.TYPES.SPECIMEN_SIGNATURE
     ]);
+    table.timestamps();
   });
 
   await knex.schema.createTable(DocumentsTemporary.tableName, table => {
@@ -75,19 +76,19 @@ exports.up = async knex => {
       .inTable(Documents.tableName)
       .notNullable();
     table.binary('file');
-    table.string('mimetype');
-    table.string('extension');
+    table.enum('mimetype', [DocumentsTemporary.MIMETYPES.APPLICATION_PDF]);
+    table.enum('extension', [DocumentsTemporary.EXTENSIONS.PDF]);
     table.timestamps();
   });
 
-  await knex.schema.createTable(DocumentsDetails.tableName, table => {
+  await knex.schema.createTable(DocumentsCloud.tableName, table => {
+    table.uuid('id').primary();
     table
-      .increments('id')
+      .integer('document_id')
       .references('id')
       .inTable(Documents.tableName)
-      .notNullable()
-      .primary();
-    table.jsonb('aws_storage_details');
+      .notNullable();
+    table.jsonb('storage_details');
     table.timestamps();
   });
 
@@ -284,8 +285,8 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(MailSenderNames.tableName);
   await knex.schema.dropTableIfExists(Addresses.tableName);
   await knex.schema.dropTableIfExists(Users.tableName);
-  await knex.schema.dropTableIfExists(DocumentsDetails.tableName);
   await knex.schema.dropTableIfExists(DocumentsTemporary.tableName);
+  await knex.schema.dropTableIfExists(DocumentsCloud.tableName);
   await knex.schema.dropTableIfExists(Documents.tableName);
   await knex.schema.dropTableIfExists(Emails.tableName);
   await knex.schema.dropTableIfExists(Phones.tableName);

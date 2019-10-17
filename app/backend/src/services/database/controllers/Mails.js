@@ -28,11 +28,11 @@ class Mails {
       extension: file['originalname'].split('.')[1]
     });
 
-    const senderDbRecord = this._findOrCreateSender({ sender, transaction });
+    //const senderDbRecord = this._findOrCreateSender({ sender, transaction });
 
     await this.models.Mails.query(transaction).insert({
       legal_entity_id: receiver,
-      sender_id: senderDbRecord['id'],
+      sender_id: sender,
       subject_id: subject,
       document_id: documentId
     });
