@@ -9,6 +9,7 @@ const {
     selectorGetMailSubjectRecommendations
   },
   actions: {
+    actionCreateNewMail,
     actionCreateNewMailSenderNameAndReFetch,
     actionCreateNewMailSubjectAndReFetch,
     actionFindAllMailSenderNames,
@@ -22,6 +23,8 @@ const {
 
 const mapStateToProps = state => {
   return {
+    stateIsCreateNewMailAjaxRequestInProgress:
+      state.mails.create.isAjaxRequestInProgress,
     stateIsMailSendersAjaxRequestInProgress:
       state.mails.senders.isAjaxRequestInProgress,
     stateIsMailSenderNamesAjaxRequestInProgress:
@@ -41,6 +44,7 @@ const mapStateToProps = state => {
 };
 
 const mapActionsToProps = {
+  actionCreateNewMail,
   actionCreateNewMailSenderNameAndReFetch,
   actionCreateNewMailSubjectAndReFetch,
   actionFindAllMailSenderNames,

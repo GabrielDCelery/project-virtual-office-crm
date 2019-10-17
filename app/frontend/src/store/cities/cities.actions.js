@@ -24,6 +24,7 @@ export const actionFindAllCities = () => {
     const { success, payload } = await services.api.cities.findAll();
 
     if (!success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_CITIES });
       return dispatch({ type: ERRORED_FETCHING_CITIES });
     }
 

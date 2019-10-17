@@ -4,6 +4,7 @@ module.exports = {
   Countries: require('./Countries'),
   Documents: require('./Documents'),
   LegalEntities: require('./LegalEntities'),
+  Mails: require('./Mails'),
   MailSenders: require('./MailSenders'),
   MailSenderNames: require('./MailSenderNames'),
   MailSubjects: require('./MailSubjects'),

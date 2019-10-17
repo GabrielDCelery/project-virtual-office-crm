@@ -20,6 +20,10 @@ export default ({ getter, handler }) => {
             <FormReactSelect
               inputId="mail-sender-legal-entity"
               isClearable={true}
+              isDisabled={
+                getter('ajaxInProgress', 'createNewMail') ||
+                getter('ajaxInProgress', 'legalEntityRecommendations')
+              }
               isLoading={getter('ajaxInProgress', 'legalEntityRecommendations')}
               label="Legal Entity"
               onChange={recommendation => {
@@ -52,6 +56,10 @@ export default ({ getter, handler }) => {
               <FormReactSelect
                 inputId="mail-sender"
                 isClearable={true}
+                isDisabled={
+                  getter('ajaxInProgress', 'createNewMail') ||
+                  getter('ajaxInProgress', 'mailSenderRecommendations')
+                }
                 isLoading={getter(
                   'ajaxInProgress',
                   'mailSenderRecommendations'
@@ -74,6 +82,10 @@ export default ({ getter, handler }) => {
                 <FormReactCreateSelect
                   inputId="react-select-single"
                   isClearable={true}
+                  isDisabled={
+                    getter('ajaxInProgress', 'createNewMail') ||
+                    getter('ajaxInProgress', 'mailSenderNameRecommendations')
+                  }
                   isLoading={getter(
                     'ajaxInProgress',
                     'mailSenderNameRecommendations'
@@ -115,6 +127,10 @@ export default ({ getter, handler }) => {
                 <FormReactSelect
                   inputId="react-select-single"
                   isClearable={true}
+                  isDisabled={
+                    getter('ajaxInProgress', 'createNewMail') ||
+                    getter('ajaxInProgress', 'countryRecommendations')
+                  }
                   isLoading={getter('ajaxInProgress', 'countryRecommendations')}
                   label="Country"
                   onChange={recommendation => {
@@ -132,6 +148,10 @@ export default ({ getter, handler }) => {
                 <FormReactSelect
                   inputId="react-select-single"
                   isClearable={true}
+                  isDisabled={
+                    getter('ajaxInProgress', 'createNewMail') ||
+                    getter('ajaxInProgress', 'cityRecommendations')
+                  }
                   isLoading={getter('ajaxInProgress', 'cityRecommendations')}
                   label="City"
                   onChange={recommendation => {
@@ -176,6 +196,10 @@ export default ({ getter, handler }) => {
             <FormReactCreateSelect
               inputId="react-select-single"
               isClearable={true}
+              isDisabled={
+                getter('ajaxInProgress', 'createNewMail') ||
+                getter('ajaxInProgress', 'mailSubjects')
+              }
               isLoading={getter('ajaxInProgress', 'mailSubjects')}
               label="Mail Subject"
               onChange={recommendation => {
@@ -236,7 +260,10 @@ export default ({ getter, handler }) => {
           color="secondary"
           size="large"
           fullWidth={true}
-          disabled={!getter('callbacks', 'form', 'isReadyToSubmit')()}
+          disabled={
+            getter('ajaxInProgress', 'createNewMail') ||
+            !getter('callbacks', 'form', 'isReadyToSubmit')()
+          }
           onClick={getter('callbacks', 'form', 'submit')}
         >
           {getter('callbacks', 'form', 'isReadyToSubmit')()

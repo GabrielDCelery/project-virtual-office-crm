@@ -26,6 +26,7 @@ class DB {
       Countries,
       Documents,
       LegalEntities,
+      Mails,
       MailSenders,
       MailSenderNames,
       MailSubjects,
@@ -53,6 +54,11 @@ class DB {
         nodeModules
       }),
       legalEntities: new LegalEntities({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      mails: new Mails({
         models,
         nodeModules,
         recordPreparator: new RecordPreparator({ nodeModules })

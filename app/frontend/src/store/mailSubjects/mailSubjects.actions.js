@@ -43,12 +43,14 @@ export const actionCreateNewMailSubjectAndReFetch = mailSubject => {
     });
 
     if (!createResult.success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SUBJECTS });
       return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });
     }
 
     const findAllResult = await services.api.mailSubjects.findAll();
 
     if (!findAllResult.success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SUBJECTS });
       return dispatch({ type: ERRORED_FETCHING_MAIL_SUBJECTS });
     }
 

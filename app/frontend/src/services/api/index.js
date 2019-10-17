@@ -2,6 +2,7 @@ import addresses from './addresses';
 import cities from './cities';
 import countries from './countries';
 import legalEntities from './legalEntities';
+import mails from './mails';
 import mailSenderNames from './mailSenderNames';
 import mailSenders from './mailSenders';
 import mailSubjects from './mailSubjects';
@@ -12,6 +13,7 @@ export default {
   cities,
   countries,
   legalEntities,
+  mails,
   mailSenders,
   mailSenderNames,
   mailSubjects,

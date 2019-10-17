@@ -24,6 +24,7 @@ export const actionFindAllMailSenderNames = () => {
     const { success, payload } = await services.api.mailSenderNames.findAll();
 
     if (!success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES });
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDER_NAMES });
     }
 
@@ -46,12 +47,14 @@ export const actionCreateNewMailSenderNameAndReFetch = mailSenderName => {
     });
 
     if (!createResult.success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES });
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDER_NAMES });
     }
 
     const findAllResult = await services.api.mailSenderNames.findAll();
 
     if (!findAllResult.success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_MAIL_SENDER_NAMES });
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDER_NAMES });
     }
 

@@ -24,6 +24,7 @@ export const actionFindAllMailSenders = () => {
     const { success, payload } = await services.api.mailSenders.findAll();
 
     if (!success) {
+      dispatch({ type: FINSIH_AJAX_REQUEST_MAIL_SENDERS });
       return dispatch({ type: ERRORED_FETCHING_MAIL_SENDERS });
     }
 

@@ -197,6 +197,7 @@ const components = {
 export const FormReactCreateSelect = ({
   inputId,
   isClearable,
+  isDisabled,
   isLoading,
   label,
   onChange,
@@ -222,6 +223,7 @@ export const FormReactCreateSelect = ({
 
   return (
     <CreatableSelect
+      isDisabled={isDisabled}
       classes={classes}
       styles={selectStyles}
       inputId={inputId}

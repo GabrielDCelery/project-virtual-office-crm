@@ -12,6 +12,7 @@ import services from 'services';
 export default ToWrapComponent => {
   let WrapperComponent = props => {
     const {
+      actionCreateNewMail,
       actionCreateNewMailSenderNameAndReFetch,
       actionCreateNewMailSubjectAndReFetch,
       actionFindAllCities,
@@ -30,6 +31,7 @@ export default ToWrapComponent => {
       stateIsCountriesAjaxRequestInProgress,
       stateIsFetchingLegalEntities,
       stateIsFetchingMailSubjects,
+      stateIsCreateNewMailAjaxRequestInProgress,
       stateIsMailSenderNamesAjaxRequestInProgress,
       stateIsMailSendersAjaxRequestInProgress,
       stateLegalEntityRecommendations,
@@ -56,8 +58,51 @@ export default ToWrapComponent => {
     );
     const [stateFile, setFile] = useState(null);
 
+    const generateFileName = useCallback(() => {
+      if (!stateFile) {
+        return null;
+      }
+
+      const fileName = services.documents.nameGenerator.create([
+        {
+          type: 'date',
+          value: stateReceivedDate
+        },
+        {
+          type: 'string',
+          value:
+            stateMailSenderActivePanel === 0
+              ? _.get(stateSelectedMailSender, 'name')
+              : _.get(stateSelectedMailSenderName, 'label')
+        },
+        {
+          type: 'string',
+          value: _.get(stateSelectedMailSubject, 'label')
+        },
+        {
+          type: 'integer',
+          value: new Date().getTime()
+        },
+        {
+          type: 'string',
+          value: _.get(stateMailReceiver, 'name')
+        }
+      ]);
+
+      return `${fileName}.pdf`;
+    }, [
+      stateFile,
+      stateMailReceiver,
+      stateMailSenderActivePanel,
+      stateReceivedDate,
+      stateSelectedMailSender,
+      stateSelectedMailSenderName,
+      stateSelectedMailSubject
+    ]);
+
     const getters = {
       ajaxInProgress: {
+        createNewMail: stateIsCreateNewMailAjaxRequestInProgress,
         cityRecommendations: stateIsCitiesAjaxRequestInProgress,
         countryRecommendations: stateIsCountriesAjaxRequestInProgress,
         legalEntityRecommendations: stateIsFetchingLegalEntities,
@@ -96,47 +141,7 @@ export default ToWrapComponent => {
       },
       callbacks: {
         document: {
-          fileName: useCallback(() => {
-            if (!stateFile) {
-              return null;
-            }
-
-            const fileName = services.documents.nameGenerator.create([
-              {
-                type: 'date',
-                value: stateReceivedDate
-              },
-              {
-                type: 'string',
-                value:
-                  stateMailSenderActivePanel === 0
-                    ? _.get(stateSelectedMailSender, 'name')
-                    : _.get(stateSelectedMailSenderName, 'label')
-              },
-              {
-                type: 'string',
-                value: _.get(stateSelectedMailSubject, 'label')
-              },
-              {
-                type: 'integer',
-                value: new Date().getTime()
-              },
-              {
-                type: 'string',
-                value: _.get(stateMailReceiver, 'name')
-              }
-            ]);
-
-            return `${fileName}.pdf`;
-          }, [
-            stateFile,
-            stateMailReceiver,
-            stateMailSenderActivePanel,
-            stateReceivedDate,
-            stateSelectedMailSender,
-            stateSelectedMailSenderName,
-            stateSelectedMailSubject
-          ])
+          fileName: generateFileName
         },
         form: {
           isReadyToSubmit: useCallback(() => {
@@ -178,19 +183,25 @@ export default ToWrapComponent => {
               receiver: stateMailReceiver['value'],
               sender: stateSelectedMailSender
                 ? stateSelectedMailSender['value']
-                : {
+                : JSON.stringify({
                     city: stateSelectedCity['value'],
                     country: stateSelectedCountry['value'],
                     name: stateSelectedMailSenderName['value'],
                     postcode: statePostcode,
                     street: stateStreet
-                  },
-              receivedDate: stateReceivedDate,
+                  }),
+              document: JSON.stringify({
+                name: generateFileName(),
+                received: stateReceivedDate
+              }),
               subject: stateSelectedMailSubject['value'],
-              document: stateFile
+              file: stateFile
             };
-            console.log(data);
+
+            actionCreateNewMail(data);
           }, [
+            actionCreateNewMail,
+            generateFileName,
             stateFile,
             stateMailReceiver,
             statePostcode,

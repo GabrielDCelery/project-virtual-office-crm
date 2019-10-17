@@ -5,10 +5,15 @@ module.exports = ({ Router, middlewares, orchestrator }) => {
 
   router.post(
     '/create',
-    middlewares.get('multer').createSync('single', 'document'),
+    middlewares.get('multer').createSync('single', 'file'),
     async (req, res) => {
-      return apiJsonResultWrapper(res, () => {
-        return orchestrator.execute('mails', 'create');
+      return apiJsonResultWrapper(res, async () => {
+        const { body, file } = req;
+
+        return await orchestrator.execute('mails', 'create', {
+          ...body,
+          file
+        });
       });
     }
   );

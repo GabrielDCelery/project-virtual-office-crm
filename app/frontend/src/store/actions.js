@@ -1,6 +1,7 @@
 import actions_old from './actions_old';
 import { actionFindAllCities, actionSetSelectedCity } from './cities';
 import { actionFindAllCountries, actionSetSelectedCountry } from './countries';
+import { actionCreateNewMail } from './mailCreate';
 import {
   actionCreateNewMailSenderNameAndReFetch,
   actionFindAllMailSenderNames,
@@ -18,6 +19,7 @@ import {
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 
 export default {
+  actionCreateNewMail,
   actionCreateNewMailSenderNameAndReFetch,
   actionCreateNewMailSubjectAndReFetch,
   actionFindAllCities,

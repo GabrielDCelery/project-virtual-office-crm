@@ -24,6 +24,7 @@ export const actionFindAllCountries = () => {
     const { success, payload } = await services.api.countries.findAll();
 
     if (!success) {
+      dispatch({ type: FINISH_AJAX_REQUEST_COUNTRIES });
       return dispatch({ type: ERRORED_FETCHING_COUNTRIES });
     }
 

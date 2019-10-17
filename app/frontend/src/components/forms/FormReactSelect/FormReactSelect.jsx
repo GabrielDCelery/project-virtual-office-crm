@@ -197,6 +197,7 @@ const components = {
 export const FormReactSelect = ({
   inputId,
   isClearable,
+  isDisabled,
   isLoading,
   label,
   onChange,
@@ -221,6 +222,7 @@ export const FormReactSelect = ({
 
   return (
     <Select
+      isDisabled={isDisabled}
       classes={classes}
       styles={selectStyles}
       inputId={inputId}
