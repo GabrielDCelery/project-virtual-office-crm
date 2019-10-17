@@ -2,6 +2,8 @@ const { expect } = require('chai');
 //const verror = require('verror');
 const sinon = require('sinon');
 const services = require('../../../../../src/services');
+const fs = require('fs');
+const path = require('path');
 
 describe('services.get("database").execute("documents", "create")', () => {
   let clock = null;
@@ -25,7 +27,9 @@ describe('services.get("database").execute("documents", "create")', () => {
     const args = {
       name: 'somedocumentname',
       type: 'identity card',
-      file: Buffer.from('wefersger', 'binary'),
+      file: fs.readFileSync(
+        path.join(__dirname, '../../../../seeds/sample.pdf')
+      ),
       mimetype: 'application/pdf',
       extension: 'pdf'
     };
