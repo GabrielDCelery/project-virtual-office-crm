@@ -12,11 +12,11 @@ export default {
       },
       background: {
         default: '#082431',
-        hover: '#2c9fda'
+        hover: '#2b617a'
       },
       border: {
         default: '#0d3346',
-        hover: '#46B9F4'
+        hover: '#6193AA'
       }
     }
   },
