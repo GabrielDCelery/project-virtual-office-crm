@@ -6,29 +6,48 @@ class Mails {
     this.create = this.create.bind(this);
   }
 
-  async _findOrCreateAddress() {}
+  async _findOrCreateAddress({ sender, transaction }) {
+    const where = {
+      postcode: sender['postcode'],
+      city_id: sender['city'],
+      long_street: sender['street']
+    };
+
+    const addressRecord = await this.models.Addresses.query(
+      transaction
+    ).findOne(where);
+
+    if (addressRecord) {
+      return addressRecord;
+    }
+
+    return await this.models.Addresses.query(transaction).insert(where);
+  }
 
   async _findOrCreateSender({ sender, transaction }) {
     if (Number.isInteger(sender)) {
       return sender;
     }
 
-    const addressRecord = await this.models.Addresses.query(transaction).insert(
-      {
-        postcode: sender['postcode'],
-        city_id: sender['city'],
-        long_street: sender['street']
-      }
-    );
+    const addressRecord = await this._findOrCreateAddress({
+      sender,
+      transaction
+    });
+
+    const where = {
+      address_id: addressRecord['id'],
+      sender_name_id: sender['name']
+    };
 
     const mailSenderRecord = await this.models.MailSenders.query(
       transaction
-    ).insert({
-      address_id: addressRecord['id'],
-      sender_name_id: sender['name']
-    });
+    ).findOne(where);
 
-    return mailSenderRecord['id'];
+    if (mailSenderRecord) {
+      return mailSenderRecord;
+    }
+
+    return await this.models.MailSenders.query(transaction).insert(where);
   }
 
   async create({ receiver, sender, subject, document, file, transaction }) {
@@ -51,9 +70,14 @@ class Mails {
       extension: file['originalname'].split('.')[1]
     });
 
+    const mailSenderRecord = await this._findOrCreateSender({
+      sender,
+      transaction
+    });
+
     await this.models.Mails.query(transaction).insert({
       legal_entity_id: receiver,
-      sender_id: await this._findOrCreateSender({ sender, transaction }),
+      sender_id: mailSenderRecord['id'],
       subject_id: subject,
       document_id: documentId
     });
