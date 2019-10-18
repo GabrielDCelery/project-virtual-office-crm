@@ -13,12 +13,6 @@ class Documents {
       type
     });
 
-    await this.models.DocumentsCloud.query(transaction).insert({
-      id: this.nodeModules.uuidv4(),
-      document_id: documentRecord['id'],
-      storage_details: null
-    });
-
     await this.models.DocumentsTemporary.query(transaction).insert({
       id: this.nodeModules.uuidv4(),
       document_id: documentRecord['id'],

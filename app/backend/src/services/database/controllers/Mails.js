@@ -6,7 +6,30 @@ class Mails {
     this.create = this.create.bind(this);
   }
 
-  _findOrCreateSender({ sender, transaction }) {}
+  async _findOrCreateAddress() {}
+
+  async _findOrCreateSender({ sender, transaction }) {
+    if (Number.isInteger(sender)) {
+      return sender;
+    }
+
+    const addressRecord = await this.models.Addresses.query(transaction).insert(
+      {
+        postcode: sender['postcode'],
+        city_id: sender['city'],
+        long_street: sender['street']
+      }
+    );
+
+    const mailSenderRecord = await this.models.MailSenders.query(
+      transaction
+    ).insert({
+      address_id: addressRecord['id'],
+      sender_name_id: sender['name']
+    });
+
+    return mailSenderRecord['id'];
+  }
 
   async create({ receiver, sender, subject, document, file, transaction }) {
     const { uuidv4 } = this.nodeModules;
@@ -28,11 +51,9 @@ class Mails {
       extension: file['originalname'].split('.')[1]
     });
 
-    //const senderDbRecord = this._findOrCreateSender({ sender, transaction });
-
     await this.models.Mails.query(transaction).insert({
       legal_entity_id: receiver,
-      sender_id: sender,
+      sender_id: await this._findOrCreateSender({ sender, transaction }),
       subject_id: subject,
       document_id: documentId
     });
