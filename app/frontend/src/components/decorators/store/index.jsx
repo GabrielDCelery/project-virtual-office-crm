@@ -1,4 +1,3 @@
-export * from './AppStoreDecorator';
 export * from './CitiesStoreDecorator';
 export * from './CountriesStoreDecorator';
 export * from './LegalEntitiesStoreDecorator';

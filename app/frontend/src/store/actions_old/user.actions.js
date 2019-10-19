@@ -1,24 +1,16 @@
-import {
-  APP_AJAX_REQUEST_START,
-  APP_AJAX_REQUEST_SUCCESS,
-  APP_AJAX_REQUEST_FAIL,
-  USER_LOGIN,
-  USER_LOGOUT
-} from '../constants';
+import { USER_LOGIN, USER_LOGOUT } from '../constants';
 import services from 'services';
 
 const login = ({ email, password }, successCallback = () => {}) => {
   return async dispatch => {
-    dispatch({ type: APP_AJAX_REQUEST_START });
-
     const {
       success,
-      errors,
+      //errors,
       payload
     } = await services.api.user.authentication.login({ email, password });
 
     if (!success) {
-      return dispatch({ type: APP_AJAX_REQUEST_FAIL, errors });
+      return;
     }
 
     const { jwt } = payload;
@@ -28,7 +20,6 @@ const login = ({ email, password }, successCallback = () => {}) => {
       jwt
     });
     dispatch({ type: USER_LOGIN, email, jwt });
-    dispatch({ type: APP_AJAX_REQUEST_SUCCESS });
 
     return successCallback();
   };

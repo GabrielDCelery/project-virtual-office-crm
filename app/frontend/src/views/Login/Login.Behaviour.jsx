@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  AppStoreDecorator,
-  UserStoreDecorator,
-  WithRouterDecorator
-} from 'components';
+import { UserStoreDecorator, WithRouterDecorator } from 'components';
 
 export default ToWrapComponent => {
   let WrapperComponent = props => {
@@ -30,7 +26,6 @@ export default ToWrapComponent => {
     );
   };
 
-  WrapperComponent = AppStoreDecorator(WrapperComponent);
   WrapperComponent = UserStoreDecorator(WrapperComponent);
   WrapperComponent = WithRouterDecorator(WrapperComponent);
 

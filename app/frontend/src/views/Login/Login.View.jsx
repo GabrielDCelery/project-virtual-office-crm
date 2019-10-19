@@ -7,25 +7,21 @@ import {
   CardContent,
   TextField
 } from '@material-ui/core';
-import {
-  BootstrapStyleAlert
-} from 'components';
+import { BootstrapStyleAlert } from 'components';
 
 const ErrorMessages = ({ messages }) => {
-  return (
-    messages.length > 0 ?
-      <CardContent>
-        {messages.map((message, index) => (
-          <BootstrapStyleAlert
-            key={`login-error-${index}`}
-            alertType="danger"
-            message={message}
-          />
-        ))}
-      </CardContent>
-      : null
-  )
-}
+  return messages.length > 0 ? (
+    <CardContent>
+      {messages.map((message, index) => (
+        <BootstrapStyleAlert
+          key={`login-error-${index}`}
+          alertType="danger"
+          message={message}
+        />
+      ))}
+    </CardContent>
+  ) : null;
+};
 
 export default ({
   classes,
@@ -33,8 +29,7 @@ export default ({
   password,
   handleEmailChange,
   handlePasswordChange,
-  handleLogin,
-  stateAppErrors
+  handleLogin
 }) => {
   return (
     <React.Fragment>
@@ -65,16 +60,16 @@ export default ({
                   value={password}
                 />
               </CardContent>
-              <ErrorMessages messages={stateAppErrors} />
+              <ErrorMessages messages={''} />
               <CardContent>
                 <Button
                   fullWidth
-                  type='submit'
+                  type="submit"
                   color="secondary"
                   variant="contained"
                 >
                   Login
-              </Button>
+                </Button>
               </CardContent>
             </form>
           </Card>
@@ -82,4 +77,4 @@ export default ({
       </div>
     </React.Fragment>
   );
-}
+};
