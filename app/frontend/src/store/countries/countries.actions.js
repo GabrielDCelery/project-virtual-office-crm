@@ -1,36 +1,37 @@
 import {
-  ERRORED_FETCHING_COUNTRIES,
-  FINISH_AJAX_REQUEST_COUNTRIES,
-  RESET_COUNTRIES,
-  RESET_SELECTED_COUNTRY,
-  SET_COUNTRIES,
-  SET_SELECTED_COUNTRY,
-  START_AJAX_REQUEST_COUNTRIES
+  COUNTRIES_FINISH_AJAX_REQUEST,
+  COUNTRIES_RESET_LIST,
+  COUNTRIES_RESET_SELECTED,
+  COUNTRIES_SET_LIST,
+  COUNTRIES_SET_SELECTED,
+  COUNTRIES_START_AJAX_REQUEST
 } from './countries.constants';
+import { SNACKBAR_OPEN_ERROR } from '../snackbar';
 import services from 'services';
 
 export const actionSetSelectedCountry = value => {
   return async dispatch => {
-    dispatch({ type: SET_SELECTED_COUNTRY, selectedValue: value });
+    dispatch({ type: COUNTRIES_SET_SELECTED, selectedValue: value });
   };
 };
 
 export const actionFindAllCountries = () => {
   return async dispatch => {
-    dispatch({ type: START_AJAX_REQUEST_COUNTRIES });
-    dispatch({ type: RESET_SELECTED_COUNTRY });
-    dispatch({ type: RESET_COUNTRIES });
+    dispatch({ type: COUNTRIES_START_AJAX_REQUEST });
+    dispatch({ type: COUNTRIES_RESET_SELECTED });
+    dispatch({ type: COUNTRIES_RESET_LIST });
 
-    const { success, payload } = await services.api.countries.findAll();
+    const { success, errors, payload } = await services.api.countries.findAll();
+
+    dispatch({ type: COUNTRIES_FINISH_AJAX_REQUEST });
 
     if (!success) {
-      dispatch({ type: FINISH_AJAX_REQUEST_COUNTRIES });
-      return dispatch({ type: ERRORED_FETCHING_COUNTRIES });
+      dispatch({ type: SNACKBAR_OPEN_ERROR, message: errors[0] });
+      return;
     }
 
-    dispatch({ type: FINISH_AJAX_REQUEST_COUNTRIES });
     dispatch({
-      type: SET_COUNTRIES,
+      type: COUNTRIES_SET_LIST,
       items: payload
     });
   };

@@ -1,36 +1,37 @@
 import {
-  ERRORED_FETCHING_CITIES,
-  FINISH_AJAX_REQUEST_CITIES,
-  RESET_CITIES,
-  RESET_SELECTED_CITY,
-  SET_CITIES,
-  SET_SELECTED_CITY,
-  START_AJAX_REQUEST_CITIES
+  CITIES_FINISH_AJAX_REQUEST,
+  CITIES_START_AJAX_REQUEST,
+  CITIES_RESET_LIST,
+  CITIES_RESET_SELECTED,
+  CITIES_SET_LIST,
+  CITIES_SET_SELECTED
 } from './cities.constants';
+import { SNACKBAR_OPEN_ERROR } from '../snackbar';
 import services from 'services';
 
 export const actionSetSelectedCity = value => {
   return async dispatch => {
-    dispatch({ type: SET_SELECTED_CITY, selectedValue: value });
+    dispatch({ type: CITIES_SET_SELECTED, selectedValue: value });
   };
 };
 
 export const actionFindAllCities = () => {
   return async dispatch => {
-    dispatch({ type: START_AJAX_REQUEST_CITIES });
-    dispatch({ type: RESET_SELECTED_CITY });
-    dispatch({ type: RESET_CITIES });
+    dispatch({ type: CITIES_START_AJAX_REQUEST });
+    dispatch({ type: CITIES_RESET_SELECTED });
+    dispatch({ type: CITIES_RESET_LIST });
 
-    const { success, payload } = await services.api.cities.findAll();
+    const { success, errors, payload } = await services.api.cities.findAll();
+
+    dispatch({ type: CITIES_FINISH_AJAX_REQUEST });
 
     if (!success) {
-      dispatch({ type: FINISH_AJAX_REQUEST_CITIES });
-      return dispatch({ type: ERRORED_FETCHING_CITIES });
+      dispatch({ type: SNACKBAR_OPEN_ERROR, message: errors[0] });
+      return;
     }
 
-    dispatch({ type: FINISH_AJAX_REQUEST_CITIES });
     dispatch({
-      type: SET_CITIES,
+      type: CITIES_SET_LIST,
       items: payload
     });
   };

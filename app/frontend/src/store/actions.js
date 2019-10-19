@@ -4,21 +4,25 @@ import { actionFindAllCountries, actionSetSelectedCountry } from './countries';
 import { actionCreateNewMail } from './mailCreate';
 import {
   actionCreateNewMailSenderNameAndReFetch,
-  actionFindAllMailSenderNames,
-  actionSetSelectedMailSenderName
-} from './mailSenderNames';
-import {
-  actionFindAllMailSenders,
-  actionSetSelectedMailSender
-} from './mailSenders';
-import {
   actionCreateNewMailSubjectAndReFetch,
+  actionFindAllMailSenderNames,
+  actionFindAllMailSenders,
   actionFindAllMailSubjects,
+  actionSetSelectedMailSender,
+  actionSetSelectedMailSenderName,
   actionSetSelectedMailSubject
-} from './mailSubjects';
+} from './mails';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
+import {
+  actionOpenSuccessSnackBar,
+  actionOpenErrorSnackBar,
+  actionCloseSnackBar
+} from './snackbar';
 
 export default {
+  actionOpenSuccessSnackBar,
+  actionOpenErrorSnackBar,
+  actionCloseSnackBar,
   actionCreateNewMail,
   actionCreateNewMailSenderNameAndReFetch,
   actionCreateNewMailSubjectAndReFetch,

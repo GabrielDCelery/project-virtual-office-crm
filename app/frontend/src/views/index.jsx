@@ -4,3 +4,4 @@ export * from './Dashboard';
 export * from './Search';
 export * from './Database';
 export * from './mails';
+export * from './SnackBars';

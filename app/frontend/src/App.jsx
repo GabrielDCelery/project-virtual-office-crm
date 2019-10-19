@@ -6,7 +6,15 @@ import {
   StoreDecorator,
   ThemeDecorator
 } from 'components';
-import { Dashboard, Database, Login, MailsAddNew, NavBar, Search } from 'views';
+import {
+  Dashboard,
+  Database,
+  Login,
+  MailsAddNew,
+  NavBar,
+  Search,
+  SnackBars
+} from 'views';
 import config from 'config';
 import './App.css';
 
@@ -15,7 +23,8 @@ const views = {
   Database,
   Login,
   MailsAddNew,
-  Search
+  Search,
+  SnackBars
 };
 
 const ViewWithNavbar = ToWrapComponent => {
@@ -73,6 +82,7 @@ let App = () => {
           </React.Fragment>
         )
       )}
+      <SnackBars />
     </React.Fragment>
   );
 };

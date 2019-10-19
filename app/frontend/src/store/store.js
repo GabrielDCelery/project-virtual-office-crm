@@ -7,10 +7,13 @@ import { userReducer } from './user';
 import { countriesReducer } from './countries';
 import { citiesReducer } from './cities';
 import { legalEntitiesReducer } from './legalEntities';
-import { mailSendersReducer } from './mailSenders';
-import { mailSenderNamesReducer } from './mailSenderNames';
-import { mailSubjectsReducer } from './mailSubjects';
+import {
+  mailSenderNamesReducer,
+  mailSendersReducer,
+  mailSubjectsReducer
+} from './mails';
 import { mailCreateReducer } from './mailCreate';
+import { snackbarReducer } from './snackbar';
 
 const combinedReducers = combineReducers({
   addresses: reducers.addresses,
@@ -24,6 +27,7 @@ const combinedReducers = combineReducers({
     senderNames: mailSenderNamesReducer,
     subjects: mailSubjectsReducer
   }),
+  snackbar: snackbarReducer,
   user: userReducer
 });
 

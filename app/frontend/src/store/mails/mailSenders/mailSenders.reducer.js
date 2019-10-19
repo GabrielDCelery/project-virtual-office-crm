@@ -1,12 +1,11 @@
 import {
-  START_AJAX_REQUEST_MAIL_SUBJECTS,
-  FINISH_AJAX_REQUEST_MAIL_SUBJECTS,
-  ERRORED_FETCHING_MAIL_SUBJECTS,
-  RESET_MAIL_SUBJECTS,
-  RESET_SELECTED_MAIL_SUBJECT,
-  SET_MAIL_SUBJECTS,
-  SET_SELECTED_MAIL_SUBJECT
-} from './mailSubjects.constants';
+  MAIL_SENDERS_FINISH_AJAX_REQUEST,
+  MAIL_SENDERS_RESET_LIST,
+  MAIL_SENDERS_RESET_SELECTED,
+  MAIL_SENDERS_SET_LIST,
+  MAIL_SENDERS_SET_SELECTED,
+  MAIL_SENDERS_START_AJAX_REQUEST
+} from './mailSenders.constants';
 
 const initialState = {
   isAjaxRequestInProgress: false,
@@ -14,42 +13,37 @@ const initialState = {
   selectedValue: null
 };
 
-export const mailSubjectsReducer = (
+export const mailSendersReducer = (
   state = initialState,
   { type, items, selectedValue }
 ) => {
   switch (type) {
-    case START_AJAX_REQUEST_MAIL_SUBJECTS:
+    case MAIL_SENDERS_START_AJAX_REQUEST:
       return {
         ...state,
         isAjaxRequestInProgress: true
       };
-    case FINISH_AJAX_REQUEST_MAIL_SUBJECTS:
+    case MAIL_SENDERS_FINISH_AJAX_REQUEST:
       return {
         ...state,
         isAjaxRequestInProgress: false
       };
-    case ERRORED_FETCHING_MAIL_SUBJECTS:
-      return {
-        ...state,
-        isAjaxRequestInProgress: true
-      };
-    case RESET_MAIL_SUBJECTS:
+    case MAIL_SENDERS_RESET_LIST:
       return {
         ...state,
         items: []
       };
-    case SET_MAIL_SUBJECTS:
+    case MAIL_SENDERS_SET_LIST:
       return {
         ...state,
         items: items
       };
-    case RESET_SELECTED_MAIL_SUBJECT:
+    case MAIL_SENDERS_RESET_SELECTED:
       return {
         ...state,
         selectedValue: null
       };
-    case SET_SELECTED_MAIL_SUBJECT:
+    case MAIL_SENDERS_SET_SELECTED:
       return {
         ...state,
         selectedValue: selectedValue
