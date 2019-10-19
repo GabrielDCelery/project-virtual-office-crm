@@ -39,15 +39,19 @@ class Mails {
       sender_name_id: sender['name']
     };
 
-    const mailSenderRecord = await this.models.MailSenders.query(
+    const existingMailSenderRecord = await this.models.MailSenders.query(
       transaction
     ).findOne(where);
 
-    if (mailSenderRecord) {
-      return mailSenderRecord;
+    if (existingMailSenderRecord) {
+      return existingMailSenderRecord['id'];
     }
 
-    return await this.models.MailSenders.query(transaction).insert(where);
+    const mailSenderRecord = await this.models.MailSenders.query(
+      transaction
+    ).insert(where);
+
+    return mailSenderRecord['id'];
   }
 
   async create({ receiver, sender, subject, document, file, transaction }) {
@@ -70,14 +74,14 @@ class Mails {
       extension: file['originalname'].split('.')[1]
     });
 
-    const mailSenderRecord = await this._findOrCreateSender({
+    const mailSenderId = await this._findOrCreateSender({
       sender,
       transaction
     });
 
     await this.models.Mails.query(transaction).insert({
       legal_entity_id: receiver,
-      sender_id: mailSenderRecord['id'],
+      sender_id: mailSenderId,
       subject_id: subject,
       document_id: documentId
     });

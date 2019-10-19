@@ -24,7 +24,7 @@ const {
 const mapStateToProps = state => {
   return {
     stateIsCreateNewMailAjaxRequestInProgress:
-      state.mails.create.isAjaxRequestInProgress,
+      state.mails.createForm.isAjaxRequestInProgress,
     stateIsMailSendersAjaxRequestInProgress:
       state.mails.senders.isAjaxRequestInProgress,
     stateIsMailSenderNamesAjaxRequestInProgress:

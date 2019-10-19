@@ -1,20 +1,20 @@
 import {
-  START_AJAX_REQUEST_MAIL_CREATE,
-  FINISH_AJAX_REQUEST_MAIL_CREATE
-} from './mailCreate.constants';
+  MAIL_CREATE_FORM_START_AJAX_REQUEST,
+  MAIL_CREATE_FORM_FINISH_AJAX_REQUEST
+} from './mailCreateForm.constants';
 
 const initialState = {
   isAjaxRequestInProgress: false
 };
 
-export const mailCreateReducer = (state = initialState, { type }) => {
+export const mailCreateFormReducer = (state = initialState, { type }) => {
   switch (type) {
-    case START_AJAX_REQUEST_MAIL_CREATE:
+    case MAIL_CREATE_FORM_START_AJAX_REQUEST:
       return {
         ...state,
         isAjaxRequestInProgress: true
       };
-    case FINISH_AJAX_REQUEST_MAIL_CREATE:
+    case MAIL_CREATE_FORM_FINISH_AJAX_REQUEST:
       return {
         ...state,
         isAjaxRequestInProgress: false

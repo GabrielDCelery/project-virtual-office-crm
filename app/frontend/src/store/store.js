@@ -10,19 +10,18 @@ import { legalEntitiesReducer } from './legalEntities';
 import {
   mailSenderNamesReducer,
   mailSendersReducer,
-  mailSubjectsReducer
+  mailSubjectsReducer,
+  mailCreateFormReducer
 } from './mails';
-import { mailCreateReducer } from './mailCreate';
 import { snackbarReducer } from './snackbar';
 
 const combinedReducers = combineReducers({
-  addresses: reducers.addresses,
   cities: citiesReducer,
   countries: countriesReducer,
   app: reducers.app,
   legalEntities: legalEntitiesReducer,
   mails: combineReducers({
-    create: mailCreateReducer,
+    createForm: mailCreateFormReducer,
     senders: mailSendersReducer,
     senderNames: mailSenderNamesReducer,
     subjects: mailSubjectsReducer
