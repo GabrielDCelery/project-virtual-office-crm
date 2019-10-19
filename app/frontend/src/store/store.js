@@ -1,9 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 //import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-import reducers from './reducers';
-import default_state from './default_state';
-import { userReducer } from './user';
 import { countriesReducer } from './countries';
 import { citiesReducer } from './cities';
 import { legalEntitiesReducer } from './legalEntities';
@@ -14,11 +11,13 @@ import {
   mailCreateFormReducer
 } from './mails';
 import { snackbarReducer } from './snackbar';
+import { userDataReducer } from './user';
+import { appReducer } from './app';
 
 const combinedReducers = combineReducers({
+  app: appReducer,
   cities: citiesReducer,
   countries: countriesReducer,
-  app: reducers.app,
   legalEntities: legalEntitiesReducer,
   mails: combineReducers({
     createForm: mailCreateFormReducer,
@@ -27,12 +26,12 @@ const combinedReducers = combineReducers({
     subjects: mailSubjectsReducer
   }),
   snackbar: snackbarReducer,
-  user: userReducer
+  user: combineReducers({
+    data: userDataReducer
+  })
 });
 
-const combinedDefaultState = {
-  user: default_state.user
-};
+const combinedDefaultState = {};
 
 //const loggerMiddleware = createLogger();
 

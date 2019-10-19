@@ -5,8 +5,22 @@ export default ToWrapComponent => {
   let WrapperComponent = props => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { actionLogin, history, PATH_TO_DASHBOARD } = props;
-
+    const { history, PATH_TO_DASHBOARD } = props;
+    /*
+    useEffect(() => {
+      if (stateIsUserAuthenticated) {
+        return history.push(location.state.from);
+      }
+      (async () => {
+        await actionAuthenticateUserByCookie();
+      })();
+    }, [
+      actionAuthenticateUserByCookie,
+      stateIsUserAuthenticated,
+      history,
+      location.state.from
+    ]);
+*/
     return (
       <ToWrapComponent
         {...props}
@@ -17,9 +31,12 @@ export default ToWrapComponent => {
           handlePasswordChange: event => setPassword(event.target.value),
           handleLogin: event => {
             event.preventDefault();
+            history.push(PATH_TO_DASHBOARD);
+            /*
             actionLogin({ email, password }, () =>
               history.push(PATH_TO_DASHBOARD)
             );
+            */
           }
         }}
       />

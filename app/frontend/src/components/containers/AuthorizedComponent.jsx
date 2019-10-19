@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  UserStoreDecorator
-} from 'components';
+import { UserStoreDecorator } from 'components';
 
 export const AuthorizedComponent = ToWrapComponent => {
   const WrapperComponent = props => {
@@ -11,4 +9,4 @@ export const AuthorizedComponent = ToWrapComponent => {
   };
 
   return UserStoreDecorator(WrapperComponent);
-}
+};

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route /*, Redirect, Switch */ } from 'react-router-dom';
 import {
+  AppLoadingScreen,
+  AppStoreDecorator,
+  UserStoreDecorator,
   AuthenticatedRoute,
   RouterDecorator,
   StoreDecorator,
@@ -48,45 +51,60 @@ const ViewWithoutNavbar = ToWrapComponent => {
   );
 };
 
-let App = () => {
+let App = ({ actionAuthenticateUserByCookie, stateIsAppLoadingScreenOn }) => {
+  useEffect(() => {
+    (async () => {
+      await actionAuthenticateUserByCookie();
+    })();
+  }, [actionAuthenticateUserByCookie]);
+
   return (
     <React.Fragment>
-      {config.routes.map(
-        (
-          { path, component, redirectTo, bHasNavbar, bNeedsAuthentication },
-          index
-        ) => (
-          <React.Fragment key={`route-${index}`}>
-            {bNeedsAuthentication ? (
-              <AuthenticatedRoute
-                exact={true}
-                path={path}
-                ComponentToRender={
-                  bHasNavbar
-                    ? ViewWithNavbar(views[component])
-                    : ViewWithoutNavbar(views[component])
-                }
-                redirectTo={redirectTo}
-              />
-            ) : (
-              <Route
-                exact={true}
-                path={path}
-                component={
-                  bHasNavbar
-                    ? ViewWithNavbar(views[component])
-                    : ViewWithoutNavbar(views[component])
-                }
-              />
-            )}
-          </React.Fragment>
-        )
+      {stateIsAppLoadingScreenOn ? (
+        <AppLoadingScreen />
+      ) : (
+        <React.Fragment>
+          {config.routes.map(
+            (
+              { path, component, redirectTo, bHasNavbar, bNeedsAuthentication },
+              index
+            ) => (
+              <React.Fragment key={`route-${index}`}>
+                {bNeedsAuthentication ? (
+                  <AuthenticatedRoute
+                    exact={true}
+                    path={path}
+                    ComponentToRender={
+                      bHasNavbar
+                        ? ViewWithNavbar(views[component])
+                        : ViewWithoutNavbar(views[component])
+                    }
+                    redirectTo={redirectTo}
+                  />
+                ) : (
+                  <Route
+                    exact={true}
+                    path={path}
+                    component={
+                      bHasNavbar
+                        ? ViewWithNavbar(views[component])
+                        : ViewWithoutNavbar(views[component])
+                    }
+                  />
+                )}
+              </React.Fragment>
+            )
+          )}
+        </React.Fragment>
       )}
+
       <SnackBars />
     </React.Fragment>
   );
 };
 
+App = UserStoreDecorator(App);
+App = AppStoreDecorator(App);
 App = ThemeDecorator(App);
 App = StoreDecorator(App);
 App = RouterDecorator(App);

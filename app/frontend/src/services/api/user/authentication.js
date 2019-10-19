@@ -13,7 +13,7 @@ class Authentication {
     const { token } = this.getCachedUser() || {};
 
     if (token) {
-      return { 'Authorization': `Bearer ${token}` };
+      return { Authorization: `Bearer ${token}` };
     }
 
     return {};
@@ -34,6 +34,18 @@ class Authentication {
 
   async logout() {
     return localStorage.removeItem('user');
+  }
+
+  async authenticateByCookie() {
+    const { data } = await axios({
+      method: 'POST',
+      url: `/api/users/authenticateByCookie`,
+      responseType: 'json'
+    });
+
+    const { success, payload, errors } = data;
+
+    return { success, payload, errors };
   }
 }
 

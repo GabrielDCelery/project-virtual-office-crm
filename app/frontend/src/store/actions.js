@@ -1,4 +1,3 @@
-import actions_old from './actions_old';
 import { actionFindAllCities, actionSetSelectedCity } from './cities';
 import { actionFindAllCountries, actionSetSelectedCountry } from './countries';
 import {
@@ -18,10 +17,16 @@ import {
   actionOpenErrorSnackBar,
   actionCloseSnackBar
 } from './snackbar';
+import {
+  actionLogin,
+  actionLogout,
+  actionAuthenticateUserByCookie
+} from './user';
 
 export default {
-  actionOpenSuccessSnackBar,
-  actionOpenErrorSnackBar,
+  actionLogin,
+  actionLogout,
+  actionAuthenticateUserByCookie,
   actionCloseSnackBar,
   actionCreateNewMail,
   actionCreateNewMailSenderNameAndReFetch,
@@ -31,12 +36,13 @@ export default {
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
   actionFindAllMailSubjects,
+  actionOpenErrorSnackBar,
+  actionOpenSuccessSnackBar,
   actionSetSelectedCity,
   actionSetSelectedCountry,
   actionSetSelectedMailSender,
   actionSetSelectedMailSenderName,
   actionSetSelectedMailSubject,
-  user: actions_old.user,
   legalEntities: {
     getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
   }

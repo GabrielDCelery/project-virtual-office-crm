@@ -7,21 +7,6 @@ import {
   CardContent,
   TextField
 } from '@material-ui/core';
-import { BootstrapStyleAlert } from 'components';
-
-const ErrorMessages = ({ messages }) => {
-  return messages.length > 0 ? (
-    <CardContent>
-      {messages.map((message, index) => (
-        <BootstrapStyleAlert
-          key={`login-error-${index}`}
-          alertType="danger"
-          message={message}
-        />
-      ))}
-    </CardContent>
-  ) : null;
-};
 
 export default ({
   classes,
@@ -60,7 +45,6 @@ export default ({
                   value={password}
                 />
               </CardContent>
-              <ErrorMessages messages={''} />
               <CardContent>
                 <Button
                   fullWidth

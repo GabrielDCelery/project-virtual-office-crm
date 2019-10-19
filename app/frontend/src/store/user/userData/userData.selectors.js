@@ -2,19 +2,21 @@ import _ from 'lodash';
 import { createSelector } from 'reselect';
 
 const getUserEmail = state => {
-  return _.get(state, ['user', 'email'], []);
+  return _.get(state, ['user', 'data', 'email'], []);
 };
+
 const getUserRules = state => {
-  return _.get(state, ['user', 'rules'], []);
+  return _.get(state, ['users', 'data', 'rules'], []);
 };
+
 const getRbacRule = (state, props = {}) => {
   return props.rbacRule;
 };
 
 export const selectorIsUserAuthenticated = createSelector(
-  [getUserEmail],
-  email => {
-    return !_.isNil(email);
+  [getUserEmail, getUserRules],
+  (email, rules) => {
+    return !_.isNil(email) && Array.isArray(rules) && rules.length > 0;
   }
 );
 

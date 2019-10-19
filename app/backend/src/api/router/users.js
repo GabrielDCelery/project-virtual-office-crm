@@ -41,5 +41,18 @@ module.exports = ({ Router, orchestrator }) => {
     });
   });
 
+  router.post('/authenticateByCookie', async (req, res) => {
+    return apiJsonResultWrapper(res, async () => {
+      return {
+        success: true,
+        errors: [],
+        payload: {
+          email: 'test@test.com',
+          rules: []
+        }
+      };
+    });
+  });
+
   return router;
 };

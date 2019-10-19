@@ -2,15 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import store from 'store';
 
+const {
+  actions: { actionLogin, actionLogout, actionAuthenticateUserByCookie },
+  selectors: { selectorIsUserAuthenticated, selectorIsUserAuthorized }
+} = store;
+
 const mapStateToProps = (state, props) => {
   return {
-    stateIsUserAuthenticated: store.selectors.user.isUserAuthenticated(state),
-    stateIsUserAuthorized: store.selectors.user.isUserAuthorized(state, props)
+    stateIsUserAuthenticated: selectorIsUserAuthenticated(state),
+    stateIsUserAuthorized: selectorIsUserAuthorized(state, props)
   };
 };
 
 const mapActionsToProps = {
-  actionLogin: store.actions.user.login
+  actionLogin,
+  actionLogout,
+  actionAuthenticateUserByCookie
 };
 
 export const UserStoreDecorator = ToWrapComponent => {
