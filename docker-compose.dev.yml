@@ -13,3 +13,8 @@ services:
     volumes:
       - /usr/src/pvocrm_frontend/node_modules
       - ./app/frontend:/usr/src/pvocrm_frontend
+  webserver:
+    volumes:
+      - ./app/webserver/nginx.conf:/etc/nginx/nginx.conf
+      - ./temp_dev/myCA.cert:/etc/nginx/myCA.cert
+      - ./temp_dev/myCA.key:/etc/nginx/myCA.key

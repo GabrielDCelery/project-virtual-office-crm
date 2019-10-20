@@ -48,7 +48,7 @@ module.exports = ({ Router, orchestrator }) => {
         errors: [],
         payload: {
           email: 'test@test.com',
-          rules: []
+          rules: ['something']
         }
       };
     });

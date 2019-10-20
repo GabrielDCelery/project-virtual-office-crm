@@ -22,7 +22,7 @@ export const userDataReducer = (
     case USER_DATA_SET_RULES:
       return {
         ...state,
-        rules
+        rules: [...rules]
       };
     case USER_DATA_RESET:
       return {

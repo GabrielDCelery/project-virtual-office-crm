@@ -2,11 +2,11 @@ import _ from 'lodash';
 import { createSelector } from 'reselect';
 
 const getUserEmail = state => {
-  return _.get(state, ['user', 'data', 'email'], []);
+  return _.get(state, ['user', 'data', 'email'], null);
 };
 
 const getUserRules = state => {
-  return _.get(state, ['users', 'data', 'rules'], []);
+  return _.get(state, ['user', 'data', 'rules'], []);
 };
 
 const getRbacRule = (state, props = {}) => {
