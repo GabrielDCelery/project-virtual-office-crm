@@ -4,7 +4,13 @@ This is a CRM system for virtual office services.
 
 ## Run development environment
 
-To start a dev environment run:
+The dec environment is accessible via https. First create self signed certificate if you don't have any or if the previous one expired.
+
+```
+make self-signed-cert
+```
+
+To start a dev environment run
 
 ```
 make dev
@@ -19,11 +25,12 @@ The above command will do the followings:
 
 | Containers      | What is it running  | What is it for                                        | Port |
 | --------------- | ------------------- | ----------------------------------------------------- | ---- |
-| pvocrm_db       | POSTGRESQL database | Storing users, clients etc...                         | 5432 |
+| pvocrm_nginx    | Nginx reverse proxy | Reverse proxy for frontend and backend                | 443  |
 | pvocrm_backend  | NodeJs express      | Exposing API endpoints for executing database actions | 8000 |
 | pvocrm_frontend | ReactJs             | CRM user interface                                    | 3000 |
+| pvocrm_db       | POSTGRESQL database | Storing users, clients etc...                         | 5432 |
 
-If the containers are running properly you can access the frontend at `localhost:3000`.
+If the containers are running properly you can access the frontend at `localhost`.
 
 Log in to the platform using the following credentials:
 
