@@ -6,21 +6,7 @@ export default ToWrapComponent => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { history, PATH_TO_DASHBOARD } = props;
-    /*
-    useEffect(() => {
-      if (stateIsUserAuthenticated) {
-        return history.push(location.state.from);
-      }
-      (async () => {
-        await actionAuthenticateUserByCookie();
-      })();
-    }, [
-      actionAuthenticateUserByCookie,
-      stateIsUserAuthenticated,
-      history,
-      location.state.from
-    ]);
-*/
+
     return (
       <ToWrapComponent
         {...props}
