@@ -34,7 +34,10 @@ describe('/api/users/login', () => {
     expect(data).to.deep.equal({
       success: true,
       errors: [],
-      payload: null
+      payload: {
+        email: 'test@test.com',
+        rules: []
+      }
     });
   });
 

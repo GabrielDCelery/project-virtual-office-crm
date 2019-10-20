@@ -22,7 +22,7 @@ class Authentication {
   async login({ email, password }) {
     const { data } = await axios({
       method: 'POST',
-      url: `/api/users/authenticate`,
+      url: `/api/users/login`,
       responseType: 'json',
       data: { email, password }
     });

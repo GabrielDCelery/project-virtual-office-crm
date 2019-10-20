@@ -8,6 +8,10 @@ class JWT {
   }
 
   async verify(jwtToVerify) {
+    if (jwtToVerify === undefined) {
+      return null;
+    }
+
     const {
       AUTHENTICATION_ERROR_MESSAGE_FAILED_TO_AUTHENTICATE,
       AUTHENTICATION_ERROR_NAME_CONTROLLER,

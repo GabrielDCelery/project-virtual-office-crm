@@ -10,8 +10,9 @@ class Users {
   constructor({ models, nodeModules }) {
     this.models = models;
     this.nodeModules = nodeModules;
+    this.getRules = this.getRules.bind(this);
+    this.login = this.login.bind(this);
     this.register = this.register.bind(this);
-    this.authenticate = this.authenticate.bind(this);
   }
 
   async _register(email, password, transaction) {
@@ -54,7 +55,7 @@ class Users {
     return await this._register(email, password, transaction);
   }
 
-  async authenticate({ email, password, transaction }) {
+  async login({ email, password, transaction }) {
     const { VError } = this.nodeModules.verror;
     const user = await this._findByEmail(email, transaction);
 
@@ -104,7 +105,16 @@ class Users {
     }
 
     return {
-      id: user.id
+      id: user.id,
+      email: user.email,
+      rules: []
+    };
+  }
+
+  async getRules({ email, transaction }) {
+    return {
+      email,
+      rules: ['*']
     };
   }
 }

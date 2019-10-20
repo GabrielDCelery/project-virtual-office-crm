@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { UserStoreDecorator, WithRouterDecorator } from 'components';
 
 export default ToWrapComponent => {
   let WrapperComponent = props => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { history, PATH_TO_DASHBOARD } = props;
+    const { actionLogin, history, PATH_TO_DASHBOARD } = props;
+
+    const redirectToDashboard = useCallback(() => {
+      return history.push(PATH_TO_DASHBOARD);
+    }, [history, PATH_TO_DASHBOARD]);
 
     return (
       <ToWrapComponent
@@ -17,12 +21,9 @@ export default ToWrapComponent => {
           handlePasswordChange: event => setPassword(event.target.value),
           handleLogin: event => {
             event.preventDefault();
-            history.push(PATH_TO_DASHBOARD);
-            /*
-            actionLogin({ email, password }, () =>
-              history.push(PATH_TO_DASHBOARD)
-            );
-            */
+            actionLogin({ email, password }, () => {
+              return redirectToDashboard();
+            });
           }
         }}
       />

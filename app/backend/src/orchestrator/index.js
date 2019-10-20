@@ -50,6 +50,7 @@ class Orchestrator {
         findAll: mailSubjects.findAllWrapper(services)
       },
       users: {
+        authenticateByCookie: users.authenticateByCookieWrapper(services),
         login: users.loginWrapper(services)
       }
     };

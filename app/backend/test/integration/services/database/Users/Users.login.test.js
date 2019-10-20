@@ -2,7 +2,7 @@ const { expect } = require('chai');
 //const verror = require('verror');
 const services = require('../../../../../src/services');
 
-describe('services.get("database").execute("users", "authenticate")', () => {
+describe('services.get("database").execute("users", "login")', () => {
   beforeEach(async () => {
     await services
       .get('database')
@@ -15,7 +15,7 @@ describe('services.get("database").execute("users", "authenticate")', () => {
   it('authenticates an existing user using email and password', async () => {
     // Given
     const controller = 'users';
-    const method = 'authenticate';
+    const method = 'login';
     const args = {
       email: 'test@test.com',
       password: 'password'
@@ -32,7 +32,9 @@ describe('services.get("database").execute("users", "authenticate")', () => {
       errors: [],
       service: 'database',
       payload: {
-        id: 1
+        id: 1,
+        email: 'test@test.com',
+        rules: []
       }
     });
   });
@@ -40,7 +42,7 @@ describe('services.get("database").execute("users", "authenticate")', () => {
   it('returns an error if it could not find the account', async () => {
     // Given
     const controller = 'users';
-    const method = 'authenticate';
+    const method = 'login';
     const args = {
       email: 'doesnotexist@test.com',
       password: 'password'
@@ -74,7 +76,7 @@ describe('services.get("database").execute("users", "authenticate")', () => {
   it('returns an error if the password is invalid', async () => {
     // Given
     const controller = 'users';
-    const method = 'authenticate';
+    const method = 'login';
     const args = {
       email: 'test@test.com',
       password: 'somebspassword'
@@ -108,7 +110,7 @@ describe('services.get("database").execute("users", "authenticate")', () => {
   it('returns an error if the account is inactive', async () => {
     // Given
     const controller = 'users';
-    const method = 'authenticate';
+    const method = 'login';
     const args = {
       email: 'test2@test.com',
       password: 'password'
@@ -141,7 +143,7 @@ describe('services.get("database").execute("users", "authenticate")', () => {
   it('returns an error if the account is suspended ', async () => {
     // Given
     const controller = 'users';
-    const method = 'authenticate';
+    const method = 'login';
     const args = {
       email: 'test3@test.com',
       password: 'password'

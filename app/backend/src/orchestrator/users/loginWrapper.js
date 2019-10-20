@@ -2,7 +2,7 @@ module.exports = services => {
   return async ({ email, password }) => {
     const dbAuthenticationResult = await services
       .get('database')
-      .execute('users', 'authenticate', { email, password });
+      .execute('users', 'login', { email, password });
 
     if (!dbAuthenticationResult.success) {
       return dbAuthenticationResult;
@@ -11,10 +11,22 @@ module.exports = services => {
     const jwtResult = await services
       .get('authentication')
       .execute('jwt', 'sign', {
-        userId: dbAuthenticationResult.payload.id,
-        email
+        id: dbAuthenticationResult.payload.id,
+        email: dbAuthenticationResult.payload.email
       });
 
-    return jwtResult;
+    if (!jwtResult.success) {
+      return jwtResult;
+    }
+
+    return {
+      success: true,
+      errors: [],
+      payload: {
+        email: dbAuthenticationResult.payload.email,
+        rules: dbAuthenticationResult.payload.rules,
+        token: jwtResult.payload
+      }
+    };
   };
 };

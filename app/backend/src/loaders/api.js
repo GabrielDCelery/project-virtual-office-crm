@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const api = globalRequire('api');
 const config = globalRequire('config');
@@ -6,6 +7,7 @@ const config = globalRequire('config');
 module.exports = {
   start: async ({ app, middlewares, orchestrator, Router }) => {
     app.use(bodyParser.json());
+    app.use(cookieParser());
     app.use(cors());
 
     const {

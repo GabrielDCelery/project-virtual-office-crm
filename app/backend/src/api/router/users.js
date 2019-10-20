@@ -1,56 +1,39 @@
-const { executeService } = globalRequire('services');
-const { apiJsonResultWrapper } = require('../helpers');
+const { ApiResultWrapper, apiJsonResultWrapper } = require('../helpers');
 
 module.exports = ({ Router, orchestrator }) => {
   const router = Router();
+  const apiResultWrapper = new ApiResultWrapper();
+  const COOKIE_USER = 'PVOCRM_SESSION_ID';
 
   router.post('/login', async (req, res) => {
     const loginResult = await orchestrator.execute('users', 'login', req.body);
 
     if (!loginResult.success) {
-      return res.json(loginResult);
+      return apiResultWrapper.returnJSON({ res, toReturn: loginResult });
     }
 
-    res.cookie('PVOCRM_SESSION_ID', loginResult.payload, {
+    res.cookie(COOKIE_USER, loginResult.payload.token, {
       httpOnly: true,
       secure: true
     });
 
-    return res.json({
-      success: true,
-      errors: [],
-      payload: null
-    });
-  });
-
-  router.post('/register', async (req, res) => {
-    return apiJsonResultWrapper(res, async () => {
-      return await executeService('Users', 'register', {
-        data: req.body,
-        config: {}
-      });
-    });
-  });
-
-  router.post('/authenticate', async (req, res) => {
-    return apiJsonResultWrapper(res, async () => {
-      return await executeService('Users', 'authenticate', {
-        data: req.body,
-        config: {}
-      });
+    return apiResultWrapper.returnJSON({
+      res,
+      toReturn: loginResult,
+      omit: ['token']
     });
   });
 
   router.post('/authenticateByCookie', async (req, res) => {
     return apiJsonResultWrapper(res, async () => {
-      return {
-        success: true,
-        errors: [],
-        payload: {
-          email: 'test@test.com',
-          rules: ['something']
-        }
-      };
+      const cookie = req.cookies[COOKIE_USER];
+      const verifyResult = await orchestrator.execute(
+        'users',
+        'authenticateByCookie',
+        { cookie }
+      );
+
+      return apiResultWrapper.returnJSON({ res, toReturn: verifyResult });
     });
   });
 
