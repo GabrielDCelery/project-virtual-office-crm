@@ -2,6 +2,7 @@ import {
   PATH_TO_ADD_NEW_CONTRACT,
   PATH_TO_ADD_NEW_MAIL,
   PATH_TO_LOGIN,
+  PATH_TO_LOGOUT,
   PATH_TO_DASHBOARD,
   PATH_TO_SEARCH_CONTRACTS,
   PATH_TO_SEARCH_MAILS,
@@ -17,6 +18,12 @@ export default [
     bNeedsAuthentication: false,
     path: PATH_TO_LOGIN,
     component: 'Login'
+  },
+  {
+    bHasNavbar: false,
+    bNeedsAuthentication: false,
+    path: PATH_TO_LOGOUT,
+    component: 'Logout'
   },
   {
     bHasNavbar: true,

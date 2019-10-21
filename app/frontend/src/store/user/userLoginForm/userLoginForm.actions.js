@@ -51,7 +51,12 @@ export const actionLogout = (successCallback = () => {}) => {
   return async dispatch => {
     dispatch({ type: USER_DATA_RESET });
 
-    await services.api.user.authentication.logout();
+    const { success, errors } = await services.api.user.authentication.logout();
+
+    if (!success) {
+      dispatch({ type: SNACKBAR_OPEN_ERROR, message: errors[0] });
+      return;
+    }
 
     return successCallback();
   };

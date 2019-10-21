@@ -13,6 +13,7 @@ import {
   Dashboard,
   Database,
   Login,
+  Logout,
   MailsAddNew,
   NavBar,
   Search,
@@ -25,6 +26,7 @@ const views = {
   Dashboard,
   Database,
   Login,
+  Logout,
   MailsAddNew,
   Search,
   SnackBars

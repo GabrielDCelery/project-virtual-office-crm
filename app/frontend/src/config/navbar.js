@@ -73,6 +73,7 @@ export default [
       {
         label: 'Logout',
         path: PATH_TO_LOGOUT,
+        component: 'Logout',
         rbacRule: null
       }
     ]

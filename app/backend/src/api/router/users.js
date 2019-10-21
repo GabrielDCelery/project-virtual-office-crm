@@ -24,6 +24,19 @@ module.exports = ({ Router, orchestrator }) => {
     });
   });
 
+  router.post('/logout', async (req, res) => {
+    res.clearCookie(COOKIE_SESSION_ID);
+
+    return apiResultWrapper.returnJSON({
+      res,
+      toReturn: {
+        success: true,
+        errors: [],
+        payload: null
+      }
+    });
+  });
+
   router.post('/authenticateByCookie', async (req, res) => {
     const jwtToken = req.cookies[COOKIE_SESSION_ID];
     const verifyResult = await orchestrator.execute(

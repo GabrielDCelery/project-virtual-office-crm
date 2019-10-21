@@ -33,7 +33,16 @@ class Authentication {
   }
 
   async logout() {
-    return localStorage.removeItem('user');
+    const { data } = await axios({
+      method: 'POST',
+      url: `/api/users/logout`,
+      responseType: 'json',
+      data: null
+    });
+
+    const { success, payload, errors } = data;
+
+    return { success, payload, errors };
   }
 
   async authenticateByCookie() {
