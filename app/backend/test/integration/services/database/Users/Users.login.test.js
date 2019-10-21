@@ -34,7 +34,7 @@ describe('services.get("database").execute("users", "login")', () => {
       payload: {
         id: 1,
         email: 'test@test.com',
-        rules: []
+        rules: ['*']
       }
     });
   });

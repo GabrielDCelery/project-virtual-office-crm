@@ -10,6 +10,9 @@ class MailsAuditTrailsDetails extends Model {
       type: 'object',
       required: [],
       properties: {
+        id: {
+          type: 'uuid'
+        },
         mails_audit_trail_id: {
           type: 'integer'
         },

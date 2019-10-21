@@ -219,12 +219,11 @@ exports.up = async knex => {
       .inTable(Mails.tableName)
       .notNullable();
     table.enum('event_type', [MailsAuditTrails.TYPES.MAIL_RECEIVED]);
-    table.datetime('event_time');
     table.timestamps();
   });
 
   await knex.schema.createTable(MailsAuditTrailsDetails.tableName, table => {
-    table.increments('id').primary();
+    table.uuid('id').primary();
     table
       .integer('mails_audit_trail_id')
       .references('id')

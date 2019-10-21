@@ -36,7 +36,7 @@ describe('/api/users/login', () => {
       errors: [],
       payload: {
         email: 'test@test.com',
-        rules: []
+        rules: ['*']
       }
     });
   });

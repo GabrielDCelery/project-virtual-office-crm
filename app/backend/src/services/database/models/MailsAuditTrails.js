@@ -33,9 +33,6 @@ class MailsAuditTrails extends Model {
             MailsAuditTrails.TYPES.MAIL_COPIED_TO_CLOUD_SERVICE,
             MailsAuditTrails.TYPES.MAIL_EMAILED_TO_LEGAL_ENTITY
           ]
-        },
-        event_time: {
-          type: 'date'
         }
       }
     };
