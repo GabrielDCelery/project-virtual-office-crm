@@ -3,12 +3,19 @@ import { connect } from 'react-redux';
 import store from 'store';
 
 const {
-  actions: { actionLogin, actionLogout, actionAuthenticateUserByCookie },
+  actions: {
+    actionLogin,
+    actionLogout,
+    actionSetUserLoginFormField,
+    actionAuthenticateUserByCookie
+  },
   selectors: { selectorIsUserAuthenticated, selectorIsUserAuthorized }
 } = store;
 
 const mapStateToProps = (state, props) => {
   return {
+    stateIsUserLoginAjaxRequestInProgress:
+      state.user.login.isAjaxRequestInProgress,
     stateIsUserAuthenticated: selectorIsUserAuthenticated(state),
     stateIsUserAuthorized: selectorIsUserAuthorized(state, props)
   };
@@ -17,7 +24,8 @@ const mapStateToProps = (state, props) => {
 const mapActionsToProps = {
   actionLogin,
   actionLogout,
-  actionAuthenticateUserByCookie
+  actionAuthenticateUserByCookie,
+  actionSetUserLoginFormField
 };
 
 export const UserStoreDecorator = ToWrapComponent => {

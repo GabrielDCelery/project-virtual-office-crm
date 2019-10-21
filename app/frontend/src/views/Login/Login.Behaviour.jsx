@@ -1,36 +1,94 @@
-import React, { useState, useCallback } from 'react';
-import { UserStoreDecorator, WithRouterDecorator } from 'components';
+import React, { useCallback } from 'react';
+import { UserLoginFormStoreDecorator, WithRouterDecorator } from 'components';
+import _ from 'lodash';
 
 export default ToWrapComponent => {
   let WrapperComponent = props => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const { actionLogin, history, PATH_TO_DASHBOARD } = props;
+    const {
+      actionLogin,
+      actionSetUserLoginFormField,
+      history,
+      PATH_TO_DASHBOARD,
+      stateUserLoginFormFieldGetter,
+      stateIsUserLoginAjaxRequestInProgress
+    } = props;
 
-    const redirectToDashboard = useCallback(() => {
-      return history.push(PATH_TO_DASHBOARD);
-    }, [history, PATH_TO_DASHBOARD]);
+    const getters = {
+      form: {
+        ajaxInProgress: stateIsUserLoginAjaxRequestInProgress,
+        email: stateUserLoginFormFieldGetter('email'),
+        password: stateUserLoginFormFieldGetter('password')
+      }
+    };
+
+    const getter = (...paths) => {
+      return _.get(getters, paths);
+    };
+
+    const handlers = {
+      form: {
+        setEmail: useCallback(
+          event => {
+            (async () => {
+              await actionSetUserLoginFormField({
+                what: 'email',
+                value: event.target.value
+              });
+            })();
+          },
+          [actionSetUserLoginFormField]
+        ),
+        setPassword: useCallback(
+          event => {
+            (async () => {
+              await actionSetUserLoginFormField({
+                what: 'password',
+                value: event.target.value
+              });
+            })();
+          },
+          [actionSetUserLoginFormField]
+        ),
+        submit: useCallback(
+          event => {
+            event.preventDefault();
+            (async () => {
+              await actionLogin(
+                {
+                  email: stateUserLoginFormFieldGetter('email'),
+                  password: stateUserLoginFormFieldGetter('password')
+                },
+                () => {
+                  return history.push(PATH_TO_DASHBOARD);
+                }
+              );
+            })();
+          },
+          [
+            PATH_TO_DASHBOARD,
+            actionLogin,
+            history,
+            stateUserLoginFormFieldGetter
+          ]
+        )
+      }
+    };
+
+    const handler = (...paths) => {
+      return _.get(handlers, paths);
+    };
 
     return (
       <ToWrapComponent
-        {...props}
         {...{
-          email: email,
-          password: password,
-          handleEmailChange: event => setEmail(event.target.value),
-          handlePasswordChange: event => setPassword(event.target.value),
-          handleLogin: event => {
-            event.preventDefault();
-            actionLogin({ email, password }, () => {
-              return redirectToDashboard();
-            });
-          }
+          getter,
+          handler
         }}
       />
     );
   };
 
-  WrapperComponent = UserStoreDecorator(WrapperComponent);
+  WrapperComponent = UserLoginFormStoreDecorator(WrapperComponent);
   WrapperComponent = WithRouterDecorator(WrapperComponent);
 
   return WrapperComponent;

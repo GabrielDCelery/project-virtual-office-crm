@@ -11,7 +11,7 @@ import {
   mailCreateFormReducer
 } from './mails';
 import { snackbarReducer } from './snackbar';
-import { userDataReducer } from './user';
+import { userDataReducer, userLoginFormReducer } from './user';
 import { appReducer } from './app';
 
 const combinedReducers = combineReducers({
@@ -27,7 +27,8 @@ const combinedReducers = combineReducers({
   }),
   snackbar: snackbarReducer,
   user: combineReducers({
-    data: userDataReducer
+    data: userDataReducer,
+    login: userLoginFormReducer
   })
 });
 

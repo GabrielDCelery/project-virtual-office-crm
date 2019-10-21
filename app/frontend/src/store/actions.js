@@ -20,7 +20,8 @@ import {
 import {
   actionLogin,
   actionLogout,
-  actionAuthenticateUserByCookie
+  actionAuthenticateUserByCookie,
+  actionSetUserLoginFormField
 } from './user';
 
 export default {
@@ -43,6 +44,7 @@ export default {
   actionSetSelectedMailSender,
   actionSetSelectedMailSenderName,
   actionSetSelectedMailSubject,
+  actionSetUserLoginFormField,
   legalEntities: {
     getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
   }

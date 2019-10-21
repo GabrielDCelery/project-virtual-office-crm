@@ -1,4 +1,3 @@
-const Users = require('./Users');
 const addresses = require('./addresses');
 const cities = require('./cities');
 const countries = require('./countries');

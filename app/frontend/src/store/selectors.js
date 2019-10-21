@@ -6,7 +6,11 @@ import {
   selectorGetMailSenderRecommendations,
   selectorGetMailSubjectRecommendations
 } from './mails';
-import { selectorIsUserAuthenticated, selectorIsUserAuthorized } from './user';
+import {
+  selectorIsUserAuthenticated,
+  selectorIsUserAuthorized,
+  selectorUserLoginFormFieldFactory
+} from './user';
 
 export default {
   selectorGetMailSenderNameRecommendations,
@@ -16,6 +20,7 @@ export default {
   selectorGetCityRecommendations,
   selectorIsUserAuthenticated,
   selectorIsUserAuthorized,
+  selectorUserLoginFormFieldFactory,
   legalEntities: {
     getLegalEntityRecommendations: selectorGetLegalEntityRecommendations
   }

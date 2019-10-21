@@ -1,10 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import {
-  PATH_TO_DASHBOARD,
-  PATH_TO_LOGIN,
-  PATH_TO_LOGOUT
-} from 'consts';
+import { PATH_TO_DASHBOARD, PATH_TO_LOGIN, PATH_TO_LOGOUT } from 'consts';
 
 export const WithRouterDecorator = ToWrapComponent => {
   return withRouter(props => {
@@ -17,6 +13,6 @@ export const WithRouterDecorator = ToWrapComponent => {
           PATH_TO_LOGOUT
         }}
       />
-    )
+    );
   });
-}
+};

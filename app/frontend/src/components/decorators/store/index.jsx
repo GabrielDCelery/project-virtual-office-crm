@@ -5,3 +5,4 @@ export * from './LegalEntitiesStoreDecorator';
 export * from './MailsStoreDecorator';
 export * from './SnackBarStoreDecorator';
 export * from './UserStoreDecorator';
+export * from './UserLoginFormStoreDecorator';

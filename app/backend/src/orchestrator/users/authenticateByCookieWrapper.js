@@ -1,22 +1,11 @@
 module.exports = services => {
-  return async ({ cookie }) => {
+  return async jwtToken => {
     const jwtResult = await services
       .get('authentication')
-      .execute('jwt', 'verify', cookie);
+      .execute('jwt', 'verify', jwtToken);
 
     if (!jwtResult.success) {
       return jwtResult;
-    }
-
-    if (jwtResult.payload === null) {
-      return {
-        success: true,
-        errors: [],
-        payload: {
-          email: null,
-          rules: []
-        }
-      };
     }
 
     const { email } = jwtResult.payload;

@@ -107,7 +107,7 @@ class Users {
     return {
       id: user.id,
       email: user.email,
-      rules: []
+      rules: ['*']
     };
   }
 

@@ -3,7 +3,7 @@ const { ApiResultWrapper, apiJsonResultWrapper } = require('../helpers');
 module.exports = ({ Router, orchestrator }) => {
   const router = Router();
   const apiResultWrapper = new ApiResultWrapper();
-  const COOKIE_USER = 'PVOCRM_SESSION_ID';
+  const COOKIE_SESSION_ID = 'PVOCRM_SESSION_ID';
 
   router.post('/login', async (req, res) => {
     const loginResult = await orchestrator.execute('users', 'login', req.body);
@@ -12,7 +12,7 @@ module.exports = ({ Router, orchestrator }) => {
       return apiResultWrapper.returnJSON({ res, toReturn: loginResult });
     }
 
-    res.cookie(COOKIE_USER, loginResult.payload.token, {
+    res.cookie(COOKIE_SESSION_ID, loginResult.payload.token, {
       httpOnly: true,
       secure: true
     });
@@ -25,16 +25,14 @@ module.exports = ({ Router, orchestrator }) => {
   });
 
   router.post('/authenticateByCookie', async (req, res) => {
-    return apiJsonResultWrapper(res, async () => {
-      const cookie = req.cookies[COOKIE_USER];
-      const verifyResult = await orchestrator.execute(
-        'users',
-        'authenticateByCookie',
-        { cookie }
-      );
+    const jwtToken = req.cookies[COOKIE_SESSION_ID];
+    const verifyResult = await orchestrator.execute(
+      'users',
+      'authenticateByCookie',
+      jwtToken
+    );
 
-      return apiResultWrapper.returnJSON({ res, toReturn: verifyResult });
-    });
+    return apiResultWrapper.returnJSON({ res, toReturn: verifyResult });
   });
 
   return router;

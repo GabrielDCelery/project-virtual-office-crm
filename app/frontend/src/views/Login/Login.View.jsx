@@ -8,21 +8,14 @@ import {
   TextField
 } from '@material-ui/core';
 
-export default ({
-  classes,
-  email,
-  password,
-  handleEmailChange,
-  handlePasswordChange,
-  handleLogin
-}) => {
+export default ({ getter, handler, classes }) => {
   return (
     <React.Fragment>
       <CssBaseline />
       <div className={classes.root}>
         <Container maxWidth="sm" className={classes.container}>
           <Card raised className={classes.card}>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handler('form', 'submit')}>
               <CardContent>
                 <TextField
                   id="email"
@@ -31,8 +24,8 @@ export default ({
                   fullWidth
                   label="Email"
                   margin="normal"
-                  onChange={handleEmailChange}
-                  value={email}
+                  onChange={handler('form', 'setEmail')}
+                  value={getter('form', 'email')}
                 />
                 <TextField
                   id="password"
@@ -41,12 +34,13 @@ export default ({
                   fullWidth
                   label="Password"
                   margin="normal"
-                  onChange={handlePasswordChange}
-                  value={password}
+                  onChange={handler('form', 'setPassword')}
+                  value={getter('form', 'password')}
                 />
               </CardContent>
               <CardContent>
                 <Button
+                  disabled={getter('form', 'ajaxInProgress')}
                   fullWidth
                   type="submit"
                   color="secondary"
