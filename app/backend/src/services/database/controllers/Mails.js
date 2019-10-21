@@ -79,12 +79,24 @@ class Mails {
       transaction
     });
 
-    await this.models.Mails.query(transaction).insert({
+    const newMailRecord = await this.models.Mails.query(transaction).insert({
       legal_entity_id: receiver,
       sender_id: mailSenderId,
       subject_id: subject,
       document_id: documentId
     });
+
+    await this.models.MailsAuditTrails.query(transaction).insert([
+      {
+        mail_id: newMailRecord['id'],
+        event_type: this.models.MailsAuditTrails.TYPES.MAIL_RECEIVED
+      },
+      {
+        mail_id: newMailRecord['id'],
+        event_type: this.models.MailsAuditTrails.TYPES
+          .MAIL_SAVED_TO_TEMPORARY_DATABASE
+      }
+    ]);
 
     return true;
   }

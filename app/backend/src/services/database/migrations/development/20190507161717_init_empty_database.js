@@ -218,7 +218,12 @@ exports.up = async knex => {
       .references('id')
       .inTable(Mails.tableName)
       .notNullable();
-    table.enum('event_type', [MailsAuditTrails.TYPES.MAIL_RECEIVED]);
+    table.enum('event_type', [
+      MailsAuditTrails.TYPES.MAIL_RECEIVED,
+      MailsAuditTrails.TYPES.MAIL_SAVED_TO_TEMPORARY_DATABASE,
+      MailsAuditTrails.TYPES.MAIL_COPIED_TO_CLOUD_SERVICE,
+      MailsAuditTrails.TYPES.MAIL_EMAILED_TO_LEGAL_ENTITY
+    ]);
     table.timestamps();
   });
 
