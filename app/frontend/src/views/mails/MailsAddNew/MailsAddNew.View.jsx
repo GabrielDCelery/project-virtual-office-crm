@@ -11,9 +11,9 @@ import {
   FormStep
 } from 'components';
 
-export default ({ getter, handler }) => {
+export default ({ StyledContainer, getter, handler }) => {
   return (
-    <Container maxWidth="lg">
+    <StyledContainer maxWidth="lg">
       <FormStep label="Mail Receiver">
         <FormPaper>
           <FormFieldControl>
@@ -272,6 +272,6 @@ export default ({ getter, handler }) => {
         </Button>
       </FormPaper>
       <div style={{ height: '2em' }}></div>
-    </Container>
+    </StyledContainer>
   );
 };
