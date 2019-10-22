@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Button, Container, Tab, Tabs, TextField } from '@material-ui/core';
+import { Button, Tab, Tabs, TextField } from '@material-ui/core';
 import {
   DocumentPdf,
   FormFieldControl,
