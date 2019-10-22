@@ -4,21 +4,19 @@ import store from 'store';
 
 const {
   selectors: { selectorGetCountryRecommendations },
-  actions: { actionFindAllCountries, actionSetSelectedCountry }
+  actions: { actionFindAllCountries }
 } = store;
 
 const mapStateToProps = state => {
   return {
     stateIsCountriesAjaxRequestInProgress:
       state.countries.isAjaxRequestInProgress,
-    stateCountryRecommendations: selectorGetCountryRecommendations(state),
-    stateSelectedCountry: state.countries.selectedValue
+    stateCountryRecommendations: selectorGetCountryRecommendations(state)
   };
 };
 
 const mapActionsToProps = {
-  actionFindAllCountries,
-  actionSetSelectedCountry
+  actionFindAllCountries
 };
 
 export const CountriesStoreDecorator = ToWrapComponent => {

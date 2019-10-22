@@ -1,24 +1,15 @@
 import {
   COUNTRIES_FINISH_AJAX_REQUEST,
   COUNTRIES_RESET_LIST,
-  COUNTRIES_RESET_SELECTED,
   COUNTRIES_SET_LIST,
-  COUNTRIES_SET_SELECTED,
   COUNTRIES_START_AJAX_REQUEST
 } from './countries.constants';
 import { SNACKBAR_OPEN_ERROR } from '../snackbar';
 import services from 'services';
 
-export const actionSetSelectedCountry = value => {
-  return async dispatch => {
-    dispatch({ type: COUNTRIES_SET_SELECTED, selectedValue: value });
-  };
-};
-
 export const actionFindAllCountries = () => {
   return async dispatch => {
     dispatch({ type: COUNTRIES_START_AJAX_REQUEST });
-    dispatch({ type: COUNTRIES_RESET_SELECTED });
     dispatch({ type: COUNTRIES_RESET_LIST });
 
     const { success, errors, payload } = await services.api.countries.findAll();

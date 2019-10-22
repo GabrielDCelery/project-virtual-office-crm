@@ -1,18 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import _ from 'lodash';
-import moment from 'moment';
 import {
   CitiesStoreDecorator,
   CountriesStoreDecorator,
   LegalEntitiesStoreDecorator,
-  MailsStoreDecorator
+  MailsStoreDecorator,
+  MailsAddNewFormStoreDecorator
 } from 'components';
 import services from 'services';
 
 export default ToWrapComponent => {
   let WrapperComponent = props => {
     const {
-      actionCreateNewMail,
       actionCreateNewMailSenderNameAndReFetch,
       actionCreateNewMailSubjectAndReFetch,
       actionFindAllCities,
@@ -21,63 +20,49 @@ export default ToWrapComponent => {
       actionFindAllMailSenders,
       actionFindAllMailSubjects,
       actionGetAllVersionsOfAllEntities,
-      actionSetSelectedCity,
-      actionSetSelectedCountry,
-      actionSetSelectedMailSender,
-      actionSetSelectedMailSenderName,
+      actionSetAddNewMailFormField,
+      actionSubmitAddNewMailForm,
+      stateAddNewMailFormFieldGetter,
       stateCityRecommendations,
       stateCountryRecommendations,
       stateIsCitiesAjaxRequestInProgress,
       stateIsCountriesAjaxRequestInProgress,
+      stateIsCreateNewMailAjaxRequestInProgress,
       stateIsFetchingLegalEntities,
       stateIsFetchingMailSubjects,
-      stateIsCreateNewMailAjaxRequestInProgress,
       stateIsMailSenderNamesAjaxRequestInProgress,
       stateIsMailSendersAjaxRequestInProgress,
       stateLegalEntityRecommendations,
       stateMailSenderNameRecommendations,
       stateMailSenderRecommendations,
-      stateMailSubjectRecommendations,
-      stateSelectedCity,
-      stateSelectedCountry,
-      stateSelectedMailSender,
-      stateSelectedMailSenderName,
-      actionSetSelectedMailSubject,
-      stateSelectedMailSubject
+      stateMailSubjectRecommendations
     } = props;
-
-    const [stateMailReceiver, setMailReceiver] = useState(null);
 
     const [stateMailSenderActivePanel, setMailSenderActivePanel] = useState(0);
 
-    const [statePostcode, setPostcode] = useState('');
-    const [stateStreet, setStreet] = useState('');
-
-    const [stateReceivedDate, setReceivedDate] = useState(
-      moment(new Date()).format('YYYY-MM-DD')
-    );
-    const [stateFile, setFile] = useState(null);
-
     const generateFileName = useCallback(() => {
-      if (!stateFile) {
+      if (!stateAddNewMailFormFieldGetter('documentFile')) {
         return null;
       }
 
       const fileName = services.documents.nameGenerator.create([
         {
           type: 'date',
-          value: stateReceivedDate
+          value: stateAddNewMailFormFieldGetter('documentReceivedDate')
         },
         {
           type: 'string',
           value:
             stateMailSenderActivePanel === 0
-              ? _.get(stateSelectedMailSender, 'name')
-              : _.get(stateSelectedMailSenderName, 'label')
+              ? _.get(stateAddNewMailFormFieldGetter('existingSender'), 'name')
+              : _.get(stateAddNewMailFormFieldGetter('newSenderName'), 'label')
         },
         {
           type: 'string',
-          value: _.get(stateSelectedMailSubject, 'label')
+          value: _.get(
+            stateAddNewMailFormFieldGetter('documentSubject'),
+            'label'
+          )
         },
         {
           type: 'integer',
@@ -85,20 +70,12 @@ export default ToWrapComponent => {
         },
         {
           type: 'string',
-          value: _.get(stateMailReceiver, 'name')
+          value: _.get(stateAddNewMailFormFieldGetter('receiver'), 'name')
         }
       ]);
 
       return `${fileName}`;
-    }, [
-      stateFile,
-      stateMailReceiver,
-      stateMailSenderActivePanel,
-      stateReceivedDate,
-      stateSelectedMailSender,
-      stateSelectedMailSenderName,
-      stateSelectedMailSubject
-    ]);
+    }, [stateAddNewMailFormFieldGetter, stateMailSenderActivePanel]);
 
     const getters = {
       ajaxInProgress: {
@@ -119,21 +96,21 @@ export default ToWrapComponent => {
         mailSubjects: stateMailSubjectRecommendations
       },
       fields: {
-        mailReceiver: stateMailReceiver,
-        existingMailSender: stateSelectedMailSender,
+        mailReceiver: stateAddNewMailFormFieldGetter('receiver'),
+        existingMailSender: stateAddNewMailFormFieldGetter('existingSender'),
         newMailSender: {
-          city: stateSelectedCity,
-          country: stateSelectedCountry,
-          name: stateSelectedMailSenderName,
-          postcode: statePostcode,
-          street: stateStreet
+          city: stateAddNewMailFormFieldGetter('newSenderCity'),
+          country: stateAddNewMailFormFieldGetter('newSenderCountry'),
+          name: stateAddNewMailFormFieldGetter('newSenderName'),
+          postcode: stateAddNewMailFormFieldGetter('newSenderPostcode'),
+          street: stateAddNewMailFormFieldGetter('newSenderStreet')
         },
         mailDetails: {
-          receivedDate: stateReceivedDate,
-          subject: stateSelectedMailSubject
+          receivedDate: stateAddNewMailFormFieldGetter('documentReceivedDate'),
+          subject: stateAddNewMailFormFieldGetter('documentSubject')
         },
         document: {
-          file: stateFile
+          file: stateAddNewMailFormFieldGetter('documentFile')
         }
       },
       layout: {
@@ -145,18 +122,26 @@ export default ToWrapComponent => {
         },
         form: {
           isReadyToSubmit: useCallback(() => {
-            const bFileUploaded = !!stateFile;
-            const bMailReceiverSet = !!stateMailReceiver;
+            const bFileUploaded = !!stateAddNewMailFormFieldGetter(
+              'documentFile'
+            );
+            const bMailReceiverSet = !!stateAddNewMailFormFieldGetter(
+              'receiver'
+            );
             const bMailSenderSet =
               stateMailSenderActivePanel === 0
-                ? !!stateSelectedMailSender
-                : stateSelectedCity &&
-                  stateSelectedCountry &&
-                  stateSelectedMailSenderName &&
-                  statePostcode &&
-                  stateStreet;
-            const bMailSubjectSet = !!stateSelectedMailSubject;
-            const bReceivedDateSet = !!stateReceivedDate;
+                ? !!stateAddNewMailFormFieldGetter('existingSender')
+                : stateAddNewMailFormFieldGetter('newSenderCity') &&
+                  stateAddNewMailFormFieldGetter('newSenderCountry') &&
+                  stateAddNewMailFormFieldGetter('newSenderName') &&
+                  stateAddNewMailFormFieldGetter('newSenderPostcode') &&
+                  stateAddNewMailFormFieldGetter('newSenderStreet');
+            const bMailSubjectSet = !!stateAddNewMailFormFieldGetter(
+              'documentSubject'
+            );
+            const bReceivedDateSet = !!stateAddNewMailFormFieldGetter(
+              'documentReceivedDate'
+            );
 
             return (
               bFileUploaded &&
@@ -165,19 +150,7 @@ export default ToWrapComponent => {
               bMailSubjectSet &&
               bReceivedDateSet
             );
-          }, [
-            stateFile,
-            stateMailReceiver,
-            stateMailSenderActivePanel,
-            statePostcode,
-            stateReceivedDate,
-            stateSelectedCity,
-            stateSelectedCountry,
-            stateSelectedMailSender,
-            stateSelectedMailSenderName,
-            stateSelectedMailSubject,
-            stateStreet
-          ]),
+          }, [stateAddNewMailFormFieldGetter, stateMailSenderActivePanel]),
           submit: useCallback(() => {
             const formData = new FormData();
 
@@ -185,39 +158,48 @@ export default ToWrapComponent => {
               'document',
               JSON.stringify({
                 name: generateFileName(),
-                received: stateReceivedDate
+                received: stateAddNewMailFormFieldGetter('documentReceivedDate')
               })
             );
-            formData.append('file', stateFile, stateFile.name);
-            formData.append('receiver', stateMailReceiver['value']);
+            formData.append(
+              'file',
+              stateAddNewMailFormFieldGetter('documentFile'),
+              stateAddNewMailFormFieldGetter('documentFile').name
+            );
+            formData.append(
+              'receiver',
+              stateAddNewMailFormFieldGetter('receiver')['value']
+            );
             formData.append(
               'sender',
-              stateSelectedMailSender
-                ? stateSelectedMailSender['value']
+              stateAddNewMailFormFieldGetter('existingSender')
+                ? stateAddNewMailFormFieldGetter('existingSender')['value']
                 : JSON.stringify({
-                    city: stateSelectedCity['value'],
-                    country: stateSelectedCountry['value'],
-                    name: stateSelectedMailSenderName['value'],
-                    postcode: statePostcode,
-                    street: stateStreet
+                    city: stateAddNewMailFormFieldGetter('newSenderCity')[
+                      'value'
+                    ],
+                    country: stateAddNewMailFormFieldGetter('newSenderCountry')[
+                      'value'
+                    ],
+                    name: stateAddNewMailFormFieldGetter('newSenderName')[
+                      'value'
+                    ],
+                    postcode: stateAddNewMailFormFieldGetter(
+                      'newSenderPostcode'
+                    ),
+                    street: stateAddNewMailFormFieldGetter('newSenderStreet')
                   })
             );
-            formData.append('subject', stateSelectedMailSubject['value']);
+            formData.append(
+              'subject',
+              stateAddNewMailFormFieldGetter('documentSubject')['value']
+            );
 
-            actionCreateNewMail(formData);
+            actionSubmitAddNewMailForm(formData);
           }, [
-            actionCreateNewMail,
+            actionSubmitAddNewMailForm,
             generateFileName,
-            stateFile,
-            stateMailReceiver,
-            statePostcode,
-            stateReceivedDate,
-            stateSelectedCity,
-            stateSelectedCountry,
-            stateSelectedMailSender,
-            stateSelectedMailSenderName,
-            stateSelectedMailSubject,
-            stateStreet
+            stateAddNewMailFormFieldGetter
           ])
         }
       }
@@ -229,26 +211,126 @@ export default ToWrapComponent => {
 
     const handlers = {
       mailReceiver: {
-        setMailReceiver
+        setMailReceiver: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'receiver',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        )
       },
       existingMailSender: {
-        actionSetSelectedMailSender
+        actionSetSelectedMailSender: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'existingSender',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        )
       },
       newMailSender: {
         actionCreateNewMailSenderNameAndReFetch,
-        actionSetSelectedCity,
-        actionSetSelectedCountry,
-        actionSetSelectedMailSenderName,
-        setPostcode,
-        setStreet
+        actionSetSelectedCity: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'newSenderCity',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        ),
+        actionSetSelectedCountry: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'newSenderCountry',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        ),
+        actionSetSelectedMailSenderName: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'newSenderName',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        ),
+        setPostcode: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'newSenderPostcode',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        ),
+        setStreet: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'newSenderStreet',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        )
       },
       mailDetails: {
         actionCreateNewMailSubjectAndReFetch,
-        actionSetSelectedMailSubject,
-        setReceivedDate
+        actionSetSelectedMailSubject: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'documentSubject',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        ),
+        setReceivedDate: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'documentReceivedDate',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        )
       },
       document: {
-        setFile
+        setFile: useCallback(
+          value => {
+            (async () => {
+              await actionSetAddNewMailFormField({
+                what: 'documentFile',
+                value: value
+              });
+            })();
+          },
+          [actionSetAddNewMailFormField]
+        )
       },
       layout: {
         setMailSenderActivePanel
@@ -291,6 +373,7 @@ export default ToWrapComponent => {
   WrapperComponent = CountriesStoreDecorator(WrapperComponent);
   WrapperComponent = LegalEntitiesStoreDecorator(WrapperComponent);
   WrapperComponent = MailsStoreDecorator(WrapperComponent);
+  WrapperComponent = MailsAddNewFormStoreDecorator(WrapperComponent);
 
   return WrapperComponent;
 };

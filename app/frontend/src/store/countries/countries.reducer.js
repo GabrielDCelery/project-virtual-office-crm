@@ -1,22 +1,16 @@
 import {
   COUNTRIES_FINISH_AJAX_REQUEST,
   COUNTRIES_RESET_LIST,
-  COUNTRIES_RESET_SELECTED,
   COUNTRIES_SET_LIST,
-  COUNTRIES_SET_SELECTED,
   COUNTRIES_START_AJAX_REQUEST
 } from './countries.constants';
 
 const initialState = {
   isAjaxRequestInProgress: false,
-  items: [],
-  selectedValue: null
+  items: []
 };
 
-export const countriesReducer = (
-  state = initialState,
-  { type, items, selectedValue }
-) => {
+export const countriesReducer = (state = initialState, { type, items }) => {
   switch (type) {
     case COUNTRIES_START_AJAX_REQUEST:
       return {
@@ -37,17 +31,6 @@ export const countriesReducer = (
       return {
         ...state,
         items: items
-      };
-    case COUNTRIES_RESET_SELECTED: {
-      return {
-        ...state,
-        selectedValue: null
-      };
-    }
-    case COUNTRIES_SET_SELECTED:
-      return {
-        ...state,
-        selectedValue: selectedValue
       };
     default:
       return state;

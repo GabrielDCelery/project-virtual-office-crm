@@ -2,23 +2,15 @@ import {
   MAIL_SUBJECTS_START_AJAX_REQUEST,
   MAIL_SUBJECTS_FINISH_AJAX_REQUEST,
   MAIL_SUBJECTS_RESET_LIST,
-  MAIL_SUBJECTS_RESET_SELECTED,
-  MAIL_SUBJECTS_SET_LIST,
-  MAIL_SUBJECTS_SET_SELECTED
+  MAIL_SUBJECTS_SET_LIST
 } from './mailSubjects.constants';
+import { MAIL_ADD_NEW_FORM_SET_FIELD } from '../mailAddNewForm';
 import { SNACKBAR_OPEN_ERROR } from '../../snackbar';
 import services from 'services';
-
-export const actionSetSelectedMailSubject = value => {
-  return async dispatch => {
-    dispatch({ type: MAIL_SUBJECTS_SET_SELECTED, selectedValue: value });
-  };
-};
 
 export const actionFindAllMailSubjects = () => {
   return async dispatch => {
     dispatch({ type: MAIL_SUBJECTS_START_AJAX_REQUEST });
-    dispatch({ type: MAIL_SUBJECTS_RESET_SELECTED });
     dispatch({ type: MAIL_SUBJECTS_RESET_LIST });
 
     const {
@@ -41,7 +33,6 @@ export const actionFindAllMailSubjects = () => {
 export const actionCreateNewMailSubjectAndReFetch = mailSubject => {
   return async dispatch => {
     dispatch({ type: MAIL_SUBJECTS_START_AJAX_REQUEST });
-    dispatch({ type: MAIL_SUBJECTS_RESET_SELECTED });
     dispatch({ type: MAIL_SUBJECTS_RESET_LIST });
 
     const createResult = await services.api.mailSubjects.create({
@@ -68,8 +59,9 @@ export const actionCreateNewMailSubjectAndReFetch = mailSubject => {
       items: findAllResult.payload
     });
     dispatch({
-      type: MAIL_SUBJECTS_SET_SELECTED,
-      selectedValue: {
+      type: MAIL_ADD_NEW_FORM_SET_FIELD,
+      what: 'documentSubject',
+      value: {
         value: createResult.payload.id,
         label: createResult.payload.longSubject
       }

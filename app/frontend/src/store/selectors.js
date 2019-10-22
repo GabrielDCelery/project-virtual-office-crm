@@ -4,7 +4,8 @@ import { selectorGetLegalEntityRecommendations } from './legalEntities';
 import {
   selectorGetMailSenderNameRecommendations,
   selectorGetMailSenderRecommendations,
-  selectorGetMailSubjectRecommendations
+  selectorGetMailSubjectRecommendations,
+  selectorAddNewMailFormFieldFactory
 } from './mails';
 import {
   selectorIsUserAuthenticated,
@@ -13,11 +14,12 @@ import {
 } from './user';
 
 export default {
+  selectorAddNewMailFormFieldFactory,
+  selectorGetCityRecommendations,
+  selectorGetCountryRecommendations,
   selectorGetMailSenderNameRecommendations,
   selectorGetMailSenderRecommendations,
   selectorGetMailSubjectRecommendations,
-  selectorGetCountryRecommendations,
-  selectorGetCityRecommendations,
   selectorIsUserAuthenticated,
   selectorIsUserAuthorized,
   selectorUserLoginFormFieldFactory,

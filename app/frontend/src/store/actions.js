@@ -1,15 +1,13 @@
-import { actionFindAllCities, actionSetSelectedCity } from './cities';
-import { actionFindAllCountries, actionSetSelectedCountry } from './countries';
+import { actionFindAllCities } from './cities';
+import { actionFindAllCountries } from './countries';
 import {
-  actionCreateNewMail,
+  actionSubmitAddNewMailForm,
   actionCreateNewMailSenderNameAndReFetch,
   actionCreateNewMailSubjectAndReFetch,
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
   actionFindAllMailSubjects,
-  actionSetSelectedMailSender,
-  actionSetSelectedMailSenderName,
-  actionSetSelectedMailSubject
+  actionSetAddNewMailFormField
 } from './mails';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 import {
@@ -25,11 +23,8 @@ import {
 } from './user';
 
 export default {
-  actionLogin,
-  actionLogout,
   actionAuthenticateUserByCookie,
   actionCloseSnackBar,
-  actionCreateNewMail,
   actionCreateNewMailSenderNameAndReFetch,
   actionCreateNewMailSubjectAndReFetch,
   actionFindAllCities,
@@ -37,14 +32,13 @@ export default {
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
   actionFindAllMailSubjects,
+  actionLogin,
+  actionLogout,
   actionOpenErrorSnackBar,
   actionOpenSuccessSnackBar,
-  actionSetSelectedCity,
-  actionSetSelectedCountry,
-  actionSetSelectedMailSender,
-  actionSetSelectedMailSenderName,
-  actionSetSelectedMailSubject,
+  actionSetAddNewMailFormField,
   actionSetUserLoginFormField,
+  actionSubmitAddNewMailForm,
   legalEntities: {
     getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
   }

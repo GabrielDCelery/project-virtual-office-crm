@@ -4,20 +4,18 @@ import store from 'store';
 
 const {
   selectors: { selectorGetCityRecommendations },
-  actions: { actionFindAllCities, actionSetSelectedCity }
+  actions: { actionFindAllCities }
 } = store;
 
 const mapStateToProps = state => {
   return {
     stateIsCitiesAjaxRequestInProgress: state.cities.isAjaxRequestInProgress,
-    stateCityRecommendations: selectorGetCityRecommendations(state),
-    stateSelectedCity: state.cities.selectedValue
+    stateCityRecommendations: selectorGetCityRecommendations(state)
   };
 };
 
 const mapActionsToProps = {
-  actionFindAllCities,
-  actionSetSelectedCity
+  actionFindAllCities
 };
 
 export const CitiesStoreDecorator = ToWrapComponent => {

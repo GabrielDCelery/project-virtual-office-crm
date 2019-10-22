@@ -1,22 +1,16 @@
 import {
   CITIES_FINISH_AJAX_REQUEST,
   CITIES_RESET_LIST,
-  CITIES_RESET_SELECTED,
   CITIES_SET_LIST,
-  CITIES_SET_SELECTED,
   CITIES_START_AJAX_REQUEST
 } from './cities.constants';
 
 const initialState = {
   isAjaxRequestInProgress: false,
-  items: [],
-  selectedValue: null
+  items: []
 };
 
-export const citiesReducer = (
-  state = initialState,
-  { type, items, selectedValue }
-) => {
+export const citiesReducer = (state = initialState, { type, items }) => {
   switch (type) {
     case CITIES_START_AJAX_REQUEST:
       return {
@@ -37,17 +31,6 @@ export const citiesReducer = (
       return {
         ...state,
         items: items
-      };
-    case CITIES_RESET_SELECTED: {
-      return {
-        ...state,
-        selectedValue: null
-      };
-    }
-    case CITIES_SET_SELECTED:
-      return {
-        ...state,
-        selectedValue: selectedValue
       };
     default:
       return state;

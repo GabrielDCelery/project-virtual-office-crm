@@ -2,21 +2,15 @@ import {
   MAIL_SUBJECTS_START_AJAX_REQUEST,
   MAIL_SUBJECTS_FINISH_AJAX_REQUEST,
   MAIL_SUBJECTS_RESET_LIST,
-  MAIL_SUBJECTS_RESET_SELECTED,
-  MAIL_SUBJECTS_SET_LIST,
-  MAIL_SUBJECTS_SET_SELECTED
+  MAIL_SUBJECTS_SET_LIST
 } from './mailSubjects.constants';
 
 const initialState = {
   isAjaxRequestInProgress: false,
-  items: [],
-  selectedValue: null
+  items: []
 };
 
-export const mailSubjectsReducer = (
-  state = initialState,
-  { type, items, selectedValue }
-) => {
+export const mailSubjectsReducer = (state = initialState, { type, items }) => {
   switch (type) {
     case MAIL_SUBJECTS_START_AJAX_REQUEST:
       return {
@@ -37,16 +31,6 @@ export const mailSubjectsReducer = (
       return {
         ...state,
         items: items
-      };
-    case MAIL_SUBJECTS_RESET_SELECTED:
-      return {
-        ...state,
-        selectedValue: null
-      };
-    case MAIL_SUBJECTS_SET_SELECTED:
-      return {
-        ...state,
-        selectedValue: selectedValue
       };
     default:
       return state;

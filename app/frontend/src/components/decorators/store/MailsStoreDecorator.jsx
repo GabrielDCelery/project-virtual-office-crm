@@ -9,22 +9,18 @@ const {
     selectorGetMailSubjectRecommendations
   },
   actions: {
-    actionCreateNewMail,
     actionCreateNewMailSenderNameAndReFetch,
     actionCreateNewMailSubjectAndReFetch,
     actionFindAllMailSenderNames,
     actionFindAllMailSenders,
-    actionFindAllMailSubjects,
-    actionSetSelectedMailSender,
-    actionSetSelectedMailSenderName,
-    actionSetSelectedMailSubject
+    actionFindAllMailSubjects
   }
 } = store;
 
 const mapStateToProps = state => {
   return {
     stateIsCreateNewMailAjaxRequestInProgress:
-      state.mails.createForm.isAjaxRequestInProgress,
+      state.mails.addNewForm.isAjaxRequestInProgress,
     stateIsMailSendersAjaxRequestInProgress:
       state.mails.senders.isAjaxRequestInProgress,
     stateIsMailSenderNamesAjaxRequestInProgress:
@@ -36,23 +32,16 @@ const mapStateToProps = state => {
     ),
     stateMailSubjectRecommendations: selectorGetMailSubjectRecommendations(
       state
-    ),
-    stateSelectedMailSenderName: state.mails.senderNames.selectedValue,
-    stateSelectedMailSender: state.mails.senders.selectedValue,
-    stateSelectedMailSubject: state.mails.subjects.selectedValue
+    )
   };
 };
 
 const mapActionsToProps = {
-  actionCreateNewMail,
   actionCreateNewMailSenderNameAndReFetch,
   actionCreateNewMailSubjectAndReFetch,
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
-  actionFindAllMailSubjects,
-  actionSetSelectedMailSender,
-  actionSetSelectedMailSenderName,
-  actionSetSelectedMailSubject
+  actionFindAllMailSubjects
 };
 
 export const MailsStoreDecorator = ToWrapComponent => {
