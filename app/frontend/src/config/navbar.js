@@ -8,7 +8,7 @@ import {
   //PATH_TO_SEARCH_INSPECTIONS,
   //PATH_TO_SEARCH_INVOICES,
   PATH_TO_SEARCH_MAILS,
-  PATH_TO_USER_SETTINGS,
+  //PATH_TO_USER_SETTINGS,
   STATIC_RBAC_RULE_CONTRACTS_PAGE_VISIT,
   STATIC_RBAC_RULE_DASHBOARD_PAGE_VISIT,
   //STATIC_RBAC_RULE_INSPECTIONS_PAGE_VISIT,
@@ -64,12 +64,13 @@ export default [
     label: 'User',
     rbacRule: null,
     children: [
+      /*
       {
         label: 'Settings',
         path: PATH_TO_USER_SETTINGS,
         component: 'Settings',
         rbacRule: null
-      },
+      },*/
       {
         label: 'Logout',
         path: PATH_TO_LOGOUT,
