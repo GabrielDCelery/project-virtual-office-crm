@@ -89,7 +89,7 @@ const DropDownNavBarItem = ({
   );
 };
 
-export default function NavBarView({
+const NavBarView = ({
   StyledDrawer,
   StyledDrawerContainer,
   StyledLink,
@@ -97,7 +97,7 @@ export default function NavBarView({
   StyledListItemIcon,
   StyledListItemText,
   navBarItems
-}) {
+}) => {
   return (
     <React.Fragment>
       <CssBaseline />
@@ -150,4 +150,6 @@ export default function NavBarView({
       </StyledDrawerContainer>
     </React.Fragment>
   );
-}
+};
+
+export default NavBarView;

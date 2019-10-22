@@ -63,8 +63,8 @@ const StyledIconButton = styled(IconButton)`
   margin-right: 16px !important;
 `;
 
-export default function NavBarStyles(ToWrapComponent) {
-  let WrapperComponent = props => {
+export default ToWrapComponent => {
+  let NavBarStyles = props => {
     return (
       <ToWrapComponent
         {...props}
@@ -81,5 +81,5 @@ export default function NavBarStyles(ToWrapComponent) {
     );
   };
 
-  return WrapperComponent;
-}
+  return NavBarStyles;
+};

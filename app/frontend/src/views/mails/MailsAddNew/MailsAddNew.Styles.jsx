@@ -9,9 +9,9 @@ const StyledContainer = styled(Container)`
 `;
 
 export default ToWrapComponent => {
-  let WrapperComponent = props => {
+  let MailsAddNewStyles = props => {
     return <ToWrapComponent {...props} {...{ StyledContainer }} />;
   };
 
-  return WrapperComponent;
+  return MailsAddNewStyles;
 };

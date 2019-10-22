@@ -11,7 +11,7 @@ import {
   FormStep
 } from 'components';
 
-export default ({ StyledContainer, getter, handler }) => {
+const MailsAddNewView = ({ StyledContainer, getter, handler }) => {
   return (
     <StyledContainer maxWidth="lg">
       <FormStep label="Mail Receiver">
@@ -275,3 +275,5 @@ export default ({ StyledContainer, getter, handler }) => {
     </StyledContainer>
   );
 };
+
+export default MailsAddNewView;

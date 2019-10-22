@@ -10,7 +10,7 @@ import {
 import services from 'services';
 
 export default ToWrapComponent => {
-  let WrapperComponent = props => {
+  let MailsAddNewBehaviour = props => {
     const {
       actionCreateNewMailSenderNameAndReFetch,
       actionCreateNewMailSubjectAndReFetch,
@@ -369,11 +369,11 @@ export default ToWrapComponent => {
     );
   };
 
-  WrapperComponent = CitiesStoreDecorator(WrapperComponent);
-  WrapperComponent = CountriesStoreDecorator(WrapperComponent);
-  WrapperComponent = LegalEntitiesStoreDecorator(WrapperComponent);
-  WrapperComponent = MailsStoreDecorator(WrapperComponent);
-  WrapperComponent = MailsAddNewFormStoreDecorator(WrapperComponent);
+  MailsAddNewBehaviour = CitiesStoreDecorator(MailsAddNewBehaviour);
+  MailsAddNewBehaviour = CountriesStoreDecorator(MailsAddNewBehaviour);
+  MailsAddNewBehaviour = LegalEntitiesStoreDecorator(MailsAddNewBehaviour);
+  MailsAddNewBehaviour = MailsStoreDecorator(MailsAddNewBehaviour);
+  MailsAddNewBehaviour = MailsAddNewFormStoreDecorator(MailsAddNewBehaviour);
 
-  return WrapperComponent;
+  return MailsAddNewBehaviour;
 };
