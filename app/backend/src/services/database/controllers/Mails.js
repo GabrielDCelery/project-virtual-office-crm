@@ -89,12 +89,12 @@ class Mails {
     await this.models.MailsAuditTrails.query(transaction).insert([
       {
         mail_id: newMailRecord['id'],
-        event_type: this.models.MailsAuditTrails.TYPES.MAIL_RECEIVED
+        event_type: this.models.MailsAuditTrails.TYPES.RECEIVED
       },
       {
         mail_id: newMailRecord['id'],
         event_type: this.models.MailsAuditTrails.TYPES
-          .MAIL_SAVED_TO_TEMPORARY_DATABASE
+          .SAVED_TO_TEMPORARY_DATABASE
       }
     ]);
 

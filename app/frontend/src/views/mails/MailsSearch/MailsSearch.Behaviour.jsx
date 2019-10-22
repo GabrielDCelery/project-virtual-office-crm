@@ -1,9 +1,9 @@
 import React from 'react';
 
 export default ToWrapComponent => {
-  let MailsListBehaviour = props => {
+  let MailsSearchBehaviour = props => {
     return <ToWrapComponent {...props} />;
   };
 
-  return MailsListBehaviour;
+  return MailsSearchBehaviour;
 };

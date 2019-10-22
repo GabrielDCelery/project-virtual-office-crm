@@ -1,2 +1,2 @@
 export * from './MailsAddNew';
-export * from './MailsList';
+export * from './MailsSearch';

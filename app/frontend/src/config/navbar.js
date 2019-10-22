@@ -13,7 +13,8 @@ import {
   STATIC_RBAC_RULE_DASHBOARD_PAGE_VISIT,
   //STATIC_RBAC_RULE_INSPECTIONS_PAGE_VISIT,
   //STATIC_RBAC_RULE_INVOICES_PAGE_VISIT,
-  STATIC_RBAC_RULE_MAILS_PAGE_VISIT
+  STATIC_RBAC_RULE_MAILS_PAGE_VISIT,
+  PATH_TO_MAIL_NOTIFICATIONS
 } from 'consts';
 
 export default [
@@ -46,14 +47,20 @@ export default [
     label: 'Mails',
     rbacRule: null,
     children: [
+      /*
       {
         label: 'Search',
         path: PATH_TO_SEARCH_MAILS,
         rbacRule: null
-      },
+      },*/
       {
         label: 'Add New',
         path: PATH_TO_ADD_NEW_MAIL,
+        rbacRule: null
+      },
+      {
+        label: 'Notify Clients',
+        path: PATH_TO_MAIL_NOTIFICATIONS,
         rbacRule: null
       }
     ]

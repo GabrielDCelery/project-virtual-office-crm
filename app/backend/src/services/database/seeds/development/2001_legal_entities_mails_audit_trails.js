@@ -5,7 +5,7 @@ exports.seed = async knex => {
     {
       id: 1,
       mail_id: 1,
-      event_type: MailsAuditTrails.TYPES.MAIL_RECEIVED,
+      event_type: MailsAuditTrails.TYPES.RECEIVED,
       created_at: new Date('2019-11-11T11:11:11.000Z'),
       updated_at: new Date('2019-11-11T11:11:11.000Z')
     }

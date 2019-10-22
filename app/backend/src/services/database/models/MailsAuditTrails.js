@@ -7,10 +7,14 @@ class MailsAuditTrails extends Model {
 
   static get TYPES() {
     return {
-      MAIL_RECEIVED: 'mail received',
-      MAIL_SAVED_TO_TEMPORARY_DATABASE: 'mail saved to temporary database',
-      MAIL_COPIED_TO_CLOUD_SERVICE: 'mail copied to cloud service',
-      MAIL_EMAILED_TO_LEGAL_ENTITY: 'mail emailed to legal entity'
+      RECEIVED: 'received',
+      SAVED_TO_TEMPORARY_DATABASE: 'saved to temporary database',
+      COPIED_TO_CLOUD_SERVICE: 'copied to cloud service',
+      EMAIL_NOTIFICATION_PENDING: 'email notification pending',
+      EMAIL_NOTIFICATION_SENT_TO_LEGAL_ENTITY:
+        'email notification sent to legal entity',
+      ENVELOPED_FOR_POSTING: 'enveloped for posting',
+      POSTED_TO_LEGAL_ENTITY: 'posted to legal entity'
     };
   }
 
@@ -28,10 +32,13 @@ class MailsAuditTrails extends Model {
         event_type: {
           type: 'string',
           enum: [
-            MailsAuditTrails.TYPES.MAIL_RECEIVED,
-            MailsAuditTrails.TYPES.MAIL_SAVED_TO_TEMPORARY_DATABASE,
-            MailsAuditTrails.TYPES.MAIL_COPIED_TO_CLOUD_SERVICE,
-            MailsAuditTrails.TYPES.MAIL_EMAILED_TO_LEGAL_ENTITY
+            MailsAuditTrails.TYPES.RECEIVED,
+            MailsAuditTrails.TYPES.SAVED_TO_TEMPORARY_DATABASE,
+            MailsAuditTrails.TYPES.COPIED_TO_CLOUD_SERVICE,
+            MailsAuditTrails.TYPES.EMAIL_NOTIFICATION_PENDING,
+            MailsAuditTrails.TYPES.EMAIL_NOTIFICATION_SENT_TO_LEGAL_ENTITY,
+            MailsAuditTrails.TYPES.ENVELOPED_FOR_POSTING,
+            MailsAuditTrails.TYPES.POSTED_TO_LEGAL_ENTITY
           ]
         }
       }

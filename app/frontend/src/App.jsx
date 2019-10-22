@@ -15,6 +15,7 @@ import {
   Login,
   Logout,
   MailsAddNew,
+  MailsSearch,
   NavBar,
   Search,
   SnackBars
@@ -28,6 +29,7 @@ const views = {
   Login,
   Logout,
   MailsAddNew,
+  MailsSearch,
   Search,
   SnackBars
 };

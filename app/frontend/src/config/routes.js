@@ -5,11 +5,12 @@ import {
   PATH_TO_LOGOUT,
   PATH_TO_DASHBOARD,
   PATH_TO_SEARCH_CONTRACTS,
-  PATH_TO_SEARCH_MAILS,
+  //PATH_TO_SEARCH_MAILS,
   PATH_TO_SEARCH_INSPECTIONS,
   PATH_TO_SEARCH_INVOICES /*,
   PATH_TO_USER_SETTINGS*/,
-  PATH_TO_DATABASE_ADDRESSES
+  PATH_TO_DATABASE_ADDRESSES,
+  PATH_TO_MAIL_NOTIFICATIONS
 } from 'consts';
 
 export default [
@@ -42,8 +43,8 @@ export default [
   {
     bHasNavbar: true,
     bNeedsAuthentication: true,
-    path: PATH_TO_SEARCH_MAILS,
-    component: 'Search',
+    path: PATH_TO_MAIL_NOTIFICATIONS,
+    component: 'MailsSearch',
     redirectTo: PATH_TO_LOGIN
   },
   {
