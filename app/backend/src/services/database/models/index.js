@@ -7,13 +7,14 @@ module.exports = {
   DocumentsTemporary: require('./DocumentsTemporary'),
   Emails: require('./Emails'),
   LegalEntities: require('./LegalEntities'),
-  Mails: require('./Mails'),
-  MailsAuditTrails: require('./MailsAuditTrails'),
-  MailsAuditTrailsDetails: require('./MailsAuditTrailsDetails'),
   LegalEntitiesVersion: require('./LegalEntitiesVersion'),
   MailSenderNames: require('./MailSenderNames'),
   MailSenders: require('./MailSenders'),
   MailSubjects: require('./MailSubjects'),
+  Mails: require('./Mails'),
+  MailsAuditTrails: require('./MailsAuditTrails'),
+  MailsAuditTrailsDetails: require('./MailsAuditTrailsDetails'),
+  MailsPendingActions: require('./MailsPendingActions'),
   Phones: require('./Phones'),
   Users: require('./Users')
 };

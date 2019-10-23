@@ -7,13 +7,14 @@ const {
   DocumentsTemporary,
   Emails,
   LegalEntities,
-  Mails,
-  MailsAuditTrails,
-  MailsAuditTrailsDetails,
   LegalEntitiesVersion,
   MailSenderNames,
   MailSenders,
   MailSubjects,
+  Mails,
+  MailsAuditTrails,
+  MailsAuditTrailsDetails,
+  MailsPendingActions,
   Phones,
   Users
 } = require('../../models');
@@ -240,6 +241,19 @@ exports.up = async knex => {
     table.jsonb('data');
   });
 
+  await knex.schema.createTable(MailsPendingActions.tableName, table => {
+    table.increments('id').primary();
+    table
+      .integer('mail_id')
+      .references('id')
+      .inTable(Mails.tableName)
+      .notNullable();
+    table.enum('action', [MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION]);
+    table.enum('reason', [MailsPendingActions.REASONS.RECEIVED_NEW_MAIL]);
+    table.boolean('pending').defaultTo(true);
+    table.timestamps();
+  });
+
   await knex.schema.createTable(
     `${LegalEntities.tableName}_${Emails.tableName}`,
     table => {
@@ -282,6 +296,7 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(
     `${LegalEntities.tableName}_${Emails.tableName}`
   );
+  await knex.schema.dropTableIfExists(MailsPendingActions.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrailsDetails.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrails.tableName);
   await knex.schema.dropTableIfExists(Mails.tableName);

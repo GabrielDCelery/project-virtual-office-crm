@@ -5,9 +5,15 @@ class MailsPendingActions extends Model {
     return 'mails_pending_actions';
   }
 
-  static get TYPES() {
+  static get ACTIONS() {
     return {
       SEND_EMAIL_NOTIFICATION: 'send email notification'
+    };
+  }
+
+  static get REASONS() {
+    return {
+      RECEIVED_NEW_MAIL: 'received new mail'
     };
   }
 
@@ -24,7 +30,14 @@ class MailsPendingActions extends Model {
         },
         action: {
           type: 'string',
-          enum: [MailsPendingActions.TYPES.SEND_EMAIL_NOTIFICATION]
+          enum: [MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION]
+        },
+        reason: {
+          type: 'string',
+          enum: [MailsPendingActions.REASONS.RECEIVED_NEW_MAIL]
+        },
+        pending: {
+          type: 'boolean'
         }
       }
     };
