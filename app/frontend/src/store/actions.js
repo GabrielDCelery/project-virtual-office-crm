@@ -7,7 +7,8 @@ import {
   actionFindAllMailSenderNames,
   actionFindAllMailSenders,
   actionFindAllMailSubjects,
-  actionSetAddNewMailFormField
+  actionSetAddNewMailFormField,
+  actionFindAllMailsPendingActionsNotifyEmails
 } from './mails';
 import { actionGetAllVersionsOfAllEntities } from './legalEntities';
 import {
@@ -39,6 +40,7 @@ export default {
   actionSetAddNewMailFormField,
   actionSetUserLoginFormField,
   actionSubmitAddNewMailForm,
+  actionFindAllMailsPendingActionsNotifyEmails,
   legalEntities: {
     getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
   }

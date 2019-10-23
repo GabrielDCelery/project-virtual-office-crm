@@ -6,6 +6,7 @@ const mailSenderNames = require('./mailSenderNames');
 const mailSenders = require('./mailSenders');
 const mailSubjects = require('./mailSubjects');
 const mails = require('./mails');
+const mailsPendingActions = require('./mailsPendingActions');
 const users = require('./users');
 
 module.exports = {
@@ -17,5 +18,6 @@ module.exports = {
   mailSenders,
   mailSubjects,
   mails,
+  mailsPendingActions,
   users
 };

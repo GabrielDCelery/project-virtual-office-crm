@@ -8,7 +8,8 @@ import {
   mailSenderNamesReducer,
   mailSendersReducer,
   mailSubjectsReducer,
-  mailAddNewFormReducer
+  mailAddNewFormReducer,
+  mailsPendingActionsNotifyEmailsReducer
 } from './mails';
 import { snackbarReducer } from './snackbar';
 import { userDataReducer, userLoginFormReducer } from './user';
@@ -23,7 +24,10 @@ const combinedReducers = combineReducers({
     addNewForm: mailAddNewFormReducer,
     senders: mailSendersReducer,
     senderNames: mailSenderNamesReducer,
-    subjects: mailSubjectsReducer
+    subjects: mailSubjectsReducer,
+    pendingActions: combineReducers({
+      notifyEmails: mailsPendingActionsNotifyEmailsReducer
+    })
   }),
   snackbar: snackbarReducer,
   user: combineReducers({

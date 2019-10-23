@@ -16,10 +16,11 @@ module.exports = {
       cities,
       countries,
       legalEntities,
-      mails,
-      mailSenders,
       mailSenderNames,
+      mailSenders,
       mailSubjects,
+      mails,
+      mailsPendingActions,
       users
     } = api;
 
@@ -54,6 +55,10 @@ module.exports = {
     app.use(
       config.api.routerPathPrefix.mailSubjects,
       mailSubjects({ Router, helpers, orchestrator })
+    );
+    app.use(
+      config.api.routerPathPrefix.mailsPendingActions,
+      mailsPendingActions({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.users,

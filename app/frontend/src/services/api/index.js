@@ -6,6 +6,7 @@ import mails from './mails';
 import mailSenderNames from './mailSenderNames';
 import mailSenders from './mailSenders';
 import mailSubjects from './mailSubjects';
+import mailsPendingActions from './mailsPendingActions';
 import user from './user';
 
 export default {
@@ -13,9 +14,10 @@ export default {
   cities,
   countries,
   legalEntities,
-  mails,
-  mailSenders,
   mailSenderNames,
+  mailSenders,
   mailSubjects,
+  mails,
+  mailsPendingActions,
   user
 };

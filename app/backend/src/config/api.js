@@ -8,6 +8,7 @@ module.exports = () => ({
     mailSenders: '/api/mailSenders',
     mailSenderNames: '/api/mailSenderNames',
     mailSubjects: '/api/mailSubjects',
+    mailsPendingActions: '/api/mailsPendingActions',
     users: '/api/users'
   }
 });

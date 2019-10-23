@@ -3,7 +3,7 @@ module.exports = ({ Router, helpers, orchestrator }) => {
   const router = Router();
   const apiResultWrapper = new ApiResultWrapper();
 
-  router.post('/findAllPendingEmailNotifications', async (req, res) => {
+  router.get('/findAllPendingEmailNotifications', async (req, res) => {
     return apiResultWrapper.returnJSON({
       res,
       toReturn: await orchestrator.execute(
