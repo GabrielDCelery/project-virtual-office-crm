@@ -1,3 +1,4 @@
 module.exports = {
-  ResultWrapper: require('./ResultWrapper')
+  ApiResultWrapper: require('./ApiResultWrapper'),
+  ServiceResultWrapper: require('./ServiceResultWrapper')
 };

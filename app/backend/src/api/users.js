@@ -1,6 +1,5 @@
-const { ApiResultWrapper, apiJsonResultWrapper } = require('../helpers');
-
-module.exports = ({ Router, orchestrator }) => {
+module.exports = ({ Router, helpers, orchestrator }) => {
+  const { ApiResultWrapper } = helpers;
   const router = Router();
   const apiResultWrapper = new ApiResultWrapper();
   const COOKIE_SESSION_ID = 'PVOCRM_SESSION_ID';
@@ -39,13 +38,15 @@ module.exports = ({ Router, orchestrator }) => {
 
   router.post('/authenticateByCookie', async (req, res) => {
     const jwtToken = req.cookies[COOKIE_SESSION_ID];
-    const verifyResult = await orchestrator.execute(
-      'users',
-      'authenticateByCookie',
-      jwtToken
-    );
 
-    return apiResultWrapper.returnJSON({ res, toReturn: verifyResult });
+    return apiResultWrapper.returnJSON({
+      res,
+      toReturn: await orchestrator.execute(
+        'users',
+        'authenticateByCookie',
+        jwtToken
+      )
+    });
   });
 
   return router;

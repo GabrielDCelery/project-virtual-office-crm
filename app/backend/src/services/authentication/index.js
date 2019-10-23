@@ -46,25 +46,25 @@ class Authentication {
   }
 
   async execute(controller, method, args) {
-    const { ResultWrapper } = this.helpers;
+    const { ServiceResultWrapper } = this.helpers;
 
     try {
       const result = await this.controllers[controller][method](args);
 
       const returnObj = {
-        type: ResultWrapper.TYPE.SUCCESS,
+        type: ServiceResultWrapper.TYPE.SUCCESS,
         service: AUTHENTICATION_SERVICE_NAME,
         payload: result
       };
 
-      return new ResultWrapper().wrap(returnObj);
+      return new ServiceResultWrapper().wrap(returnObj);
     } catch (error) {
       if (error.name !== AUTHENTICATION_ERROR_NAME_CONTROLLER) {
         throw error;
       }
 
-      return new ResultWrapper().wrap({
-        type: ResultWrapper.TYPE.FAIL,
+      return new ServiceResultWrapper().wrap({
+        type: ServiceResultWrapper.TYPE.FAIL,
         service: AUTHENTICATION_SERVICE_NAME,
         errors: [error]
       });

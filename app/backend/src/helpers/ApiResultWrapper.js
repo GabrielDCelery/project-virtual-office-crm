@@ -6,12 +6,13 @@ class ApiResultWrapper {
   }
 
   returnJSON({ res, toReturn, omit }) {
-    const { success, errors, payload } = toReturn;
+    const { success, service, errors, payload } = toReturn;
 
     return res.json({
       success,
+      service,
       errors: errors.map(error => error.message),
-      payload: _.omit(payload, omit || [])
+      payload: Array.isArray(payload) ? payload : _.omit(payload, omit || [])
     });
   }
 }

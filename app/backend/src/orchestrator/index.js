@@ -2,10 +2,11 @@ const addresses = require('./addresses');
 const cities = require('./cities');
 const countries = require('./countries');
 const legalEntities = require('./legalEntities');
-const mails = require('./mails');
 const mailSenderNames = require('./mailSenderNames');
 const mailSenders = require('./mailSenders');
 const mailSubjects = require('./mailSubjects');
+const mails = require('./mails');
+const mailsPendingActions = require('./mailsPendingActions');
 const users = require('./users');
 
 class Orchestrator {
@@ -47,6 +48,11 @@ class Orchestrator {
       mailSubjects: {
         create: mailSubjects.createWrapper(services),
         findAll: mailSubjects.findAllWrapper(services)
+      },
+      mailsPendingActions: {
+        findAllPendingEmailNotifications: mailsPendingActions.findAllPendingEmailNotificationsWrapper(
+          services
+        )
       },
       users: {
         authenticateByCookie: users.authenticateByCookieWrapper(services),

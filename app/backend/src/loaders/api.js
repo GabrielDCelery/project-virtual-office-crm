@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const api = globalRequire('api');
 const config = globalRequire('config');
+const helpers = globalRequire('helpers');
 
 module.exports = {
   start: async ({ app, middlewares, orchestrator, Router }) => {
@@ -20,41 +21,44 @@ module.exports = {
       mailSenderNames,
       mailSubjects,
       users
-    } = api.router;
+    } = api;
 
     app.use(
       config.api.routerPathPrefix.addresses,
-      addresses({ Router, orchestrator })
+      addresses({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.cities,
-      cities({ Router, orchestrator })
+      cities({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.countries,
-      countries({ Router, orchestrator })
+      countries({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.legalEntities,
-      legalEntities({ Router, orchestrator })
+      legalEntities({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.mails,
-      mails({ Router, middlewares, orchestrator })
+      mails({ Router, helpers, middlewares, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.mailSenders,
-      mailSenders({ Router, orchestrator })
+      mailSenders({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.mailSenderNames,
-      mailSenderNames({ Router, orchestrator })
+      mailSenderNames({ Router, helpers, orchestrator })
     );
     app.use(
       config.api.routerPathPrefix.mailSubjects,
-      mailSubjects({ Router, orchestrator })
+      mailSubjects({ Router, helpers, orchestrator })
     );
-    app.use(config.api.routerPathPrefix.users, users({ Router, orchestrator }));
+    app.use(
+      config.api.routerPathPrefix.users,
+      users({ Router, helpers, orchestrator })
+    );
 
     // Path for performing health check on the service
     app.get('/health', (req, res) => {

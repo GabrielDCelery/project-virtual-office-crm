@@ -117,7 +117,7 @@ class DB {
   }
 
   async execute(controller, method, args = {}) {
-    const { ResultWrapper } = this.helpers;
+    const { ServiceResultWrapper } = this.helpers;
 
     const trx = args['transaction']
       ? args['transaction']
@@ -130,7 +130,7 @@ class DB {
       });
 
       const returnObj = {
-        type: ResultWrapper.TYPE.SUCCESS,
+        type: ServiceResultWrapper.TYPE.SUCCESS,
         service: DB_SERVICE_NAME,
         payload: result
       };
@@ -142,7 +142,7 @@ class DB {
         await trx.commit();
       }
 
-      return new ResultWrapper().wrap(returnObj);
+      return new ServiceResultWrapper().wrap(returnObj);
     } catch (error) {
       await trx.rollback();
 
@@ -150,8 +150,8 @@ class DB {
         throw error;
       }
 
-      return new ResultWrapper().wrap({
-        type: ResultWrapper.TYPE.FAIL,
+      return new ServiceResultWrapper().wrap({
+        type: ServiceResultWrapper.TYPE.FAIL,
         service: DB_SERVICE_NAME,
         errors: [error]
       });

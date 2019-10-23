@@ -1,4 +1,4 @@
-class ResultWrapper {
+class ServiceResultWrapper {
   constructor() {
     this.wrap = this.wrap.bind(this);
   }
@@ -11,7 +11,7 @@ class ResultWrapper {
   }
 
   wrap({ type, service, payload, errors, extra }) {
-    if (type === ResultWrapper.TYPE.SUCCESS) {
+    if (type === ServiceResultWrapper.TYPE.SUCCESS) {
       const returnObject = {
         success: true,
         service,
@@ -26,7 +26,7 @@ class ResultWrapper {
       return returnObject;
     }
 
-    if (type === ResultWrapper.TYPE.FAIL) {
+    if (type === ServiceResultWrapper.TYPE.FAIL) {
       return {
         success: false,
         service,
@@ -35,8 +35,8 @@ class ResultWrapper {
       };
     }
 
-    throw new Error(`Invalid parameter for ResultWrapper -> ${type}!`);
+    throw new Error(`Invalid parameter for ServiceResultWrapper -> ${type}!`);
   }
 }
 
-module.exports = ResultWrapper;
+module.exports = ServiceResultWrapper;
