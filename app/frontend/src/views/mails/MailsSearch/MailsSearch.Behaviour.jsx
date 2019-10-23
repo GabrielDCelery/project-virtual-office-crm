@@ -14,9 +14,9 @@ export default ToWrapComponent => {
       })();
     }, [actionFindAllMailsPendingActionsNotifyEmails]);
 
-    console.log(statePendingActionsNotifyEmails);
-
-    return <ToWrapComponent {...props} />;
+    return (
+      <ToWrapComponent {...props} {...{ statePendingActionsNotifyEmails }} />
+    );
   };
 
   MailsSearchBehaviour = MailsPendingActionsNotifyEmailsStoreDecorator(
