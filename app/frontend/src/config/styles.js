@@ -12,17 +12,27 @@ export default {
       },
       background: {
         default: '#082431',
-        hover: '#2b617a'
+        hover: '#2b617a' /*'#7a2b3f'*/
       },
       border: {
         default: '#0d3346',
-        hover: '#6193AA'
+        hover: '#6193AA' /*'#aa6172'*/
       }
     }
   },
   layout: {
     navbar: {
       width: '300px'
+    },
+    dataTables: {
+      cellHeight: '50px',
+      cellWidth: {
+        xs: '80px',
+        s: '200px',
+        m: '300px',
+        l: '600px',
+        xl: '1000px'
+      }
     }
   }
 };

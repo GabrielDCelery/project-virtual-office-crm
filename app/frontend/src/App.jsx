@@ -38,7 +38,7 @@ const ViewWithNavbar = ToWrapComponent => {
   return props => (
     <div style={{ display: 'flex' }}>
       <NavBar />
-      <div style={{ flexGrow: 1 }}>
+      <div style={{ flexGrow: 1, width: 'calc(100vw - 300px)' }}>
         <ToWrapComponent {...props} />
       </div>
     </div>

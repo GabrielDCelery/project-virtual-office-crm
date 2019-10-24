@@ -37,8 +37,10 @@ describe('services.get("database").execute("mailsPendingActions", "findAllPendin
           legalEntityName: 'Bacz Invest Elektro Technikai',
           mailSubject: 'Felhívás',
           mailDocumentName: 'bar',
-          action: 'send email notification',
-          reason: 'received new mail'
+          action: 'confirm sending email notification',
+          reason: 'received new mail',
+          createdAt: new Date('2019-11-11T11:11:11.000Z'),
+          updatedAt: new Date('2019-11-11T11:11:11.000Z')
         }
       ]
     });

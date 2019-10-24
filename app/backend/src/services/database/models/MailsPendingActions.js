@@ -7,13 +7,15 @@ class MailsPendingActions extends Model {
 
   static get ACTIONS() {
     return {
-      SEND_EMAIL_NOTIFICATION: 'send email notification'
+      CONFIRM_SENDING_EMAIL_NOTIFICATION: 'confirm sending email notification',
+      SEND_EMAIL_NOTIFICATION: 'send email notification '
     };
   }
 
   static get REASONS() {
     return {
-      RECEIVED_NEW_MAIL: 'received new mail'
+      RECEIVED_NEW_MAIL: 'received new mail',
+      REQUESTED_BY_USER: 'requested by user'
     };
   }
 
@@ -30,11 +32,17 @@ class MailsPendingActions extends Model {
         },
         action: {
           type: 'string',
-          enum: [MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION]
+          enum: [
+            MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
+            MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION
+          ]
         },
         reason: {
           type: 'string',
-          enum: [MailsPendingActions.REASONS.RECEIVED_NEW_MAIL]
+          enum: [
+            MailsPendingActions.REASONS.RECEIVED_NEW_MAIL,
+            MailsPendingActions.REASONS.REQUESTED_BY_USER
+          ]
         },
         pending: {
           type: 'boolean'

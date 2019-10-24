@@ -12,14 +12,17 @@ class MailPendingActions {
       mail_subject: record.mail.subject.long_subject,
       mail_document_name: record.mail.document.name,
       action: record.action,
-      reason: record.reason
+      reason: record.reason,
+      created_at: record.created_at,
+      updated_at: record.updated_at
     };
   }
 
   async findAllPendingEmailNotifications({ transaction }) {
     const dbRecords = await this.models.MailsPendingActions.query(transaction)
       .where({
-        action: this.models.MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION,
+        action: this.models.MailsPendingActions.ACTIONS
+          .CONFIRM_SENDING_EMAIL_NOTIFICATION,
         pending: true
       })
       .eager('mail.[document, legal_entity, subject, sender]');

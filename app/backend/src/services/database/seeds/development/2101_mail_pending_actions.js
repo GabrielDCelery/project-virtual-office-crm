@@ -5,7 +5,7 @@ exports.seed = async knex => {
     {
       id: 1,
       mail_id: 1,
-      action: MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION,
+      action: MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
       reason: MailsPendingActions.REASONS.RECEIVED_NEW_MAIL,
       created_at: new Date('2019-11-11T11:11:11.000Z'),
       updated_at: new Date('2019-11-11T11:11:11.000Z')

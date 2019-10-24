@@ -88,7 +88,8 @@ class Mails {
 
     await this.models.MailsPendingActions.query(transaction).insert({
       mail_id: newMailRecord['id'],
-      action: this.models.MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION,
+      action: this.models.MailsPendingActions.ACTIONS
+        .CONFIRM_SENDING_EMAIL_NOTIFICATION,
       reason: this.models.MailsPendingActions.REASONS.RECEIVED_NEW_MAIL
     });
 
@@ -103,6 +104,37 @@ class Mails {
           .SAVED_TO_TEMPORARY_DATABASE
       }
     ]);
+
+    return true;
+  }
+
+  async sendEmailNotifications({ ids, transaction }) {
+    await this.models.MailsPendingActions.query(transaction)
+      .whereIn('id', ids)
+      .patch({
+        pending: false
+      });
+
+    await this.models.MailsPendingActions.query(transaction).insert(
+      ids.map(id => {
+        return {
+          mail_id: id,
+          action: this.models.MailsPendingActions.ACTIONS
+            .SEND_EMAIL_NOTIFICATION,
+          pending: true
+        };
+      })
+    );
+
+    await this.models.MailsAuditTrails.query(transaction).insert(
+      ids.map(id => {
+        return {
+          mail_id: id,
+          event_type: this.models.MailsAuditTrails.TYPES
+            .EMAIL_NOTIFICATION_PENDING
+        };
+      })
+    );
 
     return true;
   }

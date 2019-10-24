@@ -248,9 +248,16 @@ exports.up = async knex => {
       .references('id')
       .inTable(Mails.tableName)
       .notNullable();
-    table.enum('action', [MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION]);
-    table.enum('reason', [MailsPendingActions.REASONS.RECEIVED_NEW_MAIL]);
+    table.enum('action', [
+      MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
+      MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION
+    ]);
+    table.enum('reason', [
+      MailsPendingActions.REASONS.RECEIVED_NEW_MAIL,
+      MailsPendingActions.REASONS.REQUESTED_BY_USER
+    ]);
     table.boolean('pending').defaultTo(true);
+    table.index(['pending']);
     table.timestamps();
   });
 
