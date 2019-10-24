@@ -13,16 +13,5 @@ module.exports = ({ Router, helpers, orchestrator }) => {
     });
   });
 
-  router.post('/sendEmailNotifications', async (req, res) => {
-    return apiResultWrapper.returnJSON({
-      res,
-      toReturn: await orchestrator.execute(
-        'mailsPendingActions',
-        'sendEmailNotifications',
-        req.body
-      )
-    });
-  });
-
   return router;
 };

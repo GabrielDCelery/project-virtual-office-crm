@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import store from 'store';
 
 const {
-  actions: { actionFindAllMailsPendingActionsNotifyEmails }
+  actions: {
+    actionFindAllMailsPendingActionsNotifyEmails,
+    actionPendingActionsSendEmailNotifications
+  }
 } = store;
 
 const mapStateToProps = state => {
@@ -16,7 +19,8 @@ const mapStateToProps = state => {
 };
 
 const mapActionsToProps = {
-  actionFindAllMailsPendingActionsNotifyEmails
+  actionFindAllMailsPendingActionsNotifyEmails,
+  actionPendingActionsSendEmailNotifications
 };
 
 export const MailsPendingActionsNotifyEmailsStoreDecorator = ToWrapComponent => {

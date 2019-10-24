@@ -57,9 +57,7 @@ const ViewWithoutNavbar = ToWrapComponent => {
 
 let App = ({ actionAuthenticateUserByCookie, stateIsAppLoadingScreenOn }) => {
   useEffect(() => {
-    (async () => {
-      await actionAuthenticateUserByCookie();
-    })();
+    actionAuthenticateUserByCookie();
   }, [actionAuthenticateUserByCookie]);
 
   return (

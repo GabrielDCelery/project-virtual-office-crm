@@ -257,7 +257,7 @@ exports.up = async knex => {
       MailsPendingActions.REASONS.REQUESTED_BY_USER
     ]);
     table.boolean('pending').defaultTo(true);
-    table.index(['pending']);
+    table.index(['action', 'pending']);
     table.timestamps();
   });
 

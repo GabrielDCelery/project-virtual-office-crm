@@ -48,7 +48,8 @@ const columnConfigs = [
 
 const MailsSearchView = ({
   StyledContainer,
-  statePendingActionsNotifyEmails
+  statePendingActionsNotifyEmails,
+  actionPendingActionsSendEmailNotifications
 }) => {
   return (
     <React.Fragment>
@@ -59,7 +60,9 @@ const MailsSearchView = ({
           items={statePendingActionsNotifyEmails}
           columnConfigs={columnConfigs}
           handleActionForSelecteds={items => {
-            console.log(items);
+            actionPendingActionsSendEmailNotifications({
+              ids: items.map(item => item.id)
+            });
           }}
         />
       </StyledContainer>

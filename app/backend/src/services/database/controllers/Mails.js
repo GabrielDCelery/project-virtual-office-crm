@@ -109,6 +109,16 @@ class Mails {
   }
 
   async sendEmailNotifications({ ids, transaction }) {
+    const records = await this.models.MailsPendingActions.query(
+      transaction
+    ).whereIn('id', ids);
+
+    const mailIds = this.nodeModules.lodash
+      .chain(records)
+      .map(record => record['mail_id'])
+      .uniq()
+      .value();
+
     await this.models.MailsPendingActions.query(transaction)
       .whereIn('id', ids)
       .patch({
@@ -116,20 +126,21 @@ class Mails {
       });
 
     await this.models.MailsPendingActions.query(transaction).insert(
-      ids.map(id => {
+      mailIds.map(mailId => {
         return {
-          mail_id: id,
+          mail_id: mailId,
           action: this.models.MailsPendingActions.ACTIONS
             .SEND_EMAIL_NOTIFICATION,
-          pending: true
+          pending: true,
+          reason: this.models.MailsPendingActions.REASONS.REQUESTED_BY_USER
         };
       })
     );
 
     await this.models.MailsAuditTrails.query(transaction).insert(
-      ids.map(id => {
+      mailIds.map(mailId => {
         return {
-          mail_id: id,
+          mail_id: mailId,
           event_type: this.models.MailsAuditTrails.TYPES
             .EMAIL_NOTIFICATION_PENDING
         };

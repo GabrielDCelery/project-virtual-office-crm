@@ -9,9 +9,7 @@ export default ToWrapComponent => {
     } = props;
 
     useEffect(() => {
-      (async () => {
-        await actionFindAllMailsPendingActionsNotifyEmails();
-      })();
+      actionFindAllMailsPendingActionsNotifyEmails();
     }, [actionFindAllMailsPendingActionsNotifyEmails]);
 
     return (

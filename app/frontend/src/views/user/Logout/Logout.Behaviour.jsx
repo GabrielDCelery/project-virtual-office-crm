@@ -6,11 +6,9 @@ export default ToWrapComponent => {
     const { actionLogout, history, PATH_TO_LOGIN } = props;
 
     useEffect(() => {
-      (async () => {
-        await actionLogout(() => {
-          return history.push(PATH_TO_LOGIN);
-        });
-      })();
+      actionLogout(() => {
+        return history.push(PATH_TO_LOGIN);
+      });
     }, [actionLogout, history, PATH_TO_LOGIN]);
 
     return <ToWrapComponent />;

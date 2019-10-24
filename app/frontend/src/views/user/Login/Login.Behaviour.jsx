@@ -29,40 +29,34 @@ export default ToWrapComponent => {
       form: {
         setEmail: useCallback(
           event => {
-            (async () => {
-              await actionSetUserLoginFormField({
-                what: 'email',
-                value: event.target.value
-              });
-            })();
+            actionSetUserLoginFormField({
+              what: 'email',
+              value: event.target.value
+            });
           },
           [actionSetUserLoginFormField]
         ),
         setPassword: useCallback(
           event => {
-            (async () => {
-              await actionSetUserLoginFormField({
-                what: 'password',
-                value: event.target.value
-              });
-            })();
+            actionSetUserLoginFormField({
+              what: 'password',
+              value: event.target.value
+            });
           },
           [actionSetUserLoginFormField]
         ),
         submit: useCallback(
           event => {
             event.preventDefault();
-            (async () => {
-              await actionLogin(
-                {
-                  email: stateUserLoginFormFieldGetter('email'),
-                  password: stateUserLoginFormFieldGetter('password')
-                },
-                () => {
-                  return history.push(PATH_TO_DASHBOARD);
-                }
-              );
-            })();
+            actionLogin(
+              {
+                email: stateUserLoginFormFieldGetter('email'),
+                password: stateUserLoginFormFieldGetter('password')
+              },
+              () => {
+                return history.push(PATH_TO_DASHBOARD);
+              }
+            );
           },
           [
             PATH_TO_DASHBOARD,
