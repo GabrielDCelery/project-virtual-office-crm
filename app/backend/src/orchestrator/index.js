@@ -36,8 +36,7 @@ class Orchestrator {
         )
       },
       mails: {
-        create: mails.createWrapper(services),
-        sendEmailNotifications: mails.sendEmailNotificationsWrapper(services)
+        create: mails.createWrapper(services)
       },
       mailSenders: {
         findAll: mailSenders.findAllWrapper(services)
@@ -52,6 +51,9 @@ class Orchestrator {
       },
       mailsPendingActions: {
         findAllPendingEmailNotifications: mailsPendingActions.findAllPendingEmailNotificationsWrapper(
+          services
+        ),
+        sendEmailNotificationsForReceivedMails: mailsPendingActions.sendEmailNotificationsForReceivedMailsWrapper(
           services
         )
       },

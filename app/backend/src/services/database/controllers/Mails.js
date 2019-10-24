@@ -107,48 +107,6 @@ class Mails {
 
     return true;
   }
-
-  async sendEmailNotifications({ ids, transaction }) {
-    const records = await this.models.MailsPendingActions.query(
-      transaction
-    ).whereIn('id', ids);
-
-    const mailIds = this.nodeModules.lodash
-      .chain(records)
-      .map(record => record['mail_id'])
-      .uniq()
-      .value();
-
-    await this.models.MailsPendingActions.query(transaction)
-      .whereIn('id', ids)
-      .patch({
-        pending: false
-      });
-
-    await this.models.MailsPendingActions.query(transaction).insert(
-      mailIds.map(mailId => {
-        return {
-          mail_id: mailId,
-          action: this.models.MailsPendingActions.ACTIONS
-            .SEND_EMAIL_NOTIFICATION,
-          pending: true,
-          reason: this.models.MailsPendingActions.REASONS.REQUESTED_BY_USER
-        };
-      })
-    );
-
-    await this.models.MailsAuditTrails.query(transaction).insert(
-      mailIds.map(mailId => {
-        return {
-          mail_id: mailId,
-          event_type: this.models.MailsAuditTrails.TYPES
-            .EMAIL_NOTIFICATION_PENDING
-        };
-      })
-    );
-
-    return true;
-  }
 }
 
 module.exports = Mails;

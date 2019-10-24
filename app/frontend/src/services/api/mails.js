@@ -13,19 +13,6 @@ class Mails {
 
     return { success, payload, errors };
   }
-
-  async sendEmailNotifications({ ids }) {
-    const { data } = await axios({
-      method: 'POST',
-      url: `/api/mails/sendEmailNotifications`,
-      responseType: 'json',
-      data: { ids }
-    });
-
-    const { success, payload, errors } = data;
-
-    return { success, payload, errors };
-  }
 }
 
 export default new Mails();

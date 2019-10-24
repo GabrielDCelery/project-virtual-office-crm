@@ -37,9 +37,11 @@ export const actionPendingActionsSendEmailNotifications = ({ ids }) => {
     dispatch({ type: MAILS_PENDING_ACTIONS_NOTIFY_EMAILS_START_AJAX_REQUEST });
     dispatch({ type: MAILS_PENDING_ACTIONS_NOTIFY_EMAILS_RESET_LIST });
 
-    const updateResult = await services.api.mails.sendEmailNotifications({
-      ids
-    });
+    const updateResult = await services.api.mailsPendingActions.sendEmailNotificationsForReceivedMails(
+      {
+        ids
+      }
+    );
 
     if (!updateResult.success) {
       dispatch({ type: SNACKBAR_OPEN_ERROR, message: updateResult.errors[0] });

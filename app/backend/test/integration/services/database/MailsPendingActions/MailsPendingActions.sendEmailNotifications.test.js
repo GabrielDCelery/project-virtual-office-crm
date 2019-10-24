@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const services = require('../../../../../src/services');
 
-describe('services.get("database").execute("mails", "setPendingEmailNotificationsToActioned")', () => {
+describe('services.get("database").execute("mails", "sendEmailNotificationsForReceivedMails")', () => {
   let clock = null;
 
   beforeEach(async () => {
@@ -20,8 +20,8 @@ describe('services.get("database").execute("mails", "setPendingEmailNotification
 
   it('sets mails to send email notifications to legal entities', async () => {
     // Given
-    const controller = 'mails';
-    const method = 'sendEmailNotifications';
+    const controller = 'mailsPendingActions';
+    const method = 'sendEmailNotificationsForReceivedMails';
     const args = { ids: [1] };
 
     // When
