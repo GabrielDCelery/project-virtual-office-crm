@@ -22,14 +22,14 @@ const columnConfigs = [
   },
   {
     type: 'FIELD_TYPE_STRING',
-    label: 'Reason',
-    field: 'reason',
+    label: 'Action',
+    field: 'action',
     width: 'm'
   },
   {
     type: 'FIELD_TYPE_STRING',
-    label: 'Action',
-    field: 'action',
+    label: 'Reason',
+    field: 'reason',
     width: 'm'
   },
   {

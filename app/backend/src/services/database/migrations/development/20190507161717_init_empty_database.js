@@ -228,6 +228,7 @@ exports.up = async knex => {
       MailsAuditTrails.TYPES.ENVELOPED_FOR_POSTING,
       MailsAuditTrails.TYPES.POSTED_TO_LEGAL_ENTITY
     ]);
+    table.index(['mail_id']);
     table.timestamps();
   });
 
@@ -257,7 +258,7 @@ exports.up = async knex => {
       MailsPendingActions.REASONS.REQUESTED_BY_USER
     ]);
     table.boolean('pending').defaultTo(true);
-    table.index(['action', 'pending']);
+    table.index(['mail_id', 'action', 'pending']);
     table.timestamps();
   });
 

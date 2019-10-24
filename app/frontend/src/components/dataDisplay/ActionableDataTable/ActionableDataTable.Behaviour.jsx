@@ -24,7 +24,6 @@ export default ToWrapComponent => {
     const [currentPage, setCurrentPage] = useState(0);
     const [numOfRecordsPerPage, setNumOfRecordsPerPage] = useState(10);
     const [checkedItems, setCheckedItems] = useState([]);
-    const [isHeadChecked, setHeadChecked] = useState(false);
 
     const getters = {
       pagination: {
@@ -49,7 +48,11 @@ export default ToWrapComponent => {
           },
           [checkedItems]
         ),
-        isHeadChecked,
+        isHeadChecked: useCallback(() => {
+          return (
+            checkedItems.length !== 0 && checkedItems.length === items.length
+          );
+        }, [checkedItems, items]),
         isHeadIndeterminate: useCallback(() => {
           return (
             0 < checkedItems.length && checkedItems.length !== items.length
@@ -75,16 +78,17 @@ export default ToWrapComponent => {
       },
       dataTable: {
         toggleAllCheckedItems: useCallback(() => {
-          if (isHeadChecked) {
+          if (
+            checkedItems.length !== 0 &&
+            checkedItems.length === items.length
+          ) {
             setCheckedItems([]);
-            setHeadChecked(false);
 
             return;
           }
 
           setCheckedItems(items.map(item => item['id']));
-          setHeadChecked(true);
-        }, [isHeadChecked, items, setHeadChecked, setCheckedItems]),
+        }, [checkedItems, items, setCheckedItems]),
         toggleCheckedItem: useCallback(
           id => {
             const newCheckedItems = JSON.parse(JSON.stringify(checkedItems));

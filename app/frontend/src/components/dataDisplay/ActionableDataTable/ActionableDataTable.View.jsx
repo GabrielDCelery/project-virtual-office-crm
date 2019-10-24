@@ -55,7 +55,7 @@ const ActionableDataTableView = ({
               <TableHead>
                 <TableRow>
                   <DataTableHeadCellCheckbox
-                    isChecked={getter('dataTable', 'isHeadChecked')}
+                    isChecked={getter('dataTable', 'isHeadChecked')()}
                     isIndeterminate={getter(
                       'dataTable',
                       'isHeadIndeterminate'
