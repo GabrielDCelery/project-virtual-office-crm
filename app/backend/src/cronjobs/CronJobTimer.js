@@ -23,7 +23,7 @@ class CronJobTimer {
       return null;
     }
 
-    await CronJobTimer.sleep(1000);
+    await CronJobTimer.sleep(5000);
 
     return this._cronMethodRunAgainWrapper();
   }

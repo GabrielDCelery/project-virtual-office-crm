@@ -5,34 +5,6 @@ class MailPendingActions {
     this.recordPreparator = recordPreparator;
   }
 
-  static flattenRecord(record) {
-    return {
-      id: record.id,
-      legal_entity_name: record.mail.legal_entity.long_name,
-      mail_subject: record.mail.subject.long_subject,
-      mail_document_name: record.mail.document.name,
-      action: record.action,
-      reason: record.reason,
-      created_at: record.created_at,
-      updated_at: record.updated_at
-    };
-  }
-
-  static flatten(record) {
-    return {
-      mail_pending_action_id: record.id,
-      mail_document_name: record.mail.document.name,
-      mail_document_temporary_save_id:
-        record.mail.document.temporary_saves[0].id,
-      mail_document_temporary_save_file:
-        record.mail.document.temporary_saves[0].file,
-      mail_document_temporary_save_mimetype:
-        record.mail.document.temporary_saves[0].mimetype,
-      mail_document_temporary_save_extension:
-        record.mail.document.temporary_saves[0].extension
-    };
-  }
-
   async findAllPendingEmailNotifications({ transaction }) {
     const dbRecords = await this.models.MailsPendingActions.query(transaction)
       .where({
@@ -42,14 +14,28 @@ class MailPendingActions {
       })
       .eager('mail.[document, legal_entity, subject, sender]');
 
-    return dbRecords.map(dbRecord => {
-      const flattenedDbRecord = MailPendingActions.flattenRecord(dbRecord);
+    const { flattenDbRecord, prepareDbRecordForReturn } = this.recordPreparator;
 
-      return this.recordPreparator.prepareDbRecordForReturn(flattenedDbRecord);
+    return dbRecords.map(dbRecord => {
+      const flattenedDbRecord = flattenDbRecord({
+        dbRecord,
+        fieldsMap: {
+          id: 'id',
+          legal_entity_name: 'mail.legal_entity.long_name',
+          mail_subject: 'mail.subject.long_subject',
+          mail_document_name: 'mail.document.name',
+          action: 'action',
+          reason: 'reason',
+          created_at: 'created_at',
+          updated_at: 'updated_at'
+        }
+      });
+
+      return prepareDbRecordForReturn(flattenedDbRecord);
     });
   }
 
-  async findAllPendingCopyFromTemporaryToCloudActions({ transaction }) {
+  async findAllPendingCopyToCloudTemporaryDocuments({ transaction }) {
     const dbRecords = await this.models.MailsPendingActions.query(transaction)
       .where({
         action: this.models.MailsPendingActions.ACTIONS
@@ -60,11 +46,43 @@ class MailPendingActions {
         'mail.[document.[temporary_saves], legal_entity, subject, sender]'
       );
 
-    return dbRecords.map(dbRecord => {
-      const flattenedDbRecord = MailPendingActions.flatten(dbRecord);
+    const recordsToReturn = [];
 
-      return this.recordPreparator.prepareDbRecordForReturn(flattenedDbRecord);
+    const {
+      flattenDbRecord,
+      flattenEagerLoadedDbRecords,
+      prepareDbRecordForReturn
+    } = this.recordPreparator;
+
+    dbRecords.forEach(dbRecord => {
+      const temporarySavedDocuments = flattenEagerLoadedDbRecords({
+        dbRecord,
+        eagerLoadedRecordsPath: 'mail.document.temporary_saves',
+        keyForEagerLoadedRecord: 'temporary_saved_document'
+      });
+
+      temporarySavedDocuments.forEach(temporarySavedDocument => {
+        const flattenedDbRecord = flattenDbRecord({
+          dbRecord: temporarySavedDocument,
+          fieldsMap: {
+            mail_pending_action_id: 'id',
+            mail_document_name: 'mail.document.name',
+            mail_document_temporary_save_id: 'temporary_saved_document.id',
+            mail_document_temporary_save_file: 'temporary_saved_document.file',
+            mail_document_temporary_save_mimetype:
+              'temporary_saved_document.mimetype',
+            mail_document_temporary_save_extension:
+              'temporary_saved_document.extension'
+          }
+        });
+
+        const preparedRecord = prepareDbRecordForReturn(flattenedDbRecord);
+
+        recordsToReturn.push(preparedRecord);
+      });
     });
+
+    return recordsToReturn;
   }
 
   async sendEmailNotificationsForReceivedMails({ ids, transaction }) {

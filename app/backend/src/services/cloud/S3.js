@@ -52,8 +52,8 @@ class S3 {
     });
   }
 
-  async uploadFileToBucket({ bucket, file, fileName }) {
-    return await this._uploadFileToBucket({ bucket, file, fileName });
+  async uploadFileToMailsBucket({ file, fileName }) {
+    return await this._uploadFileToBucket({ bucket: 'mails', file, fileName });
   }
 }
 
