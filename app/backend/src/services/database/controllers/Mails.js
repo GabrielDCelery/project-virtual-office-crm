@@ -86,12 +86,20 @@ class Mails {
       document_id: documentId
     });
 
-    await this.models.MailsPendingActions.query(transaction).insert({
-      mail_id: newMailRecord['id'],
-      action: this.models.MailsPendingActions.ACTIONS
-        .CONFIRM_SENDING_EMAIL_NOTIFICATION,
-      reason: this.models.MailsPendingActions.REASONS.RECEIVED_NEW_MAIL
-    });
+    await this.models.MailsPendingActions.query(transaction).insert([
+      {
+        mail_id: newMailRecord['id'],
+        action: this.models.MailsPendingActions.ACTIONS
+          .CONFIRM_SENDING_EMAIL_NOTIFICATION,
+        reason: this.models.MailsPendingActions.REASONS.RECEIVED_NEW_MAIL
+      },
+      {
+        mail_id: newMailRecord['id'],
+        action: this.models.MailsPendingActions.ACTIONS
+          .COPY_FROM_TEMPORARY_TO_CLOUD_S3_SERVICE,
+        reason: this.models.MailsPendingActions.REASONS.RECEIVED_NEW_MAIL
+      }
+    ]);
 
     await this.models.MailsAuditTrails.query(transaction).insert([
       {

@@ -40,6 +40,7 @@ class Documents extends Model {
 
   static get relationMappings() {
     const Mails = require('./Mails');
+    const DocumentsTemporary = require('./DocumentsTemporary');
 
     return {
       mails: {
@@ -48,6 +49,14 @@ class Documents extends Model {
         join: {
           from: `${Documents.tableName}.id`,
           to: `${Mails.tableName}.document_id`
+        }
+      },
+      temporary_saves: {
+        relation: Model.HasManyRelation,
+        modelClass: DocumentsTemporary,
+        join: {
+          from: `${Documents.tableName}.id`,
+          to: `${DocumentsTemporary.tableName}.document_id`
         }
       }
     };

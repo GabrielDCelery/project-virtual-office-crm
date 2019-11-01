@@ -18,6 +18,21 @@ class MailPendingActions {
     };
   }
 
+  static flatten(record) {
+    return {
+      mail_pending_action_id: record.id,
+      mail_document_name: record.mail.document.name,
+      mail_document_temporary_save_id:
+        record.mail.document.temporary_saves[0].id,
+      mail_document_temporary_save_file:
+        record.mail.document.temporary_saves[0].file,
+      mail_document_temporary_save_mimetype:
+        record.mail.document.temporary_saves[0].mimetype,
+      mail_document_temporary_save_extension:
+        record.mail.document.temporary_saves[0].extension
+    };
+  }
+
   async findAllPendingEmailNotifications({ transaction }) {
     const dbRecords = await this.models.MailsPendingActions.query(transaction)
       .where({
@@ -29,6 +44,24 @@ class MailPendingActions {
 
     return dbRecords.map(dbRecord => {
       const flattenedDbRecord = MailPendingActions.flattenRecord(dbRecord);
+
+      return this.recordPreparator.prepareDbRecordForReturn(flattenedDbRecord);
+    });
+  }
+
+  async findAllPendingCopyFromTemporaryToCloudActions({ transaction }) {
+    const dbRecords = await this.models.MailsPendingActions.query(transaction)
+      .where({
+        action: this.models.MailsPendingActions.ACTIONS
+          .COPY_FROM_TEMPORARY_TO_CLOUD_S3_SERVICE,
+        pending: true
+      })
+      .eager(
+        'mail.[document.[temporary_saves], legal_entity, subject, sender]'
+      );
+
+    return dbRecords.map(dbRecord => {
+      const flattenedDbRecord = MailPendingActions.flatten(dbRecord);
 
       return this.recordPreparator.prepareDbRecordForReturn(flattenedDbRecord);
     });

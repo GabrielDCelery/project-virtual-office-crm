@@ -251,6 +251,7 @@ exports.up = async knex => {
       .notNullable();
     table.enum('action', [
       MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
+      MailsPendingActions.ACTIONS.COPY_FROM_TEMPORARY_TO_CLOUD_S3_SERVICE,
       MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION
     ]);
     table.enum('reason', [

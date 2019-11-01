@@ -2,6 +2,7 @@ const api = require('./api');
 const services = require('./services');
 const middlewares = require('./middlewares');
 const orchestrator = require('./orchestrator');
+const cronjobs = require('./cronjobs');
 
 module.exports = {
   start: async ({ app, Router }) => {
@@ -14,8 +15,10 @@ module.exports = {
       middlewares: globalRequire('middlewares'),
       orchestrator: globalRequire('orchestrator')
     });
+    await cronjobs.start();
   },
   stop: async () => {
+    await cronjobs.stop();
     await api.stop();
     await orchestrator.stop();
     await services.stop();
