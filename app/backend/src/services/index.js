@@ -1,6 +1,7 @@
 const services = {
   authentication: require('./authentication'),
   database: require('./database'),
+  cloud: require('./cloud'),
   redis: require('./redis')
 };
 

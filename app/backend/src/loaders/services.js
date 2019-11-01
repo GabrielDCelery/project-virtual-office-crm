@@ -2,6 +2,7 @@ const services = globalRequire('services');
 const helpers = globalRequire('helpers');
 const jsonwebtoken = require('jsonwebtoken');
 const lodash = require('lodash');
+const AWS = require('aws-sdk');
 const uuidv4 = require('uuid/v4');
 const verror = require('verror');
 
@@ -17,7 +18,10 @@ const {
   SERVICE_REDIS_HOST,
   SERVICE_REDIS_PORT,
   SERVICE_JWT_SECRET,
-  SERVICE_JWT_EXPIRY_IN_SECONDS
+  SERVICE_JWT_EXPIRY_IN_SECONDS,
+  SERVICE_CLOUD_S3_ACCESS_KEY_ID,
+  SERVICE_CLOUD_S3_SECRET_ACCESS_KEY,
+  SERVICE_CLOUD_S3_ENDPOINT
 } = process.env;
 
 module.exports = {
@@ -58,9 +62,23 @@ module.exports = {
         verror
       }
     });
+    await services.get('cloud').start({
+      environmentVariables: {
+        SERVICE_CLOUD_S3_ACCESS_KEY_ID,
+        SERVICE_CLOUD_S3_SECRET_ACCESS_KEY,
+        SERVICE_CLOUD_S3_ENDPOINT
+      },
+      helpers: helpers,
+      nodeModules: {
+        AWS,
+        verror
+      }
+    });
   },
   stop: async () => {
     await services.get('database').stop();
+    await services.get('authentication').stop();
     await services.get('redis').stop();
+    await services.get('cloud').stop();
   }
 };
