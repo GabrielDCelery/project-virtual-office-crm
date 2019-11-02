@@ -38,15 +38,13 @@ module.exports = ({ services }) => {
         documentId,
         documentMimetype,
         documentName,
-        documentSize,
-        documentType
+        documentSize
       } = dbRecord;
       const fileName = `${documentName}.${documentExtension}`;
 
       const uploadFileToBucketResult = await services
         .get('cloud')
-        .execute('s3', 'uploadFileToBucket', {
-          bucket: documentType.toLowerCase().replace(/\s/g, '_'),
+        .execute('s3', 'uploadFileToMailBucket', {
           file: documentFile,
           fileName
         });
