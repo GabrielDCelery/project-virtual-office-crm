@@ -13,11 +13,11 @@ class DocumentsTemporary {
       .whereIn('id', ids);
   }
 
-  async getNextBatchOfMails({ transaction }) {
+  async getNextBatchOfMails({ limit, transaction }) {
     const dbRecords = await this.models.DocumentsTemporary.query(transaction)
       .joinRelation('document')
       .where('document.type', this.models.Documents.TYPES.MAIL)
-      .limit(10)
+      .limit(limit || 10)
       .eager('document.mail');
 
     const { flattenDbRecord, prepareDbRecordForReturn } = this.recordPreparator;
@@ -33,7 +33,8 @@ class DocumentsTemporary {
           document_file: 'file',
           document_type: 'document.type',
           document_size: 'size',
-          document_temporary_id: 'id'
+          document_temporary_id: 'id',
+          mail_id: 'document.mail.id'
         }
       });
 

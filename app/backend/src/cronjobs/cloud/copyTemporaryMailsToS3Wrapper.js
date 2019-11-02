@@ -38,7 +38,8 @@ module.exports = ({ services }) => {
         documentId,
         documentMimetype,
         documentName,
-        documentSize
+        documentSize,
+        mailId
       } = dbRecord;
       const fileName = `${documentName}.${documentExtension}`;
 
@@ -62,7 +63,8 @@ module.exports = ({ services }) => {
         extension: documentExtension,
         mimetype: documentMimetype,
         size: documentSize,
-        storageDetails: uploadFileToBucketResult.payload
+        storageDetails: uploadFileToBucketResult.payload,
+        mailId
       });
     }
 
@@ -77,6 +79,21 @@ module.exports = ({ services }) => {
     if (!saveCloudMailsResult.success) {
       return {
         ...saveCloudMailsResult,
+        bRunAgain: true
+      };
+    }
+
+    const mailsAuditTrailResult = await services
+      .get('database')
+      .execute('mailsAuditTrails', 'createBulkCopiedToCloudService', {
+        inserts: documentsCloudInserts,
+        transaction,
+        bKeepTransactionAlive: true
+      });
+
+    if (!mailsAuditTrailResult.success) {
+      return {
+        ...mailsAuditTrailResult,
         bRunAgain: true
       };
     }

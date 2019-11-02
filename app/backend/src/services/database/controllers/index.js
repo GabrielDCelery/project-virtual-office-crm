@@ -6,6 +6,7 @@ module.exports = {
   DocumentsCloud: require('./DocumentsCloud'),
   DocumentsTemporary: require('./DocumentsTemporary'),
   LegalEntities: require('./LegalEntities'),
+  MailsAuditTrails: require('./MailsAuditTrails'),
   MailsPendingActions: require('./MailsPendingActions'),
   MailSenderNames: require('./MailSenderNames'),
   MailSenders: require('./MailSenders'),

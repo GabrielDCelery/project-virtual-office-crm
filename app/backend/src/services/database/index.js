@@ -28,6 +28,7 @@ class DB {
       DocumentsCloud,
       DocumentsTemporary,
       LegalEntities,
+      MailsAuditTrails,
       MailsPendingActions,
       MailSenderNames,
       MailSenders,
@@ -87,6 +88,11 @@ class DB {
         recordPreparator: new RecordPreparator({ nodeModules })
       }),
       mailSubjects: new MailSubjects({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      mailsAuditTrails: new MailsAuditTrails({
         models,
         nodeModules,
         recordPreparator: new RecordPreparator({ nodeModules })
