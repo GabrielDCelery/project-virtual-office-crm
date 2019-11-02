@@ -1,5 +1,5 @@
-const copyTemporaryDocumentsToS3Wrapper = require('./copyTemporaryDocumentsToS3Wrapper');
+const copyTemporaryMailsToS3Wrapper = require('./copyTemporaryMailsToS3Wrapper');
 
 module.exports = {
-  copyTemporaryDocumentsToS3Wrapper
+  copyTemporaryMailsToS3Wrapper
 };

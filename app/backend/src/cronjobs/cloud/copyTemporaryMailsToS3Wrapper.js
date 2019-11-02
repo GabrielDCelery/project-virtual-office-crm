@@ -2,24 +2,24 @@ module.exports = ({ services }) => {
   return async () => {
     const transaction = await services.get('database').createTransaction();
 
-    const batchOfTemporaryDocumentsResult = await services
+    const batchOfTemporaryMailsResult = await services
       .get('database')
-      .execute('documentsTemporary', 'getNextBatch', {
+      .execute('documentsTemporary', 'getNextBatchOfMails', {
         transaction,
         bKeepTransactionAlive: true
       });
 
-    if (!batchOfTemporaryDocumentsResult.success) {
+    if (!batchOfTemporaryMailsResult.success) {
       return {
-        ...batchOfTemporaryDocumentsResult,
+        ...batchOfTemporaryMailsResult,
         bRunAgain: true
       };
     }
 
-    if (batchOfTemporaryDocumentsResult.payload.length === 0) {
+    if (batchOfTemporaryMailsResult.payload.length === 0) {
       await services.get('database').commitTransaction({ transaction });
       return {
-        ...batchOfTemporaryDocumentsResult,
+        ...batchOfTemporaryMailsResult,
         bRunAgain: false
       };
     }
@@ -27,11 +27,11 @@ module.exports = ({ services }) => {
     const documentsCloudInserts = [];
 
     for (
-      let i = 0, iMax = batchOfTemporaryDocumentsResult.payload.length;
+      let i = 0, iMax = batchOfTemporaryMailsResult.payload.length;
       i < iMax;
       i++
     ) {
-      const dbRecord = batchOfTemporaryDocumentsResult.payload[i];
+      const dbRecord = batchOfTemporaryMailsResult.payload[i];
       const {
         documentExtension,
         documentFile,
@@ -68,7 +68,7 @@ module.exports = ({ services }) => {
       });
     }
 
-    const saveCloudRecordResults = await services
+    const saveCloudMailsResult = await services
       .get('database')
       .execute('documentsCloud', 'createBulk', {
         inserts: documentsCloudInserts,
@@ -76,24 +76,24 @@ module.exports = ({ services }) => {
         bKeepTransactionAlive: true
       });
 
-    if (!saveCloudRecordResults.success) {
+    if (!saveCloudMailsResult.success) {
       return {
-        ...saveCloudRecordResults,
+        ...saveCloudMailsResult,
         bRunAgain: true
       };
     }
 
-    const deleteTemporaryResults = await services
+    const deleteTemporaryMailsResult = await services
       .get('database')
       .execute('documentsTemporary', 'delete', {
-        ids: batchOfTemporaryDocumentsResult.payload.map(
+        ids: batchOfTemporaryMailsResult.payload.map(
           record => record['documentTemporaryId']
         ),
         transaction
       });
 
     return {
-      ...deleteTemporaryResults,
+      ...deleteTemporaryMailsResult,
       bRunAgain: true
     };
   };

@@ -43,8 +43,8 @@ class Documents extends Model {
     const DocumentsTemporary = require('./DocumentsTemporary');
 
     return {
-      mails: {
-        relation: Model.HasManyRelation,
+      mail: {
+        relation: Model.HasOneRelation,
         modelClass: Mails,
         join: {
           from: `${Documents.tableName}.id`,

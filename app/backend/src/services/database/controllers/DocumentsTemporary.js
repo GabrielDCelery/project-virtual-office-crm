@@ -4,7 +4,7 @@ class DocumentsTemporary {
     this.nodeModules = nodeModules;
     this.recordPreparator = recordPreparator;
     this.delete = this.delete.bind(this);
-    this.getNextBatch = this.getNextBatch.bind(this);
+    this.getNextBatchOfMails = this.getNextBatchOfMails.bind(this);
   }
 
   async delete({ ids, transaction }) {
@@ -13,10 +13,12 @@ class DocumentsTemporary {
       .whereIn('id', ids);
   }
 
-  async getNextBatch({ transaction }) {
-    const dbRecords = await this.models.DocumentsTemporary.query(
-      transaction
-    ).eager('document');
+  async getNextBatchOfMails({ transaction }) {
+    const dbRecords = await this.models.DocumentsTemporary.query(transaction)
+      .joinRelation('document')
+      .where('document.type', this.models.Documents.TYPES.MAIL)
+      .limit(10)
+      .eager('document.mail');
 
     const { flattenDbRecord, prepareDbRecordForReturn } = this.recordPreparator;
 

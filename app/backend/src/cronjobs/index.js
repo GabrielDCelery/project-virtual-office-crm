@@ -13,12 +13,12 @@ class CronJobs {
   initialize({ services, nodeModules }) {
     this.instances = {
       cloud: {
-        copyTemporaryDocumentsToS3: new CronJobTimer({
+        copyTemporaryMailsToS3: new CronJobTimer({
           config: {
-            timer: '*/15 * * * * *'
+            timer: '*/5 * * * * *'
           },
           nodeModules,
-          cronMethod: cloud.copyTemporaryDocumentsToS3Wrapper({
+          cronMethod: cloud.copyTemporaryMailsToS3Wrapper({
             services
           })
         }).start()
