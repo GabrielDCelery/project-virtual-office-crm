@@ -9,6 +9,9 @@ exports.seed = async knex => {
         Bucket: 'foo',
         Key: 'folder/20191111/foo'
       },
+      mimetype: 'application/pdf',
+      extension: 'pdf',
+      size: 13764,
       created_at: new Date('2019-11-11T11:11:11.000Z'),
       updated_at: new Date('2019-11-11T11:11:11.000Z')
     },
@@ -19,6 +22,9 @@ exports.seed = async knex => {
         Bucket: 'bar',
         Key: 'folder/20191111/bar'
       },
+      mimetype: 'application/pdf',
+      extension: 'pdf',
+      size: 13764,
       created_at: new Date('2019-11-11T11:11:11.000Z'),
       updated_at: new Date('2019-11-11T11:11:11.000Z')
     }

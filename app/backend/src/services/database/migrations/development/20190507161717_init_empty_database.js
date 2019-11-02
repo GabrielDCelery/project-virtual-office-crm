@@ -91,6 +91,9 @@ exports.up = async knex => {
       .inTable(Documents.tableName)
       .notNullable();
     table.jsonb('storage_details');
+    table.enum('mimetype', [DocumentsCloud.MIMETYPES.APPLICATION_PDF]);
+    table.enum('extension', [DocumentsCloud.EXTENSIONS.PDF]);
+    table.integer('size');
     table.timestamps();
   });
 

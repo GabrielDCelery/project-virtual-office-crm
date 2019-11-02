@@ -5,6 +5,18 @@ class DocumentsCloud extends Model {
     return 'documents_cloud';
   }
 
+  static get EXTENSIONS() {
+    return {
+      PDF: 'pdf'
+    };
+  }
+
+  static get MIMETYPES() {
+    return {
+      APPLICATION_PDF: 'application/pdf'
+    };
+  }
+
   static get jsonSchema() {
     return {
       type: 'object',
@@ -18,6 +30,17 @@ class DocumentsCloud extends Model {
         },
         storage_details: {
           type: 'json'
+        },
+        mimetype: {
+          type: 'string',
+          enum: [DocumentsCloud.MIMETYPES.APPLICATION_PDF]
+        },
+        extension: {
+          type: 'string',
+          enum: [DocumentsCloud.EXTENSIONS.PDF]
+        },
+        size: {
+          type: 'integer'
         },
         created_at: {
           type: 'string',
