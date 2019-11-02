@@ -79,6 +79,7 @@ exports.up = async knex => {
     table.binary('file');
     table.enum('mimetype', [DocumentsTemporary.MIMETYPES.APPLICATION_PDF]);
     table.enum('extension', [DocumentsTemporary.EXTENSIONS.PDF]);
+    table.integer('size');
     table.timestamps();
   });
 

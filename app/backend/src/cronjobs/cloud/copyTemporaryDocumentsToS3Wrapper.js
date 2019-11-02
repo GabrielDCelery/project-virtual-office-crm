@@ -4,6 +4,8 @@ module.exports = ({ services }) => {
       .get('database')
       .execute('documentsTemporary', 'getNextBatch');
 
+    console.log(batchOfTemporaryDocumentsResult);
+
     for (
       let i = 0, iMax = batchOfTemporaryDocumentsResult.payload.length;
       i < iMax;
@@ -30,7 +32,7 @@ module.exports = ({ services }) => {
         return uploadFileToBucketResult;
       }
 
-      console.log(uploadFileToBucketResult);
+      //console.log(uploadFileToBucketResult);
     }
 
     return {

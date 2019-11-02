@@ -71,7 +71,8 @@ class Mails {
       document_id: documentId,
       file: file['buffer'],
       mimetype: file['mimetype'],
-      extension: file['originalname'].split('.')[1]
+      extension: file['originalname'].split('.')[1],
+      size: file['size']
     });
 
     const mailSenderId = await this._findOrCreateSender({

@@ -39,6 +39,9 @@ class DocumentsTemporary extends Model {
           type: 'string',
           enum: [DocumentsTemporary.EXTENSIONS.PDF]
         },
+        size: {
+          type: 'integer'
+        },
         created_at: {
           type: 'string',
           format: 'date-time'

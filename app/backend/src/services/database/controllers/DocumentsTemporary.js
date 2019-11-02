@@ -23,6 +23,7 @@ class DocumentsTemporary {
           document_extension: 'extension',
           document_file: 'file',
           document_type: 'document.type',
+          document_size: 'size',
           document_temporary_id: 'id'
         }
       });
