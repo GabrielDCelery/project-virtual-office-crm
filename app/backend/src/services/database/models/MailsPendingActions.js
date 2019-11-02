@@ -8,8 +8,6 @@ class MailsPendingActions extends Model {
   static get ACTIONS() {
     return {
       CONFIRM_SENDING_EMAIL_NOTIFICATION: 'confirm sending email notification',
-      COPY_FROM_TEMPORARY_TO_CLOUD_S3_SERVICE:
-        'copy from temporary to cloud s3 service',
       SEND_EMAIL_NOTIFICATION: 'send email notification '
     };
   }
@@ -36,7 +34,6 @@ class MailsPendingActions extends Model {
           type: 'string',
           enum: [
             MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
-            MailsPendingActions.ACTIONS.COPY_FROM_TEMPORARY_TO_CLOUD_S3_SERVICE,
             MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION
           ]
         },

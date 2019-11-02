@@ -35,56 +35,6 @@ class MailPendingActions {
     });
   }
 
-  async findAllPendingCopyToCloudTemporaryDocuments({ transaction }) {
-    const dbRecords = await this.models.MailsPendingActions.query(transaction)
-      .where({
-        action: this.models.MailsPendingActions.ACTIONS
-          .COPY_FROM_TEMPORARY_TO_CLOUD_S3_SERVICE,
-        pending: true
-      })
-      .eager(
-        'mail.[document.[temporary_saves], legal_entity, subject, sender]'
-      );
-
-    const recordsToReturn = [];
-
-    const {
-      flattenDbRecord,
-      flattenEagerLoadedDbRecords,
-      prepareDbRecordForReturn
-    } = this.recordPreparator;
-
-    dbRecords.forEach(dbRecord => {
-      const temporarySavedDocuments = flattenEagerLoadedDbRecords({
-        dbRecord,
-        eagerLoadedRecordsPath: 'mail.document.temporary_saves',
-        keyForEagerLoadedRecord: 'temporary_saved_document'
-      });
-
-      temporarySavedDocuments.forEach(temporarySavedDocument => {
-        const flattenedDbRecord = flattenDbRecord({
-          dbRecord: temporarySavedDocument,
-          fieldsMap: {
-            mail_pending_action_id: 'id',
-            mail_document_name: 'mail.document.name',
-            mail_document_temporary_save_id: 'temporary_saved_document.id',
-            mail_document_temporary_save_file: 'temporary_saved_document.file',
-            mail_document_temporary_save_mimetype:
-              'temporary_saved_document.mimetype',
-            mail_document_temporary_save_extension:
-              'temporary_saved_document.extension'
-          }
-        });
-
-        const preparedRecord = prepareDbRecordForReturn(flattenedDbRecord);
-
-        recordsToReturn.push(preparedRecord);
-      });
-    });
-
-    return recordsToReturn;
-  }
-
   async sendEmailNotificationsForReceivedMails({ ids, transaction }) {
     const records = await this.models.MailsPendingActions.query(
       transaction

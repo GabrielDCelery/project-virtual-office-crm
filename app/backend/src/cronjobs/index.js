@@ -13,15 +13,15 @@ class CronJobs {
   initialize({ services, nodeModules }) {
     this.instances = {
       cloud: {
-        copyMailsFromTempDbToS3: new CronJobTimer({
+        copyTemporaryDocumentsToS3: new CronJobTimer({
           config: {
             timer: '*/5 * * * * *'
           },
           nodeModules,
-          cronMethod: cloud.copyMailsFromTempDbToS3Wrapper({
+          cronMethod: cloud.copyTemporaryDocumentsToS3Wrapper({
             services
           })
-        })
+        }).start()
       }
     };
   }
@@ -37,6 +37,11 @@ class CronJobs {
   }
 
   async stop() {
+    Object.keys(this.instances).forEach(instance => {
+      Object.keys(this.instances[instance]).forEach(method => {
+        return this.instances[instance][method].stop();
+      });
+    });
     this.initialized = false;
   }
 

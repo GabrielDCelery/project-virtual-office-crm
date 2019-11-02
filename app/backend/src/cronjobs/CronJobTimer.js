@@ -13,7 +13,18 @@ class CronJobTimer {
     this.job = new CronJob(this.config.timer, () => {
       this._runCronMethod();
     });
+  }
+
+  start() {
     this.job.start();
+
+    return this;
+  }
+
+  stop() {
+    this.job.stop();
+
+    return this;
   }
 
   async _cronMethodRunAgainWrapper() {

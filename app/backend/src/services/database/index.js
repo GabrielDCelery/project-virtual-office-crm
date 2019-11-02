@@ -25,6 +25,7 @@ class DB {
       Cities,
       Countries,
       Documents,
+      DocumentsTemporary,
       LegalEntities,
       MailsPendingActions,
       MailSenderNames,
@@ -53,6 +54,11 @@ class DB {
       documents: new Documents({
         models,
         nodeModules
+      }),
+      documentsTemporary: new DocumentsTemporary({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
       }),
       legalEntities: new LegalEntities({
         models,
