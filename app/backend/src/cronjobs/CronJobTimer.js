@@ -28,7 +28,8 @@ class CronJobTimer {
   }
 
   async _cronMethodRunAgainWrapper() {
-    const { bRunAgain } = await this.cronMethod();
+    const result = await this.cronMethod();
+    const { success, errors, payload, bRunAgain } = result;
 
     if (!bRunAgain) {
       return null;

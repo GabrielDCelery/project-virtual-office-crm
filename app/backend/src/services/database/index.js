@@ -25,6 +25,7 @@ class DB {
       Cities,
       Countries,
       Documents,
+      DocumentsCloud,
       DocumentsTemporary,
       LegalEntities,
       MailsPendingActions,
@@ -54,6 +55,11 @@ class DB {
       documents: new Documents({
         models,
         nodeModules
+      }),
+      documentsCloud: new DocumentsCloud({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
       }),
       documentsTemporary: new DocumentsTemporary({
         models,
@@ -122,6 +128,18 @@ class DB {
     return this.knex;
   }
 
+  async createTransaction() {
+    return await transaction.start(Model.knex());
+  }
+
+  async commitTransaction({ transaction }) {
+    return await transaction.commit();
+  }
+
+  async rollbackTransaction({ transaction }) {
+    return await transaction.rollback();
+  }
+
   async execute(controller, method, args = {}) {
     const { ServiceResultWrapper } = this.helpers;
 
@@ -141,10 +159,7 @@ class DB {
         payload: result
       };
 
-      if (args['bReturnTransaction']) {
-        returnObj['extra'] = {};
-        returnObj['extra']['transaction'] = trx;
-      } else {
+      if (!args['bKeepTransactionAlive']) {
         await trx.commit();
       }
 

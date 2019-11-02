@@ -80,6 +80,7 @@ exports.up = async knex => {
     table.enum('mimetype', [DocumentsTemporary.MIMETYPES.APPLICATION_PDF]);
     table.enum('extension', [DocumentsTemporary.EXTENSIONS.PDF]);
     table.integer('size');
+    table.index(['document_id']);
     table.timestamps();
   });
 
@@ -94,6 +95,7 @@ exports.up = async knex => {
     table.enum('mimetype', [DocumentsCloud.MIMETYPES.APPLICATION_PDF]);
     table.enum('extension', [DocumentsCloud.EXTENSIONS.PDF]);
     table.integer('size');
+    table.index(['document_id']);
     table.timestamps();
   });
 

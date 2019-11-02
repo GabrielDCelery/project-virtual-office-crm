@@ -15,7 +15,7 @@ class CronJobs {
       cloud: {
         copyTemporaryDocumentsToS3: new CronJobTimer({
           config: {
-            timer: '*/5 * * * * *'
+            timer: '*/15 * * * * *'
           },
           nodeModules,
           cronMethod: cloud.copyTemporaryDocumentsToS3Wrapper({

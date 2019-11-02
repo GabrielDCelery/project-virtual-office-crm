@@ -3,7 +3,14 @@ class DocumentsTemporary {
     this.models = models;
     this.nodeModules = nodeModules;
     this.recordPreparator = recordPreparator;
+    this.delete = this.delete.bind(this);
     this.getNextBatch = this.getNextBatch.bind(this);
+  }
+
+  async delete({ ids, transaction }) {
+    return await this.models.DocumentsTemporary.query(transaction)
+      .delete()
+      .whereIn('id', ids);
   }
 
   async getNextBatch({ transaction }) {

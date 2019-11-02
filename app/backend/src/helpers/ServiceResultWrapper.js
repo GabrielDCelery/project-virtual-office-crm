@@ -10,20 +10,14 @@ class ServiceResultWrapper {
     };
   }
 
-  wrap({ type, service, payload, errors, extra }) {
+  wrap({ type, service, payload, errors }) {
     if (type === ServiceResultWrapper.TYPE.SUCCESS) {
-      const returnObject = {
+      return {
         success: true,
         service,
         errors: [],
         payload: payload
       };
-
-      if (extra) {
-        returnObject[extra];
-      }
-
-      return returnObject;
     }
 
     if (type === ServiceResultWrapper.TYPE.FAIL) {
