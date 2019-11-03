@@ -34,7 +34,8 @@ exports.up = async knex => {
       .integer('country_id')
       .references('id')
       .inTable(Countries.tableName)
-      .notNullable();
+      .notNullable()
+      .index();
     table.unique(['name', 'country_id']);
   });
 
@@ -45,27 +46,34 @@ exports.up = async knex => {
       .integer('country_id')
       .references('id')
       .inTable(Countries.tableName)
+      .notNullable()
+      .index();
+    table
+      .enum('status', [Phones.STATUSES.ACTIVE, Phones.STATUSES.INACTIVE])
       .notNullable();
-    table.enum('status', [Phones.STATUSES.ACTIVE, Phones.STATUSES.INACTIVE]);
-    table.enum('type', [Phones.TYPES.MOBILE, Phones.TYPES.HOME]);
+    table.enum('type', [Phones.TYPES.MOBILE, Phones.TYPES.HOME]).notNullable();
     table.unique(['country_id', 'number']);
   });
 
   await knex.schema.createTable(Emails.tableName, table => {
     table.increments('id').primary();
-    table.string('address');
-    table.enum('status', [Emails.STATUSES.ACTIVE, Emails.STATUSES.INACTIVE]);
+    table.string('address').notNullable();
+    table
+      .enum('status', [Emails.STATUSES.ACTIVE, Emails.STATUSES.INACTIVE])
+      .notNullable();
   });
 
   await knex.schema.createTable(Documents.tableName, table => {
     table.increments('id').primary();
-    table.string('name');
-    table.enum('type', [
-      Documents.TYPES.DEED_OF_ASSOCIATION,
-      Documents.TYPES.IDENTITY_CARD,
-      Documents.TYPES.MAIL,
-      Documents.TYPES.SPECIMEN_SIGNATURE
-    ]);
+    table.string('name').notNullable();
+    table
+      .enum('type', [
+        Documents.TYPES.DEED_OF_ASSOCIATION,
+        Documents.TYPES.IDENTITY_CARD,
+        Documents.TYPES.MAIL,
+        Documents.TYPES.SPECIMEN_SIGNATURE
+      ])
+      .notNullable();
     table.timestamps();
   });
 
@@ -75,12 +83,14 @@ exports.up = async knex => {
       .integer('document_id')
       .references('id')
       .inTable(Documents.tableName)
+      .notNullable()
+      .index();
+    table.binary('file').notNullable();
+    table
+      .enum('mimetype', [DocumentsTemporary.MIMETYPES.APPLICATION_PDF])
       .notNullable();
-    table.binary('file');
-    table.enum('mimetype', [DocumentsTemporary.MIMETYPES.APPLICATION_PDF]);
-    table.enum('extension', [DocumentsTemporary.EXTENSIONS.PDF]);
-    table.integer('size');
-    table.index(['document_id']);
+    table.enum('extension', [DocumentsTemporary.EXTENSIONS.PDF]).notNullable();
+    table.integer('size').notNullable();
     table.timestamps();
   });
 
@@ -90,26 +100,29 @@ exports.up = async knex => {
       .integer('document_id')
       .references('id')
       .inTable(Documents.tableName)
+      .notNullable()
+      .index();
+    table.jsonb('storage_details').notNullable();
+    table
+      .enum('mimetype', [DocumentsCloud.MIMETYPES.APPLICATION_PDF])
       .notNullable();
-    table.jsonb('storage_details');
-    table.enum('mimetype', [DocumentsCloud.MIMETYPES.APPLICATION_PDF]);
-    table.enum('extension', [DocumentsCloud.EXTENSIONS.PDF]);
-    table.integer('size');
-    table.index(['document_id']);
+    table.enum('extension', [DocumentsCloud.EXTENSIONS.PDF]).notNullable();
+    table.integer('size').notNullable();
     table.timestamps();
   });
 
   await knex.schema.createTable(Users.tableName, table => {
     table.increments('id').primary();
-    table.string('email');
-    table.string('password');
+    table.string('email').notNullable();
+    table.string('password').notNullable();
     table
       .enum('status', [
         Users.STATUSES.INACTIVE,
         Users.STATUSES.ACTIVE,
         Users.STATUSES.SUSPENDED
       ])
-      .defaultTo(Users.STATUSES.INACTIVE);
+      .defaultTo(Users.STATUSES.INACTIVE)
+      .notNullable();
     table.timestamps();
     table.unique(['email']);
   });
@@ -121,15 +134,16 @@ exports.up = async knex => {
       .integer('city_id')
       .references('id')
       .inTable(Cities.tableName)
-      .notNullable();
-    table.string('long_street');
+      .notNullable()
+      .index();
+    table.string('long_street').notNullable();
     table.timestamps();
     table.unique(['postcode', 'city_id', 'long_street']);
   });
 
   await knex.schema.createTable(MailSenderNames.tableName, table => {
     table.increments('id').primary();
-    table.string('name');
+    table.string('name').notNullable();
     table.unique(['name']);
   });
 
@@ -138,43 +152,51 @@ exports.up = async knex => {
     table
       .integer('address_id')
       .references('id')
-      .inTable(Addresses.tableName);
+      .inTable(Addresses.tableName)
+      .notNullable()
+      .index();
     table
       .integer('sender_name_id')
       .references('id')
-      .inTable(MailSenderNames.tableName);
+      .inTable(MailSenderNames.tableName)
+      .notNullable()
+      .index();
     table.unique(['address_id', 'sender_name_id']);
   });
 
   await knex.schema.createTable(MailSubjects.tableName, table => {
     table.increments('id').primary();
-    table.string('long_subject');
+    table.string('long_subject').notNullable();
     table.unique(['long_subject']);
   });
 
   await knex.schema.createTable(LegalEntities.tableName, table => {
     table.increments('id').primary();
-    table.string('short_name');
-    table.string('long_name');
-    table.enum('type', [
-      LegalEntities.TYPES.LIMITED_LIABILITY_COMPANY,
-      LegalEntities.TYPES.UNLIMITED_PARTNERSHIP
-    ]);
+    table.string('short_name').notNullable();
+    table.string('long_name').notNullable();
+    table
+      .enum('type', [
+        LegalEntities.TYPES.LIMITED_LIABILITY_COMPANY,
+        LegalEntities.TYPES.UNLIMITED_PARTNERSHIP
+      ])
+      .notNullable();
     table.string('registration_id');
     table.string('tax_id');
-    table.integer('permanent_address_id');
-    table.integer('version');
-    table.datetime('version_start_at');
+    table.integer('permanent_address_id').notNullable();
+    table.integer('version').notNullable();
+    table.datetime('version_start_at').notNullable();
   });
 
   await knex.schema.createTable(LegalEntitiesVersion.tableName, table => {
     table.increments('id').primary();
-    table.string('short_name');
-    table.string('long_name');
-    table.enum('type', [
-      LegalEntitiesVersion.TYPES.LIMITED_LIABILITY_COMPANY,
-      LegalEntitiesVersion.TYPES.UNLIMITED_PARTNERSHIP
-    ]);
+    table.string('short_name').notNullable();
+    table.string('long_name').notNullable();
+    table
+      .enum('type', [
+        LegalEntitiesVersion.TYPES.LIMITED_LIABILITY_COMPANY,
+        LegalEntitiesVersion.TYPES.UNLIMITED_PARTNERSHIP
+      ])
+      .notNullable();
     table.string('registration_id');
     table.string('tax_id');
     table
@@ -186,12 +208,12 @@ exports.up = async knex => {
       .integer('legal_entity_id')
       .references('id')
       .inTable(LegalEntities.tableName)
-      .notNullable();
-    table.integer('version');
-    table.datetime('version_start_at');
-    table.datetime('version_end_at');
+      .notNullable()
+      .index();
+    table.integer('version').notNullable();
+    table.datetime('version_start_at').notNullable();
+    table.datetime('version_end_at').notNullable();
     table.unique(['legal_entity_id', 'version']);
-    table.index(['legal_entity_id'], 'legal_entity_id');
   });
 
   await knex.schema.createTable(Mails.tableName, table => {
@@ -200,7 +222,8 @@ exports.up = async knex => {
       .integer('legal_entity_id')
       .references('id')
       .inTable(LegalEntities.tableName)
-      .notNullable();
+      .notNullable()
+      .index();
     table
       .integer('sender_id')
       .references('id')
@@ -215,7 +238,8 @@ exports.up = async knex => {
       .integer('document_id')
       .references('id')
       .inTable(Documents.tableName)
-      .notNullable();
+      .notNullable()
+      .index();
   });
 
   await knex.schema.createTable(MailsAuditTrails.tableName, table => {
@@ -224,17 +248,19 @@ exports.up = async knex => {
       .integer('mail_id')
       .references('id')
       .inTable(Mails.tableName)
+      .notNullable()
+      .index();
+    table
+      .enum('event_type', [
+        MailsAuditTrails.TYPES.RECEIVED,
+        MailsAuditTrails.TYPES.SAVED_TO_TEMPORARY_DATABASE,
+        MailsAuditTrails.TYPES.COPIED_TO_CLOUD_SERVICE,
+        MailsAuditTrails.TYPES.EMAIL_NOTIFICATION_PENDING,
+        MailsAuditTrails.TYPES.EMAIL_NOTIFICATION_SENT_TO_LEGAL_ENTITY,
+        MailsAuditTrails.TYPES.ENVELOPED_FOR_POSTING,
+        MailsAuditTrails.TYPES.POSTED_TO_LEGAL_ENTITY
+      ])
       .notNullable();
-    table.enum('event_type', [
-      MailsAuditTrails.TYPES.RECEIVED,
-      MailsAuditTrails.TYPES.SAVED_TO_TEMPORARY_DATABASE,
-      MailsAuditTrails.TYPES.COPIED_TO_CLOUD_SERVICE,
-      MailsAuditTrails.TYPES.EMAIL_NOTIFICATION_PENDING,
-      MailsAuditTrails.TYPES.EMAIL_NOTIFICATION_SENT_TO_LEGAL_ENTITY,
-      MailsAuditTrails.TYPES.ENVELOPED_FOR_POSTING,
-      MailsAuditTrails.TYPES.POSTED_TO_LEGAL_ENTITY
-    ]);
-    table.index(['mail_id']);
     table.timestamps();
   });
 
@@ -245,7 +271,7 @@ exports.up = async knex => {
       .references('id')
       .inTable(MailsAuditTrails.tableName)
       .notNullable();
-    table.jsonb('data');
+    table.jsonb('data').notNullable();
   });
 
   await knex.schema.createTable(MailsPendingActions.tableName, table => {
@@ -254,18 +280,26 @@ exports.up = async knex => {
       .integer('mail_id')
       .references('id')
       .inTable(Mails.tableName)
+      .notNullable()
+      .index();
+    table
+      .enum('action', [
+        MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
+        MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION
+      ])
       .notNullable();
-    table.enum('action', [
-      MailsPendingActions.ACTIONS.CONFIRM_SENDING_EMAIL_NOTIFICATION,
-      MailsPendingActions.ACTIONS.SEND_EMAIL_NOTIFICATION
-    ]);
-    table.enum('reason', [
-      MailsPendingActions.REASONS.RECEIVED_NEW_MAIL,
-      MailsPendingActions.REASONS.REQUESTED_BY_USER
-    ]);
-    table.boolean('pending').defaultTo(true);
-    table.index(['mail_id', 'action', 'pending']);
+    table
+      .enum('reason', [
+        MailsPendingActions.REASONS.RECEIVED_NEW_MAIL,
+        MailsPendingActions.REASONS.REQUESTED_BY_USER
+      ])
+      .notNullable();
+    table
+      .boolean('pending')
+      .defaultTo(true)
+      .notNullable();
     table.timestamps();
+    table.index(['action', 'pending']);
   });
 
   await knex.schema.createTable(
@@ -275,12 +309,14 @@ exports.up = async knex => {
         .integer('legal_entity_id')
         .references('id')
         .inTable(LegalEntities.tableName)
-        .notNullable();
+        .notNullable()
+        .index();
       table
         .integer('email_id')
         .references('id')
         .inTable(Emails.tableName)
-        .notNullable();
+        .notNullable()
+        .index();
       table.unique(['legal_entity_id', 'email_id']);
     }
   );
@@ -292,12 +328,14 @@ exports.up = async knex => {
         .integer('legal_entity_id')
         .references('id')
         .inTable(LegalEntities.tableName)
-        .notNullable();
+        .notNullable()
+        .index();
       table
         .integer('phone_id')
         .references('id')
         .inTable(Phones.tableName)
-        .notNullable();
+        .notNullable()
+        .index();
       table.unique(['legal_entity_id', 'phone_id']);
     }
   );

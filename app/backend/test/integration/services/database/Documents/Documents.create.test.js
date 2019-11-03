@@ -31,7 +31,8 @@ describe('services.get("database").execute("documents", "create")', () => {
         path.join(__dirname, '../../../../seeds/sample.pdf')
       ),
       mimetype: 'application/pdf',
-      extension: 'pdf'
+      extension: 'pdf',
+      size: 0
     };
 
     // When
