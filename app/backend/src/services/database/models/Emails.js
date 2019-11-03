@@ -30,7 +30,7 @@ class Emails extends Model {
       }
     };
   }
-
+  /*
   static get relationMappings() {
     const LegalEntities = require('./LegalEntities');
 
@@ -49,6 +49,7 @@ class Emails extends Model {
       }
     };
   }
+  */
 }
 
 module.exports = Emails;

@@ -78,6 +78,7 @@ class LegalEntities extends Model {
           to: `${Mails.tableName}.legal_entity_id`
         }
       },
+      /*
       emails: {
         relation: Model.ManyToManyRelation,
         modelClass: Emails,
@@ -102,6 +103,7 @@ class LegalEntities extends Model {
           to: `${Phones.tableName}.id`
         }
       },
+      */
       permanent_address: {
         relation: Model.BelongsToOneRelation,
         modelClass: Addresses,

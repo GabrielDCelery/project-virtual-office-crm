@@ -57,7 +57,8 @@ class Phones extends Model {
           from: `${Phones.tableName}.country_id`,
           to: `${Countries.tableName}.id`
         }
-      },
+      }
+      /*,
       legal_entities: {
         relation: Model.ManyToManyRelation,
         modelClass: LegalEntities,
@@ -70,6 +71,7 @@ class Phones extends Model {
           to: `${LegalEntities.tableName}.id`
         }
       }
+      */
     };
   }
 }

@@ -308,44 +308,6 @@ exports.up = async knex => {
     table.index(['action', 'pending']);
   });
 
-  await knex.schema.createTable(
-    `${LegalEntities.tableName}_${Emails.tableName}`,
-    table => {
-      table
-        .integer('legal_entity_id')
-        .references('id')
-        .inTable(LegalEntities.tableName)
-        .notNullable()
-        .index();
-      table
-        .integer('email_id')
-        .references('id')
-        .inTable(Emails.tableName)
-        .notNullable()
-        .index();
-      table.unique(['legal_entity_id', 'email_id']);
-    }
-  );
-
-  await knex.schema.createTable(
-    `${LegalEntities.tableName}_${Phones.tableName}`,
-    table => {
-      table
-        .integer('legal_entity_id')
-        .references('id')
-        .inTable(LegalEntities.tableName)
-        .notNullable()
-        .index();
-      table
-        .integer('phone_id')
-        .references('id')
-        .inTable(Phones.tableName)
-        .notNullable()
-        .index();
-      table.unique(['legal_entity_id', 'phone_id']);
-    }
-  );
-
   await knex.schema.createTable(NaturalPeople.tableName, table => {
     table.increments('id').primary();
     table.string('first_name').notNullable();
@@ -394,12 +356,6 @@ exports.up = async knex => {
 exports.down = async knex => {
   await knex.schema.dropTableIfExists(NaturalPeopleVersion.tableName);
   await knex.schema.dropTableIfExists(NaturalPeople.tableName);
-  await knex.schema.dropTableIfExists(
-    `${LegalEntities.tableName}_${Phones.tableName}`
-  );
-  await knex.schema.dropTableIfExists(
-    `${LegalEntities.tableName}_${Emails.tableName}`
-  );
   await knex.schema.dropTableIfExists(MailsPendingActions.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrailsDetails.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrails.tableName);
