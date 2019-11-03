@@ -47,6 +47,9 @@ class LegalEntitiesVersion extends Model {
         permanent_address_id: {
           type: 'id'
         },
+        version: {
+          type: 'integer'
+        },
         version_start_at: {
           type: 'date'
         },

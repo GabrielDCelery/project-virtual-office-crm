@@ -12,5 +12,6 @@ module.exports = {
   MailSenders: require('./MailSenders'),
   MailSubjects: require('./MailSubjects'),
   Mails: require('./Mails'),
+  NaturalPeople: require('./NaturalPeople'),
   Users: require('./Users')
 };

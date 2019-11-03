@@ -34,6 +34,7 @@ class DB {
       MailSenders,
       MailSubjects,
       Mails,
+      NaturalPeople,
       Users
     } = controllers;
 
@@ -98,6 +99,11 @@ class DB {
         recordPreparator: new RecordPreparator({ nodeModules })
       }),
       mailsPendingActions: new MailsPendingActions({
+        models,
+        nodeModules,
+        recordPreparator: new RecordPreparator({ nodeModules })
+      }),
+      naturalPeople: new NaturalPeople({
         models,
         nodeModules,
         recordPreparator: new RecordPreparator({ nodeModules })

@@ -14,11 +14,15 @@ const {
   Mails,
   MailsAuditTrails,
   MailsPendingActions,
+  NaturalPeople,
+  NaturalPeopleVersion,
   Phones,
   Users
 } = require('../../models');
 
 exports.seed = async knex => {
+  await knex(NaturalPeopleVersion.tableName).del();
+  await knex(NaturalPeople.tableName).del();
   await knex(`${LegalEntities.tableName}_${Phones.tableName}`).del();
   await knex(`${LegalEntities.tableName}_${Emails.tableName}`).del();
   await knex(MailsPendingActions.tableName).del();

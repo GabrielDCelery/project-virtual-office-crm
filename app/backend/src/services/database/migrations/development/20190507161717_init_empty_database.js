@@ -15,6 +15,8 @@ const {
   MailsAuditTrails,
   MailsAuditTrailsDetails,
   MailsPendingActions,
+  NaturalPeople,
+  NaturalPeopleVersion,
   Phones,
   Users
 } = require('../../models');
@@ -182,13 +184,23 @@ exports.up = async knex => {
       .notNullable();
     table.string('registration_id');
     table.string('tax_id');
-    table.integer('permanent_address_id').notNullable();
+    table
+      .integer('permanent_address_id')
+      .references('id')
+      .inTable(Addresses.tableName)
+      .notNullable();
     table.integer('version').notNullable();
     table.datetime('version_start_at').notNullable();
   });
 
   await knex.schema.createTable(LegalEntitiesVersion.tableName, table => {
     table.increments('id').primary();
+    table
+      .integer('legal_entity_id')
+      .references('id')
+      .inTable(LegalEntities.tableName)
+      .notNullable()
+      .index();
     table.string('short_name').notNullable();
     table.string('long_name').notNullable();
     table
@@ -204,12 +216,6 @@ exports.up = async knex => {
       .references('id')
       .inTable(Addresses.tableName)
       .notNullable();
-    table
-      .integer('legal_entity_id')
-      .references('id')
-      .inTable(LegalEntities.tableName)
-      .notNullable()
-      .index();
     table.integer('version').notNullable();
     table.datetime('version_start_at').notNullable();
     table.datetime('version_end_at').notNullable();
@@ -339,9 +345,55 @@ exports.up = async knex => {
       table.unique(['legal_entity_id', 'phone_id']);
     }
   );
+
+  await knex.schema.createTable(NaturalPeople.tableName, table => {
+    table.increments('id').primary();
+    table.string('first_name').notNullable();
+    table.string('last_name').notNullable();
+    table.string('mother_name');
+    table.date('birth_date');
+    table
+      .integer('identifier_document_id')
+      .references('id')
+      .inTable(Documents.tableName);
+    table
+      .integer('permanent_address_id')
+      .references('id')
+      .inTable(Addresses.tableName);
+    table.integer('version').notNullable();
+    table.datetime('version_start_at').notNullable();
+  });
+
+  await knex.schema.createTable(NaturalPeopleVersion.tableName, table => {
+    table.increments('id').primary();
+    table
+      .integer('natural_person_id')
+      .references('id')
+      .inTable(NaturalPeople.tableName)
+      .notNullable()
+      .index();
+    table.string('first_name').notNullable();
+    table.string('last_name').notNullable();
+    table.string('mother_name');
+    table.date('birth_date');
+    table
+      .integer('identifier_document_id')
+      .references('id')
+      .inTable(Documents.tableName);
+    table
+      .integer('permanent_address_id')
+      .references('id')
+      .inTable(Addresses.tableName);
+    table.integer('version').notNullable();
+    table.datetime('version_start_at').notNullable();
+    table.datetime('version_end_at').notNullable();
+    table.unique(['natural_person_id', 'version']);
+  });
 };
 
 exports.down = async knex => {
+  await knex.schema.dropTableIfExists(NaturalPeopleVersion.tableName);
+  await knex.schema.dropTableIfExists(NaturalPeople.tableName);
   await knex.schema.dropTableIfExists(
     `${LegalEntities.tableName}_${Phones.tableName}`
   );

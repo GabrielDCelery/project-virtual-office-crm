@@ -115,6 +115,14 @@ class LegalEntities {
       .value();
   }
 
+  async getLatestVersionsOfAllEntities({ transaction }) {
+    const dbRecords = await this.models.LegalEntities.query(transaction);
+
+    return dbRecords.map(dbRecord => {
+      return this.recordPreparator.prepareDbRecordForReturn(dbRecord);
+    });
+  }
+
   async update({ id, transaction, ...inputs }) {
     const updatedAt = new Date();
     const beforeUpdateLegalEntity = await this.models.LegalEntities.query(

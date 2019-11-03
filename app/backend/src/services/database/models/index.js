@@ -15,6 +15,8 @@ module.exports = {
   MailsAuditTrails: require('./MailsAuditTrails'),
   MailsAuditTrailsDetails: require('./MailsAuditTrailsDetails'),
   MailsPendingActions: require('./MailsPendingActions'),
+  NaturalPeople: require('./NaturalPeople'),
+  NaturalPeopleVersion: require('./NaturalPeopleVersion'),
   Phones: require('./Phones'),
   Users: require('./Users')
 };
