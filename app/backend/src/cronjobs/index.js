@@ -21,7 +21,7 @@ class CronJobs {
           cronMethod: cloud.copyTemporaryMailsToS3Wrapper({
             services
           })
-        }).start()
+        }) /*.start()*/
       }
     };
   }

@@ -6,8 +6,8 @@ const {
   DocumentsCloud,
   DocumentsTemporary,
   Emails,
+  HistoryRecordChanges,
   LegalEntities,
-  LegalEntitiesVersion,
   MailSenderNames,
   MailSenders,
   MailSubjects,
@@ -15,18 +15,16 @@ const {
   MailsAuditTrails,
   MailsPendingActions,
   NaturalPeople,
-  NaturalPeopleVersion,
   Phones,
   Users
 } = require('../../models');
 
 exports.seed = async knex => {
-  await knex(NaturalPeopleVersion.tableName).del();
+  await knex(HistoryRecordChanges.tableName).del();
   await knex(NaturalPeople.tableName).del();
   await knex(MailsPendingActions.tableName).del();
   await knex(MailsAuditTrails.tableName).del();
   await knex(Mails.tableName).del();
-  await knex(LegalEntitiesVersion.tableName).del();
   await knex(LegalEntities.tableName).del();
   await knex(Users.tableName).del();
   await knex(MailSubjects.tableName).del();

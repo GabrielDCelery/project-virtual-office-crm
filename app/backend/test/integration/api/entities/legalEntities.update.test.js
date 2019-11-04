@@ -36,56 +36,17 @@ describe('/api/legalEntities/update', () => {
       success: true,
       service: 'database',
       errors: [],
-      payload: [
-        {
-          legalEntityId: 2,
-          shortName: 'Chrono-Line',
-          longName: 'Chrono-Line New',
-          type: 'limited liability company',
-          registrationId: '02-03-529212',
-          taxId: '31580371-1-42',
-          permanentAddressId: 2,
-          version: 3,
-          versionStartAt: '2019-08-27T11:11:11.000Z',
-          versionEndAt: null
-        },
-        {
-          legalEntityId: 2,
-          shortName: 'Chrono-Line',
-          longName: 'Chrono-Line',
-          type: 'limited liability company',
-          registrationId: '02-03-529212',
-          taxId: '31580371-1-42',
-          permanentAddressId: 1,
-          version: 2,
-          versionStartAt: '2019-08-09T11:11:11.000Z',
-          versionEndAt: '2019-08-27T11:11:11.000Z'
-        },
-        {
-          legalEntityId: 2,
-          shortName: 'Chrono-Line',
-          longName: 'Chrono-Line',
-          type: 'limited liability company',
-          registrationId: '02-03-529212',
-          taxId: '41580371-1-42',
-          permanentAddressId: 1,
-          version: 1,
-          versionStartAt: '2018-09-02T11:11:11.000Z',
-          versionEndAt: '2019-08-09T11:11:11.000Z'
-        },
-        {
-          legalEntityId: 2,
-          shortName: 'Chrono-Trigger',
-          longName: 'Chrono-Trigger',
-          type: 'limited liability company',
-          registrationId: '02-03-529212',
-          taxId: '41580371-1-42',
-          permanentAddressId: 1,
-          version: 0,
-          versionStartAt: '2018-08-03T11:11:11.000Z',
-          versionEndAt: '2018-09-02T11:11:11.000Z'
-        }
-      ]
+      payload: {
+        id: 2,
+        shortName: 'Chrono-Line',
+        longName: 'Chrono-Line New',
+        type: 'limited liability company',
+        registrationId: '02-03-529212',
+        taxId: '31580371-1-42',
+        permanentAddressId: 2,
+        createdAt: '2018-08-03T11:11:11.000Z',
+        updatedAt: '2019-08-27T11:11:11.000Z'
+      }
     });
   });
 });

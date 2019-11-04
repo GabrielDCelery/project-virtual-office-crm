@@ -10,8 +10,8 @@ exports.seed = async knex => {
       birth_date: new Date('1983-11-08'),
       identifier_document_id: 1,
       permanent_address_id: 1,
-      version: 0,
-      version_start_at: new Date('2019-08-01T11:11:11')
+      created_at: new Date('2019-08-01T11:11:11'),
+      updated_at: new Date('2019-08-01T11:11:11')
     },
     {
       id: 2,
@@ -21,8 +21,8 @@ exports.seed = async knex => {
       birth_date: new Date('1743-04-13'),
       identifier_document_id: 1,
       permanent_address_id: 3,
-      version: 1,
-      version_start_at: new Date('2019-08-01T11:11:11')
+      created_at: new Date('2018-06-03T11:11:11'),
+      updated_at: new Date('2019-08-01T11:11:11')
     }
   ]);
 

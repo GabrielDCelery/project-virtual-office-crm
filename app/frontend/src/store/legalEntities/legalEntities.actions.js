@@ -12,7 +12,7 @@ export const actionGetAllVersionsOfAllEntities = () => {
     const {
       success,
       payload
-    } = await services.api.legalEntities.getAllVersionsOfAllEntities();
+    } = await services.api.legalEntities.getAllVersionsOfAllRecords();
 
     if (!success) {
       return dispatch({

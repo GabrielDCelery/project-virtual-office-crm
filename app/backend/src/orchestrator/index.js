@@ -31,7 +31,7 @@ class Orchestrator {
       },
       legalEntities: {
         update: legalEntities.updateWrapper(services),
-        getAllVersionsOfAllEntities: legalEntities.getAllVersionsOfAllEntitiesWrapper(
+        getAllVersionsOfAllRecords: legalEntities.getAllVersionsOfAllEntitiesWrapper(
           services
         )
       },

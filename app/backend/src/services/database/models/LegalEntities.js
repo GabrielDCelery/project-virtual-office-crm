@@ -43,12 +43,6 @@ class LegalEntities extends Model {
         },
         permanent_address_id: {
           type: 'id'
-        },
-        version: {
-          type: 'integer'
-        },
-        version_start_at: {
-          type: 'date'
         }
       }
     };
@@ -56,20 +50,9 @@ class LegalEntities extends Model {
 
   static get relationMappings() {
     const Addresses = require('./Addresses');
-    const Emails = require('./Emails');
     const Mails = require('./Mails');
-    const LegalEntitiesVersion = require('./LegalEntitiesVersion');
-    const Phones = require('./Phones');
 
     return {
-      legal_entities_versions: {
-        relation: Model.HasManyRelation,
-        modelClass: LegalEntitiesVersion,
-        join: {
-          from: `${LegalEntities.tableName}.id`,
-          to: `${LegalEntitiesVersion.tableName}.legal_entity_id`
-        }
-      },
       mails: {
         relation: Model.HasManyRelation,
         modelClass: Mails,
@@ -113,6 +96,17 @@ class LegalEntities extends Model {
         }
       }
     };
+  }
+
+  $beforeInsert() {
+    const date = new Date().toISOString();
+
+    this.created_at = date;
+    this.updated_at = date;
+  }
+
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
   }
 }
 

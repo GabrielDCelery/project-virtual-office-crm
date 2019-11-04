@@ -8,6 +8,7 @@ class RecordPreparator {
     );
     this.prepareDbRecordForReturn = this.prepareDbRecordForReturn.bind(this);
     this.prepareRecordForDbInsert = this.prepareRecordForDbInsert.bind(this);
+    this.prepareRecordForUpdate = this.prepareRecordForUpdate.bind(this);
   }
 
   setJsonSchema(jsonSchema) {

@@ -44,6 +44,6 @@ export default {
   actionFindAllMailsPendingActionsNotifyEmails,
   actionPendingActionsSendEmailNotifications,
   legalEntities: {
-    getAllVersionsOfAllEntities: actionGetAllVersionsOfAllEntities
+    getAllVersionsOfAllRecords: actionGetAllVersionsOfAllEntities
   }
 };

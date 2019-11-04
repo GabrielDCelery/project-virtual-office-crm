@@ -1,8 +1,8 @@
 const { expect } = require('chai');
 //const verror = require("verror");
-const services = require('../../../../../src/services');
+const services = require('../src/services');
 
-describe('services.get("database").execute("naturalPeople", "getLatestVersionsOfAllEntities")', () => {
+describe('services.get("database").execute("naturalPeople", "getLatestVersionsOfAllRecords")', () => {
   beforeEach(async () => {
     await services
       .get('database')
@@ -15,7 +15,7 @@ describe('services.get("database").execute("naturalPeople", "getLatestVersionsOf
   it('gets latest versions of natural people', async () => {
     // Given
     const controller = 'naturalPeople';
-    const method = 'getLatestVersionsOfAllEntities';
+    const method = 'getLatestVersionsOfAllRecords';
 
     // When
     const result = await services.get('database').execute(controller, method);

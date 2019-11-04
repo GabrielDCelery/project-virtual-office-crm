@@ -2,7 +2,7 @@ const { expect } = require('chai');
 //const verror = require("verror");
 const services = require('../../../../../src/services');
 
-describe('services.get("database").execute("legalEntities", "getLatestVersionsOfAllEntities")', () => {
+describe('services.get("database").execute("legalEntities", "getLatestVersionsOfAllRecords")', () => {
   beforeEach(async () => {
     await services
       .get('database')
@@ -15,7 +15,7 @@ describe('services.get("database").execute("legalEntities", "getLatestVersionsOf
   it('gets latest versions of legal entities', async () => {
     // Given
     const controller = 'legalEntities';
-    const method = 'getLatestVersionsOfAllEntities';
+    const method = 'getLatestVersionsOfAllRecords';
 
     // When
     const result = await services.get('database').execute(controller, method);
@@ -34,8 +34,8 @@ describe('services.get("database").execute("legalEntities", "getLatestVersionsOf
           registrationId: '03-01-131101',
           taxId: '13781174-1-42',
           permanentAddressId: 1,
-          version: 0,
-          versionStartAt: new Date('2019-08-01T11:11:11.000Z')
+          createdAt: new Date('2019-08-01 11:11:11'),
+          updatedAt: new Date('2019-08-01 11:11:11')
         },
         {
           id: 2,
@@ -45,8 +45,8 @@ describe('services.get("database").execute("legalEntities", "getLatestVersionsOf
           registrationId: '02-03-529212',
           taxId: '31580371-1-42',
           permanentAddressId: 1,
-          version: 2,
-          versionStartAt: new Date('2019-08-09T11:11:11.000Z')
+          createdAt: new Date('2018-08-03 11:11:11'),
+          updatedAt: new Date('2019-08-09 11:11:11')
         }
       ]
     });

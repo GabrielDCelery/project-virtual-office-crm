@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 class LegalEntities {
-  async getAllVersionsOfAllEntities() {
+  async getAllVersionsOfAllRecords() {
     const { data } = await axios({
       method: 'GET',
-      url: `/api/legalEntities/getAllVersionsOfAllEntities`,
+      url: `/api/legalEntities/getAllVersionsOfAllRecords`,
       responseType: 'json'
     });
 

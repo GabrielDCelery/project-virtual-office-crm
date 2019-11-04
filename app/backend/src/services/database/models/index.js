@@ -6,8 +6,8 @@ module.exports = {
   DocumentsCloud: require('./DocumentsCloud'),
   DocumentsTemporary: require('./DocumentsTemporary'),
   Emails: require('./Emails'),
+  HistoryRecordChanges: require('./HistoryRecordChanges'),
   LegalEntities: require('./LegalEntities'),
-  LegalEntitiesVersion: require('./LegalEntitiesVersion'),
   MailSenderNames: require('./MailSenderNames'),
   MailSenders: require('./MailSenders'),
   MailSubjects: require('./MailSubjects'),
@@ -16,7 +16,6 @@ module.exports = {
   MailsAuditTrailsDetails: require('./MailsAuditTrailsDetails'),
   MailsPendingActions: require('./MailsPendingActions'),
   NaturalPeople: require('./NaturalPeople'),
-  NaturalPeopleVersion: require('./NaturalPeopleVersion'),
   Phones: require('./Phones'),
   Users: require('./Users')
 };

@@ -1,32 +1,23 @@
 const { expect } = require('chai');
 //const verror = require("verror");
-const sinon = require('sinon');
-const services = require('../../../../../src/services');
+const services = require('../src/services');
 
-describe('services.get("database").execute("naturalPeople", "update")', () => {
-  let clock = null;
-
+describe('services.get("database").execute("naturalPeople", "getAllVersionsOfSingleRecord")', () => {
   beforeEach(async () => {
     await services
       .get('database')
       .getKnex()
       .seed.run();
-    clock = sinon.useFakeTimers(
-      new Date(new Date('2019-08-27T11:11:11.000Z')).getTime()
-    );
   });
 
-  afterEach(async () => {
-    clock.restore();
-  });
+  afterEach(async () => {});
 
-  it('updates a natural person', async () => {
+  it('gets all versions of a natural person', async () => {
     // Given
     const controller = 'naturalPeople';
-    const method = 'update';
+    const method = 'getAllVersionsOfSingleRecord';
     const args = {
-      id: 2,
-      firstName: 'Tooooomas'
+      id: 2
     };
 
     // When
@@ -42,18 +33,6 @@ describe('services.get("database").execute("naturalPeople", "update")', () => {
       payload: [
         {
           naturalPersonId: 2,
-          firstName: 'Tooooomas',
-          lastName: 'Jefferson',
-          motherName: 'Jane Randolph Jefferson',
-          birthDate: new Date('1743-04-13T00:00:00.000Z'),
-          identifierDocumentId: 1,
-          permanentAddressId: 3,
-          version: 2,
-          versionStartAt: new Date('2019-08-27T11:11:11.000Z'),
-          versionEndAt: null
-        },
-        {
-          naturalPersonId: 2,
           firstName: 'Thomas',
           lastName: 'Jefferson',
           motherName: 'Jane Randolph Jefferson',
@@ -62,7 +41,7 @@ describe('services.get("database").execute("naturalPeople", "update")', () => {
           permanentAddressId: 3,
           version: 1,
           versionStartAt: new Date('2019-08-01T11:11:11.000Z'),
-          versionEndAt: new Date('2019-08-27T11:11:11.000Z')
+          versionEndAt: null
         },
         {
           naturalPersonId: 2,

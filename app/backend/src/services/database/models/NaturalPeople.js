@@ -30,12 +30,6 @@ class NaturalPeople extends Model {
         },
         permanent_address_id: {
           type: 'id'
-        },
-        version: {
-          type: 'integer'
-        },
-        version_start_at: {
-          type: 'date'
         }
       }
     };
@@ -44,17 +38,8 @@ class NaturalPeople extends Model {
   static get relationMappings() {
     const Addresses = require('./Addresses');
     const Documents = require('./Documents');
-    const NaturalPeopleVersion = require('./NaturalPeopleVersion');
 
     return {
-      natural_people_versions: {
-        relation: Model.HasManyRelation,
-        modelClass: NaturalPeopleVersion,
-        join: {
-          from: `${NaturalPeople.tableName}.id`,
-          to: `${NaturalPeopleVersion.tableName}.natural_person_id`
-        }
-      },
       identifier_document: {
         relation: Model.BelongsToOneRelation,
         modelClass: Documents,
@@ -72,6 +57,17 @@ class NaturalPeople extends Model {
         }
       }
     };
+  }
+
+  $beforeInsert() {
+    const date = new Date().toISOString();
+
+    this.created_at = date;
+    this.updated_at = date;
+  }
+
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
   }
 }
 

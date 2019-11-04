@@ -48,8 +48,8 @@ describe('services.get("database").execute("naturalPeople", "create")', () => {
         birthDate: new Date('1990-07-03T00:00:00.000Z'),
         identifierDocumentId: 1,
         permanentAddressId: 1,
-        version: 0,
-        versionStartAt: new Date('2019-08-27T11:11:11.000Z'),
+        createdAt: '2019-08-27T11:11:11.000Z',
+        updatedAt: '2019-08-27T11:11:11.000Z',
         id: 3
       }
     });

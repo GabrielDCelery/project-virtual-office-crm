@@ -6,8 +6,8 @@ const {
   DocumentsCloud,
   DocumentsTemporary,
   Emails,
+  HistoryRecordChanges,
   LegalEntities,
-  LegalEntitiesVersion,
   MailSenderNames,
   MailSenders,
   MailSubjects,
@@ -16,12 +16,43 @@ const {
   MailsAuditTrailsDetails,
   MailsPendingActions,
   NaturalPeople,
-  NaturalPeopleVersion,
   Phones,
   Users
 } = require('../../models');
 
 exports.up = async knex => {
+  await knex.schema.createTable(HistoryRecordChanges.tableName, table => {
+    table.increments('id').primary();
+    table
+      .enum('table', [
+        HistoryRecordChanges.TABLES.LEGAL_ENTITIES,
+        HistoryRecordChanges.TABLES.NATURAL_PEOPLE
+      ])
+      .notNullable()
+      .index();
+    table
+      .enum('column', [
+        HistoryRecordChanges.COLUMNS.SHORT_NAME,
+        HistoryRecordChanges.COLUMNS.LONG_NAME,
+        HistoryRecordChanges.COLUMNS.TYPE,
+        HistoryRecordChanges.COLUMNS.REGISTRATION_ID,
+        HistoryRecordChanges.COLUMNS.TAX_ID,
+        HistoryRecordChanges.COLUMNS.PERMANENT_ADDRESS_ID
+      ])
+      .notNullable();
+    table
+      .enum('column_type', [
+        HistoryRecordChanges.COLUMN_TYPES.STRING,
+        HistoryRecordChanges.COLUMN_TYPES.INTEGER
+      ])
+      .notNullable();
+    table.integer('record_id').notNullable();
+    table.string('old_value');
+    table.string('new_value');
+    table.timestamp('changed_at');
+    table.index(['table', 'record_id']);
+  });
+
   await knex.schema.createTable(Countries.tableName, table => {
     table.increments('id').primary();
     table.string('name').notNullable();
@@ -189,37 +220,7 @@ exports.up = async knex => {
       .references('id')
       .inTable(Addresses.tableName)
       .notNullable();
-    table.integer('version').notNullable();
-    table.datetime('version_start_at').notNullable();
-  });
-
-  await knex.schema.createTable(LegalEntitiesVersion.tableName, table => {
-    table.increments('id').primary();
-    table
-      .integer('legal_entity_id')
-      .references('id')
-      .inTable(LegalEntities.tableName)
-      .notNullable()
-      .index();
-    table.string('short_name').notNullable();
-    table.string('long_name').notNullable();
-    table
-      .enum('type', [
-        LegalEntitiesVersion.TYPES.LIMITED_LIABILITY_COMPANY,
-        LegalEntitiesVersion.TYPES.UNLIMITED_PARTNERSHIP
-      ])
-      .notNullable();
-    table.string('registration_id');
-    table.string('tax_id');
-    table
-      .integer('permanent_address_id')
-      .references('id')
-      .inTable(Addresses.tableName)
-      .notNullable();
-    table.integer('version').notNullable();
-    table.datetime('version_start_at').notNullable();
-    table.datetime('version_end_at').notNullable();
-    table.unique(['legal_entity_id', 'version']);
+    table.timestamps();
   });
 
   await knex.schema.createTable(Mails.tableName, table => {
@@ -322,45 +323,16 @@ exports.up = async knex => {
       .integer('permanent_address_id')
       .references('id')
       .inTable(Addresses.tableName);
-    table.integer('version').notNullable();
-    table.datetime('version_start_at').notNullable();
-  });
-
-  await knex.schema.createTable(NaturalPeopleVersion.tableName, table => {
-    table.increments('id').primary();
-    table
-      .integer('natural_person_id')
-      .references('id')
-      .inTable(NaturalPeople.tableName)
-      .notNullable()
-      .index();
-    table.string('first_name').notNullable();
-    table.string('last_name').notNullable();
-    table.string('mother_name');
-    table.date('birth_date');
-    table
-      .integer('identifier_document_id')
-      .references('id')
-      .inTable(Documents.tableName);
-    table
-      .integer('permanent_address_id')
-      .references('id')
-      .inTable(Addresses.tableName);
-    table.integer('version').notNullable();
-    table.datetime('version_start_at').notNullable();
-    table.datetime('version_end_at').notNullable();
-    table.unique(['natural_person_id', 'version']);
+    table.timestamps();
   });
 };
 
 exports.down = async knex => {
-  await knex.schema.dropTableIfExists(NaturalPeopleVersion.tableName);
   await knex.schema.dropTableIfExists(NaturalPeople.tableName);
   await knex.schema.dropTableIfExists(MailsPendingActions.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrailsDetails.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrails.tableName);
   await knex.schema.dropTableIfExists(Mails.tableName);
-  await knex.schema.dropTableIfExists(LegalEntitiesVersion.tableName);
   await knex.schema.dropTableIfExists(LegalEntities.tableName);
   await knex.schema.dropTableIfExists(MailSubjects.tableName);
   await knex.schema.dropTableIfExists(MailSenders.tableName);
@@ -374,4 +346,5 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(Phones.tableName);
   await knex.schema.dropTableIfExists(Cities.tableName);
   await knex.schema.dropTableIfExists(Countries.tableName);
+  await knex.schema.dropTableIfExists(HistoryRecordChanges.tableName);
 };

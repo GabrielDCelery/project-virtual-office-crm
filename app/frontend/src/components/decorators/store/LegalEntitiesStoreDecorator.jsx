@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 
 const mapActionsToProps = {
   actionGetAllVersionsOfAllEntities:
-    store.actions.legalEntities.getAllVersionsOfAllEntities
+    store.actions.legalEntities.getAllVersionsOfAllRecords
 };
 
 export const LegalEntitiesStoreDecorator = ToWrapComponent => {

@@ -3,22 +3,22 @@ module.exports = ({ Router, helpers, orchestrator }) => {
   const router = Router();
   const apiResultWrapper = new ApiResultWrapper();
 
-  router.get('/getAllVersionsOfAllEntities', async (req, res) => {
+  router.get('/getAllVersionsOfAllRecords', async (req, res) => {
     return apiResultWrapper.returnJSON({
       res,
       toReturn: await orchestrator.execute(
         'legalEntities',
-        'getAllVersionsOfAllEntities'
+        'getAllVersionsOfAllRecords'
       )
     });
   });
 
-  router.get('/getAllVersionsOfSingleEntity', async (req, res) => {
+  router.get('/getAllVersionsOfSingleRecord', async (req, res) => {
     return apiResultWrapper.returnJSON({
       res,
       toReturn: await orchestrator.execute(
         'legalEntities',
-        'getAllVersionsOfSingleEntity',
+        'getAllVersionsOfSingleRecord',
         req.body
       )
     });

@@ -49,8 +49,8 @@ describe('services.get("database").execute("legalEntities", "create")', () => {
         registrationId: '01-01-129342',
         taxId: '21583385-1-41',
         permanentAddressId: 2,
-        version: 0,
-        versionStartAt: new Date('2019-08-27T11:11:11.000Z')
+        createdAt: '2019-08-27T11:11:11.000Z',
+        updatedAt: '2019-08-27T11:11:11.000Z'
       }
     });
   });
