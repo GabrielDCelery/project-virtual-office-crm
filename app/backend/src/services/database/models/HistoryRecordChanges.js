@@ -19,7 +19,12 @@ class HistoryRecordChanges extends Model {
       TYPE: 'type',
       REGISTRATION_ID: 'registration_id',
       TAX_ID: 'tax_id',
-      PERMANENT_ADDRESS_ID: 'permanent_address_id'
+      PERMANENT_ADDRESS_ID: 'permanent_address_id',
+      FIRST_NAME: 'first_name',
+      LAST_NAME: 'last_name',
+      MOTHER_NAME: 'mother_name',
+      BIRTH_DATE: 'birth_date',
+      IDENTIFIER_DOCUMENT_ID: 'identifier_document_id'
     };
   }
 
@@ -53,7 +58,12 @@ class HistoryRecordChanges extends Model {
             HistoryRecordChanges.COLUMNS.TYPE,
             HistoryRecordChanges.COLUMNS.REGISTRATION_ID,
             HistoryRecordChanges.COLUMNS.TAX_ID,
-            HistoryRecordChanges.COLUMNS.PERMANENT_ADDRESS_ID
+            HistoryRecordChanges.COLUMNS.PERMANENT_ADDRESS_ID,
+            HistoryRecordChanges.COLUMNS.FIRST_NAME,
+            HistoryRecordChanges.COLUMNS.LAST_NAME,
+            HistoryRecordChanges.COLUMNS.MOTHER_NAME,
+            HistoryRecordChanges.COLUMNS.BIRTH_DATE,
+            HistoryRecordChanges.COLUMNS.IDENTIFIER_DOCUMENT_ID
           ]
         },
         column_type: {

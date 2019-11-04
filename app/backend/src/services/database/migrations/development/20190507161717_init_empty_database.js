@@ -37,7 +37,12 @@ exports.up = async knex => {
         HistoryRecordChanges.COLUMNS.TYPE,
         HistoryRecordChanges.COLUMNS.REGISTRATION_ID,
         HistoryRecordChanges.COLUMNS.TAX_ID,
-        HistoryRecordChanges.COLUMNS.PERMANENT_ADDRESS_ID
+        HistoryRecordChanges.COLUMNS.PERMANENT_ADDRESS_ID,
+        HistoryRecordChanges.COLUMNS.FIRST_NAME,
+        HistoryRecordChanges.COLUMNS.LAST_NAME,
+        HistoryRecordChanges.COLUMNS.MOTHER_NAME,
+        HistoryRecordChanges.COLUMNS.BIRTH_DATE,
+        HistoryRecordChanges.COLUMNS.IDENTIFIER_DOCUMENT_ID
       ])
       .notNullable();
     table

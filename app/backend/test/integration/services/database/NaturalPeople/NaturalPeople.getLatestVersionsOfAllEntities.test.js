@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 //const verror = require("verror");
-const services = require('../src/services');
+const services = require('../../../../../src/services');
 
 describe('services.get("database").execute("naturalPeople", "getLatestVersionsOfAllRecords")', () => {
   beforeEach(async () => {
@@ -34,8 +34,8 @@ describe('services.get("database").execute("naturalPeople", "getLatestVersionsOf
           birthDate: new Date('1983-11-08T00:00:00.000Z'),
           identifierDocumentId: 1,
           permanentAddressId: 1,
-          version: 0,
-          versionStartAt: new Date('2019-08-01T11:11:11.000Z')
+          createdAt: new Date('2019-08-01T11:11:11.000Z'),
+          updatedAt: new Date('2019-08-01T11:11:11.000Z')
         },
         {
           id: 2,
@@ -45,8 +45,8 @@ describe('services.get("database").execute("naturalPeople", "getLatestVersionsOf
           birthDate: new Date('1743-04-13T00:00:00.000Z'),
           identifierDocumentId: 1,
           permanentAddressId: 3,
-          version: 1,
-          versionStartAt: new Date('2019-08-01T11:11:11.000Z')
+          createdAt: new Date('2018-06-03T11:11:11.000Z'),
+          updatedAt: new Date('2019-08-01T11:11:11.000Z')
         }
       ]
     });

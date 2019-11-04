@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 //const verror = require("verror");
-const services = require('../src/services');
+const services = require('../../../../../src/services');
 
 describe('services.get("database").execute("naturalPeople", "getAllVersionsOfSingleRecord")', () => {
   beforeEach(async () => {
@@ -32,28 +32,28 @@ describe('services.get("database").execute("naturalPeople", "getAllVersionsOfSin
       errors: [],
       payload: [
         {
-          naturalPersonId: 2,
+          id: 2,
           firstName: 'Thomas',
           lastName: 'Jefferson',
           motherName: 'Jane Randolph Jefferson',
           birthDate: new Date('1743-04-13T00:00:00.000Z'),
           identifierDocumentId: 1,
           permanentAddressId: 3,
-          version: 1,
-          versionStartAt: new Date('2019-08-01T11:11:11.000Z'),
-          versionEndAt: null
+          createdAt: new Date('2018-06-03T11:11:11.000Z'),
+          updatedAt: new Date('2019-08-01T11:11:11.000Z'),
+          version: 1
         },
         {
-          naturalPersonId: 2,
+          id: 2,
           firstName: 'Thomas',
           lastName: 'Jefferson',
           motherName: 'Jane Randolph Jefferson',
-          birthDate: new Date('1743-04-13T00:00:00.000Z'),
+          birthDate: '1743-04-13T00:00:00.000Z',
           identifierDocumentId: 1,
           permanentAddressId: 4,
-          version: 0,
-          versionStartAt: new Date('2018-06-03T11:11:11.000Z'),
-          versionEndAt: new Date('2019-08-01T11:11:11.000Z')
+          createdAt: new Date('2018-06-03T11:11:11.000Z'),
+          updatedAt: new Date('2018-06-03T11:11:11.000Z'),
+          version: 0
         }
       ]
     });

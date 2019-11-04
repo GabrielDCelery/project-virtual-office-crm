@@ -13,6 +13,9 @@ class LegalEntities {
     this.getAllVersionsOfSingleRecord = this.getAllVersionsOfSingleRecord.bind(
       this
     );
+    this.getAllVersionsOfAllRecords = this.getAllVersionsOfAllRecords.bind(
+      this
+    );
   }
 
   async create({
