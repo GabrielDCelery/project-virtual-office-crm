@@ -1,6 +1,7 @@
 const {
   Addresses,
   Cities,
+  Contracts,
   Countries,
   Documents,
   DocumentsCloud,
@@ -330,9 +331,30 @@ exports.up = async knex => {
       .inTable(Addresses.tableName);
     table.timestamps();
   });
+
+  await knex.schema.createTable(Contracts.tableName, table => {
+    table.increments('id').primary();
+    table.integer('client_id').notNullable();
+    table.integer('client_signatory_id').notNullable();
+    table
+      .enum('client_signatory_type', [Contracts.SIGNATORY_TYPES.MANAGER])
+      .notNullable();
+    table.integer('service_provider_id').notNullable();
+    table.integer('service_provider_signatory_id').notNullable();
+    table
+      .enum('service_provider_signatory_type', [
+        Contracts.SIGNATORY_TYPES.MANAGER
+      ])
+      .notNullable();
+    table.date('start_at');
+    table.date('end_at');
+    table.enum('status', [Contracts.STATUSES.ACTIVE]).notNullable();
+    table.timestamps();
+  });
 };
 
 exports.down = async knex => {
+  await knex.schema.dropTableIfExists(Contracts.tableName);
   await knex.schema.dropTableIfExists(NaturalPeople.tableName);
   await knex.schema.dropTableIfExists(MailsPendingActions.tableName);
   await knex.schema.dropTableIfExists(MailsAuditTrailsDetails.tableName);

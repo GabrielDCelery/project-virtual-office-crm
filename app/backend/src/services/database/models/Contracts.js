@@ -54,12 +54,6 @@ class Contracts extends Model {
         status: {
           type: 'string',
           enum: [Contracts.STATUSES.ACTIVE]
-        },
-        version: {
-          type: 'integer'
-        },
-        version_start_at: {
-          type: 'date'
         }
       }
     };

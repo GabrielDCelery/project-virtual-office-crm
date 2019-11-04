@@ -1,6 +1,7 @@
 const {
   Addresses,
   Cities,
+  Contracts,
   Countries,
   Documents,
   DocumentsCloud,
@@ -21,6 +22,7 @@ const {
 
 exports.seed = async knex => {
   await knex(HistoryRecordChanges.tableName).del();
+  await knex(Contracts.tableName).del();
   await knex(NaturalPeople.tableName).del();
   await knex(MailsPendingActions.tableName).del();
   await knex(MailsAuditTrails.tableName).del();
