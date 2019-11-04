@@ -20,18 +20,18 @@ class NaturalPeople {
       prepareDbRecordForReturn
     } = this.recordPreparator;
 
-    const dbRecord = await this.models.NaturalPeople.query(transaction).insert(
-      prepareRecordForDbInsert({
-        firstName,
-        lastName,
-        motherName,
-        birthDate,
-        identifierDocumentId,
-        permanentAddressId
-      })
+    return prepareDbRecordForReturn(
+      await this.models.NaturalPeople.query(transaction).insert(
+        prepareRecordForDbInsert({
+          firstName,
+          lastName,
+          motherName,
+          birthDate,
+          identifierDocumentId,
+          permanentAddressId
+        })
+      )
     );
-
-    return prepareDbRecordForReturn(dbRecord);
   }
 }
 

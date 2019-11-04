@@ -12,7 +12,6 @@ module.exports = ({ Router, helpers, orchestrator }) => {
       )
     });
   });
-
   router.get('/getAllVersionsOfSingleRecord', async (req, res) => {
     return apiResultWrapper.returnJSON({
       res,
@@ -20,6 +19,16 @@ module.exports = ({ Router, helpers, orchestrator }) => {
         'legalEntities',
         'getAllVersionsOfSingleRecord',
         req.body
+      )
+    });
+  });
+
+  router.get('/getLatestVersionsOfAllRecords', async (req, res) => {
+    return apiResultWrapper.returnJSON({
+      res,
+      toReturn: await orchestrator.execute(
+        'legalEntities',
+        'getLatestVersionsOfAllRecords'
       )
     });
   });

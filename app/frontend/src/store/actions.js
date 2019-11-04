@@ -11,7 +11,7 @@ import {
   actionFindAllMailsPendingActionsNotifyEmails,
   actionPendingActionsSendEmailNotifications
 } from './mails';
-import { actionGetAllVersionsOfAllEntities } from './legalEntities';
+import { actionGetLatestVersionsOfAllEntities } from './legalEntities';
 import {
   actionOpenSuccessSnackBar,
   actionOpenErrorSnackBar,
@@ -43,7 +43,5 @@ export default {
   actionSubmitAddNewMailForm,
   actionFindAllMailsPendingActionsNotifyEmails,
   actionPendingActionsSendEmailNotifications,
-  legalEntities: {
-    getAllVersionsOfAllRecords: actionGetAllVersionsOfAllEntities
-  }
+  actionGetLatestVersionsOfAllEntities
 };

@@ -5,14 +5,14 @@ import {
 } from './legalEntities.constants';
 import services from 'services';
 
-export const actionGetAllVersionsOfAllEntities = () => {
+export const actionGetLatestVersionsOfAllEntities = () => {
   return async dispatch => {
     dispatch({ type: START_FETCHING_ALL_VERSIONS_OF_ALL_LEGAL_ENTITIES });
 
     const {
       success,
       payload
-    } = await services.api.legalEntities.getAllVersionsOfAllRecords();
+    } = await services.api.legalEntities.getLatestVersionsOfAllRecords();
 
     if (!success) {
       return dispatch({

@@ -33,6 +33,9 @@ class Orchestrator {
         update: legalEntities.updateWrapper(services),
         getAllVersionsOfAllRecords: legalEntities.getAllVersionsOfAllEntitiesWrapper(
           services
+        ),
+        getLatestVersionsOfAllRecords: legalEntities.getLatestVersionsOfAllRecordsWrapper(
+          { services }
         )
       },
       mails: {

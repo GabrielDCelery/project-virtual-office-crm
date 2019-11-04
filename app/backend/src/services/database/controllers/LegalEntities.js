@@ -1,4 +1,5 @@
 const HistoryRecordChanges = require('./HistoryRecordChanges');
+
 class LegalEntities {
   constructor({ models, nodeModules, recordPreparator }) {
     this.models = models;
@@ -28,18 +29,18 @@ class LegalEntities {
       prepareDbRecordForReturn
     } = this.recordPreparator;
 
-    const dbRecord = await this.models.LegalEntities.query(transaction).insert(
-      prepareRecordForDbInsert({
-        shortName,
-        longName,
-        type,
-        registrationId,
-        taxId,
-        permanentAddressId
-      })
+    return prepareDbRecordForReturn(
+      await this.models.LegalEntities.query(transaction).insert(
+        prepareRecordForDbInsert({
+          shortName,
+          longName,
+          type,
+          registrationId,
+          taxId,
+          permanentAddressId
+        })
+      )
     );
-
-    return prepareDbRecordForReturn(dbRecord);
   }
 
   async update({ id, transaction, ...inputs }) {
@@ -104,15 +105,9 @@ class LegalEntities {
 
     const changes = await this.models.HistoryRecordChanges.query(
       transaction
-    ) /*.whereIn(
-      ['table', 'record_id'],
-      records.map(record => {
-        return [this.models.LegalEntities.tableName, record['id']];
-      })
-    )*/
-      .where({
-        table: this.models.LegalEntities.tableName
-      });
+    ).where({
+      table: this.models.LegalEntities.tableName
+    });
 
     return HistoryRecordChanges.getAllVersionsOfRecords({
       records,

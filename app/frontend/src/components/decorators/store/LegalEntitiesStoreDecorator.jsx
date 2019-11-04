@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import store from 'store';
 
+const {
+  actions: { actionGetLatestVersionsOfAllEntities }
+} = store;
+
 const mapStateToProps = state => {
   return {
     stateIsFetchingLegalEntities: state.legalEntities.isFetching,
@@ -12,8 +16,7 @@ const mapStateToProps = state => {
 };
 
 const mapActionsToProps = {
-  actionGetAllVersionsOfAllEntities:
-    store.actions.legalEntities.getAllVersionsOfAllRecords
+  actionGetLatestVersionsOfAllEntities
 };
 
 export const LegalEntitiesStoreDecorator = ToWrapComponent => {

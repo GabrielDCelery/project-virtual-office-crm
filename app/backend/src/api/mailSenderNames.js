@@ -1,5 +1,3 @@
-const { apiJsonResultWrapper } = require('../helpers');
-
 module.exports = ({ Router, helpers, orchestrator }) => {
   const { ApiResultWrapper } = helpers;
   const router = Router();

@@ -8,10 +8,13 @@ const getLegalEntityAllVersions = state => {
 export const selectorGetLegalEntityRecommendations = createSelector(
   [getLegalEntityAllVersions],
   legalEntityAllVersions => {
-    return legalEntityAllVersions.map(({ legalEntityId, longName, type }) => ({
-      value: legalEntityId,
-      label: `${longName} ${type}`,
-      name: longName
-    }));
+    return _.chain(legalEntityAllVersions)
+      .uniqBy('longName')
+      .map(({ id, longName, type }) => ({
+        value: id,
+        label: `${longName} ${type}`,
+        name: longName
+      }))
+      .value();
   }
 );

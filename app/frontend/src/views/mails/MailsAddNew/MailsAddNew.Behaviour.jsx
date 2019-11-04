@@ -19,7 +19,7 @@ export default ToWrapComponent => {
       actionFindAllMailSenderNames,
       actionFindAllMailSenders,
       actionFindAllMailSubjects,
-      actionGetAllVersionsOfAllEntities,
+      actionGetLatestVersionsOfAllEntities,
       actionSetAddNewMailFormField,
       actionSubmitAddNewMailForm,
       stateAddNewMailFormFieldGetter,
@@ -348,7 +348,7 @@ export default ToWrapComponent => {
         await actionFindAllMailSenderNames();
         await actionFindAllMailSenders();
         await actionFindAllMailSubjects();
-        await actionGetAllVersionsOfAllEntities();
+        await actionGetLatestVersionsOfAllEntities();
       })();
     }, [
       actionFindAllMailSubjects,
@@ -356,7 +356,7 @@ export default ToWrapComponent => {
       actionFindAllCountries,
       actionFindAllMailSenderNames,
       actionFindAllMailSenders,
-      actionGetAllVersionsOfAllEntities
+      actionGetLatestVersionsOfAllEntities
     ]);
 
     return (
