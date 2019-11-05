@@ -47,7 +47,7 @@ class Phones extends Model {
 
   static get relationMappings() {
     const Countries = require('./Countries');
-    const LegalEntities = require('./LegalEntities');
+    const Contracts = require('./Contracts');
 
     return {
       country: {
@@ -57,21 +57,19 @@ class Phones extends Model {
           from: `${Phones.tableName}.country_id`,
           to: `${Countries.tableName}.id`
         }
-      }
-      /*,
-      legal_entities: {
+      },
+      contracts: {
         relation: Model.ManyToManyRelation,
-        modelClass: LegalEntities,
+        modelClass: Contracts,
         join: {
           from: `${Phones.tableName}.id`,
           through: {
-            from: `${LegalEntities.tableName}_${Phones.tableName}.phone_id`,
-            to: `${LegalEntities.tableName}_${Phones.tableName}.legal_entity_id`
+            from: `${Contracts.tableName}_${Phones.tableName}.phone_id`,
+            to: `${Contracts.tableName}_${Phones.tableName}.contract_id`
           },
-          to: `${LegalEntities.tableName}.id`
+          to: `${Contracts.tableName}.id`
         }
       }
-      */
     };
   }
 }

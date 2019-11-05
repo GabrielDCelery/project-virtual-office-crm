@@ -7,6 +7,7 @@ module.exports = {
   DocumentsCloud: require('./DocumentsCloud'),
   DocumentsTemporary: require('./DocumentsTemporary'),
   Emails: require('./Emails'),
+  HistoryManyToManyChanges: require('./HistoryManyToManyChanges'),
   HistoryRecordChanges: require('./HistoryRecordChanges'),
   LegalEntities: require('./LegalEntities'),
   MailSenderNames: require('./MailSenderNames'),

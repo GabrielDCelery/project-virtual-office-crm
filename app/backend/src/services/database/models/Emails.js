@@ -30,26 +30,25 @@ class Emails extends Model {
       }
     };
   }
-  /*
+
   static get relationMappings() {
-    const LegalEntities = require('./LegalEntities');
+    const Contracts = require('./Contracts');
 
     return {
       legal_entities: {
         relation: Model.ManyToManyRelation,
-        modelClass: LegalEntities,
+        modelClass: Contracts,
         join: {
           from: `${Emails.tableName}.id`,
           through: {
-            from: `${LegalEntities.tableName}_${Emails.tableName}.email_id`,
-            to: `${LegalEntities.tableName}_${Emails.tableName}.legal_entity_id`
+            from: `${Contracts.tableName}_${Emails.tableName}.email_id`,
+            to: `${Contracts.tableName}_${Emails.tableName}.contract_id`
           },
-          to: `${LegalEntities.tableName}.id`
+          to: `${Contracts.tableName}.id`
         }
       }
     };
   }
-  */
 }
 
 module.exports = Emails;

@@ -60,7 +60,46 @@ class Contracts extends Model {
   }
 
   static get relationMappings() {
-    return {};
+    const Emails = require('./Emails');
+    const Phones = require('./Phones');
+
+    return {
+      emails: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Emails,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_${Emails.tableName}.contract_id`,
+            to: `${Contracts.tableName}_${Emails.tableName}.email_id`
+          },
+          to: `${Emails.tableName}.id`
+        }
+      },
+      phones: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Phones,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_${Phones.tableName}.contract_id`,
+            to: `${Contracts.tableName}_${Phones.tableName}.phone_id`
+          },
+          to: `${Phones.tableName}.id`
+        }
+      }
+    };
+  }
+
+  $beforeInsert() {
+    const date = new Date().toISOString();
+
+    this.created_at = date;
+    this.updated_at = date;
+  }
+
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
   }
 }
 

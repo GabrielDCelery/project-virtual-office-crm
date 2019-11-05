@@ -7,6 +7,7 @@ const {
   DocumentsCloud,
   DocumentsTemporary,
   Emails,
+  HistoryManyToManyChanges,
   HistoryRecordChanges,
   LegalEntities,
   MailSenderNames,
@@ -57,6 +58,27 @@ exports.up = async knex => {
     table.string('new_value');
     table.timestamp('changed_at');
     table.index(['table', 'record_id']);
+  });
+
+  await knex.schema.createTable(HistoryManyToManyChanges.tableName, table => {
+    table.increments('id').primary();
+    table
+      .enum('table_one', [HistoryManyToManyChanges.TABLES.CONTRACTS])
+      .notNullable()
+      .index();
+    table.integer('table_one_column').notNullable();
+    table
+      .enum('table_two', [HistoryManyToManyChanges.TABLES.EMAILS])
+      .notNullable()
+      .index();
+    table.integer('table_two_column').notNullable();
+    table
+      .enum('actions', [
+        HistoryManyToManyChanges.ACTIONS.ADDED,
+        HistoryManyToManyChanges.ACTIONS.REMOVED
+      ])
+      .notNullable();
+    table.timestamp('changed_at');
   });
 
   await knex.schema.createTable(Countries.tableName, table => {
@@ -334,13 +356,29 @@ exports.up = async knex => {
 
   await knex.schema.createTable(Contracts.tableName, table => {
     table.increments('id').primary();
-    table.integer('client_id').notNullable();
-    table.integer('client_signatory_id').notNullable();
+    table
+      .integer('client_id')
+      .references('id')
+      .inTable(LegalEntities.tableName)
+      .notNullable();
+    table
+      .integer('client_signatory_id')
+      .references('id')
+      .inTable(NaturalPeople.tableName)
+      .notNullable();
     table
       .enum('client_signatory_type', [Contracts.SIGNATORY_TYPES.MANAGER])
       .notNullable();
-    table.integer('service_provider_id').notNullable();
-    table.integer('service_provider_signatory_id').notNullable();
+    table
+      .integer('service_provider_id')
+      .references('id')
+      .inTable(LegalEntities.tableName)
+      .notNullable();
+    table
+      .integer('service_provider_signatory_id')
+      .references('id')
+      .inTable(NaturalPeople.tableName)
+      .notNullable();
     table
       .enum('service_provider_signatory_type', [
         Contracts.SIGNATORY_TYPES.MANAGER
@@ -351,9 +389,53 @@ exports.up = async knex => {
     table.enum('status', [Contracts.STATUSES.ACTIVE]).notNullable();
     table.timestamps();
   });
+
+  await knex.schema.createTable(
+    `${Contracts.tableName}_${Emails.tableName}`,
+    table => {
+      table
+        .integer('contract_id')
+        .references('id')
+        .inTable(Contracts.tableName)
+        .notNullable()
+        .index();
+      table
+        .integer('email_id')
+        .references('id')
+        .inTable(Emails.tableName)
+        .notNullable()
+        .index();
+      table.unique(['contract_id', 'email_id']);
+    }
+  );
+
+  await knex.schema.createTable(
+    `${Contracts.tableName}_${Phones.tableName}`,
+    table => {
+      table
+        .integer('contract_id')
+        .references('id')
+        .inTable(Contracts.tableName)
+        .notNullable()
+        .index();
+      table
+        .integer('phone_id')
+        .references('id')
+        .inTable(Phones.tableName)
+        .notNullable()
+        .index();
+      table.unique(['contract_id', 'phone_id']);
+    }
+  );
 };
 
 exports.down = async knex => {
+  await knex.schema.dropTableIfExists(
+    `${Contracts.tableName}_${Phones.tableName}`
+  );
+  await knex.schema.dropTableIfExists(
+    `${Contracts.tableName}_${Emails.tableName}`
+  );
   await knex.schema.dropTableIfExists(Contracts.tableName);
   await knex.schema.dropTableIfExists(NaturalPeople.tableName);
   await knex.schema.dropTableIfExists(MailsPendingActions.tableName);
@@ -373,5 +455,6 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(Phones.tableName);
   await knex.schema.dropTableIfExists(Cities.tableName);
   await knex.schema.dropTableIfExists(Countries.tableName);
+  await knex.schema.dropTableIfExists(HistoryManyToManyChanges.tableName);
   await knex.schema.dropTableIfExists(HistoryRecordChanges.tableName);
 };

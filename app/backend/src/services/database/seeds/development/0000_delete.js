@@ -7,6 +7,7 @@ const {
   DocumentsCloud,
   DocumentsTemporary,
   Emails,
+  HistoryManyToManyChanges,
   HistoryRecordChanges,
   LegalEntities,
   MailSenderNames,
@@ -21,7 +22,8 @@ const {
 } = require('../../models');
 
 exports.seed = async knex => {
-  await knex(HistoryRecordChanges.tableName).del();
+  await knex(`${Contracts.tableName}_${Phones.tableName}`).del();
+  await knex(`${Contracts.tableName}_${Emails.tableName}`).del();
   await knex(Contracts.tableName).del();
   await knex(NaturalPeople.tableName).del();
   await knex(MailsPendingActions.tableName).del();
@@ -40,4 +42,6 @@ exports.seed = async knex => {
   await knex(Phones.tableName).del();
   await knex(Cities.tableName).del();
   await knex(Countries.tableName).del();
+  await knex(HistoryManyToManyChanges.tableName).del();
+  await knex(HistoryRecordChanges.tableName).del();
 };
