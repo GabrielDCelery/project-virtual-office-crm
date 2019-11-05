@@ -35,14 +35,26 @@ class Emails extends Model {
     const Contracts = require('./Contracts');
 
     return {
-      legal_entities: {
+      contact_contracts: {
         relation: Model.ManyToManyRelation,
         modelClass: Contracts,
         join: {
           from: `${Emails.tableName}.id`,
           through: {
-            from: `${Contracts.tableName}_${Emails.tableName}.email_id`,
-            to: `${Contracts.tableName}_${Emails.tableName}.contract_id`
+            from: `${Contracts.tableName}_contact_${Emails.tableName}.email_id`,
+            to: `${Contracts.tableName}_contact_${Emails.tableName}.contract_id`
+          },
+          to: `${Contracts.tableName}.id`
+        }
+      },
+      mail_notification_contracts: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Contracts,
+        join: {
+          from: `${Emails.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_mail_notification_${Emails.tableName}.email_id`,
+            to: `${Contracts.tableName}_mail_notification_${Emails.tableName}.contract_id`
           },
           to: `${Contracts.tableName}.id`
         }

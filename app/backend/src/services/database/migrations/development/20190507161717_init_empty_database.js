@@ -10,6 +10,8 @@ const {
   HistoryManyToManyChanges,
   HistoryRecordChanges,
   LegalEntities,
+  MailReceiverNames,
+  MailReceivers,
   MailSenderNames,
   MailSenders,
   MailSubjects,
@@ -391,7 +393,7 @@ exports.up = async knex => {
   });
 
   await knex.schema.createTable(
-    `${Contracts.tableName}_${Emails.tableName}`,
+    `${Contracts.tableName}_contact_${Emails.tableName}`,
     table => {
       table
         .integer('contract_id')
@@ -410,7 +412,26 @@ exports.up = async knex => {
   );
 
   await knex.schema.createTable(
-    `${Contracts.tableName}_${Phones.tableName}`,
+    `${Contracts.tableName}_mail_notification_${Emails.tableName}`,
+    table => {
+      table
+        .integer('contract_id')
+        .references('id')
+        .inTable(Contracts.tableName)
+        .notNullable()
+        .index();
+      table
+        .integer('email_id')
+        .references('id')
+        .inTable(Emails.tableName)
+        .notNullable()
+        .index();
+      table.unique(['contract_id', 'email_id']);
+    }
+  );
+
+  await knex.schema.createTable(
+    `${Contracts.tableName}_contact_${Phones.tableName}`,
     table => {
       table
         .integer('contract_id')
@@ -427,14 +448,64 @@ exports.up = async knex => {
       table.unique(['contract_id', 'phone_id']);
     }
   );
+
+  await knex.schema.createTable(MailReceiverNames.tableName, table => {
+    table.increments('id').primary();
+    table.string('name').notNullable();
+    table.unique(['name']);
+  });
+
+  await knex.schema.createTable(MailReceivers.tableName, table => {
+    table.increments('id').primary();
+    table
+      .integer('address_id')
+      .references('id')
+      .inTable(Addresses.tableName)
+      .notNullable()
+      .index();
+    table
+      .integer('receiver_name_id')
+      .references('id')
+      .inTable(MailReceiverNames.tableName)
+      .notNullable()
+      .index();
+    table.unique(['address_id', 'receiver_name_id']);
+  });
+
+  await knex.schema.createTable(
+    `${Contracts.tableName}_${MailReceivers.tableName}`,
+    table => {
+      table
+        .integer('contract_id')
+        .references('id')
+        .inTable(Contracts.tableName)
+        .notNullable()
+        .index();
+      table
+        .integer('mail_receiver_id')
+        .references('id')
+        .inTable(Phones.tableName)
+        .notNullable()
+        .index();
+      table.unique(['contract_id', 'mail_receiver_id']);
+    }
+  );
 };
 
 exports.down = async knex => {
   await knex.schema.dropTableIfExists(
-    `${Contracts.tableName}_${Phones.tableName}`
+    `${Contracts.tableName}_${MailReceivers.tableName}`
+  );
+  await knex.schema.dropTableIfExists(MailReceivers.tableName);
+  await knex.schema.dropTableIfExists(MailReceiverNames.tableName);
+  await knex.schema.dropTableIfExists(
+    `${Contracts.tableName}_contact_${Phones.tableName}`
   );
   await knex.schema.dropTableIfExists(
-    `${Contracts.tableName}_${Emails.tableName}`
+    `${Contracts.tableName}_mail_notification_${Emails.tableName}`
+  );
+  await knex.schema.dropTableIfExists(
+    `${Contracts.tableName}_contact_${Emails.tableName}`
   );
   await knex.schema.dropTableIfExists(Contracts.tableName);
   await knex.schema.dropTableIfExists(NaturalPeople.tableName);

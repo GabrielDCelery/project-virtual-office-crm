@@ -58,14 +58,14 @@ class Phones extends Model {
           to: `${Countries.tableName}.id`
         }
       },
-      contracts: {
+      contact_contracts: {
         relation: Model.ManyToManyRelation,
         modelClass: Contracts,
         join: {
           from: `${Phones.tableName}.id`,
           through: {
-            from: `${Contracts.tableName}_${Phones.tableName}.phone_id`,
-            to: `${Contracts.tableName}_${Phones.tableName}.contract_id`
+            from: `${Contracts.tableName}_contact_${Phones.tableName}.phone_id`,
+            to: `${Contracts.tableName}_contact_${Phones.tableName}.contract_id`
           },
           to: `${Contracts.tableName}.id`
         }

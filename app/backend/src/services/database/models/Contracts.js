@@ -62,28 +62,53 @@ class Contracts extends Model {
   static get relationMappings() {
     const Emails = require('./Emails');
     const Phones = require('./Phones');
+    const MailReceivers = require('./MailReceivers');
 
     return {
-      emails: {
+      contact_emails: {
         relation: Model.ManyToManyRelation,
         modelClass: Emails,
         join: {
           from: `${Contracts.tableName}.id`,
           through: {
-            from: `${Contracts.tableName}_${Emails.tableName}.contract_id`,
-            to: `${Contracts.tableName}_${Emails.tableName}.email_id`
+            from: `${Contracts.tableName}_contact_${Emails.tableName}.contract_id`,
+            to: `${Contracts.tableName}_contact_${Emails.tableName}.email_id`
           },
           to: `${Emails.tableName}.id`
         }
       },
-      phones: {
+      mail_notification_emails: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Emails,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_mail_notification_${Emails.tableName}.contract_id`,
+            to: `${Contracts.tableName}_mail_notification_${Emails.tableName}.email_id`
+          },
+          to: `${Emails.tableName}.id`
+        }
+      },
+      contact_phones: {
         relation: Model.ManyToManyRelation,
         modelClass: Phones,
         join: {
           from: `${Contracts.tableName}.id`,
           through: {
-            from: `${Contracts.tableName}_${Phones.tableName}.contract_id`,
-            to: `${Contracts.tableName}_${Phones.tableName}.phone_id`
+            from: `${Contracts.tableName}_contact_${Phones.tableName}.contract_id`,
+            to: `${Contracts.tableName}_contact_${Phones.tableName}.phone_id`
+          },
+          to: `${Phones.tableName}.id`
+        }
+      },
+      mail_receivers: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Phones,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_${MailReceivers.tableName}.contract_id`,
+            to: `${Contracts.tableName}_${MailReceivers.tableName}.mail_receiver_id`
           },
           to: `${Phones.tableName}.id`
         }

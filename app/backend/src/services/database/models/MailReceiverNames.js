@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-class MailSenderNames extends Model {
+class MailReceiverNames extends Model {
   static get tableName() {
-    return 'mail_sender_names';
+    return 'mail_receiver_names';
   }
 
   static get jsonSchema() {
@@ -21,19 +21,19 @@ class MailSenderNames extends Model {
   }
 
   static get relationMappings() {
-    const MailSenders = require('./MailSenders');
+    const MailReceivers = require('./MailReceivers');
 
     return {
-      mail_senders: {
+      mail_receivers: {
         relation: Model.HasManyRelation,
-        modelClass: MailSenders,
+        modelClass: MailReceivers,
         join: {
-          from: `${MailSenderNames.tableName}.id`,
-          to: `${MailSenders.tableName}.sender_name_id`
+          from: `${MailReceiverNames.tableName}.id`,
+          to: `${MailReceivers.tableName}.receiver_name_id`
         }
       }
     };
   }
 }
 
-module.exports = MailSenderNames;
+module.exports = MailReceiverNames;
