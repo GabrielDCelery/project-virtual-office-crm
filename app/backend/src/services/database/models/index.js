@@ -12,8 +12,6 @@ module.exports = {
   HistoryManyToManyChanges: require('./HistoryManyToManyChanges'),
   HistoryRecordChanges: require('./HistoryRecordChanges'),
   LegalEntities: require('./LegalEntities'),
-  MailReceiverNames: require('./MailReceiverNames'),
-  MailReceivers: require('./MailReceivers'),
   MailSubjects: require('./MailSubjects'),
   Mails: require('./Mails'),
   MailsAuditTrails: require('./MailsAuditTrails'),
