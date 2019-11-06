@@ -30,11 +30,11 @@ class Mails extends Model {
   }
 
   static get relationMappings() {
+    const Contacts = require('./Contacts');
     const Documents = require('./Documents');
     const LegalEntities = require('./LegalEntities');
-    const MailsAuditTrails = require('./MailsAuditTrails');
-    const MailSenders = require('./MailSenders');
     const MailSubjects = require('./MailSubjects');
+    const MailsAuditTrails = require('./MailsAuditTrails');
 
     return {
       legal_entity: {
@@ -47,10 +47,10 @@ class Mails extends Model {
       },
       sender: {
         relation: Model.BelongsToOneRelation,
-        modelClass: MailSenders,
+        modelClass: Contacts,
         join: {
           from: `${Mails.tableName}.sender_id`,
-          to: `${MailSenders.tableName}.id`
+          to: `${Contacts.tableName}.id`
         }
       },
       subject: {

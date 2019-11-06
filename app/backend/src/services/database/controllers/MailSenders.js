@@ -14,13 +14,13 @@ class MailSenders {
       country_name: record.address.city.country.name,
       country_short_name: record.address.city.country.short_name,
       long_street: record.address.long_street,
-      sender_name: record.sender_name.name
+      sender_name: record.contact_name.name
     };
   }
 
   async findAll({ transaction }) {
-    const mailSenders = await this.models.MailSenders.query(transaction).eager(
-      '[address.city.country, sender_name]'
+    const mailSenders = await this.models.Contacts.query(transaction).eager(
+      '[address.city.country, contact_name]'
     );
 
     return mailSenders.map(dbRecord => {

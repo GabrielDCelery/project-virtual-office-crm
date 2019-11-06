@@ -1,6 +1,8 @@
 const {
   Addresses,
   Cities,
+  ContactNames,
+  Contacts,
   Contracts,
   Countries,
   Documents,
@@ -10,8 +12,6 @@ const {
   HistoryManyToManyChanges,
   HistoryRecordChanges,
   LegalEntities,
-  MailSenderNames,
-  MailSenders,
   MailSubjects,
   Mails,
   MailsAuditTrails,
@@ -35,8 +35,8 @@ exports.seed = async knex => {
   await knex(LegalEntities.tableName).del();
   await knex(Users.tableName).del();
   await knex(MailSubjects.tableName).del();
-  await knex(MailSenders.tableName).del();
-  await knex(MailSenderNames.tableName).del();
+  await knex(Contacts.tableName).del();
+  await knex(ContactNames.tableName).del();
   await knex(Addresses.tableName).del();
   await knex(DocumentsTemporary.tableName).del();
   await knex(DocumentsCloud.tableName).del();

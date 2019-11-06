@@ -1,8 +1,8 @@
 const { Model } = require('objection');
 
-class MailSenders extends Model {
+class Contacts extends Model {
   static get tableName() {
-    return 'mail_senders';
+    return 'contacts';
   }
 
   static get jsonSchema() {
@@ -13,11 +13,17 @@ class MailSenders extends Model {
         id: {
           type: 'integer'
         },
-        sender_name_id: {
+        name_id: {
           type: 'integer'
         },
         address_id: {
           type: 'integer'
+        },
+        is_mail_sender: {
+          type: 'boolean'
+        },
+        is_mail_receiver: {
+          type: 'boolean'
         }
       }
     };
@@ -25,36 +31,47 @@ class MailSenders extends Model {
 
   static get relationMappings() {
     const Addresses = require('./Addresses');
+    const ContactNames = require('./ContactNames');
     const Mails = require('./Mails');
-    const MailSenderNames = require('./MailSenderNames');
 
     return {
       address: {
         relation: Model.BelongsToOneRelation,
         modelClass: Addresses,
         join: {
-          from: `${MailSenders.tableName}.address_id`,
+          from: `${Contacts.tableName}.address_id`,
           to: `${Addresses.tableName}.id`
         }
       },
-      sender_name: {
+      contact_name: {
         relation: Model.BelongsToOneRelation,
-        modelClass: MailSenderNames,
+        modelClass: ContactNames,
         join: {
-          from: `${MailSenders.tableName}.sender_name_id`,
-          to: `${MailSenderNames.tableName}.id`
+          from: `${Contacts.tableName}.name_id`,
+          to: `${ContactNames.tableName}.id`
         }
       },
       mails: {
         relation: Model.HasManyRelation,
         modelClass: Mails,
         join: {
-          from: `${MailSenders.tableName}.id`,
+          from: `${Contacts.tableName}.id`,
           to: `${Mails.tableName}.sender_id`
         }
       }
     };
   }
+
+  $beforeInsert() {
+    const date = new Date().toISOString();
+
+    this.created_at = date;
+    this.updated_at = date;
+  }
+
+  $beforeUpdate() {
+    this.updated_at = new Date().toISOString();
+  }
 }
 
-module.exports = MailSenders;
+module.exports = Contacts;

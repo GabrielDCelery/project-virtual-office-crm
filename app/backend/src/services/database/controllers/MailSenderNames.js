@@ -8,7 +8,7 @@ class MailSenderNames {
   }
 
   async create({ name, transaction }) {
-    const dbRecord = await this.models.MailSenderNames.query(transaction)
+    const dbRecord = await this.models.ContactNames.query(transaction)
       .where({
         name
       })
@@ -18,7 +18,7 @@ class MailSenderNames {
       return this.recordPreparator.prepareDbRecordForReturn(dbRecord);
     }
 
-    const newDbRecord = await this.models.MailSenderNames.query(
+    const newDbRecord = await this.models.ContactNames.query(
       transaction
     ).insert({
       name
@@ -28,9 +28,7 @@ class MailSenderNames {
   }
 
   async findAll({ transaction }) {
-    const mailSenderNames = await this.models.MailSenderNames.query(
-      transaction
-    );
+    const mailSenderNames = await this.models.ContactNames.query(transaction);
 
     return mailSenderNames.map(dbRecord => {
       return this.recordPreparator.prepareDbRecordForReturn(dbRecord);

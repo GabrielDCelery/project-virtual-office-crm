@@ -39,7 +39,7 @@ class Mails {
       sender_name_id: sender['name']
     };
 
-    const existingMailSenderRecord = await this.models.MailSenders.query(
+    const existingMailSenderRecord = await this.models.Contacts.query(
       transaction
     ).findOne(where);
 
@@ -47,7 +47,7 @@ class Mails {
       return existingMailSenderRecord['id'];
     }
 
-    const mailSenderRecord = await this.models.MailSenders.query(
+    const mailSenderRecord = await this.models.Contacts.query(
       transaction
     ).insert(where);
 

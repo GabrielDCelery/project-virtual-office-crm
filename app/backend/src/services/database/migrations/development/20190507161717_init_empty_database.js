@@ -1,6 +1,8 @@
 const {
   Addresses,
   Cities,
+  Contacts,
+  ContactNames,
   Contracts,
   Countries,
   Documents,
@@ -204,27 +206,28 @@ exports.up = async knex => {
     table.unique(['postcode', 'city_id', 'long_street']);
   });
 
-  await knex.schema.createTable(MailSenderNames.tableName, table => {
+  await knex.schema.createTable(ContactNames.tableName, table => {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.unique(['name']);
   });
 
-  await knex.schema.createTable(MailSenders.tableName, table => {
+  await knex.schema.createTable(Contacts.tableName, table => {
     table.increments('id').primary();
     table
       .integer('address_id')
       .references('id')
       .inTable(Addresses.tableName)
-      .notNullable()
-      .index();
+      .notNullable();
     table
-      .integer('sender_name_id')
+      .integer('name_id')
       .references('id')
-      .inTable(MailSenderNames.tableName)
-      .notNullable()
-      .index();
-    table.unique(['address_id', 'sender_name_id']);
+      .inTable(ContactNames.tableName)
+      .notNullable();
+    table.boolean('is_mail_sender').index();
+    table.boolean('is_mail_receiver').index();
+    table.unique(['address_id', 'name_id']);
+    table.timestamps();
   });
 
   await knex.schema.createTable(MailSubjects.tableName, table => {
@@ -264,7 +267,7 @@ exports.up = async knex => {
     table
       .integer('sender_id')
       .references('id')
-      .inTable(MailSenders.tableName)
+      .inTable(Contacts.tableName)
       .notNullable();
     table
       .integer('subject_id')
@@ -515,8 +518,8 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(Mails.tableName);
   await knex.schema.dropTableIfExists(LegalEntities.tableName);
   await knex.schema.dropTableIfExists(MailSubjects.tableName);
-  await knex.schema.dropTableIfExists(MailSenders.tableName);
-  await knex.schema.dropTableIfExists(MailSenderNames.tableName);
+  await knex.schema.dropTableIfExists(Contacts.tableName);
+  await knex.schema.dropTableIfExists(ContactNames.tableName);
   await knex.schema.dropTableIfExists(Addresses.tableName);
   await knex.schema.dropTableIfExists(Users.tableName);
   await knex.schema.dropTableIfExists(DocumentsTemporary.tableName);

@@ -37,7 +37,7 @@ class Addresses extends Model {
   static get relationMappings() {
     const Cities = require('./Cities');
     const LegalEntities = require('./LegalEntities');
-    const MailSenders = require('./MailSenders');
+    const Contacts = require('./Contacts');
 
     return {
       city: {
@@ -50,10 +50,10 @@ class Addresses extends Model {
       },
       mail_senders: {
         relation: Model.HasManyRelation,
-        modelClass: MailSenders,
+        modelClass: Contacts,
         join: {
           from: `${Addresses.tableName}.id`,
-          to: `${MailSenders.tableName}.address_id`
+          to: `${Contacts.tableName}.address_id`
         }
       },
       legal_entities: {

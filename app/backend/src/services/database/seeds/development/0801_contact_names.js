@@ -1,7 +1,7 @@
-const { MailSenderNames } = require('../../models');
+const { ContactNames } = require('../../models');
 
 exports.seed = async knex => {
-  await knex(MailSenderNames.tableName).insert([
+  await knex(ContactNames.tableName).insert([
     {
       id: 1,
       name: 'John Doe'
@@ -45,6 +45,6 @@ exports.seed = async knex => {
   ]);
 
   await knex.raw(
-    `select setval('${MailSenderNames.tableName}_id_seq', max(id)) from ${MailSenderNames.tableName}`
+    `select setval('${ContactNames.tableName}_id_seq', max(id)) from ${ContactNames.tableName}`
   );
 };
