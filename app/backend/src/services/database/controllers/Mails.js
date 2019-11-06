@@ -36,7 +36,7 @@ class Mails {
 
     const where = {
       address_id: addressRecord['id'],
-      sender_name_id: sender['name']
+      name_id: sender['name']
     };
 
     const existingMailSenderRecord = await this.models.Contacts.query(
@@ -49,7 +49,11 @@ class Mails {
 
     const mailSenderRecord = await this.models.Contacts.query(
       transaction
-    ).insert(where);
+    ).insert({
+      ...where,
+      is_mail_sender: true,
+      is_mail_receiver: false
+    });
 
     return mailSenderRecord['id'];
   }
