@@ -22,6 +22,7 @@ const {
 } = require('../../models');
 
 exports.seed = async knex => {
+  await knex(`${Contracts.tableName}_document_keepers`).del();
   await knex(`${Contracts.tableName}_mail_receivers`).del();
   await knex(`${Contracts.tableName}_contact_${Phones.tableName}`).del();
   await knex(

@@ -60,9 +60,9 @@ class Contracts extends Model {
   }
 
   static get relationMappings() {
+    const Contacts = require('./Contacts');
     const Emails = require('./Emails');
     const Phones = require('./Phones');
-    const MailReceivers = require('./MailReceivers');
 
     return {
       contact_emails: {
@@ -103,14 +103,26 @@ class Contracts extends Model {
       },
       mail_receivers: {
         relation: Model.ManyToManyRelation,
-        modelClass: Phones,
+        modelClass: Contacts,
         join: {
           from: `${Contracts.tableName}.id`,
           through: {
-            from: `${Contracts.tableName}_${MailReceivers.tableName}.contract_id`,
-            to: `${Contracts.tableName}_${MailReceivers.tableName}.mail_receiver_id`
+            from: `${Contracts.tableName}_mail_receivers.contract_id`,
+            to: `${Contracts.tableName}_mail_receivers.mail_receiver_id`
           },
-          to: `${Phones.tableName}.id`
+          to: `${Contacts.tableName}.id`
+        }
+      },
+      document_keepers: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Contacts,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_document_keepers.contract_id`,
+            to: `${Contracts.tableName}_document_keepers.document_keeper_id`
+          },
+          to: `${Contacts.tableName}.id`
         }
       }
     };

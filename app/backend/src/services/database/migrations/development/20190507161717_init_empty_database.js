@@ -220,8 +220,18 @@ exports.up = async knex => {
       .references('id')
       .inTable(ContactNames.tableName)
       .notNullable();
-    table.boolean('is_mail_sender').index();
-    table.boolean('is_mail_receiver').index();
+    table
+      .boolean('is_mail_sender')
+      .defaultTo(false)
+      .index();
+    table
+      .boolean('is_mail_receiver')
+      .defaultTo(false)
+      .index();
+    table
+      .boolean('is_document_keeper')
+      .defaultTo(false)
+      .index();
     table.unique(['address_id', 'name_id']);
     table.timestamps();
   });
@@ -466,9 +476,31 @@ exports.up = async knex => {
       table.unique(['contract_id', 'mail_receiver_id']);
     }
   );
+
+  await knex.schema.createTable(
+    `${Contracts.tableName}_document_keepers`,
+    table => {
+      table
+        .integer('contract_id')
+        .references('id')
+        .inTable(Contracts.tableName)
+        .notNullable()
+        .index();
+      table
+        .integer('document_keeper_id')
+        .references('id')
+        .inTable(Contacts.tableName)
+        .notNullable()
+        .index();
+      table.unique(['contract_id', 'document_keeper_id']);
+    }
+  );
 };
 
 exports.down = async knex => {
+  await knex.schema.dropTableIfExists(
+    `${Contracts.tableName}_document_keepers`
+  );
   await knex.schema.dropTableIfExists(`${Contracts.tableName}_mail_receivers`);
   await knex.schema.dropTableIfExists(
     `${Contracts.tableName}_contact_${Phones.tableName}`

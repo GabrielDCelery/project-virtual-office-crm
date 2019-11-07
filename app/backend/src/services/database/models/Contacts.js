@@ -24,6 +24,9 @@ class Contacts extends Model {
         },
         is_mail_receiver: {
           type: 'boolean'
+        },
+        is_document_keeper: {
+          type: 'boolean'
         }
       }
     };
@@ -33,6 +36,7 @@ class Contacts extends Model {
     const Addresses = require('./Addresses');
     const ContactNames = require('./ContactNames');
     const Mails = require('./Mails');
+    const Contracts = require('./Contracts');
 
     return {
       address: {
@@ -57,6 +61,30 @@ class Contacts extends Model {
         join: {
           from: `${Contacts.tableName}.id`,
           to: `${Mails.tableName}.sender_id`
+        }
+      },
+      mail_receivers_contracts: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Contracts,
+        join: {
+          from: `${Contacts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_mail_receivers.mail_receiver_id`,
+            to: `${Contracts.tableName}_mail_receivers.contract_id`
+          },
+          to: `${Contracts.tableName}.id`
+        }
+      },
+      document_keepers_contracts: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Contracts,
+        join: {
+          from: `${Contacts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_document_keepers.document_keeper_id`,
+            to: `${Contracts.tableName}_document_keepers.contract_id`
+          },
+          to: `${Contracts.tableName}.id`
         }
       }
     };
