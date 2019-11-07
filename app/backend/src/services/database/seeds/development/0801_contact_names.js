@@ -41,6 +41,14 @@ exports.seed = async knex => {
     {
       id: 10,
       name: 'Debreceni Gyógyfürdő Kft.'
+    },
+    {
+      id: 11,
+      name: 'Gálos János'
+    },
+    {
+      id: 12,
+      name: 'Bacz Invest'
     }
   ]);
 

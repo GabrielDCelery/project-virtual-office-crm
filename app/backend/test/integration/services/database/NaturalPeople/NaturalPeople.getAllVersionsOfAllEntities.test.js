@@ -61,6 +61,18 @@ describe('services.get("database").execute("naturalPeople", "getAllVersionsOfAll
           createdAt: new Date('2018-06-03T11:11:11.000Z'),
           updatedAt: new Date('2018-06-03T11:11:11.000Z'),
           version: 0
+        },
+        {
+          id: 3,
+          firstName: 'Ildikó',
+          lastName: 'Zeller',
+          motherName: 'Viszlovszki Ildikó',
+          birthDate: new Date('1956-10-20T00:00:00.000Z'),
+          identifierDocumentId: 1,
+          permanentAddressId: 3,
+          createdAt: new Date('2017-06-03T11:11:11.000Z'),
+          updatedAt: new Date('2017-06-03T11:11:11.000Z'),
+          version: 0
         }
       ]
     });

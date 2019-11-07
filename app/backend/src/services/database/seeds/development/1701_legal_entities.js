@@ -23,6 +23,17 @@ exports.seed = async knex => {
       permanent_address_id: 1,
       created_at: new Date('2018-08-03T11:11:11'),
       updated_at: new Date('2019-08-09T11:11:11')
+    },
+    {
+      id: 3,
+      short_name: 'Zeller & Zeller',
+      long_name: 'Zeller & Zeller',
+      type: LegalEntities.TYPES.LIMITED_LIABILITY_COMPANY,
+      registration_id: '01-01-111111',
+      tax_id: '11111111-1-11',
+      permanent_address_id: 1,
+      created_at: new Date('2018-08-03T11:11:11'),
+      updated_at: new Date('2019-08-09T11:11:11')
     }
   ]);
 

@@ -76,6 +76,24 @@ describe('services.get("database").execute("mailSenders", "findAll")', () => {
           countryShortName: 'HU',
           longStreet: 'József Attila u. 56.',
           senderName: 'NAV'
+        },
+        {
+          id: 6,
+          postcode: '1054',
+          cityName: 'Budapest',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'Báthory utca 6-4. 3. emelet 12.',
+          senderName: 'Gálos János'
+        },
+        {
+          id: 7,
+          postcode: '8000',
+          cityName: 'Székesfehérvár',
+          countryName: 'Hungary',
+          countryShortName: 'HU',
+          longStreet: 'Melencei u. 35-37.',
+          senderName: 'Bacz Invest'
         }
       ]
     });

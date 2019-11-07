@@ -50,7 +50,7 @@ describe('services.get("database").execute("naturalPeople", "create")', () => {
         permanentAddressId: 1,
         createdAt: '2019-08-27T11:11:11.000Z',
         updatedAt: '2019-08-27T11:11:11.000Z',
-        id: 3
+        id: 4
       }
     });
   });

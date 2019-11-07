@@ -73,6 +73,18 @@ describe('services.get("database").execute("legalEntities", "getAllVersionsOfAll
           createdAt: new Date('2018-08-03T11:11:11.000Z'),
           updatedAt: new Date('2018-08-03T11:11:11.000Z'),
           version: 0
+        },
+        {
+          id: 3,
+          shortName: 'Zeller & Zeller',
+          longName: 'Zeller & Zeller',
+          type: 'limited liability company',
+          registrationId: '01-01-111111',
+          taxId: '11111111-1-11',
+          permanentAddressId: 1,
+          createdAt: new Date('2018-08-03T11:11:11.000Z'),
+          updatedAt: new Date('2019-08-09T11:11:11.000Z'),
+          version: 0
         }
       ]
     });
