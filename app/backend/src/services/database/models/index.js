@@ -19,5 +19,6 @@ module.exports = {
   MailsPendingActions: require('./MailsPendingActions'),
   NaturalPeople: require('./NaturalPeople'),
   Phones: require('./Phones'),
+  Services: require('./Services'),
   Users: require('./Users')
 };
