@@ -84,12 +84,8 @@ exports.up = async knex => {
 
   await knex.schema.createTable(Services.tableName, table => {
     table.increments('id').primary();
-    table
-      .enum('name', [
-        Services.NAMES.SEND_EMAIL_NOTIFICATION,
-        Services.NAMES.POST_MAILS_MONTHLY
-      ])
-      .notNullable();
+    table.string('name').notNullable();
+    table.unique('name');
   });
 
   await knex.schema.createTable(Countries.tableName, table => {

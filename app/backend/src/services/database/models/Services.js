@@ -5,13 +5,6 @@ class Services extends Model {
     return 'services';
   }
 
-  static get NAMES() {
-    return {
-      SEND_EMAIL_NOTIFICATION: 'send email notification',
-      POST_MAILS_MONTHLY: 'post mails monthly'
-    };
-  }
-
   static get jsonSchema() {
     return {
       type: 'object',
@@ -21,11 +14,7 @@ class Services extends Model {
           type: 'integer'
         },
         name: {
-          type: 'string',
-          enum: [
-            Services.NAMES.SEND_EMAIL_NOTIFICATION,
-            Services.NAMES.POST_MAILS_MONTHLY
-          ]
+          type: 'string'
         }
       }
     };

@@ -49,6 +49,7 @@ exports.seed = async knex => {
   await knex(Phones.tableName).del();
   await knex(Cities.tableName).del();
   await knex(Countries.tableName).del();
+  await knex(Services.tableName).del();
   await knex(HistoryManyToManyChanges.tableName).del();
   await knex(HistoryRecordChanges.tableName).del();
 };
