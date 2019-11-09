@@ -11,6 +11,7 @@ const {
   Emails,
   HistoryManyToManyChanges,
   HistoryRecordChanges,
+  Invoices,
   LegalEntities,
   MailSubjects,
   Mails,
@@ -80,6 +81,22 @@ exports.up = async knex => {
       ])
       .notNullable();
     table.timestamp('changed_at');
+  });
+
+  await knex.schema.createTable(Invoices.tableName, table => {
+    table.increments('id').primary();
+    table.string('number').notNullable();
+    table.integer('payment_amount').notNullable();
+    table
+      .enum('payment_method', [
+        Invoices.PAYMENT_METHODS.CASH,
+        Invoices.PAYMENT_METHODS.BANK_TRANSFER
+      ])
+      .notNullable();
+    table.date('creation_date').notNullable();
+    table.date('transfer_date').notNullable();
+    table.unique('number');
+    table.timestamps();
   });
 
   await knex.schema.createTable(Services.tableName, table => {
@@ -521,9 +538,31 @@ exports.up = async knex => {
       table.unique(['contract_id', 'service_id']);
     }
   );
+
+  await knex.schema.createTable(
+    `${Contracts.tableName}_${Invoices.tableName}`,
+    table => {
+      table
+        .integer('contract_id')
+        .references('id')
+        .inTable(Contracts.tableName)
+        .notNullable()
+        .index();
+      table
+        .integer('invoice_id')
+        .references('id')
+        .inTable(Invoices.tableName)
+        .notNullable()
+        .index();
+      table.unique(['contract_id', 'invoice_id']);
+    }
+  );
 };
 
 exports.down = async knex => {
+  await knex.schema.dropTableIfExists(
+    `${Contracts.tableName}_${Invoices.tableName}`
+  );
   await knex.schema.dropTableIfExists(
     `${Contracts.tableName}_${Services.tableName}`
   );
@@ -560,6 +599,7 @@ exports.down = async knex => {
   await knex.schema.dropTableIfExists(Cities.tableName);
   await knex.schema.dropTableIfExists(Countries.tableName);
   await knex.schema.dropTableIfExists(Services.tableName);
+  await knex.schema.dropTableIfExists(Invoices.tableName);
   await knex.schema.dropTableIfExists(HistoryManyToManyChanges.tableName);
   await knex.schema.dropTableIfExists(HistoryRecordChanges.tableName);
 };

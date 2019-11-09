@@ -11,6 +11,7 @@ module.exports = {
   Emails: require('./Emails'),
   HistoryManyToManyChanges: require('./HistoryManyToManyChanges'),
   HistoryRecordChanges: require('./HistoryRecordChanges'),
+  Invoices: require('./Invoices'),
   LegalEntities: require('./LegalEntities'),
   MailSubjects: require('./MailSubjects'),
   Mails: require('./Mails'),

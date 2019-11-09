@@ -62,7 +62,9 @@ class Contracts extends Model {
   static get relationMappings() {
     const Contacts = require('./Contacts');
     const Emails = require('./Emails');
+    const Invoices = require('./Invoices');
     const Phones = require('./Phones');
+    const Services = require('./Services');
 
     return {
       contact_emails: {
@@ -123,6 +125,30 @@ class Contracts extends Model {
             to: `${Contracts.tableName}_document_keepers.document_keeper_id`
           },
           to: `${Contacts.tableName}.id`
+        }
+      },
+      invoices: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Invoices,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_${Invoices.tableName}.contract_id`,
+            to: `${Contracts.tableName}_${Invoices.tableName}.invoice_id`
+          },
+          to: `${Invoices.tableName}.id`
+        }
+      },
+      services: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Services,
+        join: {
+          from: `${Contracts.tableName}.id`,
+          through: {
+            from: `${Contracts.tableName}_${Services.tableName}.contract_id`,
+            to: `${Contracts.tableName}_${Services.tableName}.service_id`
+          },
+          to: `${Services.tableName}.id`
         }
       }
     };
