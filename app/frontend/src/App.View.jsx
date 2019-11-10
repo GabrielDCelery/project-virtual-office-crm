@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route /*, Redirect, Switch */ } from 'react-router-dom';
 import {
-  AppLoadingScreen,
-  AppStoreDecorator,
-  UserStoreDecorator,
   AuthenticatedRoute,
-  RouterDecorator,
-  StoreDecorator,
-  ThemeDecorator
+  CustomAppLoadingScreen,
+  CustomAppSnackbar
 } from 'components';
 import {
   Dashboard,
@@ -17,11 +13,9 @@ import {
   MailsAddNew,
   MailsSearch,
   NavBar,
-  Search,
-  SnackBars
+  Search
 } from 'views';
 import config from 'config';
-import './App.css';
 
 const views = {
   Dashboard,
@@ -30,8 +24,7 @@ const views = {
   Logout,
   MailsAddNew,
   MailsSearch,
-  Search,
-  SnackBars
+  Search
 };
 
 const ViewWithNavbar = ToWrapComponent => {
@@ -55,15 +48,11 @@ const ViewWithoutNavbar = ToWrapComponent => {
   );
 };
 
-let App = ({ actionAuthenticateUserByCookie, stateIsAppLoadingScreenOn }) => {
-  useEffect(() => {
-    actionAuthenticateUserByCookie();
-  }, [actionAuthenticateUserByCookie]);
-
+let AppView = ({ getter, handler }) => {
   return (
     <React.Fragment>
-      {stateIsAppLoadingScreenOn ? (
-        <AppLoadingScreen />
+      {getter('app', 'isLoadingScreenOn') ? (
+        <CustomAppLoadingScreen />
       ) : (
         <React.Fragment>
           {config.routes.map(
@@ -100,15 +89,16 @@ let App = ({ actionAuthenticateUserByCookie, stateIsAppLoadingScreenOn }) => {
         </React.Fragment>
       )}
 
-      <SnackBars />
+      <CustomAppSnackbar
+        {...{
+          handleClose: handler('snackbar', 'handleClose'),
+          isOpen: getter('snackbar', 'isOpen'),
+          message: getter('snackbar', 'message'),
+          type: getter('snackbar', 'type')
+        }}
+      />
     </React.Fragment>
   );
 };
 
-App = UserStoreDecorator(App);
-App = AppStoreDecorator(App);
-App = ThemeDecorator(App);
-App = StoreDecorator(App);
-App = RouterDecorator(App);
-
-export default App;
+export default AppView;

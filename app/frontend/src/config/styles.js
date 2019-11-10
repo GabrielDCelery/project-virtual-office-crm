@@ -18,6 +18,32 @@ export default {
         default: '#0d3346',
         hover: '#6193AA' /*'#aa6172'*/
       }
+    },
+    bootstrapAlert: {
+      warning: {
+        background: '#fff3cd',
+        text: '#856504',
+        border: '#856504'
+      },
+      error: {
+        background: '#f8d7da',
+        text: '#82333b',
+        border: '#82333b'
+      },
+      info: {
+        background: '#cce5ff',
+        text: '#0b498b',
+        border: '#0b498b'
+      },
+      success: {
+        background: '#d4edda',
+        text: '#4a8057',
+        border: '#4a8057'
+      }
+    },
+    snackbar: {
+      success: '#42a047',
+      error: '#d42f2f'
     }
   },
   layout: {

@@ -1,9 +1,10 @@
 import React from 'react';
+//import styled from 'styled-components';
 
 export default ToWrapComponent => {
-  let AppLoadingScreenBehaviour = props => {
+  let AppStyles = props => {
     return <ToWrapComponent {...props} />;
   };
 
-  return AppLoadingScreenBehaviour;
+  return AppStyles;
 };
