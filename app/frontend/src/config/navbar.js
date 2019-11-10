@@ -30,14 +30,14 @@ export default [
     label: 'Contracts',
     children: [
       {
+        label: 'Add New',
+        path: PATH_TO_ADD_NEW_CONTRACT,
+        rbacRule: STATIC_RBAC_RULE_MAILS_PAGE_VISIT
+      },
+      {
         label: 'Search',
         path: PATH_TO_SEARCH_CONTRACTS,
         rbacRule: STATIC_RBAC_RULE_CONTRACTS_PAGE_VISIT
-      },
-      {
-        label: 'Add new',
-        path: PATH_TO_ADD_NEW_CONTRACT,
-        rbacRule: STATIC_RBAC_RULE_MAILS_PAGE_VISIT
       }
     ]
   },

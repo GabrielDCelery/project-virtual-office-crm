@@ -1,9 +1,11 @@
 const getAllVersionsOfAllEntitiesWrapper = require('./getAllVersionsOfAllEntitiesWrapper');
-const updateWrapper = require('./updateWrapper');
 const getLatestVersionsOfAllRecordsWrapper = require('./getLatestVersionsOfAllRecordsWrapper');
+const getTypesWrapper = require('./getTypesWrapper');
+const updateWrapper = require('./updateWrapper');
 
 module.exports = {
   getAllVersionsOfAllEntitiesWrapper,
   getLatestVersionsOfAllRecordsWrapper,
+  getTypesWrapper,
   updateWrapper
 };

@@ -6,6 +6,7 @@ import {
   CustomAppSnackbar
 } from 'components';
 import {
+  ContractsAddNew,
   Dashboard,
   Database,
   Login,
@@ -18,6 +19,7 @@ import {
 import config from 'config';
 
 const views = {
+  ContractsAddNew,
   Dashboard,
   Database,
   Login,

@@ -8,7 +8,7 @@ const {
 
 const mapStateToProps = state => {
   return {
-    stateIsFetchingLegalEntities: state.legalEntities.isFetching,
+    stateIsFetchingLegalEntities: state.legalEntities.entities.isFetching,
     stateLegalEntityRecommendations: store.selectors.legalEntities.getLegalEntityRecommendations(
       state
     )

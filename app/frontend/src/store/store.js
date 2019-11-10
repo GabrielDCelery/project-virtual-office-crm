@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 //import { createLogger } from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
+import { contractAddNewFormReducer } from './contracts';
 import { countriesReducer } from './countries';
 import { citiesReducer } from './cities';
-import { legalEntitiesReducer } from './legalEntities';
+import { legalEntitiesReducer, legalEntityTypesReducer } from './legalEntities';
 import {
   mailSenderNamesReducer,
   mailSendersReducer,
@@ -18,8 +19,14 @@ import { appReducer } from './app';
 const combinedReducers = combineReducers({
   app: appReducer,
   cities: citiesReducer,
+  contracts: combineReducers({
+    addNewForm: contractAddNewFormReducer
+  }),
   countries: countriesReducer,
-  legalEntities: legalEntitiesReducer,
+  legalEntities: combineReducers({
+    entities: legalEntitiesReducer,
+    types: legalEntityTypesReducer
+  }),
   mails: combineReducers({
     addNewForm: mailAddNewFormReducer,
     senders: mailSendersReducer,

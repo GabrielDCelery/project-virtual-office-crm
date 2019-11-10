@@ -72,7 +72,7 @@ export default [
     bHasNavbar: true,
     bNeedsAuthentication: true,
     path: PATH_TO_ADD_NEW_CONTRACT,
-    component: 'Search',
+    component: 'ContractsAddNew',
     redirectTo: PATH_TO_LOGIN
   },
   {

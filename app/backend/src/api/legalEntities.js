@@ -33,6 +33,13 @@ module.exports = ({ Router, helpers, orchestrator }) => {
     });
   });
 
+  router.get('/getTypes', async (req, res) => {
+    return apiResultWrapper.returnJSON({
+      res,
+      toReturn: await orchestrator.execute('legalEntities', 'getTypes')
+    });
+  });
+
   router.post('/update', async (req, res) => {
     return apiResultWrapper.returnJSON({
       res,

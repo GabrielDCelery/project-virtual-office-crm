@@ -18,6 +18,10 @@ class LegalEntities {
     );
   }
 
+  async getTypes() {
+    return Object.values(this.models.LegalEntities.TYPES);
+  }
+
   async create({
     shortName,
     longName,

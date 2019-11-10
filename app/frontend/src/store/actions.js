@@ -1,4 +1,8 @@
 import { actionFindAllCities } from './cities';
+import {
+  actionSetAddNewContractFormField,
+  actionSubmitAddNewContractForm
+} from './contracts';
 import { actionFindAllCountries } from './countries';
 import {
   actionSubmitAddNewMailForm,
@@ -11,7 +15,10 @@ import {
   actionFindAllMailsPendingActionsNotifyEmails,
   actionPendingActionsSendEmailNotifications
 } from './mails';
-import { actionGetLatestVersionsOfAllEntities } from './legalEntities';
+import {
+  actionGetLatestVersionsOfAllEntities,
+  actionFindAllLegalEntityTypes
+} from './legalEntities';
 import {
   actionOpenSuccessSnackBar,
   actionOpenErrorSnackBar,
@@ -25,6 +32,9 @@ import {
 } from './user';
 
 export default {
+  actionSetAddNewContractFormField,
+  actionSubmitAddNewContractForm,
+  actionFindAllLegalEntityTypes,
   actionAuthenticateUserByCookie,
   actionCloseSnackBar,
   actionCreateNewMailSenderNameAndReFetch,

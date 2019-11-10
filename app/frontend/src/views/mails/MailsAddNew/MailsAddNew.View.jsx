@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Button, Tab, Tabs, TextField } from '@material-ui/core';
 import {
+  CustomLeftAlignedContainer,
   DocumentPdf,
   FormFieldControl,
   FormFileUpload,
@@ -11,9 +12,9 @@ import {
   FormStep
 } from 'components';
 
-const MailsAddNewView = ({ StyledContainer, getter, handler }) => {
+const MailsAddNewView = ({ getter, handler }) => {
   return (
-    <StyledContainer maxWidth="lg">
+    <CustomLeftAlignedContainer maxWidth="lg">
       <FormStep label="Mail Receiver">
         <FormPaper>
           <FormFieldControl>
@@ -272,7 +273,7 @@ const MailsAddNewView = ({ StyledContainer, getter, handler }) => {
         </Button>
       </FormPaper>
       <div style={{ height: '2em' }}></div>
-    </StyledContainer>
+    </CustomLeftAlignedContainer>
   );
 };
 

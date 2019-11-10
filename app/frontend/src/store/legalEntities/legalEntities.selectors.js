@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { createSelector } from 'reselect';
 
 const getLegalEntityAllVersions = state => {
-  return _.get(state, ['legalEntities', 'allVersionsOfAllRecords']);
+  return _.get(state, ['legalEntities', 'entities', 'allVersionsOfAllRecords']);
 };
 
 export const selectorGetLegalEntityRecommendations = createSelector(

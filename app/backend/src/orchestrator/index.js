@@ -36,7 +36,8 @@ class Orchestrator {
         ),
         getLatestVersionsOfAllRecords: legalEntities.getLatestVersionsOfAllRecordsWrapper(
           { services }
-        )
+        ),
+        getTypes: legalEntities.getTypesWrapper({ services })
       },
       mails: {
         create: mails.createWrapper(services)

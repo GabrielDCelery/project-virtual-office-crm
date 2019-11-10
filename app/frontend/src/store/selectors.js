@@ -1,6 +1,10 @@
 import { selectorGetCityRecommendations } from './cities';
+import { selectorAddNewContractFormFieldFactory } from './contracts';
 import { selectorGetCountryRecommendations } from './countries';
-import { selectorGetLegalEntityRecommendations } from './legalEntities';
+import {
+  selectorGetLegalEntityRecommendations,
+  selectorGetLegalEntityTypes
+} from './legalEntities';
 import {
   selectorGetMailSenderNameRecommendations,
   selectorGetMailSenderRecommendations,
@@ -23,6 +27,8 @@ export default {
   selectorIsUserAuthenticated,
   selectorIsUserAuthorized,
   selectorUserLoginFormFieldFactory,
+  selectorGetLegalEntityTypes,
+  selectorAddNewContractFormFieldFactory,
   legalEntities: {
     getLegalEntityRecommendations: selectorGetLegalEntityRecommendations
   }
