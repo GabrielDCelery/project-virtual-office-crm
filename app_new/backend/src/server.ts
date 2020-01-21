@@ -2,18 +2,26 @@ import * as express from 'express';
 import loaders from './loaders';
 import config from './config';
 
-class Server {
-  private server: express.Application;
+interface IServer {
+  start(callback: Function): Promise<void>;
+  stop(callback: Function): Promise<void>;
+}
+
+class Server implements IServer {
+  private app: express.Application;
+  private server: any;
 
   constructor() {
-    this.server = null;
+    this.app = null;
   }
 
   async start(callback = () => {}) {
     try {
-      const app = await loaders.start();
+      this.app = express();
 
-      this.server = app.listen(config.host.port, error => {
+      await loaders.start(this.app);
+
+      this.server = this.app.listen(config.host.port, error => {
         if (error) {
           return process.exit(1);
         }
@@ -21,7 +29,6 @@ class Server {
         return callback();
       });
     } catch (error) {
-      console.log(error);
       return process.exit(1);
     }
   }
@@ -32,7 +39,6 @@ class Server {
       await this.server.close();
       callback();
     } catch (error) {
-      console.log(error);
       return process.exit(1);
     }
   }

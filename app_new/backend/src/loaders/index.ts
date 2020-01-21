@@ -2,17 +2,13 @@ import * as express from 'express';
 import api from './api';
 
 interface ILoaders {
-  start(): Promise<express.Express>;
+  start(app: express.Application): Promise<void>;
   stop(): Promise<void>;
 }
 
 class Loaders implements ILoaders {
-  constructor() {}
-
-  async start() {
-    const app = await api.start();
-
-    return app;
+  async start(app: express.Application) {
+    await api.start(app);
   }
 
   async stop() {}
