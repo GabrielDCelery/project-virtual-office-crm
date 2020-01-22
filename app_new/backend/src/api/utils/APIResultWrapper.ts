@@ -1,6 +1,6 @@
 import * as express from 'express';
 
-interface IAPIResultWrapper {
+export interface IAPIResultWrapper {
   returnJSON(
     res: express.Response,
     error: Error,

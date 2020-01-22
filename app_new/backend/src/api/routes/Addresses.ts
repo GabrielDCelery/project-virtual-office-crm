@@ -1,21 +1,24 @@
 import * as express from 'express';
-import orchestrator from '../../orchestrator';
 import RoutesGenerator from './RoutesGenerator';
+import { APIResultWrapper } from '../utils';
+import { OrchestratorMethod as OrchestratorMethodEnuums } from '../../common/enums';
+import { Orchestrator } from '../../orchestrator';
+const { ORCHESTRATOR_METHOD_FIND_ALL_ADDRESSES } = OrchestratorMethodEnuums;
 
 export class Addresses extends RoutesGenerator {
-  createRoutes() {
-    this.router.get(
-      '/',
-      async (req: express.Request, res: express.Response) => {
-        const { error, payload } = await orchestrator.execute(
-          'addresses',
-          'findAll'
-        );
+  _createRouter(
+    router: express.IRouter,
+    apiResultWrapper: APIResultWrapper,
+    orchestrator: Orchestrator
+  ) {
+    router.get('/', async (req: express.Request, res: express.Response) => {
+      const { error, payload } = await orchestrator.execute(
+        ORCHESTRATOR_METHOD_FIND_ALL_ADDRESSES
+      );
 
-        return this.apiResultWrapper.returnJSON(res, error, payload);
-      }
-    );
+      return apiResultWrapper.returnJSON(res, error, payload);
+    });
 
-    return this;
+    return router;
   }
 }

@@ -8,20 +8,17 @@ interface IServer {
 }
 
 class Server implements IServer {
-  private app: express.Application;
   private server: any;
 
   constructor() {
-    this.app = null;
+    this.server = null;
   }
 
   async start(callback = () => {}) {
     try {
-      this.app = express();
+      const app = await loaders.start();
 
-      await loaders.start(this.app);
-
-      this.server = this.app.listen(config.host.port, error => {
+      this.server = app.listen(config.get('host.port'), (error: Error) => {
         if (error) {
           return process.exit(1);
         }

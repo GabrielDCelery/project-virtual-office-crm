@@ -1,22 +1,24 @@
 import * as express from 'express';
 import { APIResultWrapper } from '../utils';
+import { Orchestrator } from '../../orchestrator';
 
 export interface IRoutesGenerator {
-  createRoutes(): this;
-  getRouter(): express.IRouter;
+  createRouter(orchestrator: Orchestrator): express.IRouter;
 }
 
 export default abstract class RoutesGenerator implements IRoutesGenerator {
   protected apiResultWrapper: APIResultWrapper;
-  protected router: express.IRouter;
-  abstract createRoutes(): this;
+  abstract _createRouter(
+    router: express.IRouter,
+    apiResultWrapper: APIResultWrapper,
+    orchestrator: Orchestrator
+  ): express.IRouter;
 
-  constructor() {
-    this.router = express.Router();
-    this.apiResultWrapper = new APIResultWrapper();
-  }
-
-  getRouter() {
-    return this.router;
+  createRouter(orchestrator: Orchestrator) {
+    return this._createRouter(
+      /* router */ express.Router(),
+      /* apiResultWrapper */ new APIResultWrapper(),
+      /* orchestrator */ orchestrator
+    );
   }
 }
