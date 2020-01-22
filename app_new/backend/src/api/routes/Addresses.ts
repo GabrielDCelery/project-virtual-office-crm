@@ -1,26 +1,21 @@
 import * as express from 'express';
-import { APIResultWrapper } from '../utils';
 import orchestrator from '../../orchestrator';
-import IRoutesGenerator from './RoutesGenerator.interface';
+import RoutesGenerator from './RoutesGenerator';
 
-export class Addresses implements IRoutesGenerator {
-  static createInstance() {
-    return new Addresses();
-  }
-
+export class Addresses extends RoutesGenerator {
   createRoutes() {
-    const router: express.IRouter = express.Router();
-    const apiResultWrapper: APIResultWrapper = APIResultWrapper.createInstance();
+    this.router.get(
+      '/',
+      async (req: express.Request, res: express.Response) => {
+        const { error, payload } = await orchestrator.execute(
+          'addresses',
+          'findAll'
+        );
 
-    router.get('/', async (req: express.Request, res: express.Response) => {
-      const { error, payload } = await orchestrator.execute(
-        'addresses',
-        'findAll'
-      );
+        return this.apiResultWrapper.returnJSON(res, error, payload);
+      }
+    );
 
-      return apiResultWrapper.returnJSON(res, error, payload);
-    });
-
-    return router;
+    return this;
   }
 }

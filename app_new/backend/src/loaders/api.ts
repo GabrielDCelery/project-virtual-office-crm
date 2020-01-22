@@ -15,7 +15,7 @@ class APILoader implements IAPILoader {
     app.use(cookieParser());
     app.use(cors());
 
-    app.use('/api/addresses', AddressesRouter.createInstance().createRoutes());
+    app.use('/api/addresses', new AddressesRouter().createRoutes().getRouter());
   }
 
   async stop() {}
